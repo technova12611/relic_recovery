@@ -214,6 +214,9 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             break;
                     }
 
+                    double avgXDistance = measureXDistance(500);
+                    logInfo("X range:",vuMark + " | " + String.format("%.2f cm", avgXDistance));
+
                     if(targetDistance > 0.0) {
                         alignToCryptoBox(targetDistance);
                     }
