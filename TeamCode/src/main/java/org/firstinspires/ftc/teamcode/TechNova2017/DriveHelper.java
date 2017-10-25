@@ -76,7 +76,6 @@ public class DriveHelper {
             v_theta = dpad_speed;
         }
         else {
-
             lx = Math.pow(g.left_stick_x, 3.0)*scaleToDrive;
             ly = -Math.pow(g.left_stick_y, 3.0)*scaleToDrive;
 
@@ -84,7 +83,7 @@ public class DriveHelper {
             v_theta = Math.hypot(lx,ly);
             v_rotation = Math.pow(g.right_stick_x, 3.0)*scaleToDrive;
 
-            v_rotation = Range.clip(v_rotation,-0.75,0.5);
+            v_rotation = Range.clip(v_rotation,-1.0,1.0);
         }
 
         telemetry.addData("Joystick: ", String.format("%.2f %.2f %.2f", g.left_stick_x, g.left_stick_y, g.right_stick_x));
