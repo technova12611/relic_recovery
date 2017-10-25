@@ -93,14 +93,14 @@ public class MecanumRobot {
      * @param hardwareMap
      * @param _telemetry
      */
-    public MecanumRobot(HardwareMap hardwareMap, Telemetry _telemetry, boolean isAuto) {
+    public MecanumRobot(HardwareMap hardwareMap, Telemetry _telemetry, AllianceColor allianceColor) {
         telemetry = _telemetry;
 
         initMotors(hardwareMap);
 
-        if(isAuto) {
+        if(allianceColor != null) {
             initGyro(hardwareMap);
-            initRangeSensor(hardwareMap);
+            initRangeSensor(hardwareMap, allianceColor);
         } else {
             Servo longArm = hardwareMap.servo.get("longArm");
             // make sure long arm is in the up right position
@@ -168,11 +168,14 @@ public class MecanumRobot {
         logInfo(null, "Init Imu", timer.time(TimeUnit.MILLISECONDS) + " | imu initialized ...");
     }
 
-    private void initRangeSensor(HardwareMap hardwareMap) {
+    private void initRangeSensor(HardwareMap hardwareMap, AllianceColor alliance) {
         try {
-            x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
-            x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
-            yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "yRange");
+            if(alliance == AllianceColor.RED) {
+                x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
+            } else {
+                //x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+            }
+            //yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "yRange");
         }
         catch(Exception e) {
             Log.e(this.getClass().getSimpleName(), "Range Sesnor failed: " + e.getMessage());
@@ -360,7 +363,7 @@ public class MecanumRobot {
 
         this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        this.glyphLift.setTargetPosition(750);
+        this.glyphLift.setTargetPosition(600);
 
         this.glyphLift.setPower(0.5);
 
@@ -787,21 +790,21 @@ public class MecanumRobot {
     }
 
     public double getX2Distance() {
-        if(x1RangeSensor != null) {
+        if(x2RangeSensor != null) {
             try {
-                double distance = x1RangeSensor.getDistance(DistanceUnit.CM);
+                double distance = x2RangeSensor.getDistance(DistanceUnit.CM);
                 if (distance < 250.0) {
-                    prevX1Distance = distance;
+                    prevX2Distance = distance;
                 }
             }catch(Exception e) {
                 Log.e(this.getClass().getSimpleName(), "X2 Range Failed: " + e.getMessage());
-                prevX1Distance = 0.0;
+                prevX2Distance = 0.0;
             }
         } else {
             return 0.0;
         }
 
-        return prevX1Distance;
+        return prevX2Distance;
     }
 
     public double getYDistance() {
