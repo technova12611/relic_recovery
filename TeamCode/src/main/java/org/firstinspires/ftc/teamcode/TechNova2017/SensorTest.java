@@ -33,7 +33,7 @@ public class SensorTest extends LinearOpMode {
         // get a reference to the distance sensor that shares the same name.
         sensorDistance = hardwareMap.get(DistanceSensor.class, "jewelColor");
         xRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
-        yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "yRange");
+        //yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
 
         VuMarkVision vuMarkVision = new VuMarkVision(hardwareMap, telemetry);
 
@@ -51,10 +51,10 @@ public class SensorTest extends LinearOpMode {
             telemetry.addData("Red  ", sensorColor.red());
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
-//            telemetry.addData("(x,y): ", "(%.2f, 0)",
-//                    xRangeSensor.getDistance(DistanceUnit.CM));
-            telemetry.addData("(x,y): ", "(%.2f, %.2f)",
-                    xRangeSensor.getDistance(DistanceUnit.CM), yRangeSensor.getDistance(DistanceUnit.CM));
+            telemetry.addData("(x,y): ", "(%.2f, 0)",
+                    xRangeSensor.getDistance(DistanceUnit.CM));
+//            telemetry.addData("(x1,x2): ", "(%.2f, %.2f)",
+//                    xRangeSensor.getDistance(DistanceUnit.CM), yRangeSensor.getDistance(DistanceUnit.CM));
 
             if(vuMark == RelicRecoveryVuMark.UNKNOWN) {
                 vuMark = vuMarkVision.detect(null);

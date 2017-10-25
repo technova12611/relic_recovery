@@ -12,7 +12,7 @@ public class ArcadeTeleop extends OpMode {
 
     @Override
     public void init() {
-        robot = new MecanumRobot(hardwareMap, telemetry, false);
+        robot = new MecanumRobot(hardwareMap, telemetry, null);
         g1 = new Controller(gamepad1);
     }
 

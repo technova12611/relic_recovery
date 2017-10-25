@@ -15,7 +15,7 @@ public class MecanumTeleop extends OpMode {
 
     @Override
     public void init() {
-        robot = new MecanumRobot(hardwareMap, telemetry, false);
+        robot = new MecanumRobot(hardwareMap, telemetry, null);
 
         g1 = new Controller(gamepad1);
         g2 = new Controller(gamepad2);

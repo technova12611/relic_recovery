@@ -181,9 +181,6 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
 
                 case ALIGN_TO_CRYPTOBOX:
 
-                    gotoNextState();
-                    //break;
-
                     // need more testing on each position
                     // use the ultra_sonic sensor to align robot to the right cryto column
                     //----------------------------------------------------------------------
@@ -248,7 +245,8 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     break;
 
                 case END:
-                    robot.onStop();
+                Default:
+                    gotoState(END);
                     break;
             }
 
