@@ -32,11 +32,12 @@ package org.firstinspires.ftc.teamcode.TechNova2017;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
- * {@link SensorMRRangeSensor} illustrates how to use the Modern Robotics
+ * {@link SensorMRRangeColorSensor} illustrates how to use the Modern Robotics
  * Range Sensor.
  *
  * The op mode assumes that the range sensor is configured with a name of "sensor_range".
@@ -46,17 +47,24 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  *
  * @see <a href="http://modernroboticsinc.com/range-sensor">MR Range Sensor</a>
  */
-@Autonomous(name = "Sensor: MR range sensor", group = "Sensor")
-public class SensorMRRangeSensor extends LinearOpMode {
+@Autonomous(name = "Sensor: MR range & Color sensor", group = "Sensor")
+public class SensorMRRangeColorSensor extends LinearOpMode {
 
     ModernRoboticsI2cRangeSensor rangeSensor;
     ModernRoboticsI2cRangeSensor rangeSensor2;
+    ColorSensor colorSensor;
 
     @Override public void runOpMode() {
 
         // get a reference to our compass
         rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
-        //rangeSensor2 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+        try {
+            //rangeSensor2 = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+            colorSensor = hardwareMap.get(ColorSensor.class, "mrColor");
+        }
+        catch(Exception e) {
+            telemetry.addData("sensor init failed.", e.getMessage());
+        }
 
         // wait for the start button to be pressed
         waitForStart();
@@ -66,7 +74,14 @@ public class SensorMRRangeSensor extends LinearOpMode {
             //telemetry.addData("raw optical", rangeSensor.rawOptical());
             //telemetry.addData("cm optical", "%.2f cm", rangeSensor.cmOptical());
             telemetry.addData("x1", "%.2f cm", rangeSensor.getDistance(DistanceUnit.CM));
-            //telemetry.addData("x2", "%.2f cm", rangeSensor2.getDistance(DistanceUnit.CM));
+            if(rangeSensor2 != null) {
+                telemetry.addData("x2", "%.2f cm", rangeSensor2.getDistance(DistanceUnit.CM));
+            }
+
+            if(colorSensor != null) {
+                telemetry.addData("color", colorSensor.red() + " | " + colorSensor.blue());
+            }
+
             telemetry.update();
         }
     }

@@ -20,6 +20,8 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
     VuMarkVision vuMarkVision;
     RelicRecoveryVuMark vuMark;
 
+    MovingAverage xAvgDistance = new MovingAverage(20);
+
     ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
     protected void initOpMode() throws InterruptedException {
@@ -216,6 +218,16 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
 
     protected double getXDistance() {
         return getAllianceColor() == AllianceColor.RED? robot.getX1Distance(): robot.getX2Distance();
+    }
+
+    protected double measureXDistance(long elapseTime) {
+        ElapsedTime timer = new ElapsedTime();
+        double avg = 0.0;
+        while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < elapseTime) {
+            avg = xAvgDistance.next(robot.getX1Distance());
+        }
+
+        return avg;
     }
 
     // default is RED allaince
