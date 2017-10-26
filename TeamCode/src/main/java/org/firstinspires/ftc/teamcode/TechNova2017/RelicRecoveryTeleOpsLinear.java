@@ -30,7 +30,6 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
         robot.onStart();
 
-        // loop and read the RGB data.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         while (opModeIsActive()) {
 
@@ -44,8 +43,6 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
                 robot.updateSensorTelemetry();
                 telemetry.update();
             }
-
-            // check the status of the x button on gamepad1.
         }
     }
 
@@ -91,9 +88,6 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         }
         else if(g2.right_trigger > 0.0){
             robot.moveGlyphLift(-g2.right_trigger);
-        }
-        else if(g2.leftBumper() && g2.right_trigger > 0.25) {
-            robot.forceMoveGlyphLiftDown(-g2.right_trigger);
         }
         else {
             robot.moveGlyphLift(0.0);
