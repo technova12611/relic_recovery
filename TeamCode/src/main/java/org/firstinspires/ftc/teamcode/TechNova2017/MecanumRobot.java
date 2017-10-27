@@ -385,12 +385,12 @@ public class MecanumRobot {
         sleepInAuto(200);
 
         this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        this.glyphLift.setTargetPosition(600);
-
+        this.glyphLift.setTargetPosition(625);
         this.glyphLift.setPower(0.5);
 
-        while(this.glyphLift.isBusy()) {
+        ElapsedTime timer = new ElapsedTime();
+        // wait for 2 seconds, if not reached, move on anyway
+        while(busy(glyphLift) && timer.time(TimeUnit.SECONDS) < 2) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -412,7 +412,7 @@ public class MecanumRobot {
         this.glyphLift.setPower(0.5);
 
         ElapsedTime timer = new ElapsedTime();
-        while(this.glyphLift.isBusy() && timer.time(TimeUnit.MILLISECONDS) < 3000) {
+        while( busy(glyphLift) && timer.time(TimeUnit.SECONDS) < 3) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -625,7 +625,8 @@ public class MecanumRobot {
         }
     }
 
-    public static final int ENCODERS_CLOSE_ENOUGH = 10;
+    // 4 encoders, with 6 counts each
+    public static final int ENCODERS_CLOSE_ENOUGH = 25;
 
     /**
      * Check to see if robot should stop when using SET_TO_POSITION mode
@@ -647,7 +648,6 @@ public class MecanumRobot {
 
     public boolean driveMotorsBusy() {
         return busy(lf, lr, rf, rr);
-
     }
 
     /**
@@ -798,7 +798,7 @@ public class MecanumRobot {
         if(x1RangeSensor != null) {
             try {
                 double distance = x1RangeSensor.getDistance(DistanceUnit.CM);
-                if (distance < 250.0) {
+                if (distance < 225.0 && distance > 25.0) {
                     prevX1Distance = distance;
                 }
             }catch(Exception e) {
@@ -816,7 +816,7 @@ public class MecanumRobot {
         if(x2RangeSensor != null) {
             try {
                 double distance = x2RangeSensor.getDistance(DistanceUnit.CM);
-                if (distance < 250.0) {
+                if (distance < 225.0 && distance > 25.0) {
                     prevX2Distance = distance;
                 }
             }catch(Exception e) {
@@ -834,7 +834,7 @@ public class MecanumRobot {
         if(yRangeSensor != null) {
             try {
                 double distance = yRangeSensor.getDistance(DistanceUnit.CM);
-                if (distance < 250.0) {
+                if (distance < 225.0 && distance > 25.0) {
                     prevX1Distance = distance;
                 }
             }catch(Exception e) {
