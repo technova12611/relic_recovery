@@ -71,7 +71,8 @@ public class JewelPusher {
             waitForMS(200);
 
             telemetry.addData("Color: ", jewelColor.argb());
-            Log.i(this.getClass().getName(), "Red Color in Init:" + jewelColor.red() + "");
+            Log.i(this.getClass().getSimpleName(), "Color in Init (R,G, B):"
+                    + jewelColor.red() + ", " + jewelColor.green() + ", " + jewelColor.blue());
         }
     }
 
@@ -80,6 +81,8 @@ public class JewelPusher {
      *   servo.setPosition()
      */
     public void extend() throws InterruptedException {
+
+        Log.i(this.getClass().getSimpleName(), "Deploying jewel pusher arms ...");
 
         // set to the correct position (middle position)
         // then wait a bit
@@ -101,6 +104,8 @@ public class JewelPusher {
      * short arm should be still in folding position after pushing the jewel
      */
     public void retract() throws InterruptedException {
+
+        Log.i(this.getClass().getSimpleName(), "Retracting jewel pusher arms ...");
 
         // long arm up
         //--------------------------------------
@@ -156,9 +161,9 @@ public class JewelPusher {
 
         // red alliance, and red jewel detected,
         // then turn the right to push the blue
-        Log.i("JewelPusher", "JewelColor:" + jewelColor);
+        Log.i("TechNova: " + this.getClass().getSimpleName(), "JewelColor:" + jewelColor);
 
-        _telemetry.addData("JewelPusher", "JewelColor:" + jewelColor);
+        _telemetry.addData("JewelPusher", "JewelColor: " + jewelColor);
 
         if (this.alliance == AllianceColor.RED) {
             if(jewelColor == RED) {
@@ -203,7 +208,7 @@ public class JewelPusher {
 
         if(jewelColor != null) {
             String message = "Color: (" + jewelColor.red() + "|" + jewelColor.blue() + ") " + jewelColor.argb();
-            Log.i("Jewel color: ",  message);
+            Log.i("TechNova: " + this.getClass().getSimpleName() + ": Jewel color: ",  message);
             if(_telemetry != null) {
                 _telemetry.addData("Jewel Color:", message);
             }

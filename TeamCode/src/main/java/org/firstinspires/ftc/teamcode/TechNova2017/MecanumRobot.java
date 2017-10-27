@@ -626,7 +626,7 @@ public class MecanumRobot {
     }
 
     // 4 encoders, with 6 counts each
-    public static final int ENCODERS_CLOSE_ENOUGH = 25;
+    public static final int ENCODERS_CLOSE_ENOUGH = 15;
 
     /**
      * Check to see if robot should stop when using SET_TO_POSITION mode
@@ -760,7 +760,7 @@ public class MecanumRobot {
      * @param message
      */
     public void logInfo(Telemetry telemetry, String tag, String message) {
-        Log.i(this.getClass().getSimpleName(), tag + " | " + message);
+        Log.i("TechNova: " + this.getClass().getSimpleName(), tag + " | " + message);
 
         if(telemetry != null) {
             telemetry.addData(tag, message);
