@@ -154,15 +154,16 @@ public class JewelPusher {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
         Color jewelColor = getJewelColor();
+        Log.i("TechNova: " + this.getClass().getSimpleName(), "JewelColor:" + jewelColor);
 
-        while(timer.time() <2000 && jewelColor == UNKNOWN) {
+        while(timer.time() < 2000 && jewelColor == UNKNOWN) {
             jewelColor = getJewelColor();
+            waitForMS(100);
         }
 
         // red alliance, and red jewel detected,
         // then turn the right to push the blue
         Log.i("TechNova: " + this.getClass().getSimpleName(), "JewelColor:" + jewelColor);
-
         _telemetry.addData("JewelPusher", "JewelColor: " + jewelColor);
 
         if (this.alliance == AllianceColor.RED) {
