@@ -228,7 +228,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
 
                 case PLACE_GLYPH_INTO_CRYPTO:
                     logInfo(" --- Open Grabber --- ");
-                    robot.openGlyphGripperWider();
+                    robot.openGlyphGripperMidWide();
 
                     while(opModeIsActive() && timer.time() < 300)  {
                         sleep(100);
@@ -261,6 +261,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
 
                 case RESET_GLYPH_LIFT:
                     // move the glyph lift back to zero position
+                    robot.openGlyphGripperMidWide();
                     robot.resetGlyphLift();
                     gotoNextState();
                     break;
