@@ -217,6 +217,10 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
         Log.i("TechNova: " + this.getClass().getSimpleName(), tag + " | " + message);
     }
 
+    void logInfo(String message) {
+        Log.i("TechNova: " + this.getClass().getSimpleName(), message);
+    }
+
     protected double getXDistance() {
         return getAllianceColor() == AllianceColor.RED? robot.getX1Distance(): robot.getX2Distance();
     }
