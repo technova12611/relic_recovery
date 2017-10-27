@@ -9,6 +9,13 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
     private Controller g1, g2;
     private boolean debug_mode = false;
 
+    private int GLYPH_ARM_OPEN_POSITION_CLOSED   = 0;
+    private int GLYPH_ARM_OPEN_POSITION_OPEN     = 1;
+    private int GLYPH_ARM_OPEN_POSITION_MID_OPEN = 2;
+    private int GLYPH_ARM_OPEN_POSITION_WIDE_OPEN = 3;
+
+    private int glyphGrabberState = GLYPH_ARM_OPEN_POSITION_WIDE_OPEN;
+
     @Override
     public void runOpMode() {
 
@@ -54,15 +61,30 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // grab glyph (open and close servo)
         // ---------------------------------------
         if(g1.A() || g2.A()) {
-            robot.openGlyphGripper();
+            if(glyphGrabberState ==GLYPH_ARM_OPEN_POSITION_CLOSED ) {
+                glyphGrabberState = GLYPH_ARM_OPEN_POSITION_OPEN;
+                robot.openGlyphGripper();
+            }
+            else if(glyphGrabberState == GLYPH_ARM_OPEN_POSITION_WIDE_OPEN ||
+                    glyphGrabberState == GLYPH_ARM_OPEN_POSITION_OPEN ) {
+                glyphGrabberState = GLYPH_ARM_OPEN_POSITION_MID_OPEN;
+                robot.openGlyphGripperMidWide();
+            } else if(glyphGrabberState == GLYPH_ARM_OPEN_POSITION_MID_OPEN) {
+                glyphGrabberState = GLYPH_ARM_OPEN_POSITION_WIDE_OPEN;
+                robot.openGlyphGripperWider();
+            } else {
+                robot.openGlyphGripper();
+            }
         }
 
         if(g1.B() || g2.B()) {
+            glyphGrabberState = GLYPH_ARM_OPEN_POSITION_CLOSED;
             robot.closeGlyphGripper();
         }
 
         if((g1.A() && g1.leftBumper()) ||  (g2.A() && g2.leftBumper())) {
             robot.openGlyphGripperWider();
+            glyphGrabberState = GLYPH_ARM_OPEN_POSITION_WIDE_OPEN;
         }
 
         if(g2.XOnce()) {

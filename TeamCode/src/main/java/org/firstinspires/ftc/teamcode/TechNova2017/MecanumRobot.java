@@ -28,18 +28,22 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIV
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION;
 
@@ -320,6 +324,13 @@ public class MecanumRobot {
         openLowerGlyphGripperWider();
     }
 
+    public void openGlyphGripperMidWide() {
+        openUpperGlyphGripperMidWider();
+        openLowerGlyphGripperMidWider();
+    }
+
+    // open/close upper gripper
+    //---------------------------------------------------------------------
     public void openUpperGlyphGripper() {
         upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_OPEN_POSITION);
         upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION);
@@ -335,6 +346,13 @@ public class MecanumRobot {
         upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION);
     }
 
+    public void openUpperGlyphGripperMidWider() {
+        upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
+        upperLeftGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
+    }
+
+    // open/close lower gripper
+    //-------------------------------------------------------------------
     public void openLowerGlyphGripper() {
         lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_OPEN_POSITION);
         lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION);
@@ -348,6 +366,11 @@ public class MecanumRobot {
     public void openLowerGlyphGripperWider() {
         lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION);
         lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION);
+    }
+
+    public void openLowerGlyphGripperMidWider() {
+        lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
+        lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
     }
 
     public void pickupGlyphInAuto() {

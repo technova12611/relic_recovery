@@ -30,6 +30,11 @@ public class RobotInfo {
     public static double LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION = 0.56;
     public static double LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION = 0.29;
 
+    public static double UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION  = 0.65;
+    public static double UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.41;
+    public static double LOWER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION  = 0.41;
+    public static double LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.42;
+
     public static double UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.60;
     public static double UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.46;
     public static double LOWER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.46;
@@ -40,10 +45,10 @@ public class RobotInfo {
     public static double LOWER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.37;
     public static double LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.48;
 
-    public static double UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.77;
-    public static double UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.27;
-    public static double LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.29;
-    public static double LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.58;
+    public static double UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.79;
+    public static double UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.25;
+    public static double LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.27;
+    public static double LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.60;
 
     // Driver control motor speed
     //-------------------------------------------------------
