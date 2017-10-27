@@ -202,10 +202,11 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
      */
     void logStateInfo(AutoState state, String stage) {
         Log.i(this.getClass().getSimpleName(),
-                String.format("%.1f",getRuntime()*1000.0)
-                + " | " + timer.time(TimeUnit.MILLISECONDS)
+                getAllianceColor()
                 + " | State: " + state.toString()
                 + " | " + stage
+                + String.format("%.1f",getRuntime()*1000.0)
+                + " | " + timer.time(TimeUnit.MILLISECONDS)
                 + " | " + String.format("IMU: %.1f", robot.getHeadingAngle())
                 + " | " + String.format("(x1,x2, y): %.1f, %.1f, %.1f", robot.getX1Distance(), robot.getX2Distance(), robot.getYDistance())
                 + " | " + (vuMark != null? vuMark:"")
@@ -213,7 +214,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
     }
 
     void logInfo(String tag, String message) {
-        Log.i(this.getClass().getSimpleName(), tag + " | " + message);
+        Log.i("TechNova: " + this.getClass().getSimpleName(), tag + " | " + message);
     }
 
     protected double getXDistance() {

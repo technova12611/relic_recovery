@@ -48,6 +48,8 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
         // waiting for operator to press start button
         waitForStart();
 
+        this.resetStartTime();
+
         //-----------------------------------------------------------
         //   Auto Starts Here
         //-----------------------------------------------------------
@@ -225,7 +227,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
-                    robot.openLowerGlyphGripperWider();
+                    robot.openGlyphGripperWider();
 
                     while(opModeIsActive() && timer.time() < 1000)  {
                         sleep(100);
