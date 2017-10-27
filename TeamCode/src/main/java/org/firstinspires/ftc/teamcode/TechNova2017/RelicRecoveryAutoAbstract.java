@@ -204,12 +204,12 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
         Log.i(this.getClass().getSimpleName(),
                 getAllianceColor()
                 + " | State: " + state.toString()
-                + " | " + stage
-                + String.format("%.1f",getRuntime()*1000.0)
-                + " | " + timer.time(TimeUnit.MILLISECONDS)
-                + " | " + String.format("IMU: %.1f", robot.getHeadingAngle())
-                + " | " + String.format("(x1,x2, y): %.1f, %.1f, %.1f", robot.getX1Distance(), robot.getX2Distance(), robot.getYDistance())
-                + " | " + (vuMark != null? vuMark:"")
+                + " | \t" + stage
+                + " | \t" + String.format("%.1f",getRuntime()*1000.0)
+                + " | \t" + timer.time(TimeUnit.MILLISECONDS)
+                + " | \t" + String.format("IMU: %.1f", robot.getHeadingAngle())
+                + " | \t" + String.format("(x1,x2, y): %.1f, %.1f, %.1f", robot.getX1Distance(), robot.getX2Distance(), robot.getYDistance())
+                + " | \t" + (vuMark != null? vuMark:"")
                );
     }
 
