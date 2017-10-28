@@ -11,7 +11,7 @@ public class RobotInfo {
     public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.38;
 
     public static double JEWEL_PUSHER_SHORT_ARM_INITIAL_POSITION = 0.10;
-    public static double JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION = 0.53;
+    public static double JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION = 0.51;
 
     public static double JEWEL_PUSHER_SHORT_ARM_LEFT_PUSH_POSITION = 0.95;
     public static double JEWEL_PUSHER_SHORT_ARM_RIGHT_PUSH_POSITION = 0.05;
@@ -35,15 +35,15 @@ public class RobotInfo {
     public static double LOWER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION  = 0.41;
     public static double LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.42;
 
-    public static double UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.60;
-    public static double UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.46;
-    public static double LOWER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.46;
-    public static double LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.36;
+    public static double UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.62;
+    public static double UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.44;
+    public static double LOWER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.44;
+    public static double LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.38;
 
-    public static double UPPER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.71;
+    public static double UPPER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.72;
     public static double UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.35;
-    public static double LOWER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.37;
-    public static double LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.48;
+    public static double LOWER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.36;
+    public static double LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.49;
 
     public static double UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.79;
     public static double UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.25;

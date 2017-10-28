@@ -112,7 +112,9 @@ public class JewelPusher {
         longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
 
         // wait for half seconds
-        waitForMS(500);
+        waitForMS(100);
+
+        shortArm.setPosition(JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION);
     }
 
     /**
@@ -213,9 +215,9 @@ public class JewelPusher {
             if(_telemetry != null) {
                 _telemetry.addData("Jewel Color:", message);
             }
-            if(jewelColor.red() > 10 && jewelColor.red() - jewelColor.blue() >= 5) {
+            if(jewelColor.red() > 10 && jewelColor.red() - jewelColor.blue() > 5 &&jewelColor.argb() > 0) {
                 return RED;
-            } else if(jewelColor.blue() > 10 &&  jewelColor.blue() - jewelColor.red() >= 5) {
+            } else if(jewelColor.blue() > 10 &&  jewelColor.blue() - jewelColor.red() > 5) {
                 return BLUE;
             }
         }
