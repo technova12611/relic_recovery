@@ -50,7 +50,7 @@ public class DriveHelper {
                 scaleToDrive = 1.0;
             }
         }
-        else if(g.XOnce() || (g.leftBumper() && g.rightBumper())) {
+        else if(g.XOnce() || (g.leftBumperOnce() && g.rightBumperOnce())) {
             slowDrive = !slowDrive;
             if(slowDrive) {
                 scaleToDrive = LOW_MODE_SCALE_TO_DRIVE;
