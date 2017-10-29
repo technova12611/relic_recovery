@@ -408,11 +408,11 @@ public class MecanumRobot {
     public void resetGlyphLift() {
 
         this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        this.glyphLift.setTargetPosition(0);
+        this.glyphLift.setTargetPosition(-100);
         this.glyphLift.setPower(0.5);
 
         ElapsedTime timer = new ElapsedTime();
-        while( busy(glyphLift) && timer.time(TimeUnit.SECONDS) < 3) {
+        while( glyphLift.isBusy() && timer.time(TimeUnit.SECONDS) < 3) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

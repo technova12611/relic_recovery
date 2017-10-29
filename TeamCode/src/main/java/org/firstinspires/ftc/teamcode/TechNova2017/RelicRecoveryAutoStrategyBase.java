@@ -234,26 +234,16 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                         sleep(100);
                     }
 
-                    // the idea here is to use the grabber arms to push the glyph inside the column
-                    // even though the glyph might not place straight, with the push, it should
-                    // be
-                    logInfo(" --- Drive backwards --- ");
-                    driveBackwardInches(4.0, motorSpeed);
-
-                    logInfo(" --- Reset Glyph lift --- ");
-                    robot.resetGlyphLift();
-
-                    logInfo(" --- Close Grabber --- ");
-                    robot.closeGlyphGripper();
-
                     // move forward to push the glyph into the box
                     //
                     logInfo(" --- Drive forward to push --- ");
-                    driveForwardInches(8.0, motorSpeed);
+                    driveForwardInches(4.0, motorSpeed);
 
                     // move backward to separate robot from glyph
                     logInfo(" --- Drive backward to finish --- ");
-                    driveBackwardInches(4.0, motorSpeed);
+                    driveBackwardInches(6.0, motorSpeed);
+
+                    turn(90.0);
 
                     gotoNextState();
 
