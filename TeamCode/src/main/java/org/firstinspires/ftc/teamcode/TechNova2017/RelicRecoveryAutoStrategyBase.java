@@ -135,7 +135,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             // if this is BLUE Alliance
                             else {
                                 driveBackwardInches(35.5,motorSpeed);
-                            }
+                              }
                             break;
 
                         // need to place glyph into LEFT Crypto box
