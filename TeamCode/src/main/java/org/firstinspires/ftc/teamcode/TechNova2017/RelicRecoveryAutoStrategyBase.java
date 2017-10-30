@@ -119,23 +119,22 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveForwardInches(26.0, motorSpeed);
+                                driveForwardInches(27.5, motorSpeed);
                             }
                             // if this is BLUE Alliance
                             else {
                                 driveBackwardInches(43.0, motorSpeed);
                             }
                             break;
-
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveForwardInches(34.8, motorSpeed);
+                                driveForwardInches(35.0, motorSpeed);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(35.0,motorSpeed);
+                                driveBackwardInches(35.5,motorSpeed);
                             }
                             break;
 
@@ -147,7 +146,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(27.0, motorSpeed);
+                                driveBackwardInches(27.5, motorSpeed);
                             }
                             break;
 
@@ -159,7 +158,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(36.0, motorSpeed);
+                                driveBackwardInches(35.5, motorSpeed);
                             }
                             break;
                     }
