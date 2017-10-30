@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.TechNova2017;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "Relic Recovery TeleOps", group = "Mecanum")
 @Disabled
@@ -15,7 +14,7 @@ public class MecanumTeleop extends OpMode {
 
     @Override
     public void init() {
-        robot = new MecanumRobot(hardwareMap, telemetry, null);
+        robot = new MecanumRobot(null, hardwareMap, telemetry, null);
 
         g1 = new Controller(gamepad1);
         g2 = new Controller(gamepad2);

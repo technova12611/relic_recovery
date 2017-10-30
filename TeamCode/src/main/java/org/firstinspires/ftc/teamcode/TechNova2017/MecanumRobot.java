@@ -5,6 +5,7 @@ import android.util.Log;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -63,8 +64,6 @@ public class MecanumRobot {
     private Servo upperLeftGripper, upperRightGripper, lowerLeftGripper, lowerRightGripper;;
     private DcMotor glyphLift;
 
-    private JewelPusher pusher;
-
     private Telemetry telemetry;
 
     private BNO055IMU imu;
@@ -79,6 +78,8 @@ public class MecanumRobot {
     private double prevX1Distance = 0.0;
     private double prevX2Distance = 0.0;
     private double prevYDistance = 0.0;
+
+    private LinearOpMode linearOpMode;
 
     // Encoder Driving
     // Assuming 4" wheels
@@ -97,8 +98,9 @@ public class MecanumRobot {
      * @param hardwareMap
      * @param _telemetry
      */
-    public MecanumRobot(HardwareMap hardwareMap, Telemetry _telemetry, AllianceColor allianceColor) {
-        telemetry = _telemetry;
+    public MecanumRobot(LinearOpMode opMode, HardwareMap hardwareMap, Telemetry _telemetry, AllianceColor allianceColor) {
+        this.linearOpMode = opMode;
+        this.telemetry = _telemetry;
 
         initMotors(hardwareMap);
 
@@ -390,7 +392,8 @@ public class MecanumRobot {
 
         ElapsedTime timer = new ElapsedTime();
         // wait for 2 seconds, if not reached, move on anyway
-        while(busy(glyphLift) && timer.time(TimeUnit.SECONDS) < 2) {
+        while(busy(glyphLift) && timer.time(TimeUnit.SECONDS) < 2 &&
+                this.linearOpMode != null && this.linearOpMode.opModeIsActive()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -412,7 +415,8 @@ public class MecanumRobot {
         this.glyphLift.setPower(0.5);
 
         ElapsedTime timer = new ElapsedTime();
-        while( glyphLift.isBusy() && timer.time(TimeUnit.SECONDS) < 3) {
+        while( glyphLift.isBusy() && timer.time(TimeUnit.SECONDS) < 3
+                && this.linearOpMode != null && this.linearOpMode.opModeIsActive()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -432,7 +436,8 @@ public class MecanumRobot {
     private void sleepInAuto(long milliSeconds) {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
-        while(timer.time() < milliSeconds) {
+        while(this.linearOpMode != null && this.linearOpMode.opModeIsActive()
+                && timer.time() < milliSeconds) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {

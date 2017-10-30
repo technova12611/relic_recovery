@@ -32,7 +32,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
 
         telemetry.addData("Robot:", "Initializing ....");
 
-        robot = new MecanumRobot(hardwareMap, telemetry, getAllianceColor());
+        robot = new MecanumRobot(this,hardwareMap, telemetry, getAllianceColor());
 
         // VuMark is auto only, set up Vuforia and camera
         //-------------------------------------------------------

@@ -19,7 +19,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        robot = new MecanumRobot(hardwareMap, telemetry, null);
+        robot = new MecanumRobot(this,hardwareMap, telemetry, null);
 
         g1 = new Controller(gamepad1);
         g2 = new Controller(gamepad2);
