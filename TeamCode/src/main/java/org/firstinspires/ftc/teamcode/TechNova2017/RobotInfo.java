@@ -45,10 +45,10 @@ public class RobotInfo {
     public static double LOWER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.36;
     public static double LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.49;
 
-    public static double UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.79;
-    public static double UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.25;
-    public static double LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.27;
-    public static double LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.60;
+    public static double UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.82;
+    public static double UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.22;
+    public static double LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.24;
+    public static double LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.63;
 
     // Driver control motor speed
     //-------------------------------------------------------

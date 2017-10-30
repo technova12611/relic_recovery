@@ -385,7 +385,7 @@ public class MecanumRobot {
         sleepInAuto(200);
 
         this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        this.glyphLift.setTargetPosition(625);
+        this.glyphLift.setTargetPosition(725);
         this.glyphLift.setPower(0.5);
 
         ElapsedTime timer = new ElapsedTime();
