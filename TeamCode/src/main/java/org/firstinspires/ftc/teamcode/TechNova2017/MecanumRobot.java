@@ -26,6 +26,9 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIVE_POWER;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_CLOSE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION;
@@ -61,7 +64,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_
  */
 public class MecanumRobot {
     private DcMotor lf, lr, rf, rr;
-    private Servo upperLeftGripper, upperRightGripper, lowerLeftGripper, lowerRightGripper;;
+    private Servo upperLeftGripper, upperRightGripper, lowerLeftGripper, lowerRightGripper, glyphHolder;
     private DcMotor glyphLift;
 
     private Telemetry telemetry;
@@ -124,6 +127,13 @@ public class MecanumRobot {
 
         lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION);
         lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION);
+
+        try {
+            glyphHolder = hardwareMap.servo.get("glyphHolder");
+            glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init glyph holder", e.getMessage());
+        }
 
         glyphLift = hardwareMap.dcMotor.get("glyphLift");
         glyphLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -336,16 +346,19 @@ public class MecanumRobot {
     public void openUpperGlyphGripper() {
         upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_OPEN_POSITION);
         upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION);
+        glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
     }
 
     public void closeUpperGlyphGripper() {
         upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION);
         upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION);
+        glyphHolder.setPosition(GLYPH_TOP_HOLDER_CLOSE_POSITION);
     }
 
     public void openUpperGlyphGripperWider() {
         upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION);
         upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION);
+        glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
     }
 
     public void openUpperGlyphGripperMidWider() {

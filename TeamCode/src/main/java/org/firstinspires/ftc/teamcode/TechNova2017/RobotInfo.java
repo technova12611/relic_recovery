@@ -50,6 +50,10 @@ public class RobotInfo {
     public static double LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.24;
     public static double LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.63;
 
+    public static double  GLYPH_TOP_HOLDER_INITIAL_POSITION = 0.20;
+    public static double  GLYPH_TOP_HOLDER_OPEN_POSITION = 0.80;
+    public static double  GLYPH_TOP_HOLDER_CLOSE_POSITION = 0.40;
+
     // Driver control motor speed
     //-------------------------------------------------------
     public static double ENCODER_DRIVE_POWER = 0.40;
