@@ -1,11 +1,6 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.view.View;
-
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -13,8 +8,6 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-
-import java.util.Locale;
 
 @TeleOp(name = "Sensor Test", group = "Sensor")
 public class SensorTest extends LinearOpMode {
@@ -32,9 +25,12 @@ public class SensorTest extends LinearOpMode {
 
         // get a reference to the distance sensor that shares the same name.
         sensorDistance = hardwareMap.get(DistanceSensor.class, "jewelColor");
-        xRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
-        //yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+        try {
+            xRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
+            //yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+        }catch(Exception e) {
 
+        }
         VuMarkVision vuMarkVision = new VuMarkVision(hardwareMap, telemetry);
 
         // wait for the start button to be pressed.
@@ -52,7 +48,7 @@ public class SensorTest extends LinearOpMode {
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
             telemetry.addData("(x,y): ", "(%.2f, 0)",
-                    xRangeSensor.getDistance(DistanceUnit.CM));
+                    xRangeSensor!= null? xRangeSensor.getDistance(DistanceUnit.CM):0.0);
 //            telemetry.addData("(x1,x2): ", "(%.2f, %.2f)",
 //                    xRangeSensor.getDistance(DistanceUnit.CM), yRangeSensor.getDistance(DistanceUnit.CM));
 
