@@ -63,8 +63,10 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_
  *   5. Jewel Pusher (2 servos and one color)
  */
 public class MecanumRobot {
-    private DcMotor lf, lr, rf, rr;
-    private Servo upperLeftGripper, upperRightGripper, lowerLeftGripper, lowerRightGripper, glyphHolder;
+    private DcMotor lf, lr, rf, rr, led;
+    private Servo upperLeftGripper, upperRightGripper,
+            lowerLeftGripper, lowerRightGripper, glyphHolder;
+            ;
     private DcMotor glyphLift;
 
     private Telemetry telemetry;
@@ -133,6 +135,14 @@ public class MecanumRobot {
             glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
         } catch(Exception e) {
             logInfo(this.telemetry, "Init glyph holder", e.getMessage());
+        }
+
+        try {
+            led = hardwareMap.dcMotor.get("led");
+            led.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Led power control failed.", e.getMessage());
         }
 
         glyphLift = hardwareMap.dcMotor.get("glyphLift");
@@ -869,6 +879,18 @@ public class MecanumRobot {
 
     public int getGlyphLiftPosition() {
         return this.glyphLift.getCurrentPosition();
+    }
+
+    public void turnOnBlueLed() {
+        if(led != null) {
+            led.setPower(-0.90);
+        }
+    }
+
+    public void turnOffBlueLed() {
+        if(led != null) {
+            led.setPower(0.0);
+        }
     }
 }
 

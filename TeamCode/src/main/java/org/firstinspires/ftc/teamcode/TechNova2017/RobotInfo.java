@@ -7,7 +7,7 @@ public class RobotInfo {
     //-------------------------------------------------------------------
     public static double JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION = 0.90;
 
-    public static double JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION = 0.83;
+    public static double JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION = 0.95;
     public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.38;
 
     public static double JEWEL_PUSHER_SHORT_ARM_INITIAL_POSITION = 0.10;
@@ -50,9 +50,9 @@ public class RobotInfo {
     public static double LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.24;
     public static double LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.63;
 
-    public static double  GLYPH_TOP_HOLDER_INITIAL_POSITION = 0.90;
+    public static double  GLYPH_TOP_HOLDER_INITIAL_POSITION = 1.0;
     public static double  GLYPH_TOP_HOLDER_OPEN_POSITION = 0.20;
-    public static double  GLYPH_TOP_HOLDER_CLOSE_POSITION = 0.70;
+    public static double  GLYPH_TOP_HOLDER_CLOSE_POSITION = 0.88;
 
     // Driver control motor speed
     //-------------------------------------------------------
