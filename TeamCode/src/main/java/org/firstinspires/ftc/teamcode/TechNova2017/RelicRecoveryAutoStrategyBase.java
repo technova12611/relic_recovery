@@ -265,6 +265,10 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
             if(detectVuMark && vuMark == RelicRecoveryVuMark.UNKNOWN) {
                 vuMark = vuMarkVision.detect(telemetry);
             }
+
+            if(vuMark != RelicRecoveryVuMark.UNKNOWN) {
+                robot.turnOffBlueLed();
+            }
         }
 
         robot.onStop();

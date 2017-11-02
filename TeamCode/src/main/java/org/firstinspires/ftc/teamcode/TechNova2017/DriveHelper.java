@@ -103,6 +103,12 @@ public class DriveHelper {
             theta %= 2*Math.PI;
         }
         robot.drive(theta, v_theta, v_rotation);
+
+        if(slowDrive) {
+            robot.turnOnBlueLed();
+        } else {
+            robot.turnOffBlueLed();
+        }
     }
 
     public static void logInfo(Telemetry telemetry, String tag, String message) {
