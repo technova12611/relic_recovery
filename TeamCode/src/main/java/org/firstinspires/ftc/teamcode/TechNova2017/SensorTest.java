@@ -20,6 +20,8 @@ public class SensorTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
+        MecanumRobot robot = new MecanumRobot(this, hardwareMap, telemetry, null);
+
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, "jewelColor");
 
@@ -54,6 +56,9 @@ public class SensorTest extends LinearOpMode {
 
             if(vuMark == RelicRecoveryVuMark.UNKNOWN) {
                 vuMark = vuMarkVision.detect(null);
+                robot.turnOffBlueLed();
+            } else {
+                robot.turnOnBlueLed();
             }
 
             String message =String.format("%s visible", vuMark);
@@ -61,7 +66,11 @@ public class SensorTest extends LinearOpMode {
 
             telemetry.update();
 
-            sleep(100);
+            if(gamepad1.left_stick_y > 0.5) {
+                robot.turnOnBlueLed();
+            } else if(gamepad1.left_stick_y < -0.5) {
+                robot.turnOffBlueLed();
+            }
         }
     }
 }
