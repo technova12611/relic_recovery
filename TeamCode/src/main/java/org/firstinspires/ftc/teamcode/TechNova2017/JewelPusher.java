@@ -215,9 +215,9 @@ public class JewelPusher {
             if(_telemetry != null) {
                 _telemetry.addData("Jewel Color:", message);
             }
-            if(jewelColor.red() > 10 && jewelColor.red() - jewelColor.blue() > 5 &&jewelColor.argb() > 0) {
+            if(jewelColor.red() > 10 && (jewelColor.red() - jewelColor.blue() > 8) && jewelColor.argb() > 0) {
                 return RED;
-            } else if(jewelColor.blue() > 10 &&  jewelColor.blue() - jewelColor.red() > 5) {
+            } else if(jewelColor.blue() > 10 &&  (jewelColor.blue() - jewelColor.red() > 8) && jewelColor.argb() > 0) {
                 return BLUE;
             }
         }
