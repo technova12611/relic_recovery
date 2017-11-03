@@ -267,7 +267,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
             }
 
             if(vuMark != RelicRecoveryVuMark.UNKNOWN) {
-                robot.turnOffBlueLed();
+                robot.turnOnBlueLed();
             }
         }
 
