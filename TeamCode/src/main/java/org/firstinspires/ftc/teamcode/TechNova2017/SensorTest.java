@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
+import android.util.Log;
+
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
@@ -16,6 +19,8 @@ public class SensorTest extends LinearOpMode {
 
     ModernRoboticsI2cRangeSensor xRangeSensor;
     ModernRoboticsI2cRangeSensor yRangeSensor;
+
+    AnalogInput rangeSensor;
 
     @Override
     public void runOpMode() {
@@ -31,8 +36,15 @@ public class SensorTest extends LinearOpMode {
             xRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
             //yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
         }catch(Exception e) {
-
         }
+
+        double maxVoltage = 0.0;
+        try {
+            rangeSensor = hardwareMap.analogInput.get("range");
+            maxVoltage= rangeSensor.getMaxVoltage();
+        }catch(Exception e) {
+        }
+
         VuMarkVision vuMarkVision = new VuMarkVision(hardwareMap, telemetry);
 
         // wait for the start button to be pressed.
@@ -51,6 +63,14 @@ public class SensorTest extends LinearOpMode {
             telemetry.addData("Blue ", sensorColor.blue());
             telemetry.addData("(x,y): ", "(%.2f, 0)",
                     xRangeSensor!= null? xRangeSensor.getDistance(DistanceUnit.CM):0.0);
+
+            if(rangeSensor != null) {
+                telemetry.addData("Max Vol: ", "%.2f", maxVoltage);
+                telemetry.addData("Range Vol: ", "%.5f", rangeSensor.getVoltage());
+
+                Log.i("Range Sensor", String.format("%.5f",rangeSensor.getVoltage() ));
+                sleep(100);
+            }
 //            telemetry.addData("(x1,x2): ", "(%.2f, %.2f)",
 //                    xRangeSensor.getDistance(DistanceUnit.CM), yRangeSensor.getDistance(DistanceUnit.CM));
 

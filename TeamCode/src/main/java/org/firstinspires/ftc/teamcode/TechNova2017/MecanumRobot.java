@@ -7,6 +7,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -86,6 +87,9 @@ public class MecanumRobot {
 
     private LinearOpMode linearOpMode;
 
+    private AnalogInput rangeSensor;
+    double maxRangeVol = 0.0;
+
     // Encoder Driving
     // Assuming 4" wheels
     private static final double TICKS_PER_INCH = 1120 * (24./32.) / (Math.PI * 4.0);
@@ -112,6 +116,13 @@ public class MecanumRobot {
         if(allianceColor != null) {
             initGyro(hardwareMap);
             initRangeSensor(hardwareMap, allianceColor);
+
+            try {
+                rangeSensor = hardwareMap.analogInput.get("range");
+                maxRangeVol= rangeSensor.getMaxVoltage();
+            }catch(Exception e) {
+            }
+
         } else {
             Servo longArm = hardwareMap.servo.get("longArm");
             // make sure long arm is in the up right position
@@ -891,6 +902,14 @@ public class MecanumRobot {
         if(led != null) {
             led.setPower(0.0);
         }
+    }
+
+    public double getRangeSensorVol() {
+        if(rangeSensor != null) {
+            return rangeSensor.getVoltage();
+        }
+
+        return 0.0;
     }
 }
 
