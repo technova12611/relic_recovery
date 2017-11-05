@@ -185,7 +185,8 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     // need more testing on each position
                     // use the ultra_sonic sensor to align robot to the right cryto column
                     //----------------------------------------------------------------------
-                    double xDistance = robot.getX1Distance();
+                    sleep(1000);
+                    double xDistance = robot.getRangeSensorVol();
 
                     // within 1 cm is fine
                     // need more testing
@@ -215,7 +216,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             break;
                     }
 
-                    double avgXDistance = measureXDistance(500);
+                    double avgXDistance = measureXDistance(1000);
                     logInfo("X range:",vuMark + " | " + String.format("%.2f cm", avgXDistance));
 
                     if(targetDistance > 0.0) {
