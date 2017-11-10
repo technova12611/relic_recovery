@@ -156,8 +156,6 @@ public class JewelPusher {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
         Color jewelColor = getJewelColor();
-        Log.i("TechNova: " + this.getClass().getSimpleName(), "JewelColor:" + jewelColor);
-
         while(timer.time() < 2000 && jewelColor == UNKNOWN) {
             jewelColor = getJewelColor();
             waitForMS(100);
@@ -210,10 +208,10 @@ public class JewelPusher {
     protected Color getJewelColor() {
 
         if(jewelColor != null) {
-            String message = "Color: (" + jewelColor.red() + "|" + jewelColor.blue() + ") " + jewelColor.argb();
-            Log.i("TechNova: " + this.getClass().getSimpleName() + ": Jewel color: ",  message);
+            String message = "Jewel Color: (" + jewelColor.red() + "|" + jewelColor.blue() + ") " + jewelColor.argb();
+            Log.i("TechNova:" + this.getClass().getSimpleName(),  message);
             if(_telemetry != null) {
-                _telemetry.addData("Jewel Color:", message);
+                _telemetry.addData("Jewel Pusher:", message);
             }
             if(jewelColor.red() > 10 && (jewelColor.red() - jewelColor.blue() > 8) && jewelColor.argb() > 0) {
                 return RED;
