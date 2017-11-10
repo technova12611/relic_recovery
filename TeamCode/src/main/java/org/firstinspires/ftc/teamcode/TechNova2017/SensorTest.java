@@ -34,7 +34,7 @@ public class SensorTest extends LinearOpMode {
         sensorDistance = hardwareMap.get(DistanceSensor.class, "jewelColor");
         try {
             xRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
-            //yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+            yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
         }catch(Exception e) {
         }
 
@@ -61,8 +61,6 @@ public class SensorTest extends LinearOpMode {
             telemetry.addData("Red  ", sensorColor.red());
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
-            telemetry.addData("(x,y): ", "(%.2f, 0)",
-                    xRangeSensor!= null? xRangeSensor.getDistance(DistanceUnit.CM):0.0);
 
             if(rangeSensor != null) {
                 telemetry.addData("Max Vol: ", "%.2f", maxVoltage);
@@ -71,8 +69,11 @@ public class SensorTest extends LinearOpMode {
                 Log.i("Range Sensor", String.format("%.5f",rangeSensor.getVoltage() ));
                 sleep(100);
             }
-//            telemetry.addData("(x1,x2): ", "(%.2f, %.2f)",
-//                    xRangeSensor.getDistance(DistanceUnit.CM), yRangeSensor.getDistance(DistanceUnit.CM));
+
+
+            telemetry.addData("(x1,x2): ", "(%.2f, %.2f)",
+                    xRangeSensor!= null?xRangeSensor.getDistance(DistanceUnit.CM):0.0,
+                    yRangeSensor != null?yRangeSensor.getDistance(DistanceUnit.CM):0.0);
 
             if(vuMark == RelicRecoveryVuMark.UNKNOWN) {
                 vuMark = vuMarkVision.detect(null);
