@@ -210,7 +210,7 @@ public class MecanumRobot {
             if(alliance == AllianceColor.RED) {
                 x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
             } else {
-                //x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+                x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
             }
             //yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "yRange");
         }
