@@ -132,7 +132,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(18.0, motorSpeed);
+                            driveRightInches(19.5, motorSpeed);
                             break;
 
                         // need to place glyph into CENTER Crypto box
@@ -144,7 +144,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveRightInches(6.0, motorSpeed);
+                            driveRightInches(4.0, motorSpeed);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
