@@ -130,11 +130,11 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                         // -------------------------------------------------
                         case CENTER:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveForwardInches(35.0, motorSpeed);
+                                driveForwardInches(36.0, motorSpeed);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(35.5,motorSpeed);
+                                driveBackwardInches(36.5,motorSpeed);
                               }
                             break;
 
@@ -142,11 +142,11 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                         // -------------------------------------------------
                         case LEFT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveForwardInches(42.0, motorSpeed);
+                                driveForwardInches(43.0, motorSpeed);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(27.5, motorSpeed);
+                                driveBackwardInches(28.5, motorSpeed);
                             }
                             break;
 
@@ -158,7 +158,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(35.5, motorSpeed);
+                                driveBackwardInches(36.5, motorSpeed);
                             }
                             break;
                     }

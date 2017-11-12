@@ -114,7 +114,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                     break;
 
                 case BACKWARD_3_FEET:
-                    driveBackwardInches(36.0, motorSpeed);
+                    driveBackwardInches(34.0, motorSpeed);
                     gotoNextState();
                     break;
 
