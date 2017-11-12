@@ -41,6 +41,8 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_RELEASE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_OPEN_POSITION;
@@ -72,7 +74,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_
 public class MecanumRobot {
     private DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider;
     private Servo upperLeftGripper, upperRightGripper,
-            lowerLeftGripper, lowerRightGripper, glyphHolder, relicClaw, relicElbow;
+            lowerLeftGripper, lowerRightGripper, glyphHolder, relicClaw, relicElbow, relicClawholder;
 
     private Telemetry telemetry;
 
@@ -182,6 +184,12 @@ public class MecanumRobot {
             logInfo(this.telemetry, "Init relic claw", e.getMessage());
         }
 
+        try {
+            relicClawholder = hardwareMap.servo.get("relicClawholder");
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init relic clawholder", e.getMessage());
+        }
         telemetry.addData("Robot initialized", "Ready to go...");
     }
 
@@ -965,6 +973,12 @@ public class MecanumRobot {
     public void setRelicElbowPosition(double position) {
         if(relicElbow != null) {
             relicElbow.setPosition(position);
+        }
+    }
+
+    public void releaseClaw() {
+        if (relicClawholder != null) {
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION);
         }
     }
 }
