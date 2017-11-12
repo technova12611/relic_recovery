@@ -130,11 +130,11 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                         // -------------------------------------------------
                         case CENTER:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveForwardInches(35.0, motorSpeed);
+                                driveForwardInches(36.0, motorSpeed);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(35.5,motorSpeed);
+                                driveBackwardInches(36.5,motorSpeed);
                               }
                             break;
 
@@ -142,11 +142,11 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                         // -------------------------------------------------
                         case LEFT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveForwardInches(42.0, motorSpeed);
+                                driveForwardInches(43.0, motorSpeed);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(27.5, motorSpeed);
+                                driveBackwardInches(28.5, motorSpeed);
                             }
                             break;
 
@@ -158,7 +158,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(35.5, motorSpeed);
+                                driveBackwardInches(36.5, motorSpeed);
                             }
                             break;
                     }
@@ -185,7 +185,8 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     // need more testing on each position
                     // use the ultra_sonic sensor to align robot to the right cryto column
                     //----------------------------------------------------------------------
-                    double xDistance = robot.getX1Distance();
+                    sleep(1000);
+                    double xDistance = robot.getRangeSensorVol();
 
                     // within 1 cm is fine
                     // need more testing
@@ -215,7 +216,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             break;
                     }
 
-                    double avgXDistance = measureXDistance(500);
+                    double avgXDistance = measureXDistance(1000);
                     logInfo("X range:",vuMark + " | " + String.format("%.2f cm", avgXDistance));
 
                     if(targetDistance > 0.0) {

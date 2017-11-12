@@ -3,11 +3,15 @@ package org.firstinspires.ftc.teamcode.TechNova2017;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
+
 @TeleOp(name = "Relic Recovery TeleOps (Linear)", group = "Competition")
 public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
     private MecanumRobot robot = null;
     private Controller g1, g2;
     private boolean debug_mode = false;
+
+    private double relicElbowPosition = RELIC_ELBOW_INITIAL_POSITION;
 
     private int GLYPH_ARM_OPEN_POSITION_CLOSED   = 0;
     private int GLYPH_ARM_OPEN_POSITION_OPEN     = 1;
@@ -103,6 +107,39 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         }
         else {
             robot.moveGlyphLift(0.0);
+        }
+
+        if(Math.abs(g2.left_stick_y)>0) {
+            robot.moveRelicSlider(-1.0*g2.left_stick_y);
+        } else {
+            robot.moveRelicSlider(0.0);
+        }
+
+        if(g2.dpadUp()) {
+            robot.raiseRelicOverTheWall();
+        } else if(g2.dpadDown()) {
+            robot.prepareRelicLanding();
+        }
+        if(g2.dpadLeft()) {
+            robot.releaseRelic();
+        } else if(g2.dpadRight()) {
+            robot.grabRelic();
+        }
+
+        if(g2.right_stick_y <0) {
+            relicElbowPosition += 0.03;
+            robot.setRelicElbowPosition(relicElbowPosition);
+            sleep(100);
+        }
+
+        if(g2.right_stick_y >0) {
+            relicElbowPosition -= 0.03;
+            robot.setRelicElbowPosition(relicElbowPosition);
+            sleep(100);
+        }
+
+        if (g2.rightBumper()) {
+            robot.releaseClaw();
         }
     }
 }

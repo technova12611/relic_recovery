@@ -7,6 +7,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -40,6 +41,14 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_RELEASE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_CLOSE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_OPEN_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_FLAT_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_UP_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
@@ -63,11 +72,9 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_
  *   5. Jewel Pusher (2 servos and one color)
  */
 public class MecanumRobot {
-    private DcMotor lf, lr, rf, rr, led;
+    private DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider;
     private Servo upperLeftGripper, upperRightGripper,
-            lowerLeftGripper, lowerRightGripper, glyphHolder;
-            ;
-    private DcMotor glyphLift;
+            lowerLeftGripper, lowerRightGripper, glyphHolder, relicClaw, relicElbow, relicClawholder;
 
     private Telemetry telemetry;
 
@@ -85,6 +92,9 @@ public class MecanumRobot {
     private double prevYDistance = 0.0;
 
     private LinearOpMode linearOpMode;
+
+    private AnalogInput rangeSensor;
+    double maxRangeVol = 0.0;
 
     // Encoder Driving
     // Assuming 4" wheels
@@ -112,6 +122,13 @@ public class MecanumRobot {
         if(allianceColor != null) {
             initGyro(hardwareMap);
             initRangeSensor(hardwareMap, allianceColor);
+
+            try {
+                rangeSensor = hardwareMap.analogInput.get("range");
+                maxRangeVol= rangeSensor.getMaxVoltage();
+            }catch(Exception e) {
+            }
+
         } else {
             Servo longArm = hardwareMap.servo.get("longArm");
             // make sure long arm is in the up right position
@@ -149,6 +166,30 @@ public class MecanumRobot {
         glyphLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         glyphLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        relicSlider = hardwareMap.dcMotor.get("relicSlider");
+        relicSlider.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        relicSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        try {
+            relicClaw = hardwareMap.servo.get("relicClaw");
+            relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init relic claw", e.getMessage());
+        }
+
+        try {
+            relicElbow = hardwareMap.servo.get("relicElbow");
+            relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init relic claw", e.getMessage());
+        }
+
+        try {
+            relicClawholder = hardwareMap.servo.get("relicClawholder");
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init relic clawholder", e.getMessage());
+        }
         telemetry.addData("Robot initialized", "Ready to go...");
     }
 
@@ -199,7 +240,7 @@ public class MecanumRobot {
             if(alliance == AllianceColor.RED) {
                 x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
             } else {
-                //x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+                x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
             }
             //yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "yRange");
         }
@@ -890,6 +931,54 @@ public class MecanumRobot {
     public void turnOffBlueLed() {
         if(led != null) {
             led.setPower(0.0);
+        }
+    }
+
+    public double getRangeSensorVol() {
+        if(rangeSensor != null) {
+            return rangeSensor.getVoltage();
+        }
+
+        return 0.0;
+    }
+
+    public void moveRelicSlider(double power) {
+        relicSlider.setPower(Range.clip(power, -0.30, 1.0));
+    }
+
+    public void grabRelic() {
+        if(relicClaw != null) {
+            relicClaw.setPosition(RELIC_CLAW_CLOSE_POSITION);
+        }
+    }
+
+    public void releaseRelic() {
+        if(relicClaw != null) {
+            relicClaw.setPosition(RELIC_CLAW_OPEN_POSITION);
+        }
+    }
+
+    public void raiseRelicOverTheWall () {
+        if(relicElbow != null) {
+            relicElbow.setPosition(RELIC_ELBOW_UP_POSITION);
+        }
+    }
+
+    public void prepareRelicLanding () {
+        if(relicElbow != null) {
+            relicElbow.setPosition(RELIC_ELBOW_FLAT_POSITION);
+        }
+    }
+
+    public void setRelicElbowPosition(double position) {
+        if(relicElbow != null) {
+            relicElbow.setPosition(position);
+        }
+    }
+
+    public void releaseClaw() {
+        if (relicClawholder != null) {
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION);
         }
     }
 }
