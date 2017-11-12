@@ -137,5 +137,9 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             robot.setRelicElbowPosition(relicElbowPosition);
             sleep(100);
         }
+
+        if (g2.rightBumper()) {
+            robot.releaseClaw();
+        }
     }
 }
