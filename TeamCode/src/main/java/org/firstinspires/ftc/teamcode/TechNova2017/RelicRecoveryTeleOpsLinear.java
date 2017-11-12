@@ -138,8 +138,13 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             sleep(100);
         }
 
+<<<<<<< Updated upstream
         if (g2.rightBumper()) {
             robot.releaseClaw();
         }
+=======
+
+
+>>>>>>> Stashed changes
     }
 }
