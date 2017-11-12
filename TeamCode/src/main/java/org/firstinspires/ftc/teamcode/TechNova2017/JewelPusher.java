@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import static org.firstinspires.ftc.teamcode.TechNova2017.JewelPusher.Color.BLUE;
 import static org.firstinspires.ftc.teamcode.TechNova2017.JewelPusher.Color.RED;
 import static org.firstinspires.ftc.teamcode.TechNova2017.JewelPusher.Color.UNKNOWN;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_TARGET_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION;
@@ -83,6 +84,12 @@ public class JewelPusher {
     public void extend() throws InterruptedException {
 
         Log.i(this.getClass().getSimpleName(), "Deploying jewel pusher arms ...");
+
+        // long arm down
+        //--------------------------------------
+        longArm.setPosition(JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION);
+
+        waitForMS(750);
 
         // set to the correct position (middle position)
         // then wait a bit
