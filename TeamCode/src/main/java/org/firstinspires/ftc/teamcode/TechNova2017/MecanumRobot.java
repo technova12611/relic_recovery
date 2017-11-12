@@ -41,6 +41,12 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_CLOSE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_OPEN_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_FLAT_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_UP_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
@@ -64,11 +70,9 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_
  *   5. Jewel Pusher (2 servos and one color)
  */
 public class MecanumRobot {
-    private DcMotor lf, lr, rf, rr, led;
+    private DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider;
     private Servo upperLeftGripper, upperRightGripper,
-            lowerLeftGripper, lowerRightGripper, glyphHolder;
-            ;
-    private DcMotor glyphLift;
+            lowerLeftGripper, lowerRightGripper, glyphHolder, relicClaw, relicElbow;
 
     private Telemetry telemetry;
 
@@ -159,6 +163,24 @@ public class MecanumRobot {
         glyphLift = hardwareMap.dcMotor.get("glyphLift");
         glyphLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         glyphLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        relicSlider = hardwareMap.dcMotor.get("relicSlider");
+        relicSlider.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        relicSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        try {
+            relicClaw = hardwareMap.servo.get("relicClaw");
+            relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init relic claw", e.getMessage());
+        }
+
+        try {
+            relicElbow = hardwareMap.servo.get("relicElbow");
+            relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init relic claw", e.getMessage());
+        }
 
         telemetry.addData("Robot initialized", "Ready to go...");
     }
@@ -910,6 +932,40 @@ public class MecanumRobot {
         }
 
         return 0.0;
+    }
+
+    public void moveRelicSlider(double power) {
+        relicSlider.setPower(Range.clip(power, -0.30, 1.0));
+    }
+
+    public void grabRelic() {
+        if(relicClaw != null) {
+            relicClaw.setPosition(RELIC_CLAW_CLOSE_POSITION);
+        }
+    }
+
+    public void releaseRelic() {
+        if(relicClaw != null) {
+            relicClaw.setPosition(RELIC_CLAW_OPEN_POSITION);
+        }
+    }
+
+    public void raiseRelicOverTheWall () {
+        if(relicElbow != null) {
+            relicElbow.setPosition(RELIC_ELBOW_UP_POSITION);
+        }
+    }
+
+    public void prepareRelicLanding () {
+        if(relicElbow != null) {
+            relicElbow.setPosition(RELIC_ELBOW_FLAT_POSITION);
+        }
+    }
+
+    public void setRelicElbowPosition(double position) {
+        if(relicElbow != null) {
+            relicElbow.setPosition(position);
+        }
     }
 }
 
