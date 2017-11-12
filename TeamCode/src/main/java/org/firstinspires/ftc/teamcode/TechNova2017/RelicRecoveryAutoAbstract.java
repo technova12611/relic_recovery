@@ -203,14 +203,14 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
     void logStateInfo(AutoState state, String stage) {
         Log.i(this.getClass().getSimpleName(),
                 getAllianceColor()
-                + " | State: " + state.toString()
-                + " | \t" + stage
-                + " | \t" + String.format("%.1f",getRuntime()*1000.0)
-                + " | \t" + timer.time(TimeUnit.MILLISECONDS)
-                + " | \t" + String.format("IMU: %.1f", robot.getHeadingAngle())
-                + " | \t" + String.format("(x1,x2, y): %.1f, %.1f, %.1f", robot.getX1Distance(), robot.getX2Distance(), robot.getYDistance())
-                        + " | \t" +"glyph count:" + robot.getGlyphLiftPosition()
-                        + " | \t" + (vuMark != null? vuMark:"")
+                + " | State: " + String.format("%25s",state.toString())
+                + " | " + stage
+                + " | " + String.format("%6.1f",getRuntime()*1000.0)
+                + " | " + String.format("%5d", timer.time(TimeUnit.MILLISECONDS))
+                + " | " + String.format("IMU: %.1f", robot.getHeadingAngle())
+                + " | " + String.format("(x1,x2, y): %3.1f, %3.1f, %3.1f", robot.getX1Distance(), robot.getX2Distance(), robot.getYDistance())
+                + " | " +"Glyph count:" + String.format("%5d",robot.getGlyphLiftPosition())
+                + " | " + (vuMark != null? vuMark:"")
                );
     }
 
@@ -230,7 +230,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
         double avg = 0.0;
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < elapseTime) {
-            avg = xAvgDistance.next(robot.getX1Distance());
+            avg = xAvgDistance.next(robot.getRangeSensorVol());
         }
 
         return avg;

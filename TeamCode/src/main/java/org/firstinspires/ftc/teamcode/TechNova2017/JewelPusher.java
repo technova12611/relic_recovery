@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import static org.firstinspires.ftc.teamcode.TechNova2017.JewelPusher.Color.BLUE;
 import static org.firstinspires.ftc.teamcode.TechNova2017.JewelPusher.Color.RED;
 import static org.firstinspires.ftc.teamcode.TechNova2017.JewelPusher.Color.UNKNOWN;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_TARGET_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION;
@@ -84,6 +85,12 @@ public class JewelPusher {
 
         Log.i(this.getClass().getSimpleName(), "Deploying jewel pusher arms ...");
 
+        // long arm down
+        //--------------------------------------
+        longArm.setPosition(JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION);
+
+        waitForMS(750);
+
         // set to the correct position (middle position)
         // then wait a bit
         shortArm.setPosition(JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION);
@@ -107,14 +114,15 @@ public class JewelPusher {
 
         Log.i(this.getClass().getSimpleName(), "Retracting jewel pusher arms ...");
 
+        longArm.setPosition(JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION);
+        waitForMS(200);
+
+        shortArm.setPosition(JEWEL_PUSHER_SHORT_ARM_INITIAL_POSITION);
+        waitForMS(500);
+
         // long arm up
         //--------------------------------------
         longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
-
-        // wait for half seconds
-        waitForMS(100);
-
-        shortArm.setPosition(JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION);
     }
 
     /**
@@ -156,8 +164,6 @@ public class JewelPusher {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
         Color jewelColor = getJewelColor();
-        Log.i("TechNova: " + this.getClass().getSimpleName(), "JewelColor:" + jewelColor);
-
         while(timer.time() < 2000 && jewelColor == UNKNOWN) {
             jewelColor = getJewelColor();
             waitForMS(100);
@@ -210,10 +216,10 @@ public class JewelPusher {
     protected Color getJewelColor() {
 
         if(jewelColor != null) {
-            String message = "Color: (" + jewelColor.red() + "|" + jewelColor.blue() + ") " + jewelColor.argb();
-            Log.i("TechNova: " + this.getClass().getSimpleName() + ": Jewel color: ",  message);
+            String message = "Jewel Color: (" + jewelColor.red() + "|" + jewelColor.blue() + ") " + jewelColor.argb();
+            Log.i("TechNova:" + this.getClass().getSimpleName(),  message);
             if(_telemetry != null) {
-                _telemetry.addData("Jewel Color:", message);
+                _telemetry.addData("Jewel Pusher:", message);
             }
             if(jewelColor.red() > 10 && (jewelColor.red() - jewelColor.blue() > 8) && jewelColor.argb() > 0) {
                 return RED;
