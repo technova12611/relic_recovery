@@ -1,9 +1,14 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
+import android.util.Log;
 
-import static org.firstinspires.ftc.teamcode.TechNova2017.AllianceColor.*;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.*;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
 
 /**
  *  Use one motor to extend or collapse the slider mechanism
@@ -15,12 +20,28 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.*;
  */
 public class RelicSlider {
 
+    private DcMotor relicSlider;
+    private Servo relicClaw, relicElbow, relicClawholder;
     /**
      * initialize motor and servos
      *
-     * @param hardwarMap
+     * @param hardwareMap
      */
-    public void init(HardwareMap hardwarMap) {
+    public void init(HardwareMap hardwareMap) {
+        relicSlider = hardwareMap.dcMotor.get("relicSlider");
+        relicSlider.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        relicSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        try {
+            relicClaw = hardwareMap.servo.get("relicClaw");
+            relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
+            relicElbow = hardwareMap.servo.get("relicElbow");
+            relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
+            relicClawholder = hardwareMap.servo.get("relicClawholder");
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+        } catch(Exception e) {
+            Log.e(this.getClass().getSimpleName(), "Init relic failed: " + e.getMessage());
+        }
 
     }
 

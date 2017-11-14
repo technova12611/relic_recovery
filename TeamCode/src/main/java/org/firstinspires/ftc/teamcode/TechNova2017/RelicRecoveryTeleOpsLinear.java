@@ -14,8 +14,6 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
     private double relicElbowPosition = RELIC_ELBOW_INITIAL_POSITION;
 
     private int GLYPH_ARM_OPEN_POSITION_CLOSED   = 0;
-    private int GLYPH_ARM_OPEN_POSITION_OPEN     = 1;
-    private int GLYPH_ARM_OPEN_POSITION_MID_OPEN = 2;
     private int GLYPH_ARM_OPEN_POSITION_WIDE_OPEN = 3;
 
     private int glyphGrabberState = GLYPH_ARM_OPEN_POSITION_WIDE_OPEN;
@@ -116,10 +114,17 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         }
 
         if(g2.dpadUp()) {
-            robot.raiseRelicOverTheWall();
+            robot.closeGlyphLiftStopper();
+            robot.turnOnBlueLed();
+
+            telemetry.addData("Glyph Lower Arm: ", "CLOSED");
         } else if(g2.dpadDown()) {
-            robot.prepareRelicLanding();
+            robot.openGlyphLiftStopper();
+            robot.turnOffBlueLed();
+
+            telemetry.addData("Glyph Lower Arm: ", "OPEN");
         }
+
         if(g2.dpadLeft()) {
             robot.releaseRelic();
         } else if(g2.dpadRight()) {
@@ -138,13 +143,12 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             sleep(100);
         }
 
-<<<<<<< Updated upstream
-        if (g2.rightBumper()) {
+        if (g2.rightBumper() && g2.leftBumper()) {
             robot.releaseClaw();
         }
-=======
 
+        telemetry.addData("Relic Elbow Position: ", String.format("%.1f",robot.getRelicElbowPosition()));
 
->>>>>>> Stashed changes
+        telemetry.update();
     }
 }

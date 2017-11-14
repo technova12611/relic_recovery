@@ -23,10 +23,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIVE_POWER;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_STOPPER_CLOSE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_STOPPER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_OPEN_POSITION;
@@ -73,8 +74,9 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_
  */
 public class MecanumRobot {
     private DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider;
-    private Servo upperLeftGripper, upperRightGripper,
-            lowerLeftGripper, lowerRightGripper, glyphHolder, relicClaw, relicElbow, relicClawholder;
+    private Servo upperLeftGripper, upperRightGripper,lowerLeftGripper, lowerRightGripper,
+            glyphHolder, glyphLiftStopper,
+            relicClaw, relicElbow, relicClawholder;
 
     private Telemetry telemetry;
 
@@ -95,6 +97,10 @@ public class MecanumRobot {
 
     private AnalogInput rangeSensor;
     double maxRangeVol = 0.0;
+
+    double previousDriveAvgEncoder = 0;
+
+    MovingAverage driveEncodersMovingAvg = new MovingAverage(3);
 
     // Encoder Driving
     // Assuming 4" wheels
@@ -150,6 +156,9 @@ public class MecanumRobot {
         try {
             glyphHolder = hardwareMap.servo.get("glyphHolder");
             glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
+
+            glyphLiftStopper = hardwareMap.servo.get("glyphLiftStopper");
+            glyphLiftStopper.setPosition(GLYPH_LIFT_STOPPER_OPEN_POSITION);
         } catch(Exception e) {
             logInfo(this.telemetry, "Init glyph holder", e.getMessage());
         }
@@ -163,6 +172,7 @@ public class MecanumRobot {
         }
 
         glyphLift = hardwareMap.dcMotor.get("glyphLift");
+        glyphLift.setDirection(DcMotorSimple.Direction.REVERSE);
         glyphLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         glyphLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -173,22 +183,14 @@ public class MecanumRobot {
         try {
             relicClaw = hardwareMap.servo.get("relicClaw");
             relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
-        } catch(Exception e) {
-            logInfo(this.telemetry, "Init relic claw", e.getMessage());
-        }
 
-        try {
             relicElbow = hardwareMap.servo.get("relicElbow");
             relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
-        } catch(Exception e) {
-            logInfo(this.telemetry, "Init relic claw", e.getMessage());
-        }
 
-        try {
             relicClawholder = hardwareMap.servo.get("relicClawholder");
             relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
         } catch(Exception e) {
-            logInfo(this.telemetry, "Init relic clawholder", e.getMessage());
+            logInfo(this.telemetry, "Init relic init failed", e.getMessage());
         }
         telemetry.addData("Robot initialized", "Ready to go...");
     }
@@ -318,14 +320,19 @@ public class MecanumRobot {
      */
     public void updateSensorTelemetry() {
 
-        logInfo(telemetry,"Encoder Remain", averageRemainingTicks(lf, lr, rf, rr)+"");
-        logInfo(telemetry,"EncodersC", String.format(Locale.US, "\t%d\t%d\t%d\t%d",
+        double currentAvgRemaning = averageRemainingTicks(lf, lr, rf, rr);
+        double currentMovingAvg = driveEncodersMovingAvg.next(currentAvgRemaning);
+
+        logInfo(telemetry,"Encoder Remain", String.format("\t%.1f\t%.1f\t%.1f", currentAvgRemaning, currentMovingAvg, previousDriveAvgEncoder));
+        previousDriveAvgEncoder = currentMovingAvg;
+
+        logInfo(telemetry,"EncodersC", String.format("\t%d\t%d\t%d\t%d",
                 lf.getCurrentPosition(),
                 lr.getCurrentPosition(),
                 rf.getCurrentPosition(),
                 rr.getCurrentPosition()));
 
-        logInfo(telemetry,"EncodersT", String.format(Locale.US, "\t%d\t%d\t%d\t%d",
+        logInfo(telemetry,"EncodersT", String.format("\t%d\t%d\t%d\t%d",
                 lf.getTargetPosition(),
                 lr.getTargetPosition(),
                 rf.getTargetPosition(),
@@ -976,9 +983,29 @@ public class MecanumRobot {
         }
     }
 
+    public double getRelicElbowPosition() {
+        if(relicElbow != null) {
+            return relicElbow.getPosition();
+        }
+
+        return 0.0;
+    }
+
     public void releaseClaw() {
         if (relicClawholder != null) {
             relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION);
+        }
+    }
+
+    public void openGlyphLiftStopper() {
+        if(glyphLiftStopper != null) {
+            glyphLiftStopper.setPosition(GLYPH_LIFT_STOPPER_OPEN_POSITION);
+        }
+    }
+
+    public void closeGlyphLiftStopper() {
+        if(glyphLiftStopper != null) {
+            glyphLiftStopper.setPosition(GLYPH_LIFT_STOPPER_CLOSE_POSITION);
         }
     }
 }
