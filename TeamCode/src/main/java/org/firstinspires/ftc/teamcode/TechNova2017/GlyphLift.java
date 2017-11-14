@@ -1,8 +1,16 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION;
 
 /**
  *  One motor for lifting glyphs, two servos for grabbing glyphs
@@ -12,7 +20,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 public class GlyphLift {
 
-    Servo upperLeftGripper, upperRightGripper, lowerLeftGripper, lowerRightGripper;
+    Servo upperLeftGripper, upperRightGripper, lowerLeftGripper, lowerRightGripper, glyphHolder;
     DcMotor glyphLift;
 
     /**
@@ -21,14 +29,24 @@ public class GlyphLift {
      * @param hardwareMap
      */
     public void init(HardwareMap hardwareMap) {
-        upperLeftGripper = hardwareMap.servo.get("upperLeftGripper");
-        upperRightGripper = hardwareMap.servo.get("upperRightGripper");
+        upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION);
+        upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION);
 
         lowerLeftGripper = hardwareMap.servo.get("lowerLeftGripper");
         lowerRightGripper = hardwareMap.servo.get("lowerRightGripper");
 
+        lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION);
+        lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION);
+
+        try {
+            glyphHolder = hardwareMap.servo.get("glyphHolder");
+            glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
+        } catch(Exception e) {
+            Log.e(this.getClass().getSimpleName(), e.getMessage());
+        }
+
         glyphLift = hardwareMap.dcMotor.get("glyphLift");
-        glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        glyphLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         glyphLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
