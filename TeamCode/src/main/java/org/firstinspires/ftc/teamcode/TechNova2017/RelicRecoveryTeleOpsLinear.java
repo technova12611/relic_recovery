@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -64,6 +66,8 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // ---------------------------------------
         if(g1.A() || g2.A()) {
             robot.openGlyphGripper();
+            telemetry.addData("Glyph lift Position: ", robot.getGlyphLiftPosition());
+            Log.i(this.getClass().getSimpleName(), "Glyph lift position at release: " + robot.getGlyphLiftPosition());
         }
 
         if(g1.B() || g2.B()) {

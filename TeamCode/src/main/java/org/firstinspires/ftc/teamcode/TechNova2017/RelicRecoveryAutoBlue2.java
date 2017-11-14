@@ -6,9 +6,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoBlue2.State.BACKWARD_3_FEET;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoBlue2.State.RIGHT_1_FEET;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoBlue2.State.TURN_TO_180_DEGREE;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoRed2.State.END;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoRed2.State.FORWARD_3_FEET;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoRed2.State.START;
@@ -50,7 +47,11 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
         initOpMode();
 
         // waiting for operator to press start button
-        waitForStart();
+        while(isStarted()) {
+            telemetry.addData("Distance (x1, x2): ", "(%.1f, %.1f)", robot.getX1Distance(), robot.getX2Distance());
+            telemetry.update();
+            sleep(100);
+        }
 
         this.resetStartTime();
 
