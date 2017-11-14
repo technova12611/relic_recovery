@@ -942,6 +942,18 @@ public class MecanumRobot {
         }
     }
 
+    public void turnOnGreenBlueLed() {
+        if(led != null) {
+            led.setPower(0.90);
+        }
+    }
+
+    public void turnOffGreenBlueLed() {
+        if(led != null) {
+            led.setPower(0.0);
+        }
+    }
+
     public double getRangeSensorVol() {
         if(rangeSensor != null) {
             return rangeSensor.getVoltage();
