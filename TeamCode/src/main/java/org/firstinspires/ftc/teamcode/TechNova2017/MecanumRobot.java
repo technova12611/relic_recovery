@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIVE_POWER;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_STOPPER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_STOPPER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_CLOSE_POSITION;
@@ -458,7 +459,7 @@ public class MecanumRobot {
         sleepInAuto(200);
 
         this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        this.glyphLift.setTargetPosition(725);
+        this.glyphLift.setTargetPosition(GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION);
         this.glyphLift.setPower(0.5);
 
         ElapsedTime timer = new ElapsedTime();
