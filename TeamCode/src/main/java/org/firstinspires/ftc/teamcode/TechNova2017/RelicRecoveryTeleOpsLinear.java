@@ -20,6 +20,8 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
     private int glyphGrabberState = GLYPH_ARM_OPEN_POSITION_WIDE_OPEN;
 
+    private boolean glyphLiftStopperClosed = false;
+
     @Override
     public void runOpMode() {
 
@@ -119,14 +121,18 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
         if(g2.dpadUp()) {
             robot.closeGlyphLiftStopper();
-            robot.turnOnBlueLed();
-
+            glyphLiftStopperClosed = true;
             telemetry.addData("Glyph Lower Arm: ", "CLOSED");
         } else if(g2.dpadDown()) {
             robot.openGlyphLiftStopper();
-            robot.turnOffBlueLed();
-
+            glyphLiftStopperClosed = true;
             telemetry.addData("Glyph Lower Arm: ", "OPEN");
+        }
+
+        if(glyphLiftStopperClosed) {
+            robot.turnOnBlueLed();
+        } else {
+            robot.turnOffBlueLed();
         }
 
         if(g2.dpadLeft()) {

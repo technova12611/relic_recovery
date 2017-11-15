@@ -35,7 +35,7 @@ public class RobotInfo {
     public static double UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION = 0.52;
     public static double UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.44;
     public static double UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.41;
-    public static double UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.33;
+    public static double UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.34;
     public static double UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.22;
 
     public static double LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION = 0.50;
@@ -52,10 +52,10 @@ public class RobotInfo {
 
     public static double GLYPH_TOP_HOLDER_INITIAL_POSITION = 1.0;
     public static double GLYPH_TOP_HOLDER_OPEN_POSITION = 0.20;
-    public static double GLYPH_TOP_HOLDER_CLOSE_POSITION = 0.68;
+    public static double GLYPH_TOP_HOLDER_CLOSE_POSITION = 0.72;
 
     public static double GLYPH_LIFT_STOPPER_OPEN_POSITION = 0.50;
-    public static double GLYPH_LIFT_STOPPER_CLOSE_POSITION = 0.80;
+    public static double GLYPH_LIFT_STOPPER_CLOSE_POSITION = 0.70;
 
     public static int GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION = 725;
 
@@ -70,12 +70,12 @@ public class RobotInfo {
     //--------------------------------------------------------------------------
     public static double RELIC_CLAW_INITIAL_POSITION = 0.75;
     public static double RELIC_CLAW_CLOSE_POSITION = 0.78;
-    public static double RELIC_CLAW_OPEN_POSITION = 0.90;
+    public static double RELIC_CLAW_OPEN_POSITION = 0.94;
 
-    public static double RELIC_ELBOW_INITIAL_POSITION = 0.32;
+    public static double RELIC_ELBOW_INITIAL_POSITION = 0.28;
     public static double RELIC_ELBOW_FLAT_POSITION = 0.32;
     public static double RELIC_ELBOW_UP_POSITION = 0.62;
 
-    public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.7;
-    public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.5;
+    public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.3;
+    public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.7;
 }
