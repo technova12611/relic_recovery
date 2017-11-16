@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTest.State.END;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTest.State.START;
 
-
 @Autonomous(name = "Auto Test", group = "Test")
 public class RelicRecoveryAutoTest extends RelicRecoveryAutoAbstract {
 
@@ -22,6 +21,7 @@ public class RelicRecoveryAutoTest extends RelicRecoveryAutoAbstract {
         TURN_TO_90_DEGREE,
         SIDEWAY_RIGHT_2_INCHES,
         SIDEWAY_LEFT_1_INCHES,
+        BACKWARD_2_FEET,
         END;
 
         private static RelicRecoveryAutoTest.State[] vals = values();
@@ -116,6 +116,10 @@ public class RelicRecoveryAutoTest extends RelicRecoveryAutoAbstract {
                     driveLeftInches(1.0, 0.25);
                     gotoNextState();
                     break;
+
+                case BACKWARD_2_FEET:
+                    driveBackwardInches(24.0, motorSpeed);
+                    gotoNextState();
 
                 case END:
                     robot.onStop();
