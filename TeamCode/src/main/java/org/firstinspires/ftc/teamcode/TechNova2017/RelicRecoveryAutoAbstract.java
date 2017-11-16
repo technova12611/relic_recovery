@@ -148,18 +148,19 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
      */
     private static final double SAFE_TURN_SPEED = 0.1;
     private static final double FAST_TURN_SPEED = 0.20;
-    private static final double SUPER_FAST_TURN_SPEED = 0.3;
-    private static final double FAST_TURN_THRESHOLD = 30.0;
+    private static final double SUPER_FAST_TURN_SPEED = 0.5;
+    private static final double FAST_TURN_THRESHOLD = 15.0;
     private static final double SUPER_FAST_TURN_THRESHOLD = 60.0;
 
-    private static double speedForTurnDistance(double angle) {
-        angle = Math.abs(angle);
-        if (angle > SUPER_FAST_TURN_THRESHOLD) {
+    private double speedForTurnDistance(double angle) {
+        double error = Math.abs(angle-robot.getHeadingAngle());
+        if (error > SUPER_FAST_TURN_THRESHOLD) {
             return SUPER_FAST_TURN_SPEED;
         }
-        if (angle > FAST_TURN_THRESHOLD) {
+        if (error > FAST_TURN_THRESHOLD) {
             return FAST_TURN_SPEED;
         }
+
         return SAFE_TURN_SPEED;
     }
 

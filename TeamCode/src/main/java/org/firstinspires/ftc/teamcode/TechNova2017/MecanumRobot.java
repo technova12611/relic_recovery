@@ -391,13 +391,13 @@ public class MecanumRobot {
     }
 
     public void openGlyphGripperWider() {
-        openUpperGlyphGripperWider();
-        openLowerGlyphGripperWider();
+        openUpperGlyphGripperWide();
+        openLowerGlyphGripperWide();
     }
 
     public void openGlyphGripperMidWide() {
-        openUpperGlyphGripperMidWider();
-        openLowerGlyphGripperMidWider();
+        openUpperGlyphGripperMidWide();
+        openLowerGlyphGripperMidWide();
     }
 
     // open/close upper gripper
@@ -414,13 +414,13 @@ public class MecanumRobot {
         glyphHolder.setPosition(GLYPH_TOP_HOLDER_CLOSE_POSITION);
     }
 
-    public void openUpperGlyphGripperWider() {
+    public void openUpperGlyphGripperWide() {
         upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION);
         upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION);
         glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
     }
 
-    public void openUpperGlyphGripperMidWider() {
+    public void openUpperGlyphGripperMidWide() {
         upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
         upperLeftGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
     }
@@ -437,12 +437,12 @@ public class MecanumRobot {
         lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION);
     }
 
-    public void openLowerGlyphGripperWider() {
+    public void openLowerGlyphGripperWide() {
         lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION);
         lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION);
     }
 
-    public void openLowerGlyphGripperMidWider() {
+    public void openLowerGlyphGripperMidWide() {
         lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
         lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
     }
@@ -841,7 +841,16 @@ public class MecanumRobot {
 
         if(telemetry != null) {
             telemetry.addData(tag, message);
-            telemetry.update();
+        }
+    }
+
+    public void logInfo(Telemetry telemetry, String tag, String message, boolean inLogCat) {
+        if(inLogCat) {
+            Log.i("TechNova: " + this.getClass().getSimpleName(), tag + " | " + message);
+        }
+
+        if(telemetry != null) {
+            telemetry.addData(tag, message);
         }
     }
 
@@ -1026,11 +1035,11 @@ public class MecanumRobot {
         }
     }
 
-    public void logMotorEncoders(Telemetry telemetry) {
+    public void logMotorEncoders(Telemetry telemetry, boolean inLogCat) {
         logInfo(telemetry, "Mode Encoder: ", lf.getCurrentPosition() +
                                         " | " + rf.getCurrentPosition()
         +" | " + lr.getCurrentPosition()
-        + " | " + rr.getCurrentPosition());
+        + " | " + rr.getCurrentPosition(), inLogCat);
     }
 }
 

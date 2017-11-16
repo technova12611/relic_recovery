@@ -92,7 +92,7 @@ public class DriveHelper {
 
         telemetry.addData("Glyph Lift Position: ", robot.getGlyphLiftPosition());
 
-        robot.logMotorEncoders(telemetry);
+        robot.logMotorEncoders(telemetry, false);
 
         // If A or B are pressed, rotate drive motion by 90 degrees for more effective
         // teleop button pushing.
