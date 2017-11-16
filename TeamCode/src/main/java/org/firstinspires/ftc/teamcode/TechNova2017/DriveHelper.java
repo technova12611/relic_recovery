@@ -89,7 +89,10 @@ public class DriveHelper {
         telemetry.addData("Joystick: ", String.format("%.2f %.2f %.2f", g.left_stick_x, g.left_stick_y, g.right_stick_x));
         telemetry.addData("Slow Mode: ", slowDrive + " | " + String.format("%.2f",scaleToDrive));
         telemetry.addData("Very slow Mode: ", verySlowDrive + " | " + String.format("%.2f",scaleToDrive));
+
         telemetry.addData("Glyph Lift Position: ", robot.getGlyphLiftPosition());
+
+        robot.logMotorEncoders(telemetry);
 
         // If A or B are pressed, rotate drive motion by 90 degrees for more effective
         // teleop button pushing.

@@ -113,19 +113,24 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             robot.moveGlyphLift(0.0);
         }
 
+        // operator controller left joystick moves the relic slider
+        // ----------------------------------------------------------
         if(Math.abs(g2.left_stick_y)>0) {
             robot.moveRelicSlider(-1.0*g2.left_stick_y);
         } else {
             robot.moveRelicSlider(0.0);
         }
 
+        // operator controller DPAD up/down to open/close
+        // glyph lift stopper
+        //-----------------------------------------------------------
         if(g2.dpadUp()) {
             robot.closeGlyphLiftStopper();
             glyphLiftStopperClosed = true;
             telemetry.addData("Glyph Lower Arm: ", "CLOSED");
         } else if(g2.dpadDown()) {
             robot.openGlyphLiftStopper();
-            glyphLiftStopperClosed = true;
+            glyphLiftStopperClosed = false;
             telemetry.addData("Glyph Lower Arm: ", "OPEN");
         }
 
@@ -135,30 +140,38 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             robot.turnOffBlueLed();
         }
 
+        // operator controller DPAD left/right to grab/release RELIC
+        //------------------------------------------------------------
         if(g2.dpadLeft()) {
             robot.releaseRelic();
         } else if(g2.dpadRight()) {
             robot.grabRelic();
         }
 
+        // operator controller right joystick Y to move Relic Elbow up and down
+        // move the arm gradually to avoid sudden stop
+        //-----------------------------------------------------------------------
         if(g2.right_stick_y <0) {
-            relicElbowPosition += 0.03;
+            relicElbowPosition += (g2.right_stick_y< -0.8?0.06:0.03);
             robot.setRelicElbowPosition(relicElbowPosition);
-            sleep(100);
+            sleep(50);
         }
 
         if(g2.right_stick_y >0) {
-            relicElbowPosition -= 0.03;
+            relicElbowPosition -= ((g2.right_stick_y> 0.8?0.06:0.03));
             robot.setRelicElbowPosition(relicElbowPosition);
-            sleep(100);
+            sleep(50);
         }
 
+        // operator controller left+right bumper at once to release the RELIC claw
+        // this is not reversible, use with caution
+        // if accidentally release, need to move it up
+        //-------------------------------------------------------------------------
         if (g2.rightBumper() && g2.leftBumper()) {
             robot.releaseClaw();
         }
 
-        telemetry.addData("Relic Elbow Position: ", String.format("%.1f",robot.getRelicElbowPosition()));
-
-        telemetry.update();
+        //telemetry.addData("Relic Elbow Position: ", String.format("%.1f",robot.getRelicElbowPosition()));
+        //telemetry.update();
     }
 }

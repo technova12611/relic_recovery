@@ -942,13 +942,13 @@ public class MecanumRobot {
         }
     }
 
-    public void turnOnGreenBlueLed() {
+    public void turnOnGreenLed() {
         if(led != null) {
             led.setPower(0.90);
         }
     }
 
-    public void turnOffGreenBlueLed() {
+    public void turnOffGreenLed() {
         if(led != null) {
             led.setPower(0.0);
         }
@@ -1008,6 +1008,10 @@ public class MecanumRobot {
         if (relicClawholder != null) {
             relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION);
         }
+
+        if(relicElbow != null) {
+            relicElbow.setPosition(RELIC_ELBOW_FLAT_POSITION);
+        }
     }
 
     public void openGlyphLiftStopper() {
@@ -1020,6 +1024,13 @@ public class MecanumRobot {
         if(glyphLiftStopper != null) {
             glyphLiftStopper.setPosition(GLYPH_LIFT_STOPPER_CLOSE_POSITION);
         }
+    }
+
+    public void logMotorEncoders(Telemetry telemetry) {
+        logInfo(telemetry, "Mode Encoder: ", lf.getCurrentPosition() +
+                                        " | " + rf.getCurrentPosition()
+        +" | " + lr.getCurrentPosition()
+        + " | " + rr.getCurrentPosition());
     }
 }
 
