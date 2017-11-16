@@ -62,9 +62,9 @@ public class RobotInfo {
     // Driver control motor speed
     //-----------------------------------------------------------------------
     public static double ENCODER_DRIVE_POWER = 0.40;
-    public static double LOW_MODE_SCALE_TO_DRIVE = 0.62;
-    public static double VERY_LOW_MODE_SCALE_TO_DRIVE = 0.45;
-    public static double DPAD_SCALE_TO_DRIVE = 0.30;
+    public static double LOW_MODE_SCALE_TO_DRIVE = 0.55;
+    public static double VERY_LOW_MODE_SCALE_TO_DRIVE = 0.40;
+    public static double DPAD_SCALE_TO_DRIVE = 0.35;
 
     // Relic delivery system
     //--------------------------------------------------------------------------
