@@ -48,8 +48,9 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHO
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_FLAT_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_GRAB_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_RELEASE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_UP_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION;
@@ -995,7 +996,7 @@ public class MecanumRobot {
 
     public void prepareRelicLanding () {
         if(relicElbow != null) {
-            relicElbow.setPosition(RELIC_ELBOW_FLAT_POSITION);
+            relicElbow.setPosition(RELIC_ELBOW_RELEASE_POSITION);
         }
     }
 
@@ -1019,7 +1020,11 @@ public class MecanumRobot {
         }
 
         if(relicElbow != null) {
-            relicElbow.setPosition(RELIC_ELBOW_FLAT_POSITION);
+            relicElbow.setPosition(RELIC_ELBOW_GRAB_POSITION);
+        }
+
+        if(relicClaw != null) {
+            relicClaw.setPosition(RELIC_CLAW_OPEN_POSITION);
         }
     }
 
