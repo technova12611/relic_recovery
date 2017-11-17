@@ -436,6 +436,8 @@ public class MecanumRobot {
     public void closeLowerGlyphGripper() {
         lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION);
         lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION);
+
+        openGlyphLiftStopper();
     }
 
     public void openLowerGlyphGripperWide() {
