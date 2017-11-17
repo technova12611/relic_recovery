@@ -72,6 +72,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         }
         else if(g1.B()) {
             robot.closeGlyphGripper();
+            glyphLiftStopperClosed = false;
         }
         else if(g1.A() && (g1.leftBumper() || g1.rightBumper())) {
             robot.openGlyphGripperWider();
@@ -84,6 +85,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         }
         else if(g2.B()) {
             robot.closeLowerGlyphGripper();
+            glyphLiftStopperClosed = false;
         }
         else if((g2.A() && (g2.leftBumper() || g2.rightBumper()))) {
             robot.openLowerGlyphGripperWide();
@@ -177,6 +179,6 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             robot.releaseClaw();
         }
 
-        //telemetry.addData("Relic Elbow Position: ", String.format("%.1f",robot.getRelicElbowPosition()));
+        telemetry.addData("Relic Elbow Position: ", String.format("%.1f",robot.getRelicElbowPosition()));
     }
 }
