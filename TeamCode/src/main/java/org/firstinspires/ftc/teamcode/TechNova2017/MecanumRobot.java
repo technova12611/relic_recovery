@@ -450,7 +450,7 @@ public class MecanumRobot {
 
     public void pickupGlyphInAuto() {
         // close the grabber
-        closeGlyphGripper();
+        closeUpperGlyphGripper();
 
         // sleep for 1 second
         sleepInAuto(1000);
