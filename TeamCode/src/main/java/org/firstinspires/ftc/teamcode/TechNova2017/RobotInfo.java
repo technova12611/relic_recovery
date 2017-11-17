@@ -28,25 +28,25 @@ public class RobotInfo {
 
     public static double UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION = 0.58;
     public static double UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.62;
-    public static double UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.65;
+    public static double UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.66;
     public static double UPPER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.72;
     public static double UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.82;
 
     public static double UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION = 0.52;
     public static double UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.44;
-    public static double UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.41;
+    public static double UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.40;
     public static double UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.34;
     public static double UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.22;
 
     public static double LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION = 0.50;
     public static double LOWER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.42;
-    public static double LOWER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.41;
+    public static double LOWER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.40;
     public static double LOWER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.34;
     public static double LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.24;
 
     public static double LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION = 0.34;
     public static double LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.42;
-    public static double LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.42;
+    public static double LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.40;
     public static double LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.51;
     public static double LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.63;
 
@@ -54,7 +54,7 @@ public class RobotInfo {
     public static double GLYPH_TOP_HOLDER_OPEN_POSITION = 0.20;
     public static double GLYPH_TOP_HOLDER_CLOSE_POSITION = 0.72;
 
-    public static double GLYPH_LIFT_STOPPER_OPEN_POSITION = 0.25;
+    public static double GLYPH_LIFT_STOPPER_OPEN_POSITION = 0.18;
     public static double GLYPH_LIFT_STOPPER_CLOSE_POSITION = 0.73;
 
     public static int GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION = 725;
