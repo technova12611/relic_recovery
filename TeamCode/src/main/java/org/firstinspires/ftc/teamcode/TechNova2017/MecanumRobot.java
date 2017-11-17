@@ -423,7 +423,7 @@ public class MecanumRobot {
 
     public void openUpperGlyphGripperMidWide() {
         upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
-        upperLeftGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
+        upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
     }
 
     // open/close lower gripper

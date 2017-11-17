@@ -81,7 +81,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // Gamepad 2 A/B controls lower glyph gripper
         //-----------------------------------------------
         if((g2.A() && (g2.leftBumper() || g2.rightBumper()))) {
-            robot.openLowerGlyphGripperWide();
+            robot.openLowerGlyphGripperMidWide();
         }
         else if(g2.B()) {
             robot.closeLowerGlyphGripper();
@@ -94,7 +94,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // Gamepad 2 X/Y controls Upper glyph gripper
         //-----------------------------------------------
         if(g2.X() && (g2.leftBumper()|| g2.rightBumper())) {
-            robot.openUpperGlyphGripperWide();
+            robot.openUpperGlyphGripperMidWide();
         }
         else if(g2.X() ) {
             robot.openUpperGlyphGripper();
