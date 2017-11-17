@@ -54,8 +54,9 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
             if (debug_mode) {
                 robot.updateSensorTelemetry();
-                telemetry.update();
             }
+
+            telemetry.update();
         }
     }
 
@@ -64,31 +65,36 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // driving the robot
         DriveHelper.drive(g, robot, telemetry);
 
-        // grab glyph (open and close servo)
-        // ---------------------------------------
-        if(g1.A() || g2.A()) {
+        // gamepad 1 A/B controls both grab glyph (open and close servo)
+        // ---------------------------------------------------------
+        if(g1.A()) {
             robot.openGlyphGripper();
-            telemetry.addData("Glyph lift Position: ", robot.getGlyphLiftPosition());
-            Log.i(this.getClass().getSimpleName(), "Glyph lift position at release: " + robot.getGlyphLiftPosition());
         }
-
-        if(g1.B() || g2.B()) {
-            glyphGrabberState = GLYPH_ARM_OPEN_POSITION_CLOSED;
+        else if(g1.B()) {
             robot.closeGlyphGripper();
         }
-
-        if((g1.A() && g1.leftBumper()) ||  (g2.A() && g2.leftBumper())) {
+        else if(g1.A() && (g1.leftBumper() || g1.rightBumper())) {
             robot.openGlyphGripperWider();
         }
 
-        if((g1.A() && g1.rightBumper()) ||  (g2.A() && g2.rightBumper())) {
-            robot.openGlyphGripperWider();
+        // Gamepad 2 A/B controls lower glyph gripper
+        //-----------------------------------------------
+        if(g2.A()) {
+            robot.openLowerGlyphGripper();
+        }
+        else if(g2.B()) {
+            robot.closeLowerGlyphGripper();
+        }
+        else if((g2.A() && (g2.leftBumper() || g2.rightBumper()))) {
+            robot.openLowerGlyphGripperWide();
         }
 
+        // Gamepad 2 X/Y controls Upper glyph gripper
+        //-----------------------------------------------
         if(g2.X() ) {
             robot.openUpperGlyphGripper();
         }
-        else if(g2.X() && g2.leftBumper()) {
+        else if(g2.X() && (g2.leftBumper()|| g2.rightBumper())) {
             robot.openUpperGlyphGripperWide();
         }
         else if(g2.Y()) {
@@ -172,6 +178,5 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         }
 
         //telemetry.addData("Relic Elbow Position: ", String.format("%.1f",robot.getRelicElbowPosition()));
-        //telemetry.update();
     }
 }
