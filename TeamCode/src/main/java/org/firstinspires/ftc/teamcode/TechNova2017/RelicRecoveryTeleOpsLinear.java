@@ -67,37 +67,37 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
         // gamepad 1 A/B controls both grab glyph (open and close servo)
         // ---------------------------------------------------------
-        if(g1.A()) {
+        if(g1.A() && (g1.leftBumper() || g1.rightBumper())) {
+            robot.openGlyphGripperWider();
+        }
+        else if(g1.A()) {
             robot.openGlyphGripper();
         }
         else if(g1.B()) {
             robot.closeGlyphGripper();
             glyphLiftStopperClosed = false;
         }
-        else if(g1.A() && (g1.leftBumper() || g1.rightBumper())) {
-            robot.openGlyphGripperWider();
-        }
 
         // Gamepad 2 A/B controls lower glyph gripper
         //-----------------------------------------------
-        if(g2.A()) {
-            robot.openLowerGlyphGripper();
+        if((g2.A() && (g2.leftBumper() || g2.rightBumper()))) {
+            robot.openLowerGlyphGripperWide();
         }
         else if(g2.B()) {
             robot.closeLowerGlyphGripper();
             glyphLiftStopperClosed = false;
         }
-        else if((g2.A() && (g2.leftBumper() || g2.rightBumper()))) {
-            robot.openLowerGlyphGripperWide();
+        else if(g2.A()) {
+            robot.openLowerGlyphGripper();
         }
 
         // Gamepad 2 X/Y controls Upper glyph gripper
         //-----------------------------------------------
-        if(g2.X() ) {
-            robot.openUpperGlyphGripper();
-        }
-        else if(g2.X() && (g2.leftBumper()|| g2.rightBumper())) {
+        if(g2.X() && (g2.leftBumper()|| g2.rightBumper())) {
             robot.openUpperGlyphGripperWide();
+        }
+        else if(g2.X() ) {
+            robot.openUpperGlyphGripper();
         }
         else if(g2.Y()) {
             robot.closeUpperGlyphGripper();
