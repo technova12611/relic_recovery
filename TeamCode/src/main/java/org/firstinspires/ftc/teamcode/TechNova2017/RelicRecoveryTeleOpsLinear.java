@@ -152,15 +152,15 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // move the arm gradually to avoid sudden stop
         //-----------------------------------------------------------------------
         if(g2.right_stick_y <0) {
-            relicElbowPosition += (g2.right_stick_y< -0.8?0.06:0.03);
+            relicElbowPosition += (g2.right_stick_y< -0.8?0.05:0.03);
             robot.setRelicElbowPosition(relicElbowPosition);
-            sleep(50);
+            sleep(80);
         }
 
         if(g2.right_stick_y >0) {
-            relicElbowPosition -= ((g2.right_stick_y> 0.8?0.06:0.03));
+            relicElbowPosition -= ((g2.right_stick_y> 0.8?0.05:0.03));
             robot.setRelicElbowPosition(relicElbowPosition);
-            sleep(50);
+            sleep(80);
         }
 
         // operator controller left+right bumper at once to release the RELIC claw
