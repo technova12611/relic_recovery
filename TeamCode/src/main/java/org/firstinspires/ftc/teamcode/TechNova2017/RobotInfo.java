@@ -57,12 +57,12 @@ public class RobotInfo {
     public static double GLYPH_LIFT_STOPPER_OPEN_POSITION = 0.18;
     public static double GLYPH_LIFT_STOPPER_CLOSE_POSITION = 0.73;
 
-    public static int GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION = 725;
+    public static int GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION = 1200;
 
     // Driver control motor speed
     //-----------------------------------------------------------------------
     public static double ENCODER_DRIVE_POWER = 0.40;
-    public static double LOW_MODE_SCALE_TO_DRIVE = 0.55;
+    public static double LOW_MODE_SCALE_TO_DRIVE = 0.65;
     public static double VERY_LOW_MODE_SCALE_TO_DRIVE = 0.40;
     public static double DPAD_SCALE_TO_DRIVE = 0.35;
 
@@ -77,6 +77,6 @@ public class RobotInfo {
     public static double RELIC_ELBOW_GRAB_POSITION = 0.36;
     public static double RELIC_ELBOW_UP_POSITION = 0.62;
 
-    public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.3;
-    public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.7;
+    public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.7;
+    public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.3;
 }

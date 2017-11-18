@@ -706,7 +706,7 @@ public class MecanumRobot {
     }
 
     // 4 encoders, with 6 counts each
-    public static final int ENCODERS_CLOSE_ENOUGH = 15;
+    public static final int ENCODERS_CLOSE_ENOUGH = 20;
 
     /**
      * Check to see if robot should stop when using SET_TO_POSITION mode

@@ -148,7 +148,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                         // -------------------------------------------------
                         case LEFT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveForwardInches(43.0, motorSpeed);
+                                driveForwardInches(44.0, motorSpeed);
                             }
                             // if this is BLUE Alliance
                             else {

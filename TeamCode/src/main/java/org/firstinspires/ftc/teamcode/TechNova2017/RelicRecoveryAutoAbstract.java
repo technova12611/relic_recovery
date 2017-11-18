@@ -146,18 +146,17 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
     /**
      * Using very basic control algorithm
      */
-    private static final double SAFE_TURN_SPEED = 0.1;
-    private static final double FAST_TURN_SPEED = 0.20;
-    private static final double SUPER_FAST_TURN_SPEED = 0.5;
+    private static final double SAFE_TURN_SPEED = 0.15;
+    private static final double FAST_TURN_SPEED = 0.25;
+    private static final double SUPER_FAST_TURN_SPEED = 0.35;
     private static final double FAST_TURN_THRESHOLD = 15.0;
     private static final double SUPER_FAST_TURN_THRESHOLD = 60.0;
 
     private double speedForTurnDistance(double angle) {
-        double error = Math.abs(angle-robot.getHeadingAngle());
-        if (error > SUPER_FAST_TURN_THRESHOLD) {
+        if (angle > SUPER_FAST_TURN_THRESHOLD) {
             return SUPER_FAST_TURN_SPEED;
         }
-        if (error > FAST_TURN_THRESHOLD) {
+        if (angle > FAST_TURN_THRESHOLD) {
             return FAST_TURN_SPEED;
         }
 
@@ -175,7 +174,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
     private void turnToAngle(double degrees) throws InterruptedException {
         ElapsedTime timer = new ElapsedTime();
 
-        while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 5000) {
+        while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 7500) {
             double diff = angleDifference(robot.getHeadingAngle(), degrees);
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
             double speed = speedForTurnDistance(diff);
