@@ -150,6 +150,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
     private static final double FAST_TURN_SPEED = 0.25;
     private static final double SUPER_FAST_TURN_SPEED = 0.35;
     private static final double FAST_TURN_THRESHOLD = 30.0;
+
     private static final double SUPER_FAST_TURN_THRESHOLD = 60.0;
 
     private double speedForTurnDistance(double angle) {
@@ -177,6 +178,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 7500) {
             double diff = angleDifference(robot.getHeadingAngle(), degrees);
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
+
             double speed = speedForTurnDistance(Math.abs(diff));
             robot.drive(0.0, 0.0, diff > 0 ? -speed : speed);
             idle();
