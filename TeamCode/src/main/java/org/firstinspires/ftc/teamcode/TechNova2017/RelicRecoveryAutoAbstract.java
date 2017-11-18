@@ -20,7 +20,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
     VuMarkVision vuMarkVision;
     RelicRecoveryVuMark vuMark;
 
-    MovingAverage xAvgDistance = new MovingAverage(20);
+    MovingAverage xAvgDistance = new MovingAverage(10);
 
     ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
@@ -149,7 +149,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
     private static final double SAFE_TURN_SPEED = 0.15;
     private static final double FAST_TURN_SPEED = 0.25;
     private static final double SUPER_FAST_TURN_SPEED = 0.35;
-    private static final double FAST_TURN_THRESHOLD = 15.0;
+    private static final double FAST_TURN_THRESHOLD = 30.0;
     private static final double SUPER_FAST_TURN_THRESHOLD = 60.0;
 
     private double speedForTurnDistance(double angle) {
@@ -177,7 +177,20 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 7500) {
             double diff = angleDifference(robot.getHeadingAngle(), degrees);
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
-            double speed = speedForTurnDistance(diff);
+            double speed = speedForTurnDistance(Math.abs(diff));
+            robot.drive(0.0, 0.0, diff > 0 ? -speed : speed);
+            idle();
+        }
+        robot.stopDriveMotors();
+    }
+
+    protected void turnToAngle(double degrees, double speed) throws InterruptedException {
+        ElapsedTime timer = new ElapsedTime();
+
+        while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 5000) {
+            double diff = angleDifference(robot.getHeadingAngle(), degrees);
+            if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
+
             robot.drive(0.0, 0.0, diff > 0 ? -speed : speed);
             idle();
         }
@@ -203,8 +216,8 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
     void logStateInfo(AutoState state, String stage) {
         Log.i(this.getClass().getSimpleName(),
                 getAllianceColor()
-                + " | State: " + String.format("%25s",state.toString())
-                + " | " + stage
+                + " | State: " + String.format("%28s",state.toString())
+                + " | " + String.format("%6s",stage)
                 + " | " + String.format("%6.1f",getRuntime()*1000.0)
                 + " | " + String.format("%5d", timer.time(TimeUnit.MILLISECONDS))
                 + " | " + String.format("IMU: %.1f", robot.getHeadingAngle())
@@ -230,7 +243,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
         double avg = 0.0;
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < elapseTime) {
-            avg = xAvgDistance.next(robot.getRangeSensorVol());
+            avg = xAvgDistance.next(getXDistance());
         }
 
         return avg;

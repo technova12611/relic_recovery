@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
@@ -191,8 +192,6 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     // need more testing on each position
                     // use the ultra_sonic sensor to align robot to the right cryto column
                     //----------------------------------------------------------------------
-                    sleep(1000);
-                    double xDistance = robot.getRangeSensorVol();
 
                     // within 1 cm is fine
                     // need more testing
@@ -293,7 +292,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
 
         double distanceThrehold = 1.0;
 
-        double error = xDistance -targetPosition;
+        double error = Range.clip(xDistance -targetPosition, 0.0, 3.0);
         ElapsedTime timer = new ElapsedTime();
 
         // try for 3 seconds only, to avoid oscilliation
