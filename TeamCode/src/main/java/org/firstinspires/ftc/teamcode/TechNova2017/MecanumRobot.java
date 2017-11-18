@@ -1022,7 +1022,7 @@ public class MecanumRobot {
         }
 
         if(relicElbow != null) {
-            relicElbow.setPosition(RELIC_ELBOW_GRAB_POSITION);
+            relicElbow.setPosition(RELIC_ELBOW_RELEASE_POSITION);
         }
 
         if(relicClaw != null) {

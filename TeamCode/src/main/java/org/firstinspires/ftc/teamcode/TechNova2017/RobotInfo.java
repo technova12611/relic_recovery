@@ -77,6 +77,6 @@ public class RobotInfo {
     public static double RELIC_ELBOW_GRAB_POSITION = 0.36;
     public static double RELIC_ELBOW_UP_POSITION = 0.62;
 
-    public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.7;
-    public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.3;
+    public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.68;
+    public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.10;
 }
