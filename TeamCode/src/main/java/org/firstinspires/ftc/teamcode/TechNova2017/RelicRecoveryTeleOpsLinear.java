@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
 
@@ -48,13 +49,10 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
             g1.update();
             g2.update();
+
             //robot.loop();
 
             gamepadLoop(g1);
-
-            if (debug_mode) {
-                robot.updateSensorTelemetry();
-            }
 
             telemetry.update();
         }
@@ -62,8 +60,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
     private void gamepadLoop(Controller g) {
 
-        // driving the robot
-        DriveHelper.drive(g, robot, telemetry);
+
 
         // gamepad 1 A/B controls both grab glyph (open and close servo)
         // ---------------------------------------------------------
@@ -160,15 +157,15 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // move the arm gradually to avoid sudden stop
         //-----------------------------------------------------------------------
         if(g2.right_stick_y <0) {
-            relicElbowPosition += (g2.right_stick_y< -0.8?0.05:0.03);
-            robot.setRelicElbowPosition(relicElbowPosition);
-            sleep(80);
+            relicElbowPosition += (g2.right_stick_y< -0.8?0.05:0.02);
+            robot.setRelicElbowPosition(Range.clip(relicElbowPosition, 0.10, 0.85));
+            sleep(50);
         }
 
         if(g2.right_stick_y >0) {
-            relicElbowPosition -= ((g2.right_stick_y> 0.8?0.05:0.03));
-            robot.setRelicElbowPosition(relicElbowPosition);
-            sleep(80);
+            relicElbowPosition -= ((g2.right_stick_y> 0.8?0.05:0.02));
+            robot.setRelicElbowPosition(Range.clip(relicElbowPosition, 0.10, 0.85));
+            sleep(50);
         }
 
         // operator controller left+right bumper at once to release the RELIC claw
@@ -178,6 +175,10 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         if (g2.rightBumper() && g2.leftBumper()) {
             robot.releaseClaw();
         }
+
+        // driving the robot
+        //------------------------------------------------------
+        DriveHelper.drive(g, robot, telemetry);
 
         telemetry.addData("Relic Elbow Position: ", String.format("%.1f",robot.getRelicElbowPosition()));
     }
