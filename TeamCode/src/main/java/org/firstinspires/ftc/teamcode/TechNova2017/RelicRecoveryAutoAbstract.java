@@ -146,7 +146,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
     /**
      * Using very basic control algorithm
      */
-    private static final double SAFE_TURN_SPEED = 0.15;
+    private static final double SAFE_TURN_SPEED = 0.12;
     private static final double FAST_TURN_SPEED = 0.25;
     private static final double SUPER_FAST_TURN_SPEED = 0.35;
     private static final double FAST_TURN_THRESHOLD = 30.0;

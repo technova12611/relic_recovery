@@ -221,7 +221,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             break;
                     }
 
-                    double avgXDistance = measureXDistance(1000);
+                    double avgXDistance = measureXDistance(500);
                     logInfo("X range:",vuMark + " | " + String.format("%.2f cm", avgXDistance));
 
                     if(targetDistance > 0.0) {
@@ -240,15 +240,21 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     }
 
                     // move forward to push the glyph into the box
-                    //
+                    //-------------------------------------------------
                     logInfo(" --- Drive forward to push --- ");
+                    ElapsedTime watcher = new ElapsedTime();
                     driveForwardInches(4.0, motorSpeed);
 
+                    logInfo(" Place Glyph into column (ms): " + watcher.time(TimeUnit.MILLISECONDS));
+
                     // move backward to separate robot from glyph
+                    //----------------------------------------------
                     logInfo(" --- Drive backward to finish --- ");
                     driveBackwardInches(6.0, motorSpeed);
 
-                    turn(90.0);
+                    // fast turn to face the glyph pit, get ready for teleops
+                    //------------------------------------------------
+                    turnToAngle(90.0, 0.5);
 
                     gotoNextState();
 
