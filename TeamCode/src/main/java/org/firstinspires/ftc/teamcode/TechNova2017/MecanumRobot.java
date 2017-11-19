@@ -148,6 +148,15 @@ public class MecanumRobot {
         lowerLeftGripper = hardwareMap.servo.get("lowerLeftGripper");
         lowerRightGripper = hardwareMap.servo.get("lowerRightGripper");
 
+        try {
+            glyphHolder = hardwareMap.servo.get("glyphHolder");
+            glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
+
+            glyphLiftStopper = hardwareMap.servo.get("glyphLiftStopper");
+            glyphLiftStopper.setPosition(GLYPH_LIFT_STOPPER_OPEN_POSITION);
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init glyph holder", e.getMessage());
+        }
 
         if(allianceColor != null) {
             upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION);
@@ -157,16 +166,6 @@ public class MecanumRobot {
         }
         else {
             openGlyphGripperMidWide();
-        }
-
-        try {
-            glyphHolder = hardwareMap.servo.get("glyphHolder");
-            glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
-
-            glyphLiftStopper = hardwareMap.servo.get("glyphLiftStopper");
-            glyphLiftStopper.setPosition(GLYPH_LIFT_STOPPER_OPEN_POSITION);
-        } catch(Exception e) {
-            logInfo(this.telemetry, "Init glyph holder", e.getMessage());
         }
 
         try {
