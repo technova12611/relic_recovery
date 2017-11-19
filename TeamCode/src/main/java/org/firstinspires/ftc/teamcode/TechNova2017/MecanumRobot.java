@@ -48,7 +48,6 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHO
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_GRAB_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_RELEASE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_UP_POSITION;
@@ -420,6 +419,25 @@ public class MecanumRobot {
         glyphHolder.setPosition(GLYPH_TOP_HOLDER_CLOSE_POSITION);
     }
 
+    public void alignStackedGlyphs() {
+        // try to close and open gripper multiple times
+        // press the top glyphs into sqaured position
+        int idx = 3;
+        while(idx-- >0) {
+            upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION);
+            upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION);
+
+            sleepInLiearMode(200);
+
+            upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_OPEN_POSITION);
+            upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION);
+            sleepInLiearMode(200);
+        }
+
+        closeUpperGlyphGripper();
+    }
+
+
     public void openUpperGlyphGripperWide() {
         upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION);
         upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION);
@@ -460,11 +478,11 @@ public class MecanumRobot {
         closeUpperGlyphGripper();
 
         // sleep for 1 second
-        sleepInAuto(1000);
+        sleepInLiearMode(1000);
 
         // move up glyph
         this.glyphLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        sleepInAuto(200);
+        sleepInLiearMode(200);
 
         this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         this.glyphLift.setTargetPosition(GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION);
@@ -513,7 +531,7 @@ public class MecanumRobot {
      *
      * @param milliSeconds
      */
-    private void sleepInAuto(long milliSeconds) {
+    private void sleepInLiearMode(long milliSeconds) {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
         while(this.linearOpMode != null && this.linearOpMode.opModeIsActive()

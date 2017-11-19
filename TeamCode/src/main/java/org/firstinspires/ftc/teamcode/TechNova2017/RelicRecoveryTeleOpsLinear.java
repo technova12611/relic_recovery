@@ -96,6 +96,9 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         else if(g2.X() ) {
             robot.openUpperGlyphGripper();
         }
+        else if(g2.Y() && (g2.leftBumper()|| g2.rightBumper())) {
+            robot.alignStackedGlyphs();
+        }
         else if(g2.Y()) {
             robot.closeUpperGlyphGripper();
         }
