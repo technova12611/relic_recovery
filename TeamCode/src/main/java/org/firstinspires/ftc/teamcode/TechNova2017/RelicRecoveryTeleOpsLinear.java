@@ -125,18 +125,18 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         } else {
             robot.moveRelicSlider(0.0);
         }
-
-        // operator controller DPAD up/down to open/close
-        // glyph lift stopper
-        //-----------------------------------------------------------
+        // switch to Relic grabbing/landing handling
+        //----------------------------------------------
         if(g2.dpadUp()) {
-            robot.closeGlyphLiftStopper();
-            glyphLiftStopperClosed = true;
-            telemetry.addData("Glyph Lower Arm: ", "CLOSED");
+            robot.raiseRelicOverTheWall();
+//            robot.closeGlyphLiftStopper();
+//            glyphLiftStopperClosed = true;
+//            telemetry.addData("Glyph Lower Arm: ", "CLOSED");
         } else if(g2.dpadDown()) {
-            robot.openGlyphLiftStopper();
-            glyphLiftStopperClosed = false;
-            telemetry.addData("Glyph Lower Arm: ", "OPEN");
+            robot.prepareRelicLanding();
+//            robot.openGlyphLiftStopper();
+//            glyphLiftStopperClosed = false;
+//            telemetry.addData("Glyph Lower Arm: ", "OPEN");
         }
 
         if(glyphLiftStopperClosed) {
@@ -158,13 +158,15 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         //-----------------------------------------------------------------------
         if(g2.right_stick_y <0) {
             relicElbowPosition += (g2.right_stick_y< -0.8?0.05:0.02);
-            robot.setRelicElbowPosition(Range.clip(relicElbowPosition, 0.10, 0.85));
+            relicElbowPosition = Range.clip(relicElbowPosition, 0.10, 0.85);
+            robot.setRelicElbowPosition(relicElbowPosition);
             sleep(50);
         }
 
         if(g2.right_stick_y >0) {
             relicElbowPosition -= ((g2.right_stick_y> 0.8?0.05:0.02));
-            robot.setRelicElbowPosition(Range.clip(relicElbowPosition, 0.10, 0.85));
+            relicElbowPosition = Range.clip(relicElbowPosition, 0.10, 0.85);
+            robot.setRelicElbowPosition(relicElbowPosition);
             sleep(50);
         }
 
