@@ -153,7 +153,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(28.5, motorSpeed);
+                                driveBackwardInches(27.5, motorSpeed);
                             }
                             break;
 
