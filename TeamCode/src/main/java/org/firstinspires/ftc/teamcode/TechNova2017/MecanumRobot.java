@@ -146,14 +146,19 @@ public class MecanumRobot {
         upperLeftGripper = hardwareMap.servo.get("upperLeftGripper");
         upperRightGripper = hardwareMap.servo.get("upperRightGripper");
 
-        upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION);
-        upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION);
-
         lowerLeftGripper = hardwareMap.servo.get("lowerLeftGripper");
         lowerRightGripper = hardwareMap.servo.get("lowerRightGripper");
 
-        lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION);
-        lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION);
+
+        if(allianceColor != null) {
+            upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION);
+            upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION);
+            lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION);
+            lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION);
+        }
+        else {
+            openGlyphGripperMidWide();
+        }
 
         try {
             glyphHolder = hardwareMap.servo.get("glyphHolder");
