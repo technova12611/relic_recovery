@@ -398,11 +398,13 @@ public class MecanumRobot {
     public void openGlyphGripperWider() {
         openUpperGlyphGripperWide();
         openLowerGlyphGripperWide();
+        glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
     }
 
     public void openGlyphGripperMidWide() {
         openUpperGlyphGripperMidWide();
         openLowerGlyphGripperMidWide();
+        glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
     }
 
     // open/close upper gripper
@@ -421,17 +423,18 @@ public class MecanumRobot {
 
     public void alignStackedGlyphs() {
         // try to close and open gripper multiple times
-        // press the top glyphs into sqaured position
+        // press the top glyphs into squared position
         int idx = 3;
         while(idx-- >0) {
+            glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
             upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION);
             upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION);
 
-            sleepInLiearMode(200);
+            sleepInLiearMode(150);
 
             upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_OPEN_POSITION);
             upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION);
-            sleepInLiearMode(200);
+            sleepInLiearMode(150);
         }
 
         closeUpperGlyphGripper();
@@ -447,6 +450,7 @@ public class MecanumRobot {
     public void openUpperGlyphGripperMidWide() {
         upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
         upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION);
+        glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
     }
 
     // open/close lower gripper
