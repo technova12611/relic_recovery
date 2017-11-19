@@ -164,47 +164,6 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                     break;
 
                 case ALIGN_TO_CRYPTOBOX:
-
-                    // need more testing on each position
-                    // use the ultra_sonic sensor to align robot to the right cryto column
-                    //----------------------------------------------------------------------
-                    double xDistance = robot.getX1Distance();
-
-                    // within 1 cm is fine
-                    // need more testing
-                    double targetDistance = 0.0;
-                    switch (vuMark) {
-
-                        // need to place glyph into RIGHT Crypto box
-                        case RIGHT:
-                            targetDistance = getRightColumnTargetDistanceInCM();
-                            break;
-
-                        // need to place glyph into CENTER Crypto box
-                        // -------------------------------------------------
-                        case CENTER:
-                            targetDistance = getCenterColumnTargetDistanceInCM();
-                            break;
-
-                        // need to place glyph into LEFT Crypto box
-                        // -------------------------------------------------
-                        case LEFT:
-                            targetDistance = geLeftColumnTargetDistanceInCM();
-                            break;
-
-                        // Default is CENTER position, in case Vumark is not visible
-                        // -------------------------------------------------
-                        default:
-                            break;
-                    }
-
-                    double avgXDistance = measureXDistance(500);
-                    logInfo("X range:",vuMark + " | " + String.format("%.2f cm", avgXDistance));
-
-                    if(targetDistance > 0.0) {
-                        alignToCryptoBox(targetDistance);
-                    }
-
                     gotoNextState();
                     break;
 
@@ -216,24 +175,16 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                         sleep(100);
                     }
 
-                    // the idea here is to use the grabber arms to push the glyph inside the column
-                    // even though the glyph might not place straight, with the push, it should
-                    // be
-                    logInfo(" --- Drive backwards --- ");
-                    driveBackwardInches(4.0, motorSpeed);
-
-                    logInfo(" --- Reset Glyph lift --- ");
-                    robot.resetGlyphLift();
-
-                    logInfo(" --- Close Grabber --- ");
-                    robot.closeGlyphGripper();
-
                     // move forward to push the glyph into the box
-                    //
+                    //-------------------------------------------------
                     logInfo(" --- Drive forward to push --- ");
-                    driveForwardInches(8.0, motorSpeed);
+                    ElapsedTime watcher = new ElapsedTime();
+                    driveForwardInches(4.0, motorSpeed);
+
+                    logInfo(" Place Glyph into column (ms): " + watcher.time(TimeUnit.MILLISECONDS));
 
                     // move backward to separate robot from glyph
+                    //----------------------------------------------
                     logInfo(" --- Drive backward to finish --- ");
                     driveBackwardInches(4.0, motorSpeed);
 
