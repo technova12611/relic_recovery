@@ -155,17 +155,15 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // move the arm gradually to avoid sudden stop
         //-----------------------------------------------------------------------
         if(g2.right_stick_y <0) {
-            relicElbowPosition += (g2.right_stick_y< -0.8?0.05:0.02);
-            relicElbowPosition = Range.clip(relicElbowPosition, 0.10, 0.85);
+            relicElbowPosition = Range.clip(robot.getRelicElbowPosition() + (g2.right_stick_y< -0.8?0.03:0.01), 0.10, 0.85);
             robot.setRelicElbowPosition(relicElbowPosition);
-            sleep(50);
+            sleep(100);
         }
 
         if(g2.right_stick_y >0) {
-            relicElbowPosition -= ((g2.right_stick_y> 0.8?0.05:0.02));
-            relicElbowPosition = Range.clip(relicElbowPosition, 0.10, 0.85);
+            relicElbowPosition = Range.clip(robot.getRelicElbowPosition() - (g2.right_stick_y< -0.8?0.03:0.01), 0.10, 0.85);
             robot.setRelicElbowPosition(relicElbowPosition);
-            sleep(50);
+            sleep(100);
         }
 
         if(g2.right_stick_x > 0.9 ) {
@@ -186,7 +184,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         //------------------------------------------------------
         DriveHelper.drive(g, robot, telemetry);
 
-        telemetry.addData("RelicElbowPosition: ", relicElbowPosition);
-        telemetry.addData("Relic Elbow Position: ", String.format("%.1f",robot.getRelicElbowPosition()));
+        telemetry.addData("RelicElbowPosition: ", String.format("%.2f",relicElbowPosition));
+        telemetry.addData("Relic Elbow Position: ", String.format("%.2f",robot.getRelicElbowPosition()));
     }
 }
