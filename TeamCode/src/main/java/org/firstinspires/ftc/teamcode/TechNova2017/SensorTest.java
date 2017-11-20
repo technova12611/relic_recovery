@@ -103,6 +103,8 @@ public class SensorTest extends LinearOpMode {
                 robot.setGlyphLiftStopperPosition(Range.clip(robot.getGlyphLiftStopperPosition() - 0.02, 0.0, 1.00));
                 sleep(50);
             }
+
+            telemetry.addData("Servo Position: ", String.format("%.2f",robot.getGlyphLiftStopperPosition()));
         }
     }
 }
