@@ -8,6 +8,7 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -78,6 +79,8 @@ public class MecanumRobot {
     private Servo upperLeftGripper, upperRightGripper,lowerLeftGripper, lowerRightGripper,
             glyphHolder, glyphLiftStopper,
             relicClaw, relicElbow, relicClawholder;
+
+    private CRServo relicElbowCR;
 
     private Telemetry telemetry;
 
@@ -195,13 +198,24 @@ public class MecanumRobot {
         try {
             relicClaw = hardwareMap.servo.get("relicClaw");
             relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
-
-            relicElbow = hardwareMap.servo.get("relicElbow");
-            relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
         } catch(Exception e) {
             logInfo(this.telemetry, "Init relic init failed", e.getMessage());
         }
 
+        try {
+            relicElbow = hardwareMap.servo.get("relicElbow");
+            relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init relic elbow servo failed", e.getMessage());
+        }
+
+        try {
+            relicElbowCR = hardwareMap.crservo.get("relicElbowCR");
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init relic elbow continous servo failed", e.getMessage());
+        }
+
+        logInfo(null, "Init Servos", " Servos are initialized ...");
 
         telemetry.addData("Robot initialized", "Ready to go...");
     }
@@ -221,6 +235,8 @@ public class MecanumRobot {
         rr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER, lf, lr, rr, rf);
+
+        logInfo(null, "Init Drive Motors", " Drive Motors are initialized ...");
     }
 
     private void initGyro(HardwareMap hardwareMap) {
@@ -256,6 +272,8 @@ public class MecanumRobot {
                 x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
             }
             //yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "yRange");
+
+            logInfo(null, "Init Range Sesnor", " Range Sensor x1 and x2 are initialized ...");
         }
         catch(Exception e) {
             Log.e(this.getClass().getSimpleName(), "Range Sesnor failed: " + e.getMessage());
@@ -1090,5 +1108,25 @@ public class MecanumRobot {
          +" | " + lr.getCurrentPosition()
         + " | " + rr.getCurrentPosition(), inLogCat);
     }
+
+    public void moveRelicElbowCR(double position) {
+        if(relicElbowCR != null) {
+            if(position > 0.0) {
+                relicElbowCR.setPower(1.0);
+            }
+            else if(position == 0) {
+                relicElbowCR.setPower(0.5);
+            } else {
+                relicElbowCR.setPower(0.0);
+            }
+        }
+    }
+
+    public void stopRelicElbowCR() {
+        if(relicElbowCR != null) {
+            relicElbowCR.setPower(0.5);
+        }
+    }
+
 }
 

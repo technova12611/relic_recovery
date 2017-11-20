@@ -182,7 +182,9 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                     ElapsedTime watcher = new ElapsedTime();
                     driveForwardInches(4.0, motorSpeed);
 
-                    logInfo(" Place Glyph into column (ms): " + watcher.time(TimeUnit.MILLISECONDS));
+                    logInfo(" Place Glyph into column (ms): " +
+                            watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
+                            + " | " + String.format("%.2f cm", getXDistance()));
 
                     // move backward to separate robot from glyph
                     //----------------------------------------------

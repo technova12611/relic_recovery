@@ -42,7 +42,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        // common for all alliance to handle the initializatio of our mecamnum robot
+        // common for all alliance to handle the initialization of our mecamnum robot
         //------------------------------------------------------------------------
         initOpMode();
 
@@ -222,7 +222,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     }
 
                     double avgXDistance = measureXDistance(500);
-                    logInfo("X range:",vuMark + " | " + String.format("%.2f cm", avgXDistance));
+                    logInfo("X range:",vuMark + " | " + String.format("%.2f cm", getXDistance()));
 
                     if(targetDistance > 0.0) {
                         alignToCryptoBox(targetDistance);
@@ -245,7 +245,9 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     ElapsedTime watcher = new ElapsedTime();
                     driveForwardInches(4.0, motorSpeed);
 
-                    logInfo(" Place Glyph into column (ms): " + watcher.time(TimeUnit.MILLISECONDS));
+                    logInfo(" Place Glyph into column (ms): " +
+                            watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
+                            + " | " + String.format("%.2f cm", getXDistance()));
 
                     // move backward to separate robot from glyph
                     //----------------------------------------------
