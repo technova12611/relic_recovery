@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoRed2.State.END;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoRed2.State.FORWARD_3_FEET;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoRed2.State.START;
-
+@Autonomous(name = "Auto Blue 2", group = "Competition")
 public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
+    public AllianceColor getAllianceColor() {
+        return AllianceColor.BLUE;
+    }
 
     // make new States for each autonomous strategy
     // like Auto 2, Auto 3 etc.
@@ -68,13 +69,13 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
 
         // starts the state machine
         //---------------------------------
-        v_state = START;
+        v_state = RelicRecoveryAutoBlue2.State.START;
 
 
         // 2. Run the state machine
         //  test, and more test
         //-------------------------------------------------------------------
-        while (opModeIsActive() && v_state != END) {
+        while (opModeIsActive() && v_state != RelicRecoveryAutoBlue2.State.END) {
 
             boolean detectVuMark = false;
             double motorSpeed = 0.4;
@@ -111,11 +112,11 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                     // close the grabber, and move up the lift by 1 or 2 inches
                     robot.pickupGlyphInAuto();
 
-                    gotoState(FORWARD_3_FEET);
+                    gotoState(RelicRecoveryAutoBlue2.State.BACKWARD_3_FEET);
                     break;
 
                 case BACKWARD_3_FEET:
-                    driveBackwardInches(34.0, motorSpeed);
+                    driveBackwardInches(25.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -133,25 +134,25 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(19.5, motorSpeed);
+                            driveRightInches(22.5, motorSpeed);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveLeftInches(12.0, motorSpeed);
+                            driveRightInches(16.0, motorSpeed);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveRightInches(4.0, motorSpeed);
+                            driveRightInches(6.0, motorSpeed);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveRightInches(12.0, motorSpeed);
+                            driveRightInches(16.0, motorSpeed);
                             break;
                     }
 
@@ -159,7 +160,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                     break;
 
                 case FORWARD_1_FEET:
-                    driveForwardInches(4.0, motorSpeed);
+                    driveForwardInches(2.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -201,7 +202,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
 
                 case END:
                     Default:
-                    gotoState(END);
+                    gotoState(RelicRecoveryAutoBlue2.State.END);
                     break;
             }
 
