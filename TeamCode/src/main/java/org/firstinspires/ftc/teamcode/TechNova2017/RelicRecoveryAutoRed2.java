@@ -211,40 +211,5 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
         robot.onStop();
     }
 
-
-    protected void alignToCryptoBox(double targetPosition) throws InterruptedException
-    {
-        double xDistance = getXDistance();
-
-        // range sensor failed, abort!
-        if(xDistance == 0.0) {
-            return;
-        }
-
-        double distanceThrehold = 1.0;
-
-        double error = xDistance -targetPosition;
-        ElapsedTime timer = new ElapsedTime();
-
-        // try for 3 seconds only, to avoid oscilliation
-        while(opModeIsActive() && Math.abs(error) > distanceThrehold && timer.time(TimeUnit.SECONDS) < 3) {
-            xDistance = getXDistance();
-            // turn right
-            if(getAllianceColor() == AllianceColor.RED) {
-                if (error > 0) {
-                    driveRightInches(Math.abs(error/ 2.54), 0.25);
-                } else {
-                    driveLeftInches(Math.abs(error/ 2.54), 0.25);
-                }
-            }
-            else {
-                if (error > 0) {
-                    driveLeftInches(Math.abs(error/ 2.54), 0.25);
-                } else {
-                    driveRightInches(Math.abs(error/ 2.54), 0.25);
-                }
-            }
-        }
-    }
     //------------------------------------
 }

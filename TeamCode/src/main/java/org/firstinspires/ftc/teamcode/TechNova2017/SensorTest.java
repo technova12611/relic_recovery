@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
@@ -91,6 +92,16 @@ public class SensorTest extends LinearOpMode {
                 robot.turnOnBlueLed();
             } else if(gamepad1.left_stick_y < -0.5) {
                 robot.turnOffBlueLed();
+            }
+
+            if(gamepad2.right_stick_y <0) {
+                robot.setGlyphLiftStopperPosition(Range.clip(robot.getGlyphLiftStopperPosition() + 0.02, 0.0, 1.00));
+                sleep(50);
+            }
+
+            if(gamepad2.right_stick_y >0) {
+                robot.setGlyphLiftStopperPosition(Range.clip(robot.getGlyphLiftStopperPosition() - 0.02, 0.0, 1.00));
+                sleep(50);
             }
         }
     }

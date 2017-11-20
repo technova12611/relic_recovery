@@ -16,11 +16,6 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
     private double relicElbowPosition = RELIC_ELBOW_INITIAL_POSITION;
 
-    private int GLYPH_ARM_OPEN_POSITION_CLOSED   = 0;
-    private int GLYPH_ARM_OPEN_POSITION_WIDE_OPEN = 3;
-
-    private int glyphGrabberState = GLYPH_ARM_OPEN_POSITION_WIDE_OPEN;
-
     private boolean glyphLiftStopperClosed = false;
 
     @Override
@@ -173,6 +168,12 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             sleep(50);
         }
 
+        if(g2.right_stick_x > 0.9 ) {
+            robot.raiseRelicOverTheWall();
+        } else if(g2.right_stick_x < -0.9) {
+            robot.prepareRelicLanding();
+        }
+
         // operator controller left+right bumper at once to release the RELIC claw
         // this is not reversible, use with caution
         // if accidentally release, need to move it up
@@ -185,6 +186,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         //------------------------------------------------------
         DriveHelper.drive(g, robot, telemetry);
 
+        telemetry.addData("RelicElbowPosition: ", relicElbowPosition);
         telemetry.addData("Relic Elbow Position: ", String.format("%.1f",robot.getRelicElbowPosition()));
     }
 }

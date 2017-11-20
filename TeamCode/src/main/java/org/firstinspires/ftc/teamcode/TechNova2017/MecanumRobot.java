@@ -124,6 +124,13 @@ public class MecanumRobot {
         this.linearOpMode = opMode;
         this.telemetry = _telemetry;
 
+        try {
+            relicClawholder = hardwareMap.servo.get("relicClawholder");
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init relic claw holder failed", e.getMessage());
+        }
+
         initMotors(hardwareMap);
 
         if(allianceColor != null) {
@@ -142,12 +149,6 @@ public class MecanumRobot {
             longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
         }
 
-        upperLeftGripper = hardwareMap.servo.get("upperLeftGripper");
-        upperRightGripper = hardwareMap.servo.get("upperRightGripper");
-
-        lowerLeftGripper = hardwareMap.servo.get("lowerLeftGripper");
-        lowerRightGripper = hardwareMap.servo.get("lowerRightGripper");
-
         try {
             glyphHolder = hardwareMap.servo.get("glyphHolder");
             glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
@@ -157,6 +158,12 @@ public class MecanumRobot {
         } catch(Exception e) {
             logInfo(this.telemetry, "Init glyph holder", e.getMessage());
         }
+
+        upperLeftGripper = hardwareMap.servo.get("upperLeftGripper");
+        upperRightGripper = hardwareMap.servo.get("upperRightGripper");
+
+        lowerLeftGripper = hardwareMap.servo.get("lowerLeftGripper");
+        lowerRightGripper = hardwareMap.servo.get("lowerRightGripper");
 
         if(allianceColor != null) {
             upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION);
@@ -191,12 +198,11 @@ public class MecanumRobot {
 
             relicElbow = hardwareMap.servo.get("relicElbow");
             relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
-
-            relicClawholder = hardwareMap.servo.get("relicClawholder");
-            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
         } catch(Exception e) {
             logInfo(this.telemetry, "Init relic init failed", e.getMessage());
         }
+
+
         telemetry.addData("Robot initialized", "Ready to go...");
     }
 
@@ -1024,7 +1030,7 @@ public class MecanumRobot {
 
     public void prepareRelicLanding () {
         if(relicElbow != null) {
-            relicElbow.setPosition(RELIC_ELBOW_RELEASE_POSITION);
+            relicElbow.setPosition(RELIC_ELBOW_RELEASE_POSITION + 0.10);
         }
     }
 
@@ -1042,13 +1048,17 @@ public class MecanumRobot {
         return 0.0;
     }
 
+    public double getGlyphLiftStopperPosition() {
+        if(glyphLiftStopper != null) {
+            return glyphLiftStopper.getPosition();
+        }
+
+        return 0.0;
+    }
+
     public void releaseClaw() {
         if (relicClawholder != null) {
             relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION);
-        }
-
-        if(relicElbow != null) {
-            relicElbow.setPosition(RELIC_ELBOW_RELEASE_POSITION);
         }
 
         if(relicClaw != null) {
@@ -1068,10 +1078,16 @@ public class MecanumRobot {
         }
     }
 
+    public void setGlyphLiftStopperPosition(double position) {
+        if(glyphLiftStopper != null) {
+            glyphLiftStopper.setPosition(position);
+        }
+    }
+
     public void logMotorEncoders(Telemetry telemetry, boolean inLogCat) {
         logInfo(telemetry, "Mode Encoder: ", lf.getCurrentPosition() +
                                         " | " + rf.getCurrentPosition()
-        +" | " + lr.getCurrentPosition()
+         +" | " + lr.getCurrentPosition()
         + " | " + rr.getCurrentPosition(), inLogCat);
     }
 }
