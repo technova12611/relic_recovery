@@ -14,6 +14,7 @@ public class Controller {
 
     public Controller(Gamepad g) {
         gamepad = g;
+        gamepad.setJoystickDeadzone(0.1f);
     }
 
     public void update() {
