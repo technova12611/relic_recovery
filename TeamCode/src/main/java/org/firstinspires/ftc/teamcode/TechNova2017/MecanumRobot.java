@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -84,6 +85,7 @@ public class MecanumRobot {
     private CRServo relicElbowCR;
 
     private Telemetry telemetry;
+    private VoltageSensor voltageSensor;
 
     private BNO055IMU imu;
     private Orientation angles;
@@ -127,6 +129,7 @@ public class MecanumRobot {
     public MecanumRobot(LinearOpMode opMode, HardwareMap hardwareMap, Telemetry _telemetry, AllianceColor allianceColor) {
         this.linearOpMode = opMode;
         this.telemetry = _telemetry;
+        voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
         try {
             relicClawholder = hardwareMap.servo.get("relicClawholder");
@@ -1142,6 +1145,14 @@ public class MecanumRobot {
         if(relicElbowCR != null) {
             relicElbowCR.setPower(0.5);
         }
+    }
+
+    public double getBatteryVoltage() {
+        if(this.voltageSensor != null) {
+            return this.voltageSensor.getVoltage();
+        }
+
+        return 0.0;
     }
 
 }
