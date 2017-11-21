@@ -78,6 +78,7 @@ public class MecanumRobot {
     private DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider;
     private Servo upperLeftGripper, upperRightGripper,lowerLeftGripper, lowerRightGripper,
             glyphHolder, glyphLiftStopper,
+            longArm,
             relicClaw, relicElbow, relicClawholder;
 
     private CRServo relicElbowCR;
@@ -147,7 +148,7 @@ public class MecanumRobot {
             }
 
         } else {
-            Servo longArm = hardwareMap.servo.get("longArm");
+            longArm = hardwareMap.servo.get("longArm");
             // make sure long arm is in the up right position
             longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
         }
@@ -209,15 +210,30 @@ public class MecanumRobot {
             logInfo(this.telemetry, "Init relic elbow servo failed", e.getMessage());
         }
 
-        try {
-            relicElbowCR = hardwareMap.crservo.get("relicElbowCR");
-        } catch(Exception e) {
-            logInfo(this.telemetry, "Init relic elbow continous servo failed", e.getMessage());
-        }
+//        try {
+//            relicElbowCR = hardwareMap.crservo.get("relicElbowCR");
+//        } catch(Exception e) {
+//            logInfo(this.telemetry, "Init relic elbow continous servo failed", e.getMessage());
+//        }
 
         logInfo(null, "Init Servos", " Servos are initialized ...");
 
         telemetry.addData("Robot initialized", "Ready to go...");
+    }
+
+    public void initServosForTeleOps() {
+        try {
+            if(relicClawholder != null) relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+            if(glyphHolder != null) glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
+            if(relicClaw != null) relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
+            if(relicElbow != null) relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
+            if(longArm != null) longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
+
+            openGlyphGripperMidWide();
+        }
+        catch(Exception e) {
+            logInfo(this.telemetry, "Init servos failed", e.getMessage());
+        }
     }
 
     private void initMotors(HardwareMap hardwareMap) {
@@ -1048,7 +1064,7 @@ public class MecanumRobot {
 
     public void prepareRelicLanding () {
         if(relicElbow != null) {
-            relicElbow.setPosition(RELIC_ELBOW_RELEASE_POSITION + 0.10);
+            relicElbow.setPosition(RELIC_ELBOW_RELEASE_POSITION + 0.15);
         }
     }
 

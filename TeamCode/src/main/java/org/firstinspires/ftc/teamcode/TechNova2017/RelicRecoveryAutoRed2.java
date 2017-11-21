@@ -193,8 +193,8 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
 
                 case RESET_GLYPH_LIFT:
                     // move the glyph lift back to zero position
-                    robot.openGlyphGripperMidWide();
                     robot.resetGlyphLift();
+                    robot.initServosForTeleOps();
                     gotoNextState();
                     break;
 

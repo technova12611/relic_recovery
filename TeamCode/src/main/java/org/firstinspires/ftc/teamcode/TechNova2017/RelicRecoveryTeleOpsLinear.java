@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
-import android.util.Log;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
@@ -17,6 +16,8 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
     private double relicElbowPosition = RELIC_ELBOW_INITIAL_POSITION;
 
     private boolean glyphLiftStopperClosed = false;
+
+    private ElapsedTime relicElbowTimer = new ElapsedTime();
 
     @Override
     public void runOpMode() {
@@ -41,22 +42,16 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         while (opModeIsActive()) {
-
             g1.update();
             g2.update();
-
             //robot.loop();
-
-            gamepadLoop(g1);
-
+            gamepadLoop();
             telemetry.update();
         }
     }
 
-    private void gamepadLoop(Controller g) {
-
-
-
+    private void gamepadLoop()
+    {
         // gamepad 1 A/B controls both grab glyph (open and close servo)
         // ---------------------------------------------------------
         if(g1.A() && (g1.leftBumper() || g1.rightBumper())) {
@@ -125,16 +120,10 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         }
         // switch to Relic grabbing/landing handling
         //----------------------------------------------
-        if(g2.dpadUp()) {
+        if(g2.dpadUp() || g2.right_stick_x > 0.9) {
             robot.raiseRelicOverTheWall();
-//            robot.closeGlyphLiftStopper();
-//            glyphLiftStopperClosed = true;
-//            telemetry.addData("Glyph Lower Arm: ", "CLOSED");
-        } else if(g2.dpadDown()) {
+        } else if(g2.dpadDown() || g2.right_stick_x < -0.9) {
             robot.prepareRelicLanding();
-//            robot.openGlyphLiftStopper();
-//            glyphLiftStopperClosed = false;
-//            telemetry.addData("Glyph Lower Arm: ", "OPEN");
         }
 
         if(glyphLiftStopperClosed) {
@@ -154,22 +143,17 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // operator controller right joystick Y to move Relic Elbow up and down
         // move the arm gradually to avoid sudden stop
         //-----------------------------------------------------------------------
-        if(g2.right_stick_y <0) {
-            relicElbowPosition = Range.clip(robot.getRelicElbowPosition() + (g2.right_stick_y< -0.8?0.03:0.01), 0.10, 0.85);
-            robot.setRelicElbowPosition(relicElbowPosition);
-            sleep(100);
-        }
-
-        if(g2.right_stick_y >0) {
-            relicElbowPosition = Range.clip(robot.getRelicElbowPosition() - (g2.right_stick_y< -0.8?0.03:0.01), 0.10, 0.85);
-            robot.setRelicElbowPosition(relicElbowPosition);
-            sleep(100);
-        }
-
-        if(g2.right_stick_x > 0.9 ) {
-            robot.raiseRelicOverTheWall();
-        } else if(g2.right_stick_x < -0.9) {
-            robot.prepareRelicLanding();
+        if(relicElbowTimer.milliseconds() > 100){
+            if(g2.right_stick_y <0){
+                relicElbowPosition += Range.clip(relicElbowPosition + (g2.right_stick_y< -0.8?0.03:0.01), 0.10, 0.85);
+                robot.setRelicElbowPosition(relicElbowPosition);
+                relicElbowTimer.reset();
+            }
+            else if(g2.right_stick_y >0){
+                relicElbowPosition -= Range.clip(relicElbowPosition - (g2.right_stick_y> 0.8?0.03:0.01), 0.10, 0.85);
+                robot.setRelicElbowPosition(relicElbowPosition);
+                relicElbowTimer.reset();
+            }
         }
 
         // operator controller left+right bumper at once to release the RELIC claw
@@ -182,9 +166,9 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
         // driving the robot
         //------------------------------------------------------
-        DriveHelper.drive(g, robot, telemetry);
+        DriveHelper.drive(g1, robot, telemetry);
 
-        telemetry.addData("RelicElbowPosition: ", String.format("%.2f",relicElbowPosition));
+        telemetry.addData("relicElbowPosition: ", String.format("%.2f",relicElbowPosition));
         telemetry.addData("Relic Elbow Position: ", String.format("%.2f",robot.getRelicElbowPosition()));
     }
 }
