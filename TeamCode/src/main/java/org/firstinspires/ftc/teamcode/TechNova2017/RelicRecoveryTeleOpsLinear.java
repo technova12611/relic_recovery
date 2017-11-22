@@ -122,8 +122,10 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         //----------------------------------------------
         if(g2.dpadUp() || g2.right_stick_x > 0.9) {
             robot.raiseRelicOverTheWall();
-        } else if(g2.dpadDown() || g2.right_stick_x < -0.9) {
-            robot.prepareRelicLanding();
+        }
+
+        if(g2.dpadDown()) {
+            robot.closeRelicClawHolder();
         }
 
         if(glyphLiftStopperClosed) {
@@ -145,16 +147,18 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         //-----------------------------------------------------------------------
         if(relicElbowTimer.milliseconds() > 100){
             if(g2.right_stick_y <0){
-                relicElbowPosition += Range.clip(relicElbowPosition + (g2.right_stick_y< -0.8?0.03:0.01), 0.10, 0.85);
+                relicElbowPosition = Range.clip(relicElbowPosition + (g2.right_stick_y< -0.8?0.03:0.01), 0.10, 0.85);
                 robot.setRelicElbowPosition(relicElbowPosition);
                 relicElbowTimer.reset();
             }
             else if(g2.right_stick_y >0){
-                relicElbowPosition -= Range.clip(relicElbowPosition - (g2.right_stick_y> 0.8?0.03:0.01), 0.10, 0.85);
+                relicElbowPosition = Range.clip(relicElbowPosition - (g2.right_stick_y> 0.8?0.03:0.01), 0.10, 0.85);
                 robot.setRelicElbowPosition(relicElbowPosition);
                 relicElbowTimer.reset();
             }
         }
+
+        relicElbowPosition = robot.getRelicElbowPosition();
 
         // operator controller left+right bumper at once to release the RELIC claw
         // this is not reversible, use with caution

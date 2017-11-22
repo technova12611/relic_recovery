@@ -1103,6 +1103,12 @@ public class MecanumRobot {
         }
     }
 
+    public void closeRelicClawHolder() {
+        if (relicClawholder != null) {
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+        }
+    }
+
     public void openGlyphLiftStopper() {
         if(glyphLiftStopper != null) {
             glyphLiftStopper.setPosition(GLYPH_LIFT_STOPPER_OPEN_POSITION);
