@@ -5,7 +5,7 @@ public class RobotInfo {
     // ------------------------------------------------------------------
     // Jewel push servo positions
     //-------------------------------------------------------------------
-    public static double JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION = 0.91;
+    public static double JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION = 0.89;
 
     public static double JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION = 0.90;
     public static double JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION = 0.60;
