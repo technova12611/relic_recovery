@@ -107,9 +107,9 @@ public class DriveHelper {
         robot.drive(theta, v_theta, v_rotation);
 
         if(slowDrive) {
-            robot.turnOnBlueLed();
+            robot.turnOnGreenLed();
         } else {
-            robot.turnOffBlueLed();
+            robot.turnOffGreenLed();
         }
     }
 

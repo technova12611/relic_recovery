@@ -179,7 +179,7 @@ public class MecanumRobot {
             lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION);
         }
         else {
-            openGlyphGripperMidWide();
+            openGlyphGripperWider();
         }
 
         try {
@@ -438,15 +438,15 @@ public class MecanumRobot {
     }
 
     public void openGlyphGripperWider() {
-        openUpperGlyphGripperWide();
+        openUpperGlyphGripperMidWide();
         openLowerGlyphGripperWide();
-        glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
+        this.glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
     }
 
     public void openGlyphGripperMidWide() {
         openUpperGlyphGripperMidWide();
-        openLowerGlyphGripperMidWide();
-        glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
+        openLowerGlyphGripperWide();
+        this.glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
     }
 
     // open/close upper gripper
@@ -460,7 +460,7 @@ public class MecanumRobot {
     public void closeUpperGlyphGripper() {
         upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION);
         upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION);
-        glyphHolder.setPosition(GLYPH_TOP_HOLDER_CLOSE_POSITION);
+        this.glyphHolder.setPosition(GLYPH_TOP_HOLDER_CLOSE_POSITION);
     }
 
     public void alignStackedGlyphs() {
@@ -546,6 +546,43 @@ public class MecanumRobot {
         }
 
         this.glyphLift.setPower(0.0);
+        this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void setGlyphLiftToPosition(int position) {
+        // move up glyph
+
+        this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.glyphLift.setTargetPosition(position);
+        this.glyphLift.setPower(0.8);
+
+        ElapsedTime timer = new ElapsedTime();
+        // wait for 2 seconds, if not reached, move on anyway
+        while(busy(glyphLift) && timer.time(TimeUnit.SECONDS) < 2 &&
+                this.linearOpMode != null && this.linearOpMode.opModeIsActive()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        this.glyphLift.setPower(0.0);
+        this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public boolean isGlyphLiftTartReached() {
+
+        while(busy(glyphLift) ||
+                Math.abs(this.glyphLift.getCurrentPosition() - this.glyphLift.getTargetPosition())< 100) {
+            this.glyphLift.setPower(0.0);
+            this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            return true;
+        }
+        return false;
+    }
+
+    public void setGlyphLiftToRunEncoderMode() {
         this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
@@ -1013,7 +1050,7 @@ public class MecanumRobot {
 
     public void turnOnBlueLed() {
         if(led != null) {
-            led.setPower(-0.90);
+            led.setPower(0.90);
         }
     }
 
@@ -1025,7 +1062,7 @@ public class MecanumRobot {
 
     public void turnOnGreenLed() {
         if(led != null) {
-            led.setPower(0.90);
+            led.setPower(-0.90);
         }
     }
 
