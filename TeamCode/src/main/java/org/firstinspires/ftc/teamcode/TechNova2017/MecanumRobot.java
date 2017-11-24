@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -82,10 +83,11 @@ public class MecanumRobot {
             longArm,
             relicClaw, relicElbow, relicClawholder;
 
-    private CRServo relicElbowCR;
-
     private Telemetry telemetry;
     private VoltageSensor voltageSensor;
+
+    private boolean isBlueLedOn = false;
+    private boolean isGreenLedOn = false;
 
     private BNO055IMU imu;
     private Orientation angles;
@@ -99,6 +101,8 @@ public class MecanumRobot {
     private double prevX1Distance = 0.0;
     private double prevX2Distance = 0.0;
     private double prevYDistance = 0.0;
+
+    private DigitalChannel glyphTouchSensor;
 
     private LinearOpMode linearOpMode;
 
@@ -213,12 +217,12 @@ public class MecanumRobot {
             logInfo(this.telemetry, "Init relic elbow servo failed", e.getMessage());
         }
 
-//        try {
-//            relicElbowCR = hardwareMap.crservo.get("relicElbowCR");
-//        } catch(Exception e) {
-//            logInfo(this.telemetry, "Init relic elbow continous servo failed", e.getMessage());
-//        }
+        try {
+            glyphTouchSensor = hardwareMap.digitalChannel.get("glyphTouch");
+        }
+        catch(Exception e) {
 
+        }
         logInfo(null, "Init Servos", " Servos are initialized ...");
 
         telemetry.addData("Robot initialized", "Ready to go...");
@@ -1050,26 +1054,38 @@ public class MecanumRobot {
 
     public void turnOnBlueLed() {
         if(led != null) {
-            led.setPower(0.90);
+            led.setPower(0.95);
+            isBlueLedOn = true;
         }
     }
 
     public void turnOffBlueLed() {
         if(led != null) {
             led.setPower(0.0);
+            isBlueLedOn = false;
         }
     }
 
     public void turnOnGreenLed() {
         if(led != null) {
-            led.setPower(-0.90);
+            led.setPower(-0.95);
+            isGreenLedOn = true;
         }
     }
 
     public void turnOffGreenLed() {
         if(led != null) {
             led.setPower(0.0);
+            isGreenLedOn = false;
         }
+    }
+
+    public boolean isBlueLedOn() {
+        return this.isBlueLedOn;
+    }
+
+    public boolean isGreenLedOn() {
+        return this.isGreenLedOn;
     }
 
     public double getRangeSensorVol() {
@@ -1171,31 +1187,20 @@ public class MecanumRobot {
         + " | " + rr.getCurrentPosition(), inLogCat);
     }
 
-    public void moveRelicElbowCR(double position) {
-        if(relicElbowCR != null) {
-            if(position > 0.0) {
-                relicElbowCR.setPower(1.0);
-            }
-            else if(position == 0) {
-                relicElbowCR.setPower(0.5);
-            } else {
-                relicElbowCR.setPower(0.0);
-            }
-        }
-    }
-
-    public void stopRelicElbowCR() {
-        if(relicElbowCR != null) {
-            relicElbowCR.setPower(0.5);
-        }
-    }
-
     public double getBatteryVoltage() {
         if(this.voltageSensor != null) {
             return this.voltageSensor.getVoltage();
         }
 
         return 0.0;
+    }
+
+    public boolean isGlyphTouched() {
+        if(this.glyphTouchSensor != null) {
+            return this.glyphTouchSensor.getState();
+        }
+
+        return false;
     }
 
 }

@@ -108,7 +108,7 @@ public class DriveHelper {
 
         if(slowDrive) {
             robot.turnOnGreenLed();
-        } else {
+        } else if(robot.isGreenLedOn()){
             robot.turnOffGreenLed();
         }
     }

@@ -180,6 +180,12 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             robot.releaseClaw();
         }
 
+        if(robot.isGlyphTouched()) {
+            robot.turnOnBlueLed();
+        } else if(robot.isBlueLedOn()){
+            robot.turnOffBlueLed();
+        }
+
         // driving the robot
         //------------------------------------------------------
         DriveHelper.drive(g1, robot, telemetry);
@@ -187,5 +193,6 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         telemetry.addData("relicElbowPosition: ", String.format("%.2f",relicElbowPosition));
         telemetry.addData("Relic Elbow Position: ", String.format("%.2f",robot.getRelicElbowPosition()));
         telemetry.addData("Glyph Lift Count: ", robot.getGlyphLiftPosition());
+        telemetry.addData("Glyph Touched: ", robot.isGlyphTouched());
     }
 }
