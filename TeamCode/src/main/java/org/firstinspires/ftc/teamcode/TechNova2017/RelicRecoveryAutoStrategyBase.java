@@ -141,7 +141,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(36.0,motorSpeed);
+                                driveBackwardInches(35.5,motorSpeed);
                               }
                             break;
 
@@ -165,7 +165,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveBackwardInches(36.5, motorSpeed);
+                                driveBackwardInches(35.5, motorSpeed);
                             }
                             break;
                     }
