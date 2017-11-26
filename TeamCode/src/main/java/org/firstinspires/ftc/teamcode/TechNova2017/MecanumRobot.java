@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -102,7 +103,7 @@ public class MecanumRobot {
     private double prevX2Distance = 0.0;
     private double prevYDistance = 0.0;
 
-    private DigitalChannel glyphTouchSensor;
+    private TouchSensor glyphTouchSensor;
 
     private LinearOpMode linearOpMode;
 
@@ -218,7 +219,7 @@ public class MecanumRobot {
         }
 
         try {
-            glyphTouchSensor = hardwareMap.digitalChannel.get("glyphTouch");
+            glyphTouchSensor = hardwareMap.touchSensor.get("glyphTouch");
         }
         catch(Exception e) {
 
@@ -1197,7 +1198,7 @@ public class MecanumRobot {
 
     public boolean isGlyphTouched() {
         if(this.glyphTouchSensor != null) {
-            return this.glyphTouchSensor.getState();
+            return this.glyphTouchSensor.isPressed();
         }
 
         return false;
