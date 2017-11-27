@@ -94,9 +94,12 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // move the glyph lift up and down
         //---------------------------------------------------------------------
         if(glyphLiftInAutoMode) {
-            robot.isGlyphLiftTartReached();
-            glyphLiftInAutoMode = false;
-        } else {
+            if(robot.isGlyphLiftTargetReached()) {
+                glyphLiftInAutoMode = false;
+            }
+        }
+
+        if(!glyphLiftInAutoMode) {
             robot.setGlyphLiftToRunEncoderMode();
         }
 
