@@ -18,6 +18,9 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
     private ElapsedTime relicElbowTimer = new ElapsedTime();
 
     boolean glyphLiftInAutoMode = false;
+    ElapsedTime glyphLiftTimer = new ElapsedTime();
+
+    int debugGlyphLift = -1;
 
     @Override
     public void runOpMode() {
@@ -101,37 +104,42 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         }
 
         if(g2.left_trigger > 0.5 && (g2.leftBumper()|| g2.rightBumper())) {
-            robot.setGlyphLiftToPosition(2250);
+            robot.setGlyphLiftToPosition(2450);
+            glyphLiftTimer.reset();
             glyphLiftInAutoMode = true;
         }
         else if(g2.right_trigger > 0.5 && (g2.leftBumper()|| g2.rightBumper())) {
             robot.setGlyphLiftToPosition(0);
+            glyphLiftTimer.reset();
             glyphLiftInAutoMode = true;
         }
-        else if(g1.left_trigger >0.0) {
+        else if(g1.left_trigger >0.1 && isGlyphLiftManualModeAllowed()) {
             robot.setGlyphLiftToRunEncoderMode();
             robot.moveGlyphLift(g1.left_trigger);
             glyphLiftInAutoMode = false;
         }
-        else if(g1.right_trigger >0.0){
+        else if(g1.right_trigger >0.1 && isGlyphLiftManualModeAllowed()){
             robot.setGlyphLiftToRunEncoderMode();
             robot.moveGlyphLift(-g1.right_trigger);
             glyphLiftInAutoMode = false;
         }
-        else if(g2.left_trigger > 0.0) {
+        else if(g2.left_trigger > 0.1 && isGlyphLiftManualModeAllowed()) {
             robot.setGlyphLiftToRunEncoderMode();
             robot.moveGlyphLift(g2.left_trigger);
             glyphLiftInAutoMode = false;
+            debugGlyphLift = 1;
         }
-        else if(g2.right_trigger > 0.0){
+        else if(g2.right_trigger > 0.1 && isGlyphLiftManualModeAllowed()){
             robot.setGlyphLiftToRunEncoderMode();
             robot.moveGlyphLift(-g2.right_trigger);
             glyphLiftInAutoMode = false;
+            debugGlyphLift = 1;
         }
         else if(!glyphLiftInAutoMode){
             robot.setGlyphLiftToRunEncoderMode();
             robot.moveGlyphLift(0.0);
             glyphLiftInAutoMode = false;
+            debugGlyphLift = 1;
         }
 
         // operator controller left joystick moves the relic slider
@@ -198,6 +206,16 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         telemetry.addData("relicElbowPosition: ", String.format("%.2f",relicElbowPosition));
         telemetry.addData("Relic Elbow Position: ", String.format("%.2f",robot.getRelicElbowPosition()));
         telemetry.addData("Glyph Lift Count: ", robot.getGlyphLiftPosition());
+        telemetry.addData("Glyph Auto Mode: ", glyphLiftInAutoMode + " (LT,RT): " + String.format("%.2f, %.2f",g2.left_trigger,g2.right_trigger));
         telemetry.addData("Glyph Touched: ", robot.isGlyphTouched());
+    }
+
+    private boolean isGlyphLiftManualModeAllowed() {
+        if(!this.glyphLiftInAutoMode ||
+                (this.glyphLiftInAutoMode && glyphLiftTimer.seconds() > 1.0)) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -29,7 +29,7 @@ public class RobotInfo {
     public static double UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION = 0.52;
     public static double UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.62;
     public static double UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.66;
-    public static double UPPER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.72;
+    public static double UPPER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.70;
     public static double UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.82;
 
     public static double UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION = 0.52;
