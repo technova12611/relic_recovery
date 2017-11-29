@@ -554,29 +554,13 @@ public class MecanumRobot {
 
     public void setGlyphLiftToPosition(int position) {
         // move up glyph
-
         this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         this.glyphLift.setTargetPosition(position);
         this.glyphLift.setPower(0.8);
-
-        ElapsedTime timer = new ElapsedTime();
-        // wait for 2 seconds, if not reached, move on anyway
-        while(busy(glyphLift) && timer.time(TimeUnit.SECONDS) < 2 &&
-                this.linearOpMode != null && this.linearOpMode.opModeIsActive()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        this.glyphLift.setPower(0.0);
-        this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public boolean isGlyphLiftTargetReached() {
-
-        while(busy(glyphLift) ||
+        if(!busy(glyphLift) ||
                 Math.abs(this.glyphLift.getCurrentPosition() - this.glyphLift.getTargetPosition())< 100) {
             this.glyphLift.setPower(0.0);
             this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -1180,10 +1164,10 @@ public class MecanumRobot {
     }
 
     public void logMotorEncoders(Telemetry telemetry, boolean inLogCat) {
-        logInfo(telemetry, "Mode Encoder: ", lf.getCurrentPosition() +
-                                        " | " + rf.getCurrentPosition()
-         +" | " + lr.getCurrentPosition()
-        + " | " + rr.getCurrentPosition(), inLogCat);
+        logInfo(telemetry, "Mode Encoder: ", lf.getCurrentPosition()
+         + " | " + rf.getCurrentPosition()
+         + " | " + lr.getCurrentPosition()
+         + " | " + rr.getCurrentPosition(), inLogCat);
     }
 
     public double getBatteryVoltage() {
