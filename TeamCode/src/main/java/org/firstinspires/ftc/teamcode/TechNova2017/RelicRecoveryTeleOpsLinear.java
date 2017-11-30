@@ -20,8 +20,6 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
     boolean glyphLiftInAutoMode = false;
     ElapsedTime glyphLiftTimer = new ElapsedTime();
 
-    int debugGlyphLift = -1;
-
     @Override
     public void runOpMode() {
 
@@ -96,8 +94,10 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
         // move the glyph lift up and down
         //---------------------------------------------------------------------
-        if(glyphLiftInAutoMode && robot.isGlyphLiftTargetReached()) {
-            glyphLiftInAutoMode = false;
+        if(glyphLiftInAutoMode ) {
+            if(robot.isGlyphLiftTargetReached()) {
+                glyphLiftInAutoMode = false;
+            }
         }
         else {
             robot.setGlyphLiftToRunEncoderMode();
@@ -127,19 +127,16 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             robot.setGlyphLiftToRunEncoderMode();
             robot.moveGlyphLift(g2.left_trigger);
             glyphLiftInAutoMode = false;
-            debugGlyphLift = 1;
         }
         else if(g2.right_trigger > 0.1 && isGlyphLiftManualModeAllowed()){
             robot.setGlyphLiftToRunEncoderMode();
             robot.moveGlyphLift(-g2.right_trigger);
             glyphLiftInAutoMode = false;
-            debugGlyphLift = 1;
         }
         else if(!glyphLiftInAutoMode){
             robot.setGlyphLiftToRunEncoderMode();
             robot.moveGlyphLift(0.0);
             glyphLiftInAutoMode = false;
-            debugGlyphLift = 1;
         }
 
         // operator controller left joystick moves the relic slider
@@ -206,7 +203,6 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         telemetry.addData("relicElbowPosition: ", String.format("%.2f",relicElbowPosition));
         telemetry.addData("Relic Elbow Position: ", String.format("%.2f",robot.getRelicElbowPosition()));
         telemetry.addData("Glyph Lift Count: ", robot.getGlyphLiftPosition());
-        telemetry.addData("Glyph Auto Mode: ", glyphLiftInAutoMode + " (LT,RT): " + String.format("%.2f, %.2f",g2.left_trigger,g2.right_trigger));
         telemetry.addData("Glyph Touched: ", robot.isGlyphTouched());
     }
 
@@ -215,7 +211,6 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
                 (this.glyphLiftInAutoMode && glyphLiftTimer.seconds() > 1.0)) {
             return true;
         }
-
         return false;
     }
 }
