@@ -1135,9 +1135,9 @@ public class MecanumRobot {
             relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION);
         }
 
-        if(relicClaw != null) {
-            relicClaw.setPosition(RELIC_CLAW_OPEN_POSITION);
-        }
+//        if(relicClaw != null) {
+//            relicClaw.setPosition(RELIC_CLAW_OPEN_POSITION);
+//        }
     }
 
     public void closeRelicClawHolder() {

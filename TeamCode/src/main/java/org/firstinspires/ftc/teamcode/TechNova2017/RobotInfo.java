@@ -5,9 +5,9 @@ public class RobotInfo {
     // ------------------------------------------------------------------
     // Jewel push servo positions
     //-------------------------------------------------------------------
-    public static double JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION = 0.89;
+    public static double JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION = 0.88;
 
-    public static double JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION = 0.90;
+    public static double JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION = 0.87;
     public static double JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION = 0.60;
     public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.40;
 
@@ -26,13 +26,13 @@ public class RobotInfo {
     //
     //----------------------------------------------------------------
 
-    public static double UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION = 0.52;
+    public static double UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION = 0.50;
     public static double UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.62;
     public static double UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.66;
     public static double UPPER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.70;
     public static double UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.82;
 
-    public static double UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION = 0.52;
+    public static double UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION = 0.51;
     public static double UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.44;
     public static double UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.38;
     public static double UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.34;
@@ -72,10 +72,10 @@ public class RobotInfo {
     public static double RELIC_CLAW_CLOSE_POSITION = 0.78;
     public static double RELIC_CLAW_OPEN_POSITION = 0.94;
 
-    public static double RELIC_ELBOW_INITIAL_POSITION = 0.15;
+    public static double RELIC_ELBOW_INITIAL_POSITION = 0.16;
     public static double RELIC_ELBOW_RELEASE_POSITION = 0.21;
     public static double RELIC_ELBOW_GRAB_POSITION = 0.31;
-    public static double RELIC_ELBOW_UP_POSITION = 0.63;
+    public static double RELIC_ELBOW_UP_POSITION = 0.65;
 
     public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.73;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.15;
