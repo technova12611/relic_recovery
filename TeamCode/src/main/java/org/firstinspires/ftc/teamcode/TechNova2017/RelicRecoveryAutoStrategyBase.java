@@ -243,7 +243,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     //-------------------------------------------------
                     logInfo(" --- Drive forward to push --- ");
                     ElapsedTime watcher = new ElapsedTime();
-                    driveForwardInches(4.0, motorSpeed);
+                    driveForwardInches(5.0, motorSpeed);
 
                     logInfo(" Place Glyph into column (ms): " +
                             watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark

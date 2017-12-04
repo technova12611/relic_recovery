@@ -560,6 +560,13 @@ public class MecanumRobot {
                 ((position - this.glyphLift.getCurrentPosition())> 0?1.0:-1.0)*0.8);
     }
 
+    public void holdGlyphLiftPosition(int position) {
+        // move up glyph
+        this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.glyphLift.setTargetPosition(position);
+        this.glyphLift.setPower(0.2);
+    }
+
     public boolean isGlyphLiftTargetReached() {
         if(!(glyphLift.isBusy()) ||
                 Math.abs(this.glyphLift.getCurrentPosition() - this.glyphLift.getTargetPosition())< 50) {
