@@ -21,6 +21,8 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
     ElapsedTime glyphLiftTimer = new ElapsedTime();
     int glyphLastPosition = 0;
 
+    boolean relicClawLocked = true;
+
     @Override
     public void runOpMode() {
 
@@ -140,7 +142,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             }
             glyphLiftInAutoMode = Boolean.FALSE;
 
-            if(robot.getGlyphLiftPosition() - glyphLastPosition >-100) {
+            if(glyphLastPosition > 100 && Math.abs(robot.getGlyphLiftPosition() - glyphLastPosition) > 30) {
                 robot.holdGlyphLiftPosition(glyphLastPosition);
             } else {
                 robot.setGlyphLiftToRunEncoderMode();
@@ -150,11 +152,12 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
         // operator controller left joystick moves the relic slider
         // ----------------------------------------------------------
-        if(Math.abs(g2.left_stick_y)>0) {
-            robot.moveRelicSlider(-1.0*g2.left_stick_y);
+        if (Math.abs(g2.left_stick_y) > 0 && !relicClawLocked) {
+            robot.moveRelicSlider(-1.0 * g2.left_stick_y);
         } else {
             robot.moveRelicSlider(0.0);
         }
+
         // switch to Relic grabbing/landing handling
         //----------------------------------------------
         if(g2.dpadUp() || g2.right_stick_x > 0.9) {
@@ -163,6 +166,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
         if(g2.dpadDown()) {
             robot.closeRelicClawHolder();
+            relicClawLocked = true;
         }
 
         // operator controller DPAD left/right to grab/release RELIC
@@ -176,16 +180,17 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // operator controller right joystick Y to move Relic Elbow up and down
         // move the arm gradually to avoid sudden stop
         //-----------------------------------------------------------------------
-        if(relicElbowTimer.milliseconds() > 80){
-            if(g2.right_stick_y <0){
-                relicElbowPosition = Range.clip(relicElbowPosition + (g2.right_stick_y< -0.8?0.03:0.01), 0.10, 0.85);
-                robot.setRelicElbowPosition(relicElbowPosition);
-                relicElbowTimer.reset();
-            }
-            else if(g2.right_stick_y >0){
-                relicElbowPosition = Range.clip(relicElbowPosition - (g2.right_stick_y> 0.8?0.03:0.01), 0.10, 0.85);
-                robot.setRelicElbowPosition(relicElbowPosition);
-                relicElbowTimer.reset();
+        if(!relicClawLocked) {
+            if (relicElbowTimer.milliseconds() > 60) {
+                if (g2.right_stick_y < 0) {
+                    relicElbowPosition = Range.clip(relicElbowPosition + (g2.right_stick_y < -0.8 ? 0.03 : 0.01), 0.10, 0.85);
+                    robot.setRelicElbowPosition(relicElbowPosition);
+                    relicElbowTimer.reset();
+                } else if (g2.right_stick_y > 0) {
+                    relicElbowPosition = Range.clip(relicElbowPosition - (g2.right_stick_y > 0.8 ? 0.03 : 0.01), 0.10, 0.85);
+                    robot.setRelicElbowPosition(relicElbowPosition);
+                    relicElbowTimer.reset();
+                }
             }
         }
 
@@ -197,6 +202,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         //-------------------------------------------------------------------------
         if (g2.rightBumper() && g2.leftBumper()) {
             robot.releaseClaw();
+            relicClawLocked = false;
         }
 
         if(robot.isGlyphTouched()) {

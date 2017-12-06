@@ -548,8 +548,8 @@ public class MecanumRobot {
             }
         }
 
-        this.glyphLift.setPower(0.0);
-        this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //this.glyphLift.setPower(0.0);
+        //this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void setGlyphLiftToPosition(int position) {

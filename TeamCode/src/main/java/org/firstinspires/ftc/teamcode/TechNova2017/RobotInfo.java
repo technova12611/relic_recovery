@@ -57,7 +57,7 @@ public class RobotInfo {
     public static double GLYPH_LIFT_STOPPER_OPEN_POSITION = 0.10;
     public static double GLYPH_LIFT_STOPPER_CLOSE_POSITION = 0.73;
 
-    public static int GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION = 1300;
+    public static int GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION = 700;
 
     // Driver control motor speed
     //-----------------------------------------------------------------------

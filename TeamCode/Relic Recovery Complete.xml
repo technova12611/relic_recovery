@@ -11,7 +11,7 @@
             <Servo name="lowerRightGripper" port="3" />
             <Servo name="shortArm" port="4" />
             <Servo name="longArm" port="5" />
-            <DigitalDevice name="glyphTouch" port="1" />
+            <ModernRoboticsAnalogTouchSensor name="glyphTouch" port="1" />
             <LynxColorSensor name="jewelColor" port="0" bus="1" />
         </LynxModule>
         <LynxModule name="Expansion Hub 3" port="3">
