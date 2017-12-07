@@ -194,7 +194,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // move the arm gradually to avoid sudden stop
         //-----------------------------------------------------------------------
         if(!relicClawLocked) {
-            if (relicElbowTimer.milliseconds() > 60) {
+            if (relicElbowTimer.milliseconds() > (g2.right_stick_y<0?60:45)) {
                 if (g2.right_stick_y < 0) {
                     relicElbowPosition = Range.clip(relicElbowPosition + (g2.right_stick_y < -0.8 ? 0.03 : 0.01), 0.10, 0.85);
                     robot.setRelicElbowPosition(relicElbowPosition);
