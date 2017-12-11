@@ -192,6 +192,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
         // operator controller right joystick Y to move Relic Elbow up and down
         // move the arm gradually to avoid sudden stop
+        // Allow the slide to move only if the relic claw is released.
         //-----------------------------------------------------------------------
         if(!relicClawLocked) {
             if (relicElbowTimer.milliseconds() > (g2.right_stick_y<0?60:45)) {
@@ -218,6 +219,8 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             relicClawLocked = false;
         }
 
+        // check if the glyph touched the bumper
+        //------------------------------------
         if(robot.isGlyphTouched()) {
             robot.turnOnBlueLed();
         } else if(robot.isBlueLedOn()){
