@@ -80,18 +80,18 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             robot.openLowerGlyphGripper();
         }
 
-        if(g1.X() && (g1.leftBumper()|| g1.rightBumper())) {
-            robot.openUpperGlyphGripperMidWide();
-        }
-        else if(g1.X() ) {
-            robot.openUpperGlyphGripper();
-        }
-        else if(g1.Y() && (g1.leftBumper()|| g1.rightBumper())) {
-            robot.alignStackedGlyphs();
-        }
-        else if(g1.Y()) {
-            robot.closeUpperGlyphGripper();
-        }
+//        if(g1.X() && (g1.leftBumper()|| g1.rightBumper())) {
+//            robot.openUpperGlyphGripperMidWide();
+//        }
+//        else if(g1.X() ) {
+//            robot.openUpperGlyphGripper();
+//        }
+//        else if(g1.Y() && (g1.leftBumper()|| g1.rightBumper())) {
+//            robot.alignStackedGlyphs();
+//        }
+//        else if(g1.Y()) {
+//            robot.closeUpperGlyphGripper();
+//        }
 
         // Gamepad 2 X/Y controls Upper glyph gripper
         //-----------------------------------------------
@@ -217,14 +217,6 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         if (g2.rightBumper() && g2.leftBumper()) {
             robot.releaseClaw();
             relicClawLocked = false;
-        }
-
-        // check if the glyph touched the bumper
-        //------------------------------------
-        if(robot.isGlyphTouched()) {
-            robot.turnOnBlueLed();
-        } else if(robot.isBlueLedOn()){
-            robot.turnOffBlueLed();
         }
 
         // driving the robot

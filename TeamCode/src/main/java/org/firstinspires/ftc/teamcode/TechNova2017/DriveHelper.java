@@ -42,12 +42,16 @@ public class DriveHelper {
             //inverted = !inverted;
         }
 
-        if(g.leftBumper() && g.XOnce()) {
+        if(g.XOnce()) {
             verySlowDrive = !verySlowDrive;
             if(verySlowDrive) {
                 scaleToDrive = VERY_LOW_MODE_SCALE_TO_DRIVE;
+                robot.turnOnBlueLed();
             } else {
                 scaleToDrive = 1.0;
+                if (robot.isBlueLedOn()) {
+                    robot.turnOffBlueLed();
+                }
             }
         }
         else if(g.rightBumperOnce() || g.leftBumperOnce()) {
@@ -110,6 +114,16 @@ public class DriveHelper {
             robot.turnOnGreenLed();
         } else if(robot.isGreenLedOn()){
             robot.turnOffGreenLed();
+        }
+
+        // check if the glyph touched the bumper
+        //------------------------------------
+        if(!verySlowDrive) {
+            if (robot.isGlyphTouched()) {
+                robot.turnOnBlueLed();
+            } else if (robot.isBlueLedOn()) {
+                robot.turnOffBlueLed();
+            }
         }
     }
 
