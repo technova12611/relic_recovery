@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DPAD_SCALE_TO_DRIVE;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOW_MODE_SCALE_TO_DRIVE;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.VERY_LOW_MODE_SCALE_TO_DRIVE;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.SLOW_MODE_SCALE_TO_DRIVE;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.VERY_SLOW_MODE_SCALE_TO_DRIVE;
 
 /**
  * Gamepad mapping and mecanum drive input control algorithms
@@ -43,9 +43,13 @@ public class DriveHelper {
         }
 
         if(g.XOnce()) {
+            slowDrive = false;
+            if(robot.isGreenLedOn()){
+                robot.turnOffGreenLed();
+            }
             verySlowDrive = !verySlowDrive;
             if(verySlowDrive) {
-                scaleToDrive = VERY_LOW_MODE_SCALE_TO_DRIVE;
+                scaleToDrive = VERY_SLOW_MODE_SCALE_TO_DRIVE;
                 robot.turnOnBlueLed();
             } else {
                 scaleToDrive = 1.0;
@@ -55,9 +59,13 @@ public class DriveHelper {
             }
         }
         else if(g.rightBumperOnce() || g.leftBumperOnce()) {
+            verySlowDrive = false;
+            if (robot.isBlueLedOn()) {
+                robot.turnOffBlueLed();
+            }
             slowDrive = !slowDrive;
             if(slowDrive) {
-                scaleToDrive = LOW_MODE_SCALE_TO_DRIVE;
+                scaleToDrive = SLOW_MODE_SCALE_TO_DRIVE;
             } else {
                 scaleToDrive = 1.0;
             }
@@ -85,7 +93,7 @@ public class DriveHelper {
 
             theta = Math.atan2(lx, ly);
             v_theta = Math.hypot(lx,ly);
-            v_rotation = Math.pow(g.right_stick_x, 3.0)*scaleToDrive;
+            v_rotation = Math.pow(g.right_stick_x, 3.0)*scaleToDrive*0.5;
 
             v_rotation = Range.clip(v_rotation,-1.0,1.0);
         }
