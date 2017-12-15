@@ -288,12 +288,11 @@ public class MecanumRobot {
 
     private void initRangeSensor(HardwareMap hardwareMap, AllianceColor alliance) {
         try {
-            if(alliance == AllianceColor.RED) {
+            //if(alliance == AllianceColor.RED) {
                 x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
-            } else {
-                x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
-            }
-            //yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "yRange");
+            //} else {
+                //x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+            //}
 
             logInfo(null, "Init Range Sesnor", " Range Sensor x1 and x2 are initialized ...");
         }
