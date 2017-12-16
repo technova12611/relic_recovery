@@ -134,7 +134,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(26.0, motorSpeed);
+                            driveRightInches(27.0, motorSpeed);
                             break;
 
                         // need to place glyph into CENTER Crypto box
