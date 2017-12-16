@@ -164,7 +164,7 @@ public class JewelPusher {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
         Color jewelColor = getJewelColor();
-        while(timer.time() < 2000 && jewelColor == UNKNOWN) {
+        while(timer.time() < 3000 && jewelColor == UNKNOWN) {
             jewelColor = getJewelColor();
             waitForMS(100);
         }
@@ -221,9 +221,9 @@ public class JewelPusher {
             if(_telemetry != null) {
                 _telemetry.addData("Jewel Pusher:", message);
             }
-            if(jewelColor.red() > 10 && (jewelColor.red() - jewelColor.blue() > 12) && jewelColor.argb() > 0) {
+            if(jewelColor.red() > 10 && (jewelColor.red() - jewelColor.blue() >= 5) && jewelColor.argb() > 0) {
                 return RED;
-            } else if(jewelColor.blue() > 10 &&  (jewelColor.blue() - jewelColor.red() > 12) && jewelColor.argb() > 0) {
+            } else if(jewelColor.blue() > 10 &&  (jewelColor.blue() - jewelColor.red() >= 5) && jewelColor.argb() > 0) {
                 return BLUE;
             }
         }

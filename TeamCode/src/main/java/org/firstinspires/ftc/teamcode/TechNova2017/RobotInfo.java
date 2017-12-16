@@ -51,8 +51,8 @@ public class RobotInfo {
     public static double LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.63;
 
     public static double GLYPH_TOP_HOLDER_INITIAL_POSITION = 1.0;
-    public static double GLYPH_TOP_HOLDER_OPEN_POSITION = 0.20;
-    public static double GLYPH_TOP_HOLDER_CLOSE_POSITION = 0.75;
+    public static double GLYPH_TOP_HOLDER_OPEN_POSITION = 0.25;
+    public static double GLYPH_TOP_HOLDER_CLOSE_POSITION = 0.80;
 
     public static double GLYPH_LIFT_STOPPER_OPEN_POSITION = 0.10;
     public static double GLYPH_LIFT_STOPPER_CLOSE_POSITION = 0.73;

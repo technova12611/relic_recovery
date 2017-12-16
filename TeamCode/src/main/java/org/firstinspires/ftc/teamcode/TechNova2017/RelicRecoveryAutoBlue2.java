@@ -134,13 +134,13 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(24.0, motorSpeed);
+                            driveRightInches(26.0, motorSpeed);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(16.5, motorSpeed);
+                            driveRightInches(17.0, motorSpeed);
                             break;
 
                         // need to place glyph into LEFT Crypto box
@@ -152,7 +152,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveRightInches(16.5, motorSpeed);
+                            driveRightInches(17.0, motorSpeed);
                             break;
                     }
 
@@ -180,7 +180,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                     //-------------------------------------------------
                     logInfo(" --- Drive forward to push --- ");
                     ElapsedTime watcher = new ElapsedTime();
-                    driveForwardInches(4.0, motorSpeed);
+                    driveForwardInches(6.0, motorSpeed);
 
                     logInfo(" Place Glyph into column (ms): " +
                             watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
@@ -189,7 +189,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                     // move backward to separate robot from glyph
                     //----------------------------------------------
                     logInfo(" --- Drive backward to finish --- ");
-                    driveBackwardInches(4.0, motorSpeed);
+                    driveBackwardInches(5.0, motorSpeed);
 
                     gotoNextState();
 

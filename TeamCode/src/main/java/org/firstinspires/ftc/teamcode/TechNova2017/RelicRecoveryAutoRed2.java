@@ -129,25 +129,25 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveLeftInches(6.5, motorSpeed);
+                            driveLeftInches(7.0, motorSpeed);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveLeftInches(15.0, motorSpeed);
+                            driveLeftInches(16.0, motorSpeed);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(24.0, motorSpeed);
+                            driveLeftInches(26.0, motorSpeed);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveLeftInches(15.0, motorSpeed);
+                            driveLeftInches(16.0, motorSpeed);
                             break;
                     }
 
@@ -176,7 +176,7 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
                     //-------------------------------------------------
                     logInfo(" --- Drive forward to push --- ");
                     ElapsedTime watcher = new ElapsedTime();
-                    driveForwardInches(4.0, motorSpeed);
+                    driveForwardInches(6.0, motorSpeed);
 
                     logInfo(" Place Glyph into column (ms): " +
                             watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
@@ -185,7 +185,7 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
                     // move backward to separate robot from glyph
                     //----------------------------------------------
                     logInfo(" --- Drive backward to finish --- ");
-                    driveBackwardInches(4.0, motorSpeed);
+                    driveBackwardInches(5.0, motorSpeed);
 
                     gotoNextState();
 
