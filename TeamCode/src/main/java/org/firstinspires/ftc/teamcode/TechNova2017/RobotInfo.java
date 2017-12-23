@@ -27,25 +27,25 @@ public class RobotInfo {
     //----------------------------------------------------------------
 
     public static double UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION = 0.50;
-    public static double UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.62;
+    public static double UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.60;
     public static double UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.66;
     public static double UPPER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.70;
     public static double UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.82;
 
     public static double UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION = 0.51;
-    public static double UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.44;
+    public static double UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.46;
     public static double UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.38;
     public static double UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.34;
     public static double UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.22;
 
     public static double LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION = 0.52;
-    public static double LOWER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.42;
+    public static double LOWER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.45;
     public static double LOWER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.40;
     public static double LOWER_LEFT_GLYPH_ARM_OPEN_POSITION = 0.31;
     public static double LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION = 0.24;
 
     public static double LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION = 0.34;
-    public static double LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.40;
+    public static double LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION = 0.37;
     public static double LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION = 0.42;
     public static double LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION = 0.51;
     public static double LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION = 0.63;
