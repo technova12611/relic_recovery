@@ -8,8 +8,10 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
@@ -95,13 +97,14 @@ public class MecanumRobot {
     private ModernRoboticsI2cRangeSensor x2RangeSensor;
     private ModernRoboticsI2cRangeSensor yRangeSensor;
 
+    private ColorSensor glyphColor;
+    private DistanceSensor glyphDistance;
+
     private double headingOffset = 0.0;
 
     private double prevX1Distance = 0.0;
     private double prevX2Distance = 0.0;
     private double prevYDistance = 0.0;
-
-    private TouchSensor glyphTouchSensor;
 
     private LinearOpMode linearOpMode;
 
@@ -157,6 +160,11 @@ public class MecanumRobot {
             longArm = hardwareMap.servo.get("longArm");
             // make sure long arm is in the up right position
             longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
+
+            glyphColor = hardwareMap.get(ColorSensor.class, "glyphColorDistance");
+
+            // get a reference to the distance sensor that shares the same name.
+            glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
         }
 
         try {
@@ -216,12 +224,6 @@ public class MecanumRobot {
             logInfo(this.telemetry, "Init relic elbow servo failed", e.getMessage());
         }
 
-        try {
-            glyphTouchSensor = hardwareMap.touchSensor.get("glyphTouch");
-        }
-        catch(Exception e) {
-
-        }
         logInfo(null, "Init Servos", " Servos are initialized ...");
 
         telemetry.addData("Robot initialized", "Ready to go...");
@@ -289,9 +291,10 @@ public class MecanumRobot {
     private void initRangeSensor(HardwareMap hardwareMap, AllianceColor alliance) {
         try {
             //if(alliance == AllianceColor.RED) {
-                x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
+            //    x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
             //} else {
-                //x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+                x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
+                x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
             //}
 
             logInfo(null, "Init Range Sesnor", " Range Sensor x1 and x2 are initialized ...");
@@ -1186,11 +1189,15 @@ public class MecanumRobot {
     }
 
     public boolean isGlyphTouched() {
-        if(this.glyphTouchSensor != null) {
-            return this.glyphTouchSensor.isPressed();
+        if(this.glyphDistance != null) {
+            return this.glyphDistance.getDistance(DistanceUnit.INCH) < 2.5;
         }
 
         return false;
+    }
+
+    public double getGlyphDistance() {
+            return this.glyphDistance.getDistance(DistanceUnit.INCH);
     }
 
 }

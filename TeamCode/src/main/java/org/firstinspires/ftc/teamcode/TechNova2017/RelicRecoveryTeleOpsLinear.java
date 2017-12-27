@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
 
 @TeleOp(name = "Relic Recovery TeleOps (Linear)", group = "Competition")
@@ -195,7 +197,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // Allow the slide to move only if the relic claw is released.
         //-----------------------------------------------------------------------
         if(!relicClawLocked) {
-            if (relicElbowTimer.milliseconds() > (g2.right_stick_y<0?60:45)) {
+            if (relicElbowTimer.milliseconds() > (g2.right_stick_y<0?45:30)) {
                 if (g2.right_stick_y < 0) {
                     relicElbowPosition = Range.clip(relicElbowPosition + (g2.right_stick_y < -0.8 ? 0.03 : 0.01), 0.10, 0.85);
                     robot.setRelicElbowPosition(relicElbowPosition);
@@ -226,7 +228,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         telemetry.addData("relicElbowPosition: ", String.format("%.2f",relicElbowPosition));
         telemetry.addData("Relic Elbow Position: ", String.format("%.2f",robot.getRelicElbowPosition()));
         telemetry.addData("Glyph Lift Count: ", robot.getGlyphLiftPosition());
-        telemetry.addData("Glyph Touched: ", robot.isGlyphTouched());
+        telemetry.addData("Glyph Touched: ", robot.isGlyphTouched() + " | Distance: " + String.format("%.2f",robot.getGlyphDistance()));
     }
 
     private boolean isGlyphLiftManualModeAllowed() {

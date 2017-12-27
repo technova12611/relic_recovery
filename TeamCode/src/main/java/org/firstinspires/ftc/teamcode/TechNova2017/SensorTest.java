@@ -22,6 +22,7 @@ public class SensorTest extends LinearOpMode {
     ModernRoboticsI2cRangeSensor yRangeSensor;
 
     AnalogInput rangeSensor;
+    DistanceSensor glyphDistance;
 
     @Override
     public void runOpMode() {
@@ -45,6 +46,8 @@ public class SensorTest extends LinearOpMode {
             maxVoltage= rangeSensor.getMaxVoltage();
         }catch(Exception e) {
         }
+
+        glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
 
         VuMarkVision vuMarkVision = new VuMarkVision(hardwareMap, telemetry);
 
@@ -104,6 +107,7 @@ public class SensorTest extends LinearOpMode {
                 sleep(50);
             }
 
+            telemetry.addData("Glyph Distance: ", String.format("%.2f",glyphDistance.getDistance(DistanceUnit.INCH)));
             telemetry.addData("Servo Position: ", String.format("%.2f",robot.getGlyphLiftStopperPosition()));
         }
     }

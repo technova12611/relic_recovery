@@ -30,9 +30,12 @@ public class TestGlyphCollector extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            glyphLeft.setPower(gamepad1.left_stick_y);
-            glyphRight.setPower(gamepad1.left_stick_y);
+            float power = gamepad1.left_stick_y;
+            power = -0.20f;
+            glyphLeft.setPower(power);
+            glyphRight.setPower(power);
 
+            telemetry.addData("motor power:", String.format("%.2f", power));
             telemetry.update();
         }
 
