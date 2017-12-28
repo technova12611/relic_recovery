@@ -191,6 +191,8 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                     logInfo(" --- Drive backward to finish --- ");
                     driveBackwardInches(5.0, motorSpeed);
 
+                    turnToAngle(90.0, 0.5);
+
                     gotoNextState();
 
                     break;
