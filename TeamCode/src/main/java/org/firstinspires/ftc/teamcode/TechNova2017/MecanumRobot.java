@@ -443,7 +443,7 @@ public class MecanumRobot {
     }
 
     public void openGlyphGripperWider() {
-        openUpperGlyphGripperMidWide();
+        openUpperGlyphGripperWide();
         openLowerGlyphGripperWide();
         this.glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
     }

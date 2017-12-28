@@ -197,7 +197,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         // Allow the slide to move only if the relic claw is released.
         //-----------------------------------------------------------------------
         if(!relicClawLocked) {
-            if (relicElbowTimer.milliseconds() > (g2.right_stick_y<0?45:30)) {
+            if (relicElbowTimer.milliseconds() > (g2.right_stick_y<0?35:20)) {
                 if (g2.right_stick_y < 0) {
                     relicElbowPosition = Range.clip(relicElbowPosition + (g2.right_stick_y < -0.8 ? 0.03 : 0.01), 0.10, 0.85);
                     robot.setRelicElbowPosition(relicElbowPosition);
