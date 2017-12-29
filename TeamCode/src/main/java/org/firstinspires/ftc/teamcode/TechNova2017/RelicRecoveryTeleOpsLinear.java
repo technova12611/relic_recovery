@@ -24,6 +24,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
     int glyphLastPosition = 0;
 
     boolean relicClawLocked = true;
+    boolean clawClosed = false;
 
     @Override
     public void runOpMode() {
@@ -179,7 +180,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
             robot.raiseRelicOverTheWall();
         }
 
-        if(g2.dpadDown()) {
+        if(g2.dpadDown() && !clawClosed) {
             robot.closeRelicClawHolder();
             relicClawLocked = true;
         }
@@ -188,8 +189,10 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         //------------------------------------------------------------
         if(g2.dpadLeft()) {
             robot.releaseRelic();
+            clawClosed = false;
         } else if(g2.dpadRight()) {
             robot.grabRelic();
+            clawClosed = true;
         }
 
         // operator controller right joystick Y to move Relic Elbow up and down

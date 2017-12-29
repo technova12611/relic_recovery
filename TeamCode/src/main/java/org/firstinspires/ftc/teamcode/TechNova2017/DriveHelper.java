@@ -99,6 +99,8 @@ public class DriveHelper {
         }
 
         if(slowDrive || verySlowDrive) {
+            v_rotation = 0.75*v_rotation;
+        } else if(robot.isRelicClawReleased){
             v_rotation = 0.5*v_rotation;
         }
 

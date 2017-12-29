@@ -115,6 +115,8 @@ public class MecanumRobot {
 
     MovingAverage driveEncodersMovingAvg = new MovingAverage(3);
 
+    boolean isRelicClawReleased = false;
+
     // Encoder Driving
     // Assuming 4" wheels
     private static final double TICKS_PER_INCH = 1120 * (24./32.) / (Math.PI * 4.0);
@@ -1142,11 +1144,16 @@ public class MecanumRobot {
     public void releaseClaw() {
         if (relicClawholder != null) {
             relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION);
+            isRelicClawReleased = true;
         }
 
 //        if(relicClaw != null) {
 //            relicClaw.setPosition(RELIC_CLAW_OPEN_POSITION);
 //        }
+    }
+
+    public boolean isRelicClawReleased() {
+        return isRelicClawReleased;
     }
 
     public void closeRelicClawHolder() {
