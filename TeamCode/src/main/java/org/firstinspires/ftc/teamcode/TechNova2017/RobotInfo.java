@@ -59,6 +59,14 @@ public class RobotInfo {
 
     public static int GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION = 700;
 
+    public static double INTAKE_LEFT_HOLDER_INITIAL_POSITION = 1.0;
+    public static double INTAKE_LEFT_HOLDER_OPEN_POSITION = 0.25;
+    public static double INTAKE_LEFT_HOLDER_CLOSE_POSITION = 0.80;
+
+    public static double INTAKE_RIGHT_HOLDER_INITIAL_POSITION = 1.0;
+    public static double INTAKE_RIGHT_HOLDER_OPEN_POSITION = 0.25;
+    public static double INTAKE_RIGHT_HOLDER_CLOSE_POSITION = 0.80;
+
     // Driver control motor speed
     //-----------------------------------------------------------------------
     public static double ENCODER_DRIVE_POWER = 0.40;
