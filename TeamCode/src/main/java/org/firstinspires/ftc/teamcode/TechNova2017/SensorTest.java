@@ -98,17 +98,17 @@ public class SensorTest extends LinearOpMode {
             }
 
             if(gamepad2.right_stick_y <0) {
-                robot.setGlyphLiftStopperPosition(Range.clip(robot.getGlyphLiftStopperPosition() + 0.02, 0.0, 1.00));
+                robot.glyphHolder.setPosition(Range.clip(robot.glyphHolder.getPosition() + 0.02, 0.0, 1.00));
                 sleep(50);
             }
 
             if(gamepad2.right_stick_y >0) {
-                robot.setGlyphLiftStopperPosition(Range.clip(robot.getGlyphLiftStopperPosition() - 0.02, 0.0, 1.00));
+                robot.glyphHolder.setPosition(Range.clip(robot.glyphHolder.getPosition() - 0.02, 0.0, 1.00));
                 sleep(50);
             }
 
             telemetry.addData("Glyph Distance: ", String.format("%.2f",glyphDistance.getDistance(DistanceUnit.INCH)));
-            telemetry.addData("Servo Position: ", String.format("%.2f",robot.getGlyphLiftStopperPosition()));
+            telemetry.addData("Servo Position: ", String.format("%.2f",robot.glyphHolder.getPosition()));
         }
     }
 }

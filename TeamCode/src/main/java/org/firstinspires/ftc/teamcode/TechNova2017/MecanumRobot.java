@@ -79,8 +79,8 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_
  */
 public class MecanumRobot {
     private DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider;
-    private Servo upperLeftGripper, upperRightGripper,lowerLeftGripper, lowerRightGripper,
-            glyphHolder, glyphLiftStopper,
+    protected Servo upperLeftGripper, upperRightGripper,lowerLeftGripper, lowerRightGripper,
+            glyphHolder,
             longArm,
             relicClaw, relicElbow, relicClawholder;
 
@@ -123,6 +123,10 @@ public class MecanumRobot {
     private static final double TICKS_PER_CM = TICKS_PER_INCH / 2.54;
 
     private double encoder_drive_power = ENCODER_DRIVE_POWER;
+
+    public MecanumRobot() {
+        super();
+    }
 
     /**
      * Wheel motors MUST be named: lf, rf, lr, rr
@@ -169,15 +173,8 @@ public class MecanumRobot {
             glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
         }
 
-        try {
-            glyphHolder = hardwareMap.servo.get("glyphHolder");
-            glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
-
-            glyphLiftStopper = hardwareMap.servo.get("glyphLiftStopper");
-            glyphLiftStopper.setPosition(GLYPH_LIFT_STOPPER_OPEN_POSITION);
-        } catch(Exception e) {
-            logInfo(this.telemetry, "Init glyph holder", e.getMessage());
-        }
+        glyphHolder = hardwareMap.servo.get("glyphHolder");
+        glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
 
         upperLeftGripper = hardwareMap.servo.get("upperLeftGripper");
         upperRightGripper = hardwareMap.servo.get("upperRightGripper");
@@ -512,8 +509,6 @@ public class MecanumRobot {
     public void closeLowerGlyphGripper() {
         lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION);
         lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION);
-
-        openGlyphLiftStopper();
     }
 
     public void openLowerGlyphGripperWide() {
@@ -1133,14 +1128,6 @@ public class MecanumRobot {
         return 0.0;
     }
 
-    public double getGlyphLiftStopperPosition() {
-        if(glyphLiftStopper != null) {
-            return glyphLiftStopper.getPosition();
-        }
-
-        return 0.0;
-    }
-
     public void releaseClaw() {
         if (relicClawholder != null) {
             relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION);
@@ -1159,24 +1146,7 @@ public class MecanumRobot {
     public void closeRelicClawHolder() {
         if (relicClawholder != null) {
             relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
-        }
-    }
-
-    public void openGlyphLiftStopper() {
-        if(glyphLiftStopper != null) {
-            glyphLiftStopper.setPosition(GLYPH_LIFT_STOPPER_OPEN_POSITION);
-        }
-    }
-
-    public void closeGlyphLiftStopper() {
-        if(glyphLiftStopper != null) {
-            glyphLiftStopper.setPosition(GLYPH_LIFT_STOPPER_CLOSE_POSITION);
-        }
-    }
-
-    public void setGlyphLiftStopperPosition(double position) {
-        if(glyphLiftStopper != null) {
-            glyphLiftStopper.setPosition(position);
+            isRelicClawReleased = false;
         }
     }
 

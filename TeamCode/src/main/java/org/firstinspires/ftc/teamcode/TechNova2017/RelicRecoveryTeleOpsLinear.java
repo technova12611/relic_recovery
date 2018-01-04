@@ -176,7 +176,7 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
 
         // switch to Relic grabbing/landing handling
         //----------------------------------------------
-        if(g2.dpadUp() || g2.right_stick_x > 0.9) {
+        if(g2.dpadUp()) {
             robot.raiseRelicOverTheWall();
         }
 
