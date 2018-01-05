@@ -985,57 +985,40 @@ public class MecanumRobot {
 
     public double getX1Distance() {
         if(x1RangeSensor != null) {
-            try {
-                double distance = x1RangeSensor.getDistance(DistanceUnit.CM);
-                if (distance < 225.0 && distance > 25.0) {
-                    prevX1Distance = distance;
-                }
-            }catch(Exception e) {
-                Log.e(this.getClass().getSimpleName(), "X1 Range Failed: " + e.getMessage());
-                prevX1Distance = 0.0;
-            }
+            return x1RangeSensor.getDistance(DistanceUnit.CM);
+//            try {
+//                double distance = x1RangeSensor.getDistance(DistanceUnit.CM);
+//                if (distance < 225.0 && distance > 25.0) {
+//                    prevX1Distance = distance;
+//                }
+//            }catch(Exception e) {
+//                Log.e(this.getClass().getSimpleName(), "X1 Range Failed: " + e.getMessage());
+//                prevX1Distance = 0.01;
+//            }
         } else {
             return 0.0;
         }
 
-        return prevX1Distance;
+        //return prevX1Distance;
     }
 
     public double getX2Distance() {
         if(x2RangeSensor != null) {
-            try {
-                double distance = x2RangeSensor.getDistance(DistanceUnit.CM);
-                if (distance < 225.0 && distance > 25.0) {
-                    prevX2Distance = distance;
-                }
-            }catch(Exception e) {
-                Log.e(this.getClass().getSimpleName(), "X2 Range Failed: " + e.getMessage());
-                prevX2Distance = 0.0;
-            }
+            return  x2RangeSensor.getDistance(DistanceUnit.CM);
+//            try {
+//                double distance = x2RangeSensor.getDistance(DistanceUnit.CM);
+//                if (distance < 225.0 && distance > 25.0) {
+//                    prevX2Distance = distance;
+//                }
+//            }catch(Exception e) {
+//                Log.e(this.getClass().getSimpleName(), "X2 Range Failed: " + e.getMessage());
+//                prevX2Distance = 0.01;
+//            }
         } else {
             return 0.0;
         }
 
-        return prevX2Distance;
-    }
-
-    public double getYDistance() {
-        if(yRangeSensor != null) {
-            try {
-                double distance = yRangeSensor.getDistance(DistanceUnit.CM);
-                if (distance < 225.0 && distance > 25.0) {
-                    prevX1Distance = distance;
-                }
-            }catch(Exception e) {
-                Log.e(this.getClass().getSimpleName(), "Y Range Failed: " + e.getMessage());
-                prevX1Distance = 0.0;
-            }
-        }
-        else {
-            return 0.0;
-        }
-
-        return prevYDistance;
+        //return prevX2Distance;
     }
 
     public int getGlyphLiftPosition() {

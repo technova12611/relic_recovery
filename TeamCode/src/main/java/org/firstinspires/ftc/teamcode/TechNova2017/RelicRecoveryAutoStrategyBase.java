@@ -50,7 +50,6 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
         while(!isStarted()) {
             telemetry.addData("Distance (x1, x2): ", "(%.1f, %.1f)", robot.getX1Distance(), robot.getX2Distance());
             telemetry.update();
-            idle();
         }
 
         //waitForStart();

@@ -42,7 +42,7 @@ public class DriveHelper {
             //inverted = !inverted;
         }
 
-        if(g.X()) {
+        if(g.XOnce()) {
             slowDrive = false;
             if(robot.isGreenLedOn()){
                 robot.turnOffGreenLed();
