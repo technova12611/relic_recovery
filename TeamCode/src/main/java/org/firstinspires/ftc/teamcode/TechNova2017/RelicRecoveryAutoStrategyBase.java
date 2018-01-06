@@ -224,7 +224,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     logInfo("X range:",vuMark + " | " + String.format("%.2f cm", getXDistance()));
 
                     if(targetDistance > 0.0) {
-                        alignToCryptoBox(targetDistance);
+                        alignToCryptoBox(targetDistance, avgXDistance);
                     }
 
                     gotoNextState();
@@ -247,6 +247,12 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     logInfo(" Place Glyph into column (ms): " +
                             watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
                             + " | " + String.format("%.2f cm", getXDistance()));
+
+                    if(watcher.time(TimeUnit.MILLISECONDS) > 1500) {
+                        driveBackwardInches(3.0, motorSpeed);
+                        robot.closeLowerGlyphGripper();
+                        driveForwardInches(3.0, motorSpeed);
+                    }
 
                     // move backward to separate robot from glyph
                     //----------------------------------------------
@@ -288,9 +294,9 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
     }
 
 
-    protected void alignToCryptoBox(double targetPosition) throws InterruptedException
+    protected void alignToCryptoBox(double targetPosition, double xDistance) throws InterruptedException
     {
-        double xDistance = getXDistance();
+        //double xDistance = getXDistance();
 
         // range sensor failed, abort!
         if(xDistance == 0.0) {
@@ -299,12 +305,11 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
 
         double distanceThrehold = 1.0;
 
-        double error = Range.clip(xDistance -targetPosition, 0.0, 3.0);
+        double error = Range.clip(xDistance -targetPosition, -3.0, 3.0);
         ElapsedTime timer = new ElapsedTime();
 
         // try for 3 seconds only, to avoid oscilliation
         while(opModeIsActive() && Math.abs(error) > distanceThrehold && timer.time(TimeUnit.SECONDS) < 3) {
-            xDistance = getXDistance();
             // turn right
             if(getAllianceColor() == AllianceColor.RED) {
                 if (error > 0) {
