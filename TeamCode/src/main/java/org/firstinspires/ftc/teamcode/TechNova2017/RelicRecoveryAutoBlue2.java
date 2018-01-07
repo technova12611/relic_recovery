@@ -204,6 +204,9 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                     gotoNextState();
                     break;
                 case COLLECT_2ND_GLYPH:
+
+                    gotoNextState();
+
                     //drive forward until distance color sensor detects glyph within 2", pick up glyph, drive backwards the same
                     // distance driven forward (from logged info), turn around, drive forward 6" (same distance as used when backing
                     // away from the cryptobox), drop glyph, drive backward, turn around, reset lift
@@ -214,7 +217,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                         robot.stopDriveMotors();
                     }
                     //need sensor to detect when the robot needs to stop in order to reach the cryptobox
-                    driveBackwardInches();
+                    driveBackwardInches(10.0, 0.5);
                     driveRightInches(48.0, motorSpeed);
                     turnToAngle(180.0, 0.5);
                     driveForwardInches(6.0,motorSpeed);
