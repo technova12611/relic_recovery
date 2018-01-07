@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIVE_POWER;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_CLOSE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_STOPPER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_STOPPER_OPEN_POSITION;
@@ -162,14 +164,19 @@ public class TileRunnerRobot {
             }
 
         } else {
-            longArm = hardwareMap.servo.get("longArm");
-            // make sure long arm is in the up right position
-            longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
+            try {
+                longArm = hardwareMap.servo.get("longArm");
+                // make sure long arm is in the up right position
+                longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
 
-            glyphColor = hardwareMap.get(ColorSensor.class, "glyphColorDistance");
+                glyphColor = hardwareMap.get(ColorSensor.class, "glyphColorDistance");
 
-            // get a reference to the distance sensor that shares the same name.
-            glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
+                // get a reference to the distance sensor that shares the same name.
+                glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
+            }
+            catch(Exception e) {
+                logInfo(this.telemetry, "Jewel pusher arms init failed.", e.getMessage());
+            }
         }
 
         try {
@@ -223,6 +230,12 @@ public class TileRunnerRobot {
             logInfo(this.telemetry, "Init relic elbow servo failed", e.getMessage());
         }
 
+        try {
+            initIntakeMotors(hardwareMap);
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Init intake motors failed", e.getMessage());
+        }
+
         logInfo(null, "Init Servos", " Servos are initialized ...");
 
         telemetry.addData("Robot initialized", "Ready to go...");
@@ -259,6 +272,14 @@ public class TileRunnerRobot {
         setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER, lf, lr, rr, rf);
 
         logInfo(null, "Init Drive Motors", " Drive Motors are initialized ...");
+    }
+
+    private void initIntakeMotors(HardwareMap hardwareMap) {
+        intakeLeft = hardwareMap.dcMotor.get("intake_left");
+        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        intakeRight = hardwareMap.dcMotor.get("intake_right");
+        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER, intakeLeft, intakeRight);
     }
 
     private void initGyro(HardwareMap hardwareMap) {
@@ -982,6 +1003,32 @@ public class TileRunnerRobot {
 
     public double getGlyphDistance() {
             return this.glyphDistance.getDistance(DistanceUnit.INCH);
+    }
+
+    public void collectGlyph(double power) {
+        if(this.intakeLeft != null && this.intakeRight != null) {
+            this.intakeLeft.setPower(0.3);
+            this.intakeRight.setPower(-0.3);
+        }
+    }
+
+    public void reverseGlyph(double power) {
+        if(this.intakeLeft != null && this.intakeRight != null) {
+            this.intakeLeft.setPower(-0.3);
+            this.intakeRight.setPower(0.3);
+        }
+    }
+
+    public void resetGlyphTray() {
+        if(this.glyphFlipper !=  null) {
+            this.glyphFlipper.setPosition(GLYPH_FLIPPER_CLOSE_POSITION);
+        }
+    }
+
+    public void dumpGlyphsFromTray() {
+        if(this.glyphFlipper !=  null) {
+            this.glyphFlipper.setPosition(GLYPH_FLIPPER_OPEN_POSITION);
+        }
     }
 
 }

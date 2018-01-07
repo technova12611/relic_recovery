@@ -116,6 +116,26 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             relicClawLocked = false;
         }
 
+        if(g2.left_trigger > 0.1) {
+            robot.moveGlyphLift(g2.left_trigger);
+        } else if(g2.right_trigger > 0.1) {
+            robot.moveGlyphLift(-g2.right_trigger);
+        }
+
+        if(g2.Y()) {
+            robot.dumpGlyphsFromTray();
+        }
+
+        if(g2.X()) {
+            robot.resetGlyphTray();
+        }
+
+        if(g1.left_trigger > 0.5) {
+            robot.collectGlyph(g1.left_trigger);
+        } else if(g1.right_trigger > 0.1) {
+            robot.reverseGlyph(-g1.right_trigger);
+        }
+
         // driving the robot
         //------------------------------------------------------
         TileRunnerDriveHelper.drive(g1, robot, telemetry);
