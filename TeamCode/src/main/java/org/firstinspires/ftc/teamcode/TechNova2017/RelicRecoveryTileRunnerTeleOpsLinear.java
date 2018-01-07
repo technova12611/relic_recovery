@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
 
-@TeleOp(name = "TileRunner TeleOps (Linear)", group = "Competition")
+@TeleOp(name = "Tile Runner (New) TeleOps ", group = "Competition")
 public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
     private TileRunnerRobot robot = null;
     private Controller g1, g2;

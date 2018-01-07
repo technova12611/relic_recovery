@@ -79,7 +79,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_
  */
 public class MecanumRobot {
     private DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider;
-    protected Servo upperLeftGripper, upperRightGripper,lowerLeftGripper, lowerRightGripper,
+    protected Servo upperLeftGripper, upperRightGripper, lowerLeftGripper, lowerRightGripper,
             glyphHolder,
             longArm,
             relicClaw, relicElbow, relicClawholder;
@@ -119,7 +119,7 @@ public class MecanumRobot {
 
     // Encoder Driving
     // Assuming 4" wheels
-    private static final double TICKS_PER_INCH = 1120 * (24./32.) / (Math.PI * 4.0);
+    private static final double TICKS_PER_INCH = 1120 * (24. / 32.) / (Math.PI * 4.0);
     private static final double TICKS_PER_CM = TICKS_PER_INCH / 2.54;
 
     private double encoder_drive_power = ENCODER_DRIVE_POWER;
@@ -130,9 +130,9 @@ public class MecanumRobot {
 
     /**
      * Wheel motors MUST be named: lf, rf, lr, rr
-     *
+     * <p>
      * Glyph Lift Motor MUST be named: glyphLift
-     *
+     * <p>
      * Glyph Gripper MUST be named: leftGripper, rightGripper
      *
      * @param hardwareMap
@@ -146,20 +146,20 @@ public class MecanumRobot {
         try {
             relicClawholder = hardwareMap.servo.get("relicClawholder");
             relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
-        } catch(Exception e) {
+        } catch (Exception e) {
             logInfo(this.telemetry, "Init relic claw holder failed", e.getMessage());
         }
 
         initMotors(hardwareMap);
 
-        if(allianceColor != null) {
+        if (allianceColor != null) {
             initGyro(hardwareMap);
             initRangeSensor(hardwareMap, allianceColor);
 
             try {
                 rangeSensor = hardwareMap.analogInput.get("range");
-                maxRangeVol= rangeSensor.getMaxVoltage();
-            }catch(Exception e) {
+                maxRangeVol = rangeSensor.getMaxVoltage();
+            } catch (Exception e) {
             }
 
         } else {
@@ -182,13 +182,12 @@ public class MecanumRobot {
         lowerLeftGripper = hardwareMap.servo.get("lowerLeftGripper");
         lowerRightGripper = hardwareMap.servo.get("lowerRightGripper");
 
-        if(allianceColor != null) {
+        if (allianceColor != null) {
             upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION);
             upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION);
             lowerLeftGripper.setPosition(LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION);
             lowerRightGripper.setPosition(LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION);
-        }
-        else {
+        } else {
             openGlyphGripperWider();
         }
 
@@ -196,7 +195,7 @@ public class MecanumRobot {
             led = hardwareMap.dcMotor.get("led");
             led.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             logInfo(this.telemetry, "Led power control failed.", e.getMessage());
         }
 
@@ -212,14 +211,14 @@ public class MecanumRobot {
         try {
             relicClaw = hardwareMap.servo.get("relicClaw");
             relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
-        } catch(Exception e) {
+        } catch (Exception e) {
             logInfo(this.telemetry, "Init relic init failed", e.getMessage());
         }
 
         try {
             relicElbow = hardwareMap.servo.get("relicElbow");
             relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
-        } catch(Exception e) {
+        } catch (Exception e) {
             logInfo(this.telemetry, "Init relic elbow servo failed", e.getMessage());
         }
 
@@ -230,15 +229,15 @@ public class MecanumRobot {
 
     public void initServosForTeleOps() {
         try {
-            if(relicClawholder != null) relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
-            if(glyphHolder != null) glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
-            if(relicClaw != null) relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
-            if(relicElbow != null) relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
-            if(longArm != null) longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
+            if (relicClawholder != null)
+                relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+            if (glyphHolder != null) glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
+            if (relicClaw != null) relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
+            if (relicElbow != null) relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
+            if (longArm != null) longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
 
             openGlyphGripperMidWide();
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             logInfo(this.telemetry, "Init servos failed", e.getMessage());
         }
     }
@@ -271,11 +270,11 @@ public class MecanumRobot {
         // algorithm here just reports accelerations to the logcat log; it doesn't actually
         // provide positional information.
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
@@ -292,13 +291,12 @@ public class MecanumRobot {
             //if(alliance == AllianceColor.RED) {
             //    x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
             //} else {
-                x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
-                x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+            x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
+            x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
             //}
 
             logInfo(null, "Init Range Sesnor", " Range Sensor x1 and x2 are initialized ...");
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             Log.e(this.getClass().getSimpleName(), "Range Sesnor failed: " + e.getMessage());
         }
     }
@@ -345,8 +343,9 @@ public class MecanumRobot {
     private static int SLOW_DOWN_HERE = 1120;
     private static double ARBITRARY_SLOW_SPEED = .3;
     private boolean slowedDown = false;
+
     private void encoderDriveSlowdown() {
-        if (! slowedDown) {
+        if (!slowedDown) {
             if (lf.getMode() == DcMotor.RunMode.RUN_TO_POSITION) {
                 int remaining = averageRemainingTicks(lf, lr, rf, rr);
                 if (remaining < SLOW_DOWN_HERE) {
@@ -375,16 +374,16 @@ public class MecanumRobot {
         double currentAvgRemaning = averageRemainingTicks(lf, lr, rf, rr);
         double currentMovingAvg = driveEncodersMovingAvg.next(currentAvgRemaning);
 
-        logInfo(telemetry,"Encoder Remain", String.format("\t%.1f\t%.1f\t%.1f", currentAvgRemaning, currentMovingAvg, previousDriveAvgEncoder));
+        logInfo(telemetry, "Encoder Remain", String.format("\t%.1f\t%.1f\t%.1f", currentAvgRemaning, currentMovingAvg, previousDriveAvgEncoder));
         previousDriveAvgEncoder = currentMovingAvg;
 
-        logInfo(telemetry,"EncodersC", String.format("\t%d\t%d\t%d\t%d",
+        logInfo(telemetry, "EncodersC", String.format("\t%d\t%d\t%d\t%d",
                 lf.getCurrentPosition(),
                 lr.getCurrentPosition(),
                 rf.getCurrentPosition(),
                 rr.getCurrentPosition()));
 
-        logInfo(telemetry,"EncodersT", String.format("\t%d\t%d\t%d\t%d",
+        logInfo(telemetry, "EncodersT", String.format("\t%d\t%d\t%d\t%d",
                 lf.getTargetPosition(),
                 lr.getTargetPosition(),
                 rf.getTargetPosition(),
@@ -392,7 +391,7 @@ public class MecanumRobot {
     }
 
     /**
-     *  get the maximum absolute value of some number of arguments
+     * get the maximum absolute value of some number of arguments
      */
     private static double getMax(double... xs) {
         double ret = 0.0;
@@ -467,11 +466,19 @@ public class MecanumRobot {
         this.glyphHolder.setPosition(GLYPH_TOP_HOLDER_CLOSE_POSITION);
     }
 
+    public void openGlyphHolder() {
+        this.glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
+    }
+
+    public void closeGlyphHolder() {
+        this.glyphHolder.setPosition(GLYPH_TOP_HOLDER_CLOSE_POSITION);
+    }
+
     public void alignStackedGlyphs() {
         // try to close and open gripper multiple times
         // press the top glyphs into squared position
         int idx = 3;
-        while(idx-- >0) {
+        while (idx-- > 0) {
             glyphHolder.setPosition(GLYPH_TOP_HOLDER_OPEN_POSITION);
             upperLeftGripper.setPosition(UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION);
             upperRightGripper.setPosition(UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION);
@@ -538,7 +545,7 @@ public class MecanumRobot {
 
         ElapsedTime timer = new ElapsedTime();
         // wait for 2 seconds, if not reached, move on anyway
-        while(busy(glyphLift) && timer.time(TimeUnit.SECONDS) < 2 &&
+        while (busy(glyphLift) && timer.time(TimeUnit.SECONDS) < 2 &&
                 this.linearOpMode != null && this.linearOpMode.opModeIsActive()) {
             try {
                 Thread.sleep(100);
@@ -556,7 +563,7 @@ public class MecanumRobot {
         this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         this.glyphLift.setTargetPosition(position);
         this.glyphLift.setPower(
-                ((position - this.glyphLift.getCurrentPosition())> 0?1.0:-1.0)*0.8);
+                ((position - this.glyphLift.getCurrentPosition()) > 0 ? 1.0 : -1.0) * 0.8);
     }
 
     public void holdGlyphLiftPosition(int position) {
@@ -567,8 +574,8 @@ public class MecanumRobot {
     }
 
     public boolean isGlyphLiftTargetReached() {
-        if(!(glyphLift.isBusy()) ||
-                Math.abs(this.glyphLift.getCurrentPosition() - this.glyphLift.getTargetPosition())< 50) {
+        if (!(glyphLift.isBusy()) ||
+                Math.abs(this.glyphLift.getCurrentPosition() - this.glyphLift.getTargetPosition()) < 50) {
             this.glyphLift.setPower(0.0);
             this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             return true;
@@ -590,7 +597,7 @@ public class MecanumRobot {
         this.glyphLift.setPower(0.5);
 
         ElapsedTime timer = new ElapsedTime();
-        while( glyphLift.isBusy() && timer.time(TimeUnit.SECONDS) < 3
+        while (glyphLift.isBusy() && timer.time(TimeUnit.SECONDS) < 3
                 && this.linearOpMode != null && this.linearOpMode.opModeIsActive()) {
             try {
                 Thread.sleep(100);
@@ -611,7 +618,7 @@ public class MecanumRobot {
     private void sleepInLiearMode(long milliSeconds) {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
-        while(this.linearOpMode != null && this.linearOpMode.opModeIsActive()
+        while (this.linearOpMode != null && this.linearOpMode.opModeIsActive()
                 && timer.time() < milliSeconds) {
             try {
                 Thread.sleep(100);
@@ -623,7 +630,7 @@ public class MecanumRobot {
 
     /**
      * Represent the 4 mecanum wheels speed
-     *
+     * <p>
      * 1. lf
      * 2. rf
      * 3. lr
@@ -642,9 +649,9 @@ public class MecanumRobot {
 
     /**
      * Calculate the mecanum wheep speed for v1,v2,v3 and v4
-     *
-     *  Trigonometry version:
-     *
+     * <p>
+     * Trigonometry version:
+     * <p>
      * V1 = Vd * sin(td + PI/4) + Vt
      * V2 = Vd * cos(td + PI/4) - Vt
      * V3 = Vd * cos(td + PI/4) + Vt
@@ -660,7 +667,7 @@ public class MecanumRobot {
         final double td = direction;
         final double vt = rotation;
 
-        double s =  Math.sin(td + Math.PI / 4.0);
+        double s = Math.sin(td + Math.PI / 4.0);
         double c = Math.cos(td + Math.PI / 4.0);
         double m = Math.max(Math.abs(s), Math.abs(c));
         s /= m;
@@ -692,7 +699,7 @@ public class MecanumRobot {
         lr.setPower(w.lr);
         rr.setPower(w.rr);
 
-        if(Math.abs(direction) >0 || Math.abs(velocity) >0 || Math.abs(rotationVelocity) > 0) {
+        if (Math.abs(direction) > 0 || Math.abs(velocity) > 0 || Math.abs(rotationVelocity) > 0) {
             //logInfo(telemetry, "WheelsSpeed", String.format(Locale.US, "%.2f %.2f %.2f", direction, velocity, rotationVelocity));
 //            logInfo(telemetry, "Powers", String.format(Locale.US, "%.2f %.2f %.2f %.2f", w.lf, w.rf, w.lr, w.rr));
 //            logInfo(telemetry, "Encoders", String.format(Locale.US, "%d %d %d %d",
@@ -721,7 +728,7 @@ public class MecanumRobot {
 
     double getRawsAngle(IMUAngleOrientation type) {
         angles = imu.getAngularOrientation().toAxesReference(AxesReference.INTRINSIC).toAxesOrder(AxesOrder.ZYX);
-        switch(type) {
+        switch (type) {
             case HEADING:
                 return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
             case ROLL:
@@ -736,14 +743,13 @@ public class MecanumRobot {
      *
      * @return
      */
-    public double getHeadingAngle(){
-        if(imu == null)  return -0.0;
+    public double getHeadingAngle() {
+        if (imu == null) return -0.0;
 
         double tempAng = getRawHeadingAngle();
-        if(tempAng > 180.0) {
+        if (tempAng > 180.0) {
             tempAng = tempAng - 360;
-        }
-        else if(tempAng < -180.0) {
+        } else if (tempAng < -180.0) {
             tempAng = tempAng + 360;
         }
         return tempAng;
@@ -832,6 +838,7 @@ public class MecanumRobot {
 
     /**
      * Use SET_TO_POSITION to drive the robot to a specific distance
+     *
      * @param direction
      * @param tiles
      */
@@ -841,14 +848,14 @@ public class MecanumRobot {
 
     public void encoderDriveInches(double direction, double inches) {
         final WheelsSpeed w = getWheelsSpeed(direction, 1.0, 0.0);
-        final int ticks = (int)(inches * TICKS_PER_INCH);
+        final int ticks = (int) (inches * TICKS_PER_INCH);
         encoderDrive(ticks * w.lf, ticks * w.rf, ticks * w.lr, ticks * w.rr);
     }
 
     public void encoderDriveCM(double direction, double cm) {
         direction %= Math.PI * 2.0;
         final WheelsSpeed w = getWheelsSpeed(direction, 1.0, 0.0);
-        final int ticks = (int)(cm * TICKS_PER_CM);
+        final int ticks = (int) (cm * TICKS_PER_CM);
         encoderDrive(ticks * w.lf, ticks * w.rf, ticks * w.lr, ticks * w.rr);
     }
 
@@ -877,6 +884,7 @@ public class MecanumRobot {
     // run, start slowing down. The idea here is to avoid slip.
     private static final int ACCEL_THRESHOLD = 1120 * 24 / 32; // one wheel revolution, for starters
     private boolean atSteadyState = false;
+
     private void manageEncoderAccelleration(DcMotor... ms) {
         if (encoder_drive_power > ENCODER_DRIVE_POWER) {
             int current = 0, remaining = 0, count = 0;
@@ -900,18 +908,18 @@ public class MecanumRobot {
 
                 if (remaining < ACCEL_THRESHOLD) {
                     atSteadyState = false;
-                    power = ENCODER_DRIVE_POWER + dp * ((double)remaining / (double)ACCEL_THRESHOLD);
+                    power = ENCODER_DRIVE_POWER + dp * ((double) remaining / (double) ACCEL_THRESHOLD);
                     for (DcMotor m : driving) {
                         m.setPower(power);
                     }
                 } else if (current < ACCEL_THRESHOLD) {
                     atSteadyState = false;
-                    power = ENCODER_DRIVE_POWER + dp * ((double)current / (double)ACCEL_THRESHOLD);
+                    power = ENCODER_DRIVE_POWER + dp * ((double) current / (double) ACCEL_THRESHOLD);
                     for (DcMotor m : driving) {
                         m.setPower(power);
                     }
-                }  else {
-                    if (! atSteadyState) {
+                } else {
+                    if (!atSteadyState) {
                         for (DcMotor m : driving) {
                             m.setPower(power);
                         }
@@ -942,17 +950,17 @@ public class MecanumRobot {
     public void logInfo(Telemetry telemetry, String tag, String message) {
         Log.i("TechNova: " + this.getClass().getSimpleName(), tag + " | " + message);
 
-        if(telemetry != null) {
+        if (telemetry != null) {
             telemetry.addData(tag, message);
         }
     }
 
     public void logInfo(Telemetry telemetry, String tag, String message, boolean inLogCat) {
-        if(inLogCat) {
+        if (inLogCat) {
             Log.i("TechNova: " + this.getClass().getSimpleName(), tag + " | " + message);
         }
 
-        if(telemetry != null) {
+        if (telemetry != null) {
             telemetry.addData(tag, message);
         }
     }
@@ -974,7 +982,9 @@ public class MecanumRobot {
     /**
      * @return the robot's current heading in degrees
      */
-    public double getRawHeadingDegrees() { return Math.toDegrees(getRawHeadingRadian()); }
+    public double getRawHeadingDegrees() {
+        return Math.toDegrees(getRawHeadingRadian());
+    }
 
     /**
      * Set the current heading to zero.
@@ -984,7 +994,7 @@ public class MecanumRobot {
     }
 
     public double getX1Distance() {
-        if(x1RangeSensor != null) {
+        if (x1RangeSensor != null) {
             return x1RangeSensor.getDistance(DistanceUnit.CM);
 //            try {
 //                double distance = x1RangeSensor.getDistance(DistanceUnit.CM);
@@ -1003,8 +1013,8 @@ public class MecanumRobot {
     }
 
     public double getX2Distance() {
-        if(x2RangeSensor != null) {
-            return  x2RangeSensor.getDistance(DistanceUnit.CM);
+        if (x2RangeSensor != null) {
+            return x2RangeSensor.getDistance(DistanceUnit.CM);
 //            try {
 //                double distance = x2RangeSensor.getDistance(DistanceUnit.CM);
 //                if (distance < 225.0 && distance > 25.0) {
@@ -1026,28 +1036,28 @@ public class MecanumRobot {
     }
 
     public void turnOnBlueLed() {
-        if(led != null) {
+        if (led != null) {
             led.setPower(0.95);
             isBlueLedOn = true;
         }
     }
 
     public void turnOffBlueLed() {
-        if(led != null) {
+        if (led != null) {
             led.setPower(0.0);
             isBlueLedOn = false;
         }
     }
 
     public void turnOnGreenLed() {
-        if(led != null) {
+        if (led != null) {
             led.setPower(-0.95);
             isGreenLedOn = true;
         }
     }
 
     public void turnOffGreenLed() {
-        if(led != null) {
+        if (led != null) {
             led.setPower(0.0);
             isGreenLedOn = false;
         }
@@ -1062,7 +1072,7 @@ public class MecanumRobot {
     }
 
     public double getRangeSensorVol() {
-        if(rangeSensor != null) {
+        if (rangeSensor != null) {
             return rangeSensor.getVoltage();
         }
 
@@ -1074,37 +1084,37 @@ public class MecanumRobot {
     }
 
     public void grabRelic() {
-        if(relicClaw != null) {
+        if (relicClaw != null) {
             relicClaw.setPosition(RELIC_CLAW_CLOSE_POSITION);
         }
     }
 
     public void releaseRelic() {
-        if(relicClaw != null) {
+        if (relicClaw != null) {
             relicClaw.setPosition(RELIC_CLAW_OPEN_POSITION);
         }
     }
 
-    public void raiseRelicOverTheWall () {
-        if(relicElbow != null) {
+    public void raiseRelicOverTheWall() {
+        if (relicElbow != null) {
             relicElbow.setPosition(RELIC_ELBOW_UP_POSITION);
         }
     }
 
-    public void prepareRelicLanding () {
-        if(relicElbow != null) {
+    public void prepareRelicLanding() {
+        if (relicElbow != null) {
             relicElbow.setPosition(RELIC_ELBOW_RELEASE_POSITION + 0.15);
         }
     }
 
     public void setRelicElbowPosition(double position) {
-        if(relicElbow != null) {
+        if (relicElbow != null) {
             relicElbow.setPosition(position);
         }
     }
 
     public double getRelicElbowPosition() {
-        if(relicElbow != null) {
+        if (relicElbow != null) {
             return relicElbow.getPosition();
         }
 
@@ -1135,13 +1145,13 @@ public class MecanumRobot {
 
     public void logMotorEncoders(Telemetry telemetry, boolean inLogCat) {
         logInfo(telemetry, "Mode Encoder: ", lf.getCurrentPosition()
-         + " | " + rf.getCurrentPosition()
-         + " | " + lr.getCurrentPosition()
-         + " | " + rr.getCurrentPosition(), inLogCat);
+                + " | " + rf.getCurrentPosition()
+                + " | " + lr.getCurrentPosition()
+                + " | " + rr.getCurrentPosition(), inLogCat);
     }
 
     public double getBatteryVoltage() {
-        if(this.voltageSensor != null) {
+        if (this.voltageSensor != null) {
             return this.voltageSensor.getVoltage();
         }
 
@@ -1149,11 +1159,15 @@ public class MecanumRobot {
     }
 
     public boolean isGlyphTouched() {
-        if(this.glyphDistance != null) {
+        if (this.glyphDistance != null) {
             return this.glyphDistance.getDistance(DistanceUnit.INCH) < 2.5;
         }
 
         return false;
+    }
+
+    public boolean isGlyphHolerClosed() {
+        return this.glyphHolder.getPosition() == GLYPH_TOP_HOLDER_CLOSE_POSITION;
     }
 
     public double getGlyphDistance() {

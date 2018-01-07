@@ -228,6 +228,14 @@ public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
         //------------------------------------------------------
         DriveHelper.drive(g1, robot, telemetry);
 
+        if(g1.YOnce()) {
+            if(robot.isGlyphHolerClosed()) {
+                robot.openGlyphHolder();
+            } else {
+                robot.closeGlyphHolder();
+            }
+        }
+
         telemetry.addData("relicElbowPosition: ", String.format("%.2f",relicElbowPosition));
         telemetry.addData("Relic Elbow Position: ", String.format("%.2f",robot.getRelicElbowPosition()));
         telemetry.addData("Glyph Lift Count: ", robot.getGlyphLiftPosition());
