@@ -28,6 +28,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
         ALIGN_TO_CRYPTOBOX,
         PLACE_GLYPH_INTO_CRYPTO,
         RESET_GLYPH_LIFT,
+        COLLECT_2ND_GLYPH,
         END;
 
         private static RelicRecoveryAutoBlue2.State[] vals = values();
@@ -198,6 +199,28 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
 
                 case RESET_GLYPH_LIFT:
                     // move the glyph lift back to zero position
+                    robot.resetGlyphLift();
+                    robot.initServosForTeleOps();
+                    gotoNextState();
+                    break;
+                case COLLECT_2ND_GLYPH:
+                    //drive forward until distance color sensor detects glyph within 2", pick up glyph, drive backwards the same
+                    // distance driven forward (from logged info), turn around, drive forward 6" (same distance as used when backing
+                    // away from the cryptobox), drop glyph, drive backward, turn around, reset lift
+                    driveLeftInches(24.0, motorSpeed);
+                    logInfo("Distance to 2nd GLyph");
+                    driveForwardInches(48.0, motorSpeed);
+                    if (robot.isGlyphTouched()) {
+                        robot.stopDriveMotors();
+                    }
+                    //need sensor to detect when the robot needs to stop in order to reach the cryptobox
+                    driveBackwardInches();
+                    driveRightInches(48.0, motorSpeed);
+                    turnToAngle(180.0, 0.5);
+                    driveForwardInches(6.0,motorSpeed);
+                    robot.openGlyphGripperMidWide();
+                    driveBackwardInches(6.0, motorSpeed);
+                    turnToAngle(180.0, 0.5);
                     robot.resetGlyphLift();
                     robot.initServosForTeleOps();
                     gotoNextState();
