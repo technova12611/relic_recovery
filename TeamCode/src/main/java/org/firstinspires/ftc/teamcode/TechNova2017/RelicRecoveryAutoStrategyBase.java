@@ -281,6 +281,11 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
 
                 case COLLECT_2ND_GLYPH:
 
+                    // if we don't have time, then stop
+                    if(getRuntime() > 20.0) {
+                        gotoNextState();
+                        break;
+                    }
                     //drive forward until distance color sensor detects glyph within 2", pick up glyph, drive backwards the same
                     // distance driven forward (from logged info), turn around, drive forward 6" (same distance as used when backing
                     // away from the cryptobox), drop glyph, drive backward, turn around, reset lift
@@ -305,7 +310,6 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
 
                 case END:
                 Default:
-                    gotoState(END);
                     break;
             }
 
