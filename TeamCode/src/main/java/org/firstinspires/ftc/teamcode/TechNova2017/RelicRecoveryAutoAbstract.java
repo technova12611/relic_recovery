@@ -100,6 +100,10 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
         driveDirectionInches(0,inches, power);
     }
 
+    protected void driveForwardInchesUntilGlyphHit(double inches, double power) throws InterruptedException {
+        driveDirectionInchesUntilPlyphHit(0,inches, power);
+    }
+
     protected void driveBackwardInches(double inches, double power) throws InterruptedException {
         driveDirectionInches(Math.PI,inches, power);
     }
@@ -118,6 +122,22 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
 
         while (opModeIsActive() && robot.driveMotorsBusy() && timer.time(TimeUnit.MILLISECONDS) < 5000) {
+            robot.updateSensorTelemetry();
+            telemetry.update();
+            //robot.loop();
+            idle();
+        }
+        robot.stopDriveMotors();
+        robot.resetDriveMotorModes();
+        robot.clearEncoderDrivePower();
+    }
+
+    protected void driveDirectionInchesUntilPlyphHit(double directionRadians, double inches, double power) throws InterruptedException {
+        robot.setEncoderDrivePower(power);
+        robot.encoderDriveInches(directionRadians, inches);
+        ElapsedTime timer = new ElapsedTime();
+
+        while (opModeIsActive() && robot.driveMotorsBusy() && timer.time(TimeUnit.MILLISECONDS) < 5000 && robot.isGlyphTouched()) {
             robot.updateSensorTelemetry();
             telemetry.update();
             //robot.loop();

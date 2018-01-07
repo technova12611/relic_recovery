@@ -1174,5 +1174,14 @@ public class MecanumRobot {
             return this.glyphDistance.getDistance(DistanceUnit.INCH);
     }
 
+    /**
+     * Return the avg distance in inches since last time robot encoders are reset
+     *
+     * @return
+     */
+    public double getDistanceTraveled() {
+        return Math.abs((
+                (lf.getCurrentPosition() + rf.getCurrentPosition() + lr.getCurrentPosition() + rr.getCurrentPosition())/4.0)/TICKS_PER_INCH);
+    }
 }
 

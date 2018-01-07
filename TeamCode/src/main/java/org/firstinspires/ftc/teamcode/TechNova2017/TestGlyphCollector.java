@@ -31,7 +31,10 @@ public class TestGlyphCollector extends LinearOpMode {
         while (opModeIsActive()) {
 
             float power = gamepad1.left_stick_y;
-            power = -0.20f;
+            if(power == 0.0) {
+                power = -0.30f;
+            }
+
             glyphLeft.setPower(power);
             glyphRight.setPower(power);
 

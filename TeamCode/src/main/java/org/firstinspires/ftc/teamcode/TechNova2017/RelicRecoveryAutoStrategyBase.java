@@ -272,27 +272,34 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     // move the glyph lift back to zero position
                     robot.resetGlyphLift();
                     robot.initServosForTeleOps();
+
+                    // make sure robot is very close to 90 degree
+                    turnToAngle(90.0, 0.2);
+
                     gotoNextState();
                     break;
 
                 case COLLECT_2ND_GLYPH:
+
                     //drive forward until distance color sensor detects glyph within 2", pick up glyph, drive backwards the same
                     // distance driven forward (from logged info), turn around, drive forward 6" (same distance as used when backing
                     // away from the cryptobox), drop glyph, drive backward, turn around, reset lift
-                    driveForwardInches(40.0, motorSpeed);
-                    if (robot.isGlyphTouched()) {
-                        robot.stopDriveMotors();
-                    }
+                    driveForwardInchesUntilGlyphHit(40.0, 0.75);
                     robot.pickupGlyphInAuto();
+
                     //need sensor to detect when the robot needs to stop in order to reach the cryptobox
-                    driveBackwardInches();
-                    turnToAngle(180.0, 0.5);
+                    driveBackwardInches(robot.getDistanceTraveled(),0.75);
+
+                    turnToAngle(-90.0, 0.5);
                     driveForwardInches(6.0,motorSpeed);
                     robot.openGlyphGripperMidWide();
+
                     driveBackwardInches(6.0, motorSpeed);
-                    turnToAngle(180.0, 0.5);
                     robot.resetGlyphLift();
                     robot.initServosForTeleOps();
+
+                    turnToAngle(90.0, 0.5);
+
                     gotoNextState();
                     break;
 
