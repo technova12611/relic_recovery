@@ -121,6 +121,9 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
 
                 case LEFT_1_FEET:
 
+                    double distanceToWall = measureXDistance(500)/2.54;
+                    double distanceToRightColumn = 28.0 - distanceToWall;
+
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
                     //-------------------------------------------------------------
@@ -128,25 +131,25 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveLeftInches(7.0, motorSpeed);
+                            driveLeftInches(distanceToRightColumn, motorSpeed);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveLeftInches(15.5, motorSpeed);
+                            driveLeftInches(8.0 + distanceToRightColumn, motorSpeed);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(25.0, motorSpeed);
+                            driveLeftInches(16.0 +distanceToRightColumn , motorSpeed);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveLeftInches(15.5, motorSpeed);
+                            driveLeftInches(8.0 + distanceToRightColumn, motorSpeed);
                             break;
                     }
 
@@ -184,7 +187,7 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
                     // move backward to separate robot from glyph
                     //----------------------------------------------
                     logInfo(" --- Drive backward to finish --- ");
-                    driveBackwardInches(5.0, motorSpeed);
+                    driveBackwardInches(7.0, motorSpeed);
 
                     turnToAngle(90.0, 0.5);
 
