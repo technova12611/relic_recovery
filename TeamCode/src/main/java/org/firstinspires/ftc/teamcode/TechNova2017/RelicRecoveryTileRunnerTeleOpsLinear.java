@@ -126,6 +126,14 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.dumpGlyphsFromTray();
         }
 
+        if(g2.A()) {
+            robot.raiseGlyphTrayup1();
+        }
+
+        if(g2.B()) {
+            robot.raiseGlyphTrayup2();
+        }
+
         if(g2.X()) {
             robot.resetGlyphTray();
         }

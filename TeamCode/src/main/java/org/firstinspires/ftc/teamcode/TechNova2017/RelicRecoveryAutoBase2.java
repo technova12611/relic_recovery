@@ -11,7 +11,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoStrat
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoStrategyBase.State.FORWARD_3_FEET;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoStrategyBase.State.START;
 
-public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
+public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
 
      // make new States for each autonomous strategy
      // like Auto 2, Auto 3 etc.
@@ -21,13 +21,13 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
          START,
          PUSH_JEWEL,
          PICK_UP_GLYPH,
-         FORWARD_3_FEET,
+         GET_OFF_STONE,
          TURN_TO_90_DEGREE,
+         STRAFE_3_FEET,
          FORWARD_1_FEET,
          ALIGN_TO_CRYPTOBOX,
          PLACE_GLYPH_INTO_CRYPTO,
          RESET_GLYPH_LIFT,
-         COLLECT_2ND_GLYPH,
          END;
 
          private static State[] vals = values();
@@ -116,63 +116,11 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     gotoState(FORWARD_3_FEET);
                     break;
 
-                case FORWARD_3_FEET:
-
-                    // need more testing on each position
-                    // may need to add range sensor to have better distance control
-                    //-------------------------------------------------------------
-                    switch (vuMark) {
-
-                        // need to place glyph into RIGHT Crypto box
-                        case RIGHT:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveForwardInches(28.0, motorSpeed);
-                            }
-                            // if this is BLUE Alliance
-                            else {
-                                driveBackwardInches(43.5, motorSpeed);
-                            }
-                            break;
-                        // need to place glyph into CENTER Crypto box
-                        // -------------------------------------------------
-                        case CENTER:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveForwardInches(36.5, motorSpeed);
-                            }
-                            // if this is BLUE Alliance
-                            else {
-                                driveBackwardInches(36.0,motorSpeed);
-                              }
-                            break;
-
-                        // need to place glyph into LEFT Crypto box
-                        // -------------------------------------------------
-                        case LEFT:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveForwardInches(44.5, motorSpeed);
-                            }
-                            // if this is BLUE Alliance
-                            else {
-                                driveBackwardInches(28.0, motorSpeed);
-                            }
-                            break;
-
-                        // Default is CENTER position, in case Vumark is not visible
-                        // -------------------------------------------------
-                        default:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveForwardInches(36.5, motorSpeed);
-                            }
-                            // if this is BLUE Alliance
-                            else {
-                                driveBackwardInches(36.0, motorSpeed);
-                            }
-                            break;
-                    }
+                case GET_OFF_STONE:
+                    driveForwardInches(24.0, motorSpeed);
 
                     gotoNextState();
                     break;
-
 
                 case TURN_TO_90_DEGREE:
                     // turn right to 90 degree
@@ -182,52 +130,72 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     gotoNextState();
                     break;
 
-                case FORWARD_1_FEET:
-                    driveForwardInches(4.0, motorSpeed);
-                    gotoNextState();
-                    break;
-
-                case ALIGN_TO_CRYPTOBOX:
+                case STRAFE_3_FEET:
 
                     // need more testing on each position
-                    // use the ultra_sonic sensor to align robot to the right cryto column
-                    //----------------------------------------------------------------------
+                    // may need to add range sensor to have better distance control
+                    //-------------------------------------------------------------
+                    double distanceToWall = measureXDistance(500)/2.54;
+                    if(distanceToWall > 48.0 || distanceToWall < 36.0) {
+                        distanceToWall = 44.0;
+                    }
+                    double distanceToNearColumnInInches = 50.0 - distanceToWall;
 
-                    // within 1 cm is fine
-                    // need more testing
-                    double targetDistance = 0.0;
                     switch (vuMark) {
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            targetDistance = getRightColumnTargetDistanceInCM();
-                            break;
+                            if(getAllianceColor() ==  AllianceColor.RED) {
 
+                                driveLeftInches(distanceToNearColumnInInches, motorSpeed);
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveRightInches(distanceToNearColumnInInches, motorSpeed);
+                            }
+                            break;
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            targetDistance = getCenterColumnTargetDistanceInCM();
+                            if(getAllianceColor() ==  AllianceColor.RED) {
+                                driveLeftInches(8.0+distanceToNearColumnInInches, motorSpeed);
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveRightInches(8.0+distanceToNearColumnInInches,motorSpeed);
+                            }
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            targetDistance = geLeftColumnTargetDistanceInCM();
+                            if(getAllianceColor() ==  AllianceColor.RED) {
+                                driveLeftInches(16.0+distanceToNearColumnInInches, motorSpeed);
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveRightInches(16.0+distanceToNearColumnInInches, motorSpeed);
+                            }
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
+                            if(getAllianceColor() ==  AllianceColor.RED) {
+                                driveLeftInches(8.0+distanceToNearColumnInInches, motorSpeed);
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveRightInches(8.0+distanceToNearColumnInInches, motorSpeed);
+                            }
                             break;
                     }
 
-                    double avgXDistance = measureXDistance(500);
-                    logInfo("X range:",vuMark + " | " + String.format("%.2f cm", getXDistance()));
+                    gotoNextState();
+                    break;
 
-                    if(targetDistance > 0.0) {
-                        alignToCryptoBox(targetDistance, avgXDistance);
-                    }
-
+                case FORWARD_1_FEET:
+                    driveForwardInches(4.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -249,10 +217,10 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
                             + " | " + String.format("%.2f cm", getXDistance()));
 
-                    if(watcher.time(TimeUnit.MILLISECONDS) > 1500) {
-                        driveBackwardInches(3.0, motorSpeed);
+                    if(watcher.time(TimeUnit.MILLISECONDS) > 3000) {
+                        driveBackwardInches(4.0, motorSpeed);
                         robot.closeLowerGlyphGripper();
-                        driveForwardInches(3.0, motorSpeed);
+                        driveForwardInches(4.0, motorSpeed);
                     }
 
                     // move backward to separate robot from glyph
@@ -279,36 +247,8 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                     gotoNextState();
                     break;
 
-                case COLLECT_2ND_GLYPH:
-
-                    // if we don't have time, then stop
-                    if(getRuntime() > 15.0) {
-                        gotoNextState();
-                        break;
-                    }
-                    //drive forward until distance color sensor detects glyph within 2", pick up glyph, drive backwards the same
-                    // distance driven forward (from logged info), turn around, drive forward 6" (same distance as used when backing
-                    // away from the cryptobox), drop glyph, drive backward, turn around, reset lift
-                    driveForwardInchesUntilGlyphHit(40.0, 0.75);
-                    robot.pickupGlyphInAuto();
-
-                    //need sensor to detect when the robot needs to stop in order to reach the cryptobox
-                    driveBackwardInches(robot.getDistanceTraveled(),0.75);
-
-                    turnToAngle(-90.0, 0.5);
-                    driveForwardInches(6.0,motorSpeed);
-                    robot.openGlyphGripperMidWide();
-
-                    driveBackwardInches(6.0, motorSpeed);
-                    robot.resetGlyphLift();
-                    robot.initServosForTeleOps();
-
-                    turnToAngle(90.0, 0.5);
-
-                    gotoNextState();
-                    break;
-
                 case END:
+
                 Default:
                     break;
             }
@@ -326,39 +266,5 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
         robot.onStop();
     }
 
-
-    protected void alignToCryptoBox(double targetPosition, double xDistance) throws InterruptedException
-    {
-        //double xDistance = getXDistance();
-
-        // range sensor failed, abort!
-        if(xDistance == 0.0) {
-            return;
-        }
-
-        double distanceThrehold = 1.0;
-
-        double error = Range.clip(xDistance -targetPosition, -3.0, 3.0);
-        ElapsedTime timer = new ElapsedTime();
-
-        // try for 3 seconds only, to avoid oscilliation
-        while(opModeIsActive() && Math.abs(error) > distanceThrehold && timer.time(TimeUnit.SECONDS) < 3) {
-            // turn right
-            if(getAllianceColor() == AllianceColor.RED) {
-                if (error > 0) {
-                    driveRightInches(Math.abs(error/ 2.54), 0.25);
-                } else {
-                    driveLeftInches(Math.abs(error/ 2.54), 0.25);
-                }
-            }
-            else {
-                if (error > 0) {
-                    driveLeftInches(Math.abs(error/ 2.54), 0.25);
-                } else {
-                    driveRightInches(Math.abs(error/ 2.54), 0.25);
-                }
-            }
-        }
-    }
     //------------------------------------
 }

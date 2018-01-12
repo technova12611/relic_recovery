@@ -30,6 +30,8 @@ import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIVE_POWER;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_CLOSE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_1;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_2;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_STOPPER_CLOSE_POSITION;
@@ -1028,6 +1030,18 @@ public class TileRunnerRobot {
     public void dumpGlyphsFromTray() {
         if(this.glyphFlipper !=  null) {
             this.glyphFlipper.setPosition(GLYPH_FLIPPER_OPEN_POSITION);
+        }
+    }
+
+    public void raiseGlyphTrayup1() {
+        if(this.glyphFlipper !=  null) {
+            this.glyphFlipper.setPosition(GLYPH_FLIPPER_FLAT_POSITION_1);
+        }
+    }
+
+    public void raiseGlyphTrayup2() {
+        if(this.glyphFlipper !=  null) {
+            this.glyphFlipper.setPosition(GLYPH_FLIPPER_FLAT_POSITION_2);
         }
     }
 

@@ -9,11 +9,13 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class TestGlyphCollector extends LinearOpMode {
 
     DcMotor glyphLeft, glyphRight;
+    boolean forward = false;
+    boolean backward = false;
     @Override
     public void runOpMode() {
 
         glyphLeft = hardwareMap.dcMotor.get("glyph_left");
-        glyphLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        //glyphLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         glyphLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         glyphRight = hardwareMap.dcMotor.get("glyph_right");
@@ -31,8 +33,26 @@ public class TestGlyphCollector extends LinearOpMode {
         while (opModeIsActive()) {
 
             float power = gamepad1.left_stick_y;
-            if(power == 0.0) {
+//            if(power == 0.0) {
+//                power = -0.30f;
+//            }
+
+            if(gamepad1.x || forward) {
+                power = 0.30f;
+                forward = true;
+                backward = false;
+            }
+
+            if(gamepad1.y || backward) {
                 power = -0.30f;
+                forward = false;
+                backward = true;
+            }
+
+            if(gamepad1.a) {
+                power = 0.0f;
+                forward = false;
+                backward = false;
             }
 
             glyphLeft.setPower(power);

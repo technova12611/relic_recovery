@@ -67,9 +67,11 @@ public class RobotInfo {
     public static double INTAKE_RIGHT_HOLDER_OPEN_POSITION = 0.25;
     public static double INTAKE_RIGHT_HOLDER_CLOSE_POSITION = 0.80;
 
-    public static double GLYPH_FLIPPER_INITIAL_POSITION = 1.0;
-    public static double GLYPH_FLIPPER_OPEN_POSITION = 0.40;
-    public static double GLYPH_FLIPPER_CLOSE_POSITION = 0.83;
+    public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.70;
+    public static double GLYPH_FLIPPER_OPEN_POSITION = 0.35;
+    public static double GLYPH_FLIPPER_FLAT_POSITION_1 = 0.50;
+    public static double GLYPH_FLIPPER_FLAT_POSITION_2 = 0.40;
+    public static double GLYPH_FLIPPER_CLOSE_POSITION = 0.70;
 
     // Driver control motor speed
     //-----------------------------------------------------------------------

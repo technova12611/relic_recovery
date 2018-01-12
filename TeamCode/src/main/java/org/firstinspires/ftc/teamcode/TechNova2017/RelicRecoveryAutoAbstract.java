@@ -271,9 +271,13 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
         double avg = 0.0;
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < elapseTime) {
             avg = xAvgDistance.next(getXDistance());
+            sleep(35);
         }
 
+        logInfo(" Range Sensor: " + String.format("%.2f", avg) + " (in)" );
+
         return avg;
+
     }
 
     // default is RED allaince
