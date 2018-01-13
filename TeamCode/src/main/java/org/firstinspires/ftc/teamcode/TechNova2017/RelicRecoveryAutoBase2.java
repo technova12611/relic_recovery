@@ -1,48 +1,49 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name = "Auto Red 2", group = "Competition")
-public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
-    public AllianceColor getAllianceColor() {
-        return AllianceColor.RED;
-    }
+import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoStrategyBase.State.END;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoStrategyBase.State.FORWARD_3_FEET;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoStrategyBase.State.START;
 
-    // make new States for each autonomous strategy
-    // like Auto 2, Auto 3 etc.
-    //  the following is for Auto 2 (both BLUE and RED)
+public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
+
+     // make new States for each autonomous strategy
+     // like Auto 2, Auto 3 etc.
+    //  the following is for Auto 1 (both BLUE and RED)
     //----------------------------------------------
-    enum State implements AutoState {
-        START,
-        PUSH_JEWEL,
-        PICK_UP_GLYPH,
-        FORWARD_3_FEET,
-        LEFT_1_FEET,
-        FORWARD_1_FEET,
-        ALIGN_TO_CRYPTOBOX,
-        PLACE_GLYPH_INTO_CRYPTO,
-        RESET_GLYPH_LIFT,
-        END;
+     enum State implements AutoState {
+         START,
+         PUSH_JEWEL,
+         PICK_UP_GLYPH,
+         GET_OFF_STONE,
+         TURN_TO_90_DEGREE,
+         STRAFE_3_FEET,
+         FORWARD_1_FEET,
+         ALIGN_TO_CRYPTOBOX,
+         PLACE_GLYPH_INTO_CRYPTO,
+         RESET_GLYPH_LIFT,
+         END;
 
-        private static RelicRecoveryAutoRed2.State[] vals = values();
-        public RelicRecoveryAutoRed2.State next()
-        {
-            return vals[(this.ordinal()+1) % vals.length];
-        }
-        public String toString() {
-            return this.ordinal() + " [" + super.toString() +"]";
-        }
+         private static State[] vals = values();
+         public State next()
+         {
+             return vals[(this.ordinal()+1) % vals.length];
+         }
+         public String toString() {
+             return this.ordinal() + " [" + super.toString() +"]";
+         }
     }
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        // common for all alliance to handle the initializatio of our mecamnum robot
+        // common for all alliance to handle the initialization of our mecamnum robot
         //------------------------------------------------------------------------
         initOpMode();
 
@@ -51,6 +52,8 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
             telemetry.addData("Distance (x1, x2): ", "(%.1f, %.1f)", robot.getX1Distance(), robot.getX2Distance());
             telemetry.update();
         }
+
+        //waitForStart();
 
         this.resetStartTime();
 
@@ -67,20 +70,20 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
 
         // starts the state machine
         //---------------------------------
-        v_state = RelicRecoveryAutoRed2.State.START;
+        v_state = START;
 
 
         // 2. Run the state machine
         //  test, and more test
         //-------------------------------------------------------------------
-        while (opModeIsActive() && v_state != RelicRecoveryAutoRed2.State.END) {
+        while (opModeIsActive() && v_state != END) {
 
             boolean detectVuMark = false;
             double motorSpeed = 0.4;
 
             logStateInfo(v_state, "Start");
 
-            RelicRecoveryAutoRed2.State step = (RelicRecoveryAutoRed2.State)v_state;
+            State step = (State)v_state;
 
             switch (step) {
                 case START:
@@ -110,46 +113,81 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
                     // close the grabber, and move up the lift by 1 or 2 inches
                     robot.pickupGlyphInAuto();
 
-                    gotoState(RelicRecoveryAutoRed2.State.FORWARD_3_FEET);
+                    gotoState(FORWARD_3_FEET);
                     break;
 
-                case FORWARD_3_FEET:
-                    driveForwardInches(25.0, motorSpeed);
+                case GET_OFF_STONE:
+                    driveForwardInches(24.0, motorSpeed);
+
                     gotoNextState();
                     break;
 
+                case TURN_TO_90_DEGREE:
+                    // turn right to 90 degree
+                    // need to figure out the turn direction for
+                    // red and blue alliance
+                    turn(-90.0);
+                    gotoNextState();
+                    break;
 
-                case LEFT_1_FEET:
-
-                    double distanceToWall = measureXDistance(500)/2.54;
-                    double distanceToRightColumn = 28.0 - distanceToWall;
+                case STRAFE_3_FEET:
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
                     //-------------------------------------------------------------
+                    double distanceToWall = measureXDistance(500)/2.54;
+                    if(distanceToWall > 48.0 || distanceToWall < 36.0) {
+                        distanceToWall = 44.0;
+                    }
+                    double distanceToNearColumnInInches = 50.0 - distanceToWall;
+
                     switch (vuMark) {
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveLeftInches(distanceToRightColumn, motorSpeed);
-                            break;
+                            if(getAllianceColor() ==  AllianceColor.RED) {
 
+                                driveLeftInches(distanceToNearColumnInInches, motorSpeed);
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveRightInches(distanceToNearColumnInInches, motorSpeed);
+                            }
+                            break;
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveLeftInches(8.0 + distanceToRightColumn, motorSpeed);
+                            if(getAllianceColor() ==  AllianceColor.RED) {
+                                driveLeftInches(8.0+distanceToNearColumnInInches, motorSpeed);
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveRightInches(8.0+distanceToNearColumnInInches,motorSpeed);
+                            }
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(16.0 +distanceToRightColumn , motorSpeed);
+                            if(getAllianceColor() ==  AllianceColor.RED) {
+                                driveLeftInches(16.0+distanceToNearColumnInInches, motorSpeed);
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveRightInches(16.0+distanceToNearColumnInInches, motorSpeed);
+                            }
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveLeftInches(8.0 + distanceToRightColumn, motorSpeed);
+                            if(getAllianceColor() ==  AllianceColor.RED) {
+                                driveLeftInches(8.0+distanceToNearColumnInInches, motorSpeed);
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveRightInches(8.0+distanceToNearColumnInInches, motorSpeed);
+                            }
                             break;
                     }
 
@@ -157,16 +195,11 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
                     break;
 
                 case FORWARD_1_FEET:
-                    driveForwardInches(3.0, motorSpeed);
-                    gotoNextState();
-                    break;
-
-                case ALIGN_TO_CRYPTOBOX:
+                    driveForwardInches(4.0, motorSpeed);
                     gotoNextState();
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
-
                     logInfo(" --- Open Grabber --- ");
                     robot.openGlyphGripperMidWide();
 
@@ -178,17 +211,25 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
                     //-------------------------------------------------
                     logInfo(" --- Drive forward to push --- ");
                     ElapsedTime watcher = new ElapsedTime();
-                    driveForwardInches(6.0, motorSpeed);
+                    driveForwardInches(5.0, motorSpeed);
 
                     logInfo(" Place Glyph into column (ms): " +
                             watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
                             + " | " + String.format("%.2f cm", getXDistance()));
 
+                    if(watcher.time(TimeUnit.MILLISECONDS) > 3000) {
+                        driveBackwardInches(4.0, motorSpeed);
+                        robot.closeLowerGlyphGripper();
+                        driveForwardInches(4.0, motorSpeed);
+                    }
+
                     // move backward to separate robot from glyph
                     //----------------------------------------------
                     logInfo(" --- Drive backward to finish --- ");
-                    driveBackwardInches(7.0, motorSpeed);
+                    driveBackwardInches(6.0, motorSpeed);
 
+                    // fast turn to face the glyph pit, get ready for teleops
+                    //------------------------------------------------
                     turnToAngle(90.0, 0.5);
 
                     gotoNextState();
@@ -199,18 +240,26 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
                     // move the glyph lift back to zero position
                     robot.resetGlyphLift();
                     robot.initServosForTeleOps();
+
+                    // make sure robot is very close to 90 degree
+                    turnToAngle(90.0, 0.2);
+
                     gotoNextState();
                     break;
 
                 case END:
-                    Default:
-                    gotoState(RelicRecoveryAutoRed2.State.END);
+
+                Default:
                     break;
             }
 
             // if vuMark is not visible, keep trying
             if(detectVuMark && vuMark == RelicRecoveryVuMark.UNKNOWN) {
                 vuMark = vuMarkVision.detect(telemetry);
+            }
+
+            if(vuMark != RelicRecoveryVuMark.UNKNOWN) {
+                robot.turnOnBlueLed();
             }
         }
 

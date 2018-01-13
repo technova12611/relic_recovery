@@ -282,7 +282,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                 case COLLECT_2ND_GLYPH:
 
                     // if we don't have time, then stop
-                    if(getRuntime() > 20.0) {
+                    if(getRuntime() > 15.0) {
                         gotoNextState();
                         break;
                     }

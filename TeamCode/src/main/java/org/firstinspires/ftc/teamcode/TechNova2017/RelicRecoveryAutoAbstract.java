@@ -270,10 +270,17 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
         double avg = 0.0;
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < elapseTime) {
-            avg = xAvgDistance.next(getXDistance());
+            double distance = getXDistance();
+            if(distance > 10.0 && distance < 200 ) {
+                avg = xAvgDistance.next(distance);
+            }
+            sleep(35);
         }
 
+        logInfo(" Range Sensor: " + String.format("%.2f", avg) + " (in)" );
+
         return avg;
+
     }
 
     // default is RED allaince
