@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.TechNova2017;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "Auto Red 1", group = "Competition")
-public class RelicRecoveryAutoRed1 extends RelicRecoveryAutoStrategyBase{
+public class RelicRecoveryAutoRed1 extends RelicRecoveryAutoBase2{
 
     public AllianceColor getAllianceColor() {
         return AllianceColor.RED;

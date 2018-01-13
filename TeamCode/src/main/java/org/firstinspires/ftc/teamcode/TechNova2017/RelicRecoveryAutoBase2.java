@@ -7,9 +7,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoStrategyBase.State.END;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoStrategyBase.State.FORWARD_3_FEET;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoStrategyBase.State.START;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoBase2.State.END;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoBase2.State.START;
 
 public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
 
@@ -25,7 +24,6 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
          TURN_TO_90_DEGREE,
          STRAFE_3_FEET,
          FORWARD_1_FEET,
-         ALIGN_TO_CRYPTOBOX,
          PLACE_GLYPH_INTO_CRYPTO,
          RESET_GLYPH_LIFT,
          END;
@@ -113,7 +111,7 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                     // close the grabber, and move up the lift by 1 or 2 inches
                     robot.pickupGlyphInAuto();
 
-                    gotoState(FORWARD_3_FEET);
+                    gotoNextState();
                     break;
 
                 case GET_OFF_STONE:
@@ -139,7 +137,7 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                     if(distanceToWall > 48.0 || distanceToWall < 36.0) {
                         distanceToWall = 44.0;
                     }
-                    double distanceToNearColumnInInches = 50.0 - distanceToWall;
+                    double distanceToNearColumnInInches = 42.5 - distanceToWall;
 
                     switch (vuMark) {
 
@@ -151,18 +149,18 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(distanceToNearColumnInInches, motorSpeed);
+                                driveRightInches(17.0+distanceToNearColumnInInches, motorSpeed);
                             }
                             break;
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveLeftInches(8.0+distanceToNearColumnInInches, motorSpeed);
+                                driveLeftInches(8.5+distanceToNearColumnInInches, motorSpeed);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(8.0+distanceToNearColumnInInches,motorSpeed);
+                                driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed);
                             }
                             break;
 
@@ -170,11 +168,11 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                         // -------------------------------------------------
                         case LEFT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveLeftInches(16.0+distanceToNearColumnInInches, motorSpeed);
+                                driveLeftInches(17.0+distanceToNearColumnInInches, motorSpeed);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(16.0+distanceToNearColumnInInches, motorSpeed);
+                                driveRightInches(distanceToNearColumnInInches, motorSpeed);
                             }
                             break;
 
@@ -182,11 +180,11 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                         // -------------------------------------------------
                         default:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveLeftInches(8.0+distanceToNearColumnInInches, motorSpeed);
+                                driveLeftInches(8.5+distanceToNearColumnInInches, motorSpeed);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(8.0+distanceToNearColumnInInches, motorSpeed);
+                                driveRightInches(8.5+distanceToNearColumnInInches, motorSpeed);
                             }
                             break;
                     }
@@ -195,7 +193,7 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                     break;
 
                 case FORWARD_1_FEET:
-                    driveForwardInches(4.0, motorSpeed);
+                    driveForwardInches(3.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -203,7 +201,7 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                     logInfo(" --- Open Grabber --- ");
                     robot.openGlyphGripperMidWide();
 
-                    while(opModeIsActive() && timer.time() < 300)  {
+                    while(opModeIsActive() && timer.time() < 1000)  {
                         sleep(100);
                     }
 

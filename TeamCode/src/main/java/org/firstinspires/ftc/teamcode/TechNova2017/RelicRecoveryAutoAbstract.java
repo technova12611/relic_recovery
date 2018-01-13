@@ -244,7 +244,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
                             + " | " + String.format("%6.1f", getRuntime() * 1000.0)
                             + " | " + String.format("%5d", timer.time(TimeUnit.MILLISECONDS))
                             + " | " + String.format("IMU: %.1f", robot.getHeadingAngle())
-                            + " | " + String.format("(x1,x2): %3.1f, %3.1f, %3.1f", robot.getX1Distance(), robot.getX2Distance())
+                            + " | " + String.format("(x1,x2): %3.1f, %3.1f", robot.getX1Distance(), robot.getX2Distance())
                             + " | " + "Glyph count:" + String.format("%5d", robot.getGlyphLiftPosition())
                             + " | " + (vuMark != null ? vuMark : "")
                             + " | " + String.format("Battery: %3.2f", robot.getBatteryVoltage())
