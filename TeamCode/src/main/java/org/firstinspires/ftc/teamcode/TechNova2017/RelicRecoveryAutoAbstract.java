@@ -137,7 +137,7 @@ public abstract class RelicRecoveryAutoAbstract extends LinearOpMode {
         robot.encoderDriveInches(directionRadians, inches);
         ElapsedTime timer = new ElapsedTime();
 
-        while (opModeIsActive() && robot.driveMotorsBusy() && timer.time(TimeUnit.MILLISECONDS) < 5000 && robot.isGlyphTouched()) {
+        while (opModeIsActive() && robot.driveMotorsBusy() && timer.time(TimeUnit.MILLISECONDS) < 5000 && !robot.isGlyphTouched()) {
             robot.updateSensorTelemetry();
             telemetry.update();
             //robot.loop();

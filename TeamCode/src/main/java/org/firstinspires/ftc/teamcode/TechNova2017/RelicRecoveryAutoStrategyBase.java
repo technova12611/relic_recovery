@@ -79,7 +79,7 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
         while (opModeIsActive() && v_state != END) {
 
             boolean detectVuMark = false;
-            double motorSpeed = 0.4;
+            double motorSpeed = 0.75;
 
             logStateInfo(v_state, "Start");
 
@@ -250,9 +250,9 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                             + " | " + String.format("%.2f cm", getXDistance()));
 
                     if(watcher.time(TimeUnit.MILLISECONDS) > 1500) {
-                        driveBackwardInches(3.0, motorSpeed);
+                        driveBackwardInches(5.0, motorSpeed);
                         robot.closeLowerGlyphGripper();
-                        driveForwardInches(3.0, motorSpeed);
+                        driveForwardInches(5.0, motorSpeed);
                     }
 
                     // move backward to separate robot from glyph
@@ -286,13 +286,12 @@ public class RelicRecoveryAutoStrategyBase extends RelicRecoveryAutoAbstract {
                         gotoNextState();
                         break;
                     }
-                    //drive forward until distance color sensor detects glyph within 2", pick up glyph, drive backwards the same
-                    // distance driven forward (from logged info), turn around, drive forward 6" (same distance as used when backing
+                    //drive forward until color distance sensor detects glyph within 2", pick up glyph, drive backwards the same
+                    // distance driven forward, turn around, drive forward 6" (same distance as used when backing
                     // away from the cryptobox), drop glyph, drive backward, turn around, reset lift
                     driveForwardInchesUntilGlyphHit(40.0, 0.75);
                     robot.pickupGlyphInAuto();
 
-                    //need sensor to detect when the robot needs to stop in order to reach the cryptobox
                     driveBackwardInches(robot.getDistanceTraveled(),0.75);
 
                     turnToAngle(-90.0, 0.5);
