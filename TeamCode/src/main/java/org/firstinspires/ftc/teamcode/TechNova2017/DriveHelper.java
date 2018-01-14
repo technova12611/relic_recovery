@@ -58,7 +58,7 @@ public class DriveHelper {
                 }
             }
         }
-        else if((g.rightBumperOnce() || g.leftBumperOnce()) && !g.A()) {
+        else if((g.rightBumperOnce() || g.leftBumperOnce()) && !g.A() && !g.Y()) {
             verySlowDrive = false;
             if (robot.isBlueLedOn()) {
                 robot.turnOffBlueLed();
