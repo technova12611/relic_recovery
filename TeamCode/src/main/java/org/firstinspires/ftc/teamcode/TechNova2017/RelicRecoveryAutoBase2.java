@@ -135,7 +135,7 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                     //-------------------------------------------------------------
                     double distanceToWall = measureXDistance(500)/2.54;
                     if(distanceToWall > 48.0 || distanceToWall < 36.0) {
-                        distanceToWall = 44.0;
+                        distanceToWall = 39.0;
                     }
                     double distanceToNearColumnInInches = 42.5 - distanceToWall;
 
@@ -198,10 +198,13 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
+
+                    robot.resetGlyphLift();
+
                     logInfo(" --- Open Grabber --- ");
                     robot.openGlyphGripperMidWide();
 
-                    while(opModeIsActive() && timer.time() < 1000)  {
+                    while(opModeIsActive() && timer.time() < 500)  {
                         sleep(100);
                     }
 
