@@ -115,7 +115,14 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                     break;
 
                 case GET_OFF_STONE:
-                    driveForwardInches(24.0, motorSpeed);
+                    if(getAllianceColor() ==  AllianceColor.RED) {
+
+                        driveForwardInches(24.0, motorSpeed);
+                    }
+                    // if this is BLUE Alliance
+                    else {
+                        driveBackwardInches(24.0, motorSpeed);
+                    }
 
                     gotoNextState();
                     break;
