@@ -156,7 +156,7 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(17.0+distanceToNearColumnInInches, motorSpeed);
+                                driveRightInches(18.0+distanceToNearColumnInInches, motorSpeed);
                             }
                             break;
                         // need to place glyph into CENTER Crypto box
@@ -167,7 +167,7 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed);
+                                driveRightInches(9.5+distanceToNearColumnInInches,motorSpeed);
                             }
                             break;
 
@@ -179,7 +179,7 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(distanceToNearColumnInInches, motorSpeed);
+                                driveRightInches(1.0+distanceToNearColumnInInches, motorSpeed);
                             }
                             break;
 
@@ -191,7 +191,7 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(8.5+distanceToNearColumnInInches, motorSpeed);
+                                driveRightInches(9.5+distanceToNearColumnInInches, motorSpeed);
                             }
                             break;
                     }
@@ -200,7 +200,7 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
                     break;
 
                 case FORWARD_1_FEET:
-                    driveForwardInches(3.0, motorSpeed);
+                    driveForwardInches(4.0, motorSpeed);
                     gotoNextState();
                     break;
 

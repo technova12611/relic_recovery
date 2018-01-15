@@ -126,6 +126,12 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
 
                 case RIGHT_1_FEET:
 
+                    double distanceToWall = measureXDistance(500)/2.54;
+                    if(distanceToWall > 28.0 || distanceToWall < 18.0) {
+                        distanceToWall = 20.0;
+                    }
+                    double distanceToNearColumnInInches = 25.5 - distanceToWall;
+
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
                     //-------------------------------------------------------------
@@ -133,25 +139,25 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(27.0, motorSpeed);
+                            driveRightInches(18.5+distanceToNearColumnInInches, motorSpeed);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(17.0, motorSpeed);
+                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveRightInches(6.5, motorSpeed);
+                            driveRightInches(distanceToNearColumnInInches, motorSpeed);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveRightInches(17.0, motorSpeed);
+                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed);
                             break;
                     }
 
@@ -168,6 +174,9 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
+
+                    robot.resetGlyphLift();
+
                     logInfo(" --- Open Grabber --- ");
                     robot.openGlyphGripperMidWide();
 
@@ -190,7 +199,7 @@ public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
                     logInfo(" --- Drive backward to finish --- ");
                     driveBackwardInches(5.0, motorSpeed);
 
-                    turnToAngle(90.0, 0.5);
+                    turnToAngle(180.0, 0.5);
 
                     gotoNextState();
 

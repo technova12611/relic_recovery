@@ -15,7 +15,7 @@ public class TestGlyphCollector extends LinearOpMode {
     public void runOpMode() {
 
         glyphLeft = hardwareMap.dcMotor.get("glyph_left");
-        //glyphLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        glyphLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         glyphLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         glyphRight = hardwareMap.dcMotor.get("glyph_right");
