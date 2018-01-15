@@ -126,7 +126,7 @@ public class TileRunnerRobot {
 
     // Encoder Driving
     // Assuming 4" wheels
-    private static final double TICKS_PER_INCH = 1120 * (24./32.) / (Math.PI * 4.0);
+    private static final double TICKS_PER_INCH = 1120 * (24./40.) / (Math.PI * 4.0);
     private static final double TICKS_PER_CM = TICKS_PER_INCH / 2.54;
 
     private double encoder_drive_power = ENCODER_DRIVE_POWER;

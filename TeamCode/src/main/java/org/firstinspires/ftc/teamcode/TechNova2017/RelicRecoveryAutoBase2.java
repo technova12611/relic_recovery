@@ -47,7 +47,7 @@ public class RelicRecoveryAutoBase2 extends RelicRecoveryAutoAbstract {
 
         // waiting for operator to press start button
         while(!isStarted()) {
-            telemetry.addData("Distance (x1, x2): ", "(%.1f, %.1f)", robot.getX1Distance(), robot.getX2Distance());
+            telemetry.addData("Distance (x1, x2): ", String.format("(%.1f, %.1f)", robot.getX1Distance(), robot.getX2Distance()));
             telemetry.update();
         }
 
