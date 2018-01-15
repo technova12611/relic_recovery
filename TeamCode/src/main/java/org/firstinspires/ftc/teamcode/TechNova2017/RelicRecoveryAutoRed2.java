@@ -146,7 +146,7 @@ public class RelicRecoveryAutoRed2 extends RelicRecoveryAutoAbstract {
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(17.0+distanceToNearColumnInInches, motorSpeed);
+                            driveLeftInches(17.5+distanceToNearColumnInInches, motorSpeed);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
