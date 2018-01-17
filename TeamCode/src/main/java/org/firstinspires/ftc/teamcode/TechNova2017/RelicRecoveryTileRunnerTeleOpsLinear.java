@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.TechNova2017;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -20,6 +21,9 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
     Boolean glyphLiftInAutoMode = null;
     ElapsedTime glyphLiftTimer = new ElapsedTime();
     int glyphLastPosition = 0;
+
+    boolean intakeForward = false;
+    boolean intakeBackward = false;
 
     boolean relicClawLocked = true;
     boolean clawClosed = false;
@@ -61,9 +65,9 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         // operator controller left joystick moves the relic slider
         // ----------------------------------------------------------
         if (Math.abs(g2.left_stick_y) > 0 && !relicClawLocked) {
-            robot.moveRelicSlider(-1.0 * g2.left_stick_y);
+            //robot.moveRelicSlider(-1.0 * g2.left_stick_y);
         } else {
-            robot.moveRelicSlider(0.0);
+            //robot.moveRelicSlider(0.0);
         }
 
         // switch to Relic grabbing/landing handling
@@ -120,6 +124,8 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.moveGlyphLift(g2.left_trigger);
         } else if(g2.right_trigger > 0.1) {
             robot.moveGlyphLift(-g2.right_trigger);
+        } else {
+            robot.stopGlyphLiftMotor();
         }
 
         if(g2.Y()) {
@@ -139,9 +145,11 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         }
 
         if(g1.left_trigger > 0.5) {
-            robot.collectGlyph(g1.left_trigger);
-        } else if(g1.right_trigger > 0.1) {
-            robot.reverseGlyph(-g1.right_trigger);
+            robot.collectGlyph();
+        } else if(g1.right_trigger > 0.5) {
+            robot.reverseGlyph();
+        } else if(g1.A()) {
+            robot.stopIntake();
         }
 
         // driving the robot
@@ -151,14 +159,5 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         telemetry.addData("relicElbowPosition: ", String.format("%.2f",relicElbowPosition));
         telemetry.addData("Relic Elbow Position: ", String.format("%.2f",robot.getRelicElbowPosition()));
         telemetry.addData("Glyph Lift Count: ", robot.getGlyphLiftPosition());
-        telemetry.addData("Glyph Touched: ", robot.isGlyphTouched() + " | Distance: " + String.format("%.2f",robot.getGlyphDistance()));
-    }
-
-    private boolean isGlyphLiftManualModeAllowed() {
-        if(this.glyphLiftInAutoMode == null || !this.glyphLiftInAutoMode ||
-                (this.glyphLiftInAutoMode && glyphLiftTimer.seconds() > 1.0)) {
-            return true;
-        }
-        return false;
     }
 }

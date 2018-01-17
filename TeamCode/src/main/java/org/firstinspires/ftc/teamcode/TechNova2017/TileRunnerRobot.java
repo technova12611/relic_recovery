@@ -32,26 +32,16 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIV
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_1;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_2;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_STOPPER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_STOPPER_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_CLOSE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_PUSH_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_UP_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_INITIAL_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_LEFT_HOLDER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_RIGHT_HOLDER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_CLOSE_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_INITIAL_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_CLOSE_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_INITIAL_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_RELEASE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_CLOSE_POSITION;
@@ -60,16 +50,6 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_O
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_RELEASE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_UP_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_CLOSE_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_INITIAL_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_LEFT_GLYPH_ARM_WIDE_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_GLYPH_ARM_CLOSE_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_GLYPH_ARM_INITIAL_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_GLYPH_ARM_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION;
 
 /**
  * 2017 Relic Recovery Game Robot
@@ -87,9 +67,9 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.UPPER_RIGHT_
  *     Wheel Intake holder (2)
  */
 public class TileRunnerRobot {
-    private DcMotor lf, lr, rf, rr, glyphLift, relicSlider, intakeLeft, intakeRight;
+    DcMotor lf, lr, rf, rr, glyphLift, relicSlider, intakeLeft, intakeRight;
     private Servo relicClaw, relicElbow, relicClawholder, longArm, intakeLeftHolder, intakeRightHolder,
-                  glyphFlipper;
+                  glyphFlipper, glyphPusher;
 
     private Telemetry telemetry;
     private VoltageSensor voltageSensor;
@@ -193,10 +173,18 @@ public class TileRunnerRobot {
 
         try {
             glyphFlipper = hardwareMap.servo.get("glyphFlipper");
-            glyphFlipper.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
+            glyphFlipper.setPosition(GLYPH_FLIPPER_INITIAL_POSITION);
 
         } catch(Exception e) {
             logInfo(this.telemetry, "Glyph Flipper: ", e.getMessage());
+        }
+
+        try {
+            glyphPusher = hardwareMap.servo.get("glyphPusher");
+            glyphPusher.setPosition(GLYPH_PUSHER_INITIAL_POSITION);
+
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Glyph Pusher: ", e.getMessage());
         }
 
         try {
@@ -326,7 +314,8 @@ public class TileRunnerRobot {
     }
 
     public void onStart() {
-        setMode(DcMotor.RunMode.RUN_USING_ENCODER, lf, lr, rr, rf, glyphLift);
+        setMode(DcMotor.RunMode.RUN_USING_ENCODER, lf, lr, rr, rf, intakeLeft, intakeRight);
+        glyphLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void resetDriveMotors() {
@@ -1007,17 +996,31 @@ public class TileRunnerRobot {
             return this.glyphDistance.getDistance(DistanceUnit.INCH);
     }
 
-    public void collectGlyph(double power) {
+    public void collectGlyph() {
         if(this.intakeLeft != null && this.intakeRight != null) {
             this.intakeLeft.setPower(0.3);
+            this.intakeRight.setPower(0.3);
+        }
+    }
+
+    public void setIntakePower(double power) {
+        if(this.intakeLeft != null && this.intakeRight != null) {
+            this.intakeLeft.setPower(power);
+            this.intakeRight.setPower(power);
+        }
+    }
+
+    public void reverseGlyph() {
+        if(this.intakeLeft != null && this.intakeRight != null) {
+            this.intakeLeft.setPower(-0.3);
             this.intakeRight.setPower(-0.3);
         }
     }
 
-    public void reverseGlyph(double power) {
+    public void stopIntake() {
         if(this.intakeLeft != null && this.intakeRight != null) {
-            this.intakeLeft.setPower(-0.3);
-            this.intakeRight.setPower(0.3);
+            this.intakeLeft.setPower(0.0);
+            this.intakeRight.setPower(0.0);
         }
     }
 
@@ -1042,6 +1045,30 @@ public class TileRunnerRobot {
     public void raiseGlyphTrayup2() {
         if(this.glyphFlipper !=  null) {
             this.glyphFlipper.setPosition(GLYPH_FLIPPER_FLAT_POSITION_2);
+        }
+    }
+
+    public void setFlipperPosition(double position) {
+        if(this.glyphFlipper !=  null) {
+            this.glyphFlipper.setPosition(position);
+        }
+    }
+
+    public void pushGlyph() {
+        if(glyphPusher != null) {
+            glyphPusher.setPosition(GLYPH_PUSHER_PUSH_POSITION);
+        }
+    }
+
+    public void moveUpGlyphPusher() {
+        if(glyphPusher != null) {
+            glyphPusher.setPosition(GLYPH_PUSHER_UP_POSITION);
+        }
+    }
+
+    public void setGlyphPusherPosition(double position) {
+        if(glyphPusher != null) {
+            glyphPusher.setPosition(position);
         }
     }
 

@@ -6,13 +6,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
-@TeleOp(name = "Test Glyph Pickup Encoder", group = "Test")
-public class TestGlyphCollector2 extends LinearOpMode {
+@TeleOp(name = "Test Glyph Pickup Reverse", group = "Test")
+public class TestGlyphCollector3 extends LinearOpMode {
 
     TileRunnerRobot robot;
+
     boolean forward = false;
     boolean backward = false;
     int previousEncoder = 0;
@@ -27,19 +27,18 @@ public class TestGlyphCollector2 extends LinearOpMode {
     public void runOpMode() {
 
         robot = new TileRunnerRobot(this,hardwareMap,telemetry, null);
-
         telemetry.addData("Robot is Ready.", "Press START ..........");
         telemetry.update();
 
         // wait for the start button to be pressed.
         waitForStart();
-        robot.onStart();
 
+        robot.onStart();
 
         while (opModeIsActive()) {
 
             float power = gamepad1.left_stick_y;
-            if(Math.abs(power) > 0.20) {
+            if(Math.abs(power) > 0.2) {
                 forward = false;
                 backward = false;
             }
@@ -64,29 +63,28 @@ public class TestGlyphCollector2 extends LinearOpMode {
                 backward = false;
                 stuckDetected = false;
             }
-
+            
             int leftPosition = robot.intakeLeft.getCurrentPosition();
             double avgLeftPosition = intakeLeftEncoder.next(leftPosition);
             if(Math.abs(power) > 0.0 && !stuckDetected) {
                 if( Math.abs(avgLeftPosition) < Math.abs(leftPosition) + 10) {
                     stuckDetected = true;
                     intakeStuckTimer.reset();
-                    power = -power;
+                    //power = -power;
                 }
             }
 
             if(stuckDetected && intakeStuckTimer.time(TimeUnit.SECONDS) > 1.0 ) {
                 stuckDetected = false;
-                power = -power;
+                //power = -power;
             }
 
-            robot.intakeLeft.setPower(power);
-            robot.intakeRight.setPower(power);
-
-            if(gamepad1.right_stick_y > 0) {
-                robot.pushGlyph();
-            } else if(gamepad1.right_stick_y < 0) {
-                robot.moveUpGlyphPusher();
+            if(stuckDetected) {
+                robot.intakeLeft.setPower(power);
+                robot.intakeRight.setPower(-power);
+            } else {
+                robot.intakeLeft.setPower(power);
+                robot.intakeRight.setPower(power);
             }
 
             if(gamepad1.right_stick_x > 0.9) {
@@ -108,6 +106,5 @@ public class TestGlyphCollector2 extends LinearOpMode {
 
             telemetry.update();
         }
-
     }
 }

@@ -4,22 +4,21 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Test Glyph Pickup", group = "Test")
 public class TestGlyphCollector extends LinearOpMode {
+    TileRunnerRobot robot;
 
-    DcMotor glyphLeft, glyphRight;
     boolean forward = false;
     boolean backward = false;
+    double previousFlipper = 0.0;
+    double previousPusher = 0.0;
+
     @Override
     public void runOpMode() {
 
-        glyphLeft = hardwareMap.dcMotor.get("glyph_left");
-        glyphLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        glyphLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        glyphRight = hardwareMap.dcMotor.get("glyph_right");
-        glyphRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot = new TileRunnerRobot(this,hardwareMap,telemetry, null);
 
         telemetry.addData("Robot is Ready.", "Press START ..........");
         telemetry.update();
@@ -27,8 +26,7 @@ public class TestGlyphCollector extends LinearOpMode {
         // wait for the start button to be pressed.
         waitForStart();
 
-        glyphLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        glyphRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.onStart();
 
         while (opModeIsActive()) {
 
@@ -55,10 +53,16 @@ public class TestGlyphCollector extends LinearOpMode {
                 backward = false;
             }
 
-            glyphLeft.setPower(power);
-            glyphRight.setPower(power);
+            robot.setIntakePower(power);
+
+            if(gamepad1.right_stick_y > 0) {
+                robot.pushGlyph();
+            } else if(gamepad1.right_stick_y < 0) {
+                robot.moveUpGlyphPusher();
+            }
 
             telemetry.addData("motor power:", String.format("%.2f", power));
+
             telemetry.update();
         }
 
