@@ -8,10 +8,8 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -82,16 +80,11 @@ public class TileRunnerRobot {
 
     private ModernRoboticsI2cRangeSensor x1RangeSensor;
     private ModernRoboticsI2cRangeSensor x2RangeSensor;
-    private ModernRoboticsI2cRangeSensor yRangeSensor;
-
-    private ColorSensor glyphColor;
-    private DistanceSensor glyphDistance;
 
     private double headingOffset = 0.0;
 
     private double prevX1Distance = 0.0;
     private double prevX2Distance = 0.0;
-    private double prevYDistance = 0.0;
 
     private LinearOpMode linearOpMode;
 
@@ -150,11 +143,6 @@ public class TileRunnerRobot {
                 longArm = hardwareMap.servo.get("longArm");
                 // make sure long arm is in the up right position
                 longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
-
-                glyphColor = hardwareMap.get(ColorSensor.class, "glyphColorDistance");
-
-                // get a reference to the distance sensor that shares the same name.
-                glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
             }
             catch(Exception e) {
                 logInfo(this.telemetry, "Jewel pusher arms init failed.", e.getMessage());
@@ -316,6 +304,11 @@ public class TileRunnerRobot {
     public void onStart() {
         setMode(DcMotor.RunMode.RUN_USING_ENCODER, lf, lr, rr, rf, intakeLeft, intakeRight);
         glyphLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void resetForTeleOps() {
+        resetGlyphTray();
+        moveUpGlyphPusher();
     }
 
     public void resetDriveMotors() {
@@ -630,17 +623,6 @@ public class TileRunnerRobot {
         glyphLift.setPower(0.0);
     }
 
-    public void moveGlyphLift(GlyphLiftLevel level) {
-
-    }
-
-    public enum GlyphLiftLevel {
-        LEVEL0,
-        LEVEL1,
-        LEVEL2,
-        LEVEL3
-    }
-
     void setEncoderDrivePower(double p) {
         encoder_drive_power = p;
     }
@@ -881,32 +863,15 @@ public class TileRunnerRobot {
         return prevX2Distance;
     }
 
-    public double getYDistance() {
-        if(yRangeSensor != null) {
-            try {
-                double distance = yRangeSensor.getDistance(DistanceUnit.CM);
-                if (distance < 225.0 && distance > 25.0) {
-                    prevX1Distance = distance;
-                }
-            }catch(Exception e) {
-                Log.e(this.getClass().getSimpleName(), "Y Range Failed: " + e.getMessage());
-                prevX1Distance = 0.0;
-            }
-        }
-        else {
-            return 0.0;
-        }
-
-        return prevYDistance;
-    }
-
     public int getGlyphLiftPosition() {
         return this.glyphLift.getCurrentPosition();
     }
 
 
     public void moveRelicSlider(double power) {
-        relicSlider.setPower(Range.clip(power, -0.30, 1.0));
+        if(relicSlider != null) {
+            relicSlider.setPower(Range.clip(power, -0.50, 1.0));
+        }
     }
 
     public void grabRelic() {
@@ -984,22 +949,11 @@ public class TileRunnerRobot {
         return 0.0;
     }
 
-    public boolean isGlyphTouched() {
-        if(this.glyphDistance != null) {
-            return this.glyphDistance.getDistance(DistanceUnit.INCH) < 2.5;
-        }
-
-        return false;
-    }
-
-    public double getGlyphDistance() {
-            return this.glyphDistance.getDistance(DistanceUnit.INCH);
-    }
-
+    double intakePower = -0.35;
     public void collectGlyph() {
         if(this.intakeLeft != null && this.intakeRight != null) {
-            this.intakeLeft.setPower(0.3);
-            this.intakeRight.setPower(0.3);
+            this.intakeLeft.setPower(intakePower);
+            this.intakeRight.setPower(intakePower);
         }
     }
 
@@ -1012,8 +966,8 @@ public class TileRunnerRobot {
 
     public void reverseGlyph() {
         if(this.intakeLeft != null && this.intakeRight != null) {
-            this.intakeLeft.setPower(-0.3);
-            this.intakeRight.setPower(-0.3);
+            this.intakeLeft.setPower(-intakePower);
+            this.intakeRight.setPower(-intakePower);
         }
     }
 
@@ -1048,7 +1002,7 @@ public class TileRunnerRobot {
         }
     }
 
-    public void setFlipperPosition(double position) {
+    public void setGlyphFlipperPosition(double position) {
         if(this.glyphFlipper !=  null) {
             this.glyphFlipper.setPosition(position);
         }

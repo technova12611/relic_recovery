@@ -1,14 +1,20 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+import java.util.concurrent.TimeUnit;
+
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
 
-@TeleOp(name = "Tile Runner (New) TeleOps ", group = "Competition")
+@TeleOp(name = "Tile Runner (New) TeleOps", group = "Competition")
 public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
     private TileRunnerRobot robot = null;
     private Controller g1, g2;
@@ -18,15 +24,16 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
 
     private ElapsedTime relicElbowTimer = new ElapsedTime();
 
-    Boolean glyphLiftInAutoMode = null;
-    ElapsedTime glyphLiftTimer = new ElapsedTime();
-    int glyphLastPosition = 0;
+    boolean relicClawLocked = true;
+    boolean clawClosed = false;
+
+    ElapsedTime intakeStuckTimer = new ElapsedTime();
+    boolean stuckDetected = false;
+    double previousLeftIntakePosition = 0.0;
+    double previousRightIntakePosition = 0.0;
 
     boolean intakeForward = false;
     boolean intakeBackward = false;
-
-    boolean relicClawLocked = true;
-    boolean clawClosed = false;
 
     @Override
     public void runOpMode() {
@@ -61,13 +68,12 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
 
     private void gamepadLoop()
     {
-
         // operator controller left joystick moves the relic slider
         // ----------------------------------------------------------
         if (Math.abs(g2.left_stick_y) > 0 && !relicClawLocked) {
-            //robot.moveRelicSlider(-1.0 * g2.left_stick_y);
+            robot.moveRelicSlider(-1.0 * g2.left_stick_y);
         } else {
-            //robot.moveRelicSlider(0.0);
+            robot.moveRelicSlider(0.0);
         }
 
         // switch to Relic grabbing/landing handling
@@ -118,46 +124,127 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         if (g2.rightBumper() && g2.leftBumper()) {
             robot.releaseClaw();
             relicClawLocked = false;
+        } else if(g2.leftBumper() || g1.X()){
+           robot.moveUpGlyphPusher();
+        } else if(g2.rightBumper() || g1.Y()){
+            robot.pushGlyph();
         }
 
+        // use gamepad2 triggers to move the glyph slider lift
+        // up/down
+        //----------------------------------------------------
         if(g2.left_trigger > 0.1) {
             robot.moveGlyphLift(g2.left_trigger);
-        } else if(g2.right_trigger > 0.1) {
+        }
+        else if(g2.right_trigger > 0.1) {
             robot.moveGlyphLift(-g2.right_trigger);
-        } else {
+        }
+        else {
             robot.stopGlyphLiftMotor();
         }
 
+        // use gamepad 2 A/B/X/Y to move the glyph tray
+        //-----------------------------------------------
         if(g2.Y()) {
             robot.dumpGlyphsFromTray();
+            robot.moveUpGlyphPusher();
+            stopIntake();
         }
-
-        if(g2.A()) {
+        else if(g2.A()) {
             robot.raiseGlyphTrayup1();
+            robot.moveUpGlyphPusher();
+            stopIntake();
         }
-
-        if(g2.B()) {
+        else if(g2.B()) {
             robot.raiseGlyphTrayup2();
+            robot.moveUpGlyphPusher();
+            stopIntake();
         }
-
-        if(g2.X()) {
+        else if(g2.X()) {
             robot.resetGlyphTray();
+            robot.moveUpGlyphPusher();
         }
 
+        // use gamepad 1 triggers to control the intake wheels
+        // use button A to stop the intake
+        //-----------------------------------------------------
         if(g1.left_trigger > 0.5) {
-            robot.collectGlyph();
+            intakeForward = false;
+            intakeBackward = true;
         } else if(g1.right_trigger > 0.5) {
-            robot.reverseGlyph();
+            intakeForward = true;
+            intakeBackward = false;
+            intakeStuckTimer.reset();
         } else if(g1.A()) {
             robot.stopIntake();
+            stopIntake();
+        }
+
+        // intake stuck detection
+        // every 300 ms check the encoder against the previous measurement
+        // if it's not increase enough, it's stucked
+        //---------------------------------------------------------
+        if(intakeForward && !stuckDetected && intakeStuckTimer.milliseconds() > 500) {
+            int leftPosition = robot.intakeLeft.getCurrentPosition();
+            int rightPosition = robot.intakeRight.getCurrentPosition();
+
+            if (Math.abs(leftPosition - previousLeftIntakePosition) < 50 ||
+                Math.abs(rightPosition - previousRightIntakePosition) <50)
+            {
+                Log.i("Intake Detection:" , "Current: (" + (leftPosition + "," + rightPosition) + ")");
+                Log.i("Intake Detection:" , "Previous: (" + (previousLeftIntakePosition + "," + previousRightIntakePosition) + ")");
+                stuckDetected = true;
+            }
+
+            previousLeftIntakePosition = leftPosition;
+            previousRightIntakePosition = rightPosition;
+
+            intakeStuckTimer.reset();
+        }
+
+        // intake stuck detected
+        // set to run intake in reverse for 1.5 seconds
+        //---------------------------------------------------------------
+        if(stuckDetected) {
+            intakeBackward = true;
+            intakeForward = false;
+
+            if(intakeStuckTimer.time(TimeUnit.SECONDS) > 2.5) {
+                stuckDetected = false;
+                intakeForward = true;
+                intakeBackward = false;
+                intakeStuckTimer.reset();
+            }
+        }
+
+        if(intakeBackward) {
+            robot.reverseGlyph();
+        } else if(intakeForward) {
+            robot.collectGlyph();
+        } else {
+            robot.stopIntake();
+        }
+
+        if(!intakeForward) {
+            previousRightIntakePosition = robot.intakeLeft.getCurrentPosition();
+            previousLeftIntakePosition = robot.intakeRight.getCurrentPosition();
         }
 
         // driving the robot
         //------------------------------------------------------
         TileRunnerDriveHelper.drive(g1, robot, telemetry);
 
+        telemetry.addData("Intake Counts:",
+                         "(" + previousLeftIntakePosition + "," + previousRightIntakePosition + ")" + " | "
+                        + String.format("%.1f", intakeStuckTimer.seconds()));
+        telemetry.addData("Intake Stucked:", stuckDetected);
         telemetry.addData("relicElbowPosition: ", String.format("%.2f",relicElbowPosition));
         telemetry.addData("Relic Elbow Position: ", String.format("%.2f",robot.getRelicElbowPosition()));
         telemetry.addData("Glyph Lift Count: ", robot.getGlyphLiftPosition());
+    }
+
+    private void stopIntake() {
+        intakeForward = false;
+        intakeBackward = false;
     }
 }

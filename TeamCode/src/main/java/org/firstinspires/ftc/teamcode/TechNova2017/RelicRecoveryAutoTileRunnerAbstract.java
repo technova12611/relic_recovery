@@ -62,7 +62,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         vuMark = vuMarkVision.detect(telemetry);
 
-        AutoTransitioner.transitionOnStop(this, "Relic Recovery TeleOps (Linear)");
+        AutoTransitioner.transitionOnStop(this, "Tile Runner (New) TeleOps");
 
         ElapsedTime timer = new ElapsedTime();
         // detect VuMark pattern
@@ -139,7 +139,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.encoderDriveInches(directionRadians, inches);
         ElapsedTime timer = new ElapsedTime();
 
-        while (opModeIsActive() && robot.driveMotorsBusy() && timer.time(TimeUnit.MILLISECONDS) < 5000 && !robot.isGlyphTouched()) {
+        while (opModeIsActive() && robot.driveMotorsBusy() && timer.time(TimeUnit.MILLISECONDS) < 5000 ) {
             robot.updateSensorTelemetry();
             telemetry.update();
             //robot.loop();

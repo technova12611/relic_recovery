@@ -105,11 +105,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                 case GET_OFF_STONE:
                     if(getAllianceColor() ==  AllianceColor.RED) {
 
-                        driveForwardInches(24.0, motorSpeed);
+                        driveBackwardInches(24.0, motorSpeed);
                     }
                     // if this is BLUE Alliance
                     else {
-                        driveBackwardInches(24.0, motorSpeed);
+                        driveForwardInches(24.0, motorSpeed);
                     }
 
                     gotoNextState();
@@ -119,7 +119,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // turn right to 90 degree
                     // need to figure out the turn direction for
                     // red and blue alliance
-                    turn(-90.0);
+                    if(getAllianceColor() ==  AllianceColor.RED) {
+                        turn(-90.0);
+                    } else {
+
+                    }
                     gotoNextState();
                     break;
 
@@ -194,10 +198,10 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case PLACE_GLYPH_INTO_CRYPTO:
 
-                    logInfo(" --- Open Grabber --- ");
+                    logInfo(" --- Dump Glyph into column and push --- ");
                     robot.dumpGlyphsFromTray();
 
-                    while(opModeIsActive() && timer.time() < 500)  {
+                    while(opModeIsActive() && timer.time() < 1000)  {
                         sleep(100);
                     }
 
@@ -224,7 +228,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case RESET_GLYPH_TRAY:
                     // move the glyph lift back to zero position
-                    robot.resetGlyphTray();
+                    robot.resetForTeleOps();
 
                     // make sure robot is very close to 90 degree
                     turnToAngle(90.0, 0.2);

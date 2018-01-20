@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "Test Glyph Pickup", group = "Test")
 public class TestGlyphCollector extends LinearOpMode {
@@ -12,8 +14,12 @@ public class TestGlyphCollector extends LinearOpMode {
 
     boolean forward = false;
     boolean backward = false;
-    double previousFlipper = 0.0;
-    double previousPusher = 0.0;
+
+    ElapsedTime pusherTimer = new ElapsedTime();
+    double pusherPosition = 0.0;
+
+    ElapsedTime flipperTimer = new ElapsedTime();
+    double flipperPosition = 0.0;
 
     @Override
     public void runOpMode() {
@@ -31,9 +37,6 @@ public class TestGlyphCollector extends LinearOpMode {
         while (opModeIsActive()) {
 
             float power = gamepad1.left_stick_y;
-//            if(power == 0.0) {
-//                power = -0.30f;
-//            }
 
             if(gamepad1.x || forward) {
                 power = 0.30f;
@@ -61,7 +64,41 @@ public class TestGlyphCollector extends LinearOpMode {
                 robot.moveUpGlyphPusher();
             }
 
-            telemetry.addData("motor power:", String.format("%.2f", power));
+            if (pusherTimer.milliseconds() > 20) {
+                if (gamepad2.right_stick_y < 0) {
+                    pusherPosition = Range.clip(pusherPosition + (gamepad2.right_stick_y < -0.8 ? 0.03 : 0.01), 0.01, 1.0);
+                    robot.setGlyphPusherPosition(pusherPosition);
+                    pusherTimer.reset();
+                } else if (gamepad2.right_stick_y > 0) {
+                    pusherPosition = Range.clip(pusherPosition - (gamepad2.right_stick_y > 0.8 ? 0.03 : 0.01), 0.01, 1.0);
+                    robot.setGlyphPusherPosition(pusherPosition);
+                    pusherTimer.reset();
+                }
+            }
+
+            if (flipperTimer.milliseconds() > 20) {
+                if (gamepad2.left_stick_y < 0) {
+                    flipperPosition = Range.clip(flipperPosition + (gamepad2.left_stick_y < -0.8 ? 0.03 : 0.01), 0.01, 1.0);
+                    robot.setGlyphFlipperPosition(flipperPosition);
+                    flipperTimer.reset();
+                } else if (gamepad2.left_stick_y > 0) {
+                    flipperPosition = Range.clip(flipperPosition - (gamepad2.left_stick_y > 0.8 ? 0.03 : 0.01), 0.01, 1.0);
+                    robot.setGlyphFlipperPosition(flipperPosition);
+                    flipperTimer.reset();
+                }
+            }
+
+            if(gamepad1.left_trigger > 0.10) {
+                robot.moveGlyphLift(gamepad1.left_trigger);
+            } else if(gamepad1.right_trigger > 0.10) {
+                robot.moveGlyphLift(-gamepad1.right_trigger);
+            } else {
+                robot.moveGlyphLift(0.0);
+            }
+
+            telemetry.addData("Intake motor power:", String.format("%.2f", power));
+            telemetry.addData("Pusher position:", String.format("%.2f", pusherPosition));
+            telemetry.addData("Flipper position:", String.format("%.2f", flipperPosition));
 
             telemetry.update();
         }
