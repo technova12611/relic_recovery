@@ -69,16 +69,16 @@ public class RobotInfo {
 
     public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.60;
     public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.02;
-    public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.35;
-    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.45;
+    public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.25;
+    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.33;
     public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.60;
 
     // Driver control motor speed
     //-----------------------------------------------------------------------
-    public static double ENCODER_DRIVE_POWER = 0.40;
-    public static double SLOW_MODE_SCALE_TO_DRIVE = 0.80;
-    public static double VERY_SLOW_MODE_SCALE_TO_DRIVE = 0.55;
-    public static double DPAD_SCALE_TO_DRIVE = 0.35;
+    public static double ENCODER_DRIVE_POWER = 0.32;
+    public static double SLOW_MODE_SCALE_TO_DRIVE = 0.70;
+    public static double VERY_SLOW_MODE_SCALE_TO_DRIVE = 0.45;
+    public static double DPAD_SCALE_TO_DRIVE = 0.28;
 
     // Relic delivery system
     //--------------------------------------------------------------------------

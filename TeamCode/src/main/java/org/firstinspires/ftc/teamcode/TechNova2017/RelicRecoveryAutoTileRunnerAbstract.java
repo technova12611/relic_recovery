@@ -99,7 +99,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected void driveForwardInches(double inches, double power) throws InterruptedException {
-        driveDirectionInches(0,inches, power);
+        driveDirectionInches(Math.PI,inches, power);
     }
 
     protected void driveForwardInchesUntilGlyphHit(double inches, double power) throws InterruptedException {
@@ -107,7 +107,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected void driveBackwardInches(double inches, double power) throws InterruptedException {
-        driveDirectionInches(Math.PI,inches, power);
+        driveDirectionInches(0,inches, power);
     }
 
     protected void driveLeftInches(double inches, double power) throws InterruptedException {

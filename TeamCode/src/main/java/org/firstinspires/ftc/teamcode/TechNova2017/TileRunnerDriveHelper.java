@@ -86,15 +86,15 @@ public class TileRunnerDriveHelper {
 
             theta = Math.atan2(lx, ly);
             v_theta = Math.hypot(lx,ly);
-            v_rotation = Math.pow(g.right_stick_x, 3.0)*scaleToDrive*0.8;
+            v_rotation = Math.pow(g.right_stick_x, 3.0)*scaleToDrive*0.60;
 
             v_rotation = Range.clip(v_rotation,-1.0,1.0);
         }
 
         if(slowDrive || verySlowDrive) {
-            v_rotation = 0.60*v_rotation;
+            v_rotation = 0.80*v_rotation;
         } else if(robot.isRelicClawReleased){
-            v_rotation = 0.4*v_rotation;
+            v_rotation = 0.5*v_rotation;
         }
 
         telemetry.addData("Joystick: ", String.format("%.2f %.2f %.2f", g.left_stick_x, g.left_stick_y, g.right_stick_x));

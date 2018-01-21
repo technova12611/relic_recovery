@@ -302,8 +302,8 @@ public class TileRunnerRobot {
     }
 
     public void onStart() {
-        setMode(DcMotor.RunMode.RUN_USING_ENCODER, lf, lr, rr, rf, intakeLeft, intakeRight);
-        glyphLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        setMode(DcMotor.RunMode.RUN_USING_ENCODER, lf, lr, rr, rf, intakeLeft, intakeRight, glyphLift);
+        //glyphLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void resetForTeleOps() {
@@ -949,7 +949,7 @@ public class TileRunnerRobot {
         return 0.0;
     }
 
-    double intakePower = -0.35;
+    double intakePower = -0.45;
     public void collectGlyph() {
         if(this.intakeLeft != null && this.intakeRight != null) {
             this.intakeLeft.setPower(intakePower);
@@ -966,8 +966,8 @@ public class TileRunnerRobot {
 
     public void reverseGlyph() {
         if(this.intakeLeft != null && this.intakeRight != null) {
-            this.intakeLeft.setPower(-intakePower);
-            this.intakeRight.setPower(-intakePower);
+            this.intakeLeft.setPower(0.60);
+            this.intakeRight.setPower(0.60);
         }
     }
 
@@ -1025,6 +1025,29 @@ public class TileRunnerRobot {
             glyphPusher.setPosition(position);
         }
     }
+
+    public void setGlyphLiftToPosition(int position) {
+        // move up glyph
+        this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.glyphLift.setTargetPosition(position);
+        this.glyphLift.setPower(
+                ((position - this.glyphLift.getCurrentPosition()) > 0 ? 1.0 : -1.0) * 0.8);
+    }
+
+    public void setGlyphLiftToRunEncoderMode() {
+        this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public boolean isGlyphLiftTargetReached() {
+        if (!(glyphLift.isBusy()) ||
+                Math.abs(this.glyphLift.getCurrentPosition() - this.glyphLift.getTargetPosition()) < 50) {
+            this.glyphLift.setPower(0.0);
+            this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            return true;
+        }
+        return false;
+    }
+
 
 }
 

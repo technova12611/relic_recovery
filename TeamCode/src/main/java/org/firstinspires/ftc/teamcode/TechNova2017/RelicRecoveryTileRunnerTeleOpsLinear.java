@@ -29,11 +29,16 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
 
     ElapsedTime intakeStuckTimer = new ElapsedTime();
     boolean stuckDetected = false;
-    double previousLeftIntakePosition = 0.0;
     double previousRightIntakePosition = 0.0;
 
     boolean intakeForward = false;
     boolean intakeBackward = false;
+
+    Boolean glyphLiftInAutoMode = null;
+    ElapsedTime glyphLiftTimer = new ElapsedTime();
+    int glyphLastPosition = 0;
+
+    ElapsedTime intakeSwitchTimer = new ElapsedTime();
 
     @Override
     public void runOpMode() {
@@ -121,48 +126,68 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         // this is not reversible, use with caution
         // if accidentally release, need to move it up
         //-------------------------------------------------------------------------
+
+        if(glyphLiftInAutoMode != null &&  glyphLiftInAutoMode) {
+            if(robot.isGlyphLiftTargetReached()) {
+                glyphLiftInAutoMode = null;
+                robot.resetGlyphTray();
+            }
+        }
+        else {
+            robot.setGlyphLiftToRunEncoderMode();
+        }
+
         if (g2.rightBumper() && g2.leftBumper()) {
             robot.releaseClaw();
             relicClawLocked = false;
-        } else if(g2.leftBumper() || g1.X()){
+        } else if((g2.leftBumper() || g2.rightBumper()) && g2.right_trigger > 0.2) {
+            robot.resetGlyphLift();
+            glyphLiftInAutoMode = Boolean.TRUE;
+        }
+        else if(g2.leftBumper() || g1.X()){
            robot.moveUpGlyphPusher();
-        } else if(g2.rightBumper() || g1.Y()){
+        }
+        else if(g2.rightBumper() || g1.Y()){
             robot.pushGlyph();
         }
 
         // use gamepad2 triggers to move the glyph slider lift
         // up/down
         //----------------------------------------------------
-        if(g2.left_trigger > 0.1) {
+        else if(g2.left_trigger > 0.1) {
+            robot.setGlyphLiftToRunEncoderMode();
             robot.moveGlyphLift(g2.left_trigger);
+            glyphLiftInAutoMode = null;
         }
         else if(g2.right_trigger > 0.1) {
+            robot.setGlyphLiftToRunEncoderMode();
             robot.moveGlyphLift(-g2.right_trigger);
+            glyphLiftInAutoMode = null;
         }
-        else {
+        else if(glyphLiftInAutoMode == null || !glyphLiftInAutoMode){
+            glyphLiftInAutoMode = Boolean.FALSE;
+            robot.setGlyphLiftToRunEncoderMode();
             robot.stopGlyphLiftMotor();
         }
 
         // use gamepad 2 A/B/X/Y to move the glyph tray
         //-----------------------------------------------
         if(g2.Y()) {
-            robot.dumpGlyphsFromTray();
+            robot.resetGlyphTray();
             robot.moveUpGlyphPusher();
-            stopIntake();
         }
         else if(g2.A()) {
-            robot.raiseGlyphTrayup1();
-            robot.moveUpGlyphPusher();
+            robot.raiseGlyphTrayup2();
             stopIntake();
         }
         else if(g2.B()) {
             robot.raiseGlyphTrayup2();
-            robot.moveUpGlyphPusher();
             stopIntake();
         }
         else if(g2.X()) {
-            robot.resetGlyphTray();
+            robot.dumpGlyphsFromTray();
             robot.moveUpGlyphPusher();
+            stopIntake();
         }
 
         // use gamepad 1 triggers to control the intake wheels
@@ -175,6 +200,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             intakeForward = true;
             intakeBackward = false;
             intakeStuckTimer.reset();
+            intakeSwitchTimer.reset();
         } else if(g1.A()) {
             robot.stopIntake();
             stopIntake();
@@ -184,21 +210,16 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         // every 300 ms check the encoder against the previous measurement
         // if it's not increase enough, it's stucked
         //---------------------------------------------------------
-        if(intakeForward && !stuckDetected && intakeStuckTimer.milliseconds() > 500) {
-            int leftPosition = robot.intakeLeft.getCurrentPosition();
+        if(intakeForward && !stuckDetected && intakeStuckTimer.seconds() > 1.0 && intakeSwitchTimer.seconds() >3.0) {
             int rightPosition = robot.intakeRight.getCurrentPosition();
 
-            if (Math.abs(leftPosition - previousLeftIntakePosition) < 50 ||
-                Math.abs(rightPosition - previousRightIntakePosition) <50)
+            if (Math.abs(rightPosition - previousRightIntakePosition) < 80)
             {
-                Log.i("Intake Detection:" , "Current: (" + (leftPosition + "," + rightPosition) + ")");
-                Log.i("Intake Detection:" , "Previous: (" + (previousLeftIntakePosition + "," + previousRightIntakePosition) + ")");
+                Log.i("Intake Detection:" , "Current: " + rightPosition + " | Previous: " + previousRightIntakePosition);
                 stuckDetected = true;
             }
 
-            previousLeftIntakePosition = leftPosition;
             previousRightIntakePosition = rightPosition;
-
             intakeStuckTimer.reset();
         }
 
@@ -214,6 +235,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
                 intakeForward = true;
                 intakeBackward = false;
                 intakeStuckTimer.reset();
+                intakeSwitchTimer.reset();
             }
         }
 
@@ -226,16 +248,14 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         }
 
         if(!intakeForward) {
-            previousRightIntakePosition = robot.intakeLeft.getCurrentPosition();
-            previousLeftIntakePosition = robot.intakeRight.getCurrentPosition();
+            previousRightIntakePosition = robot.intakeRight.getCurrentPosition();
         }
 
         // driving the robot
         //------------------------------------------------------
         TileRunnerDriveHelper.drive(g1, robot, telemetry);
 
-        telemetry.addData("Intake Counts:",
-                         "(" + previousLeftIntakePosition + "," + previousRightIntakePosition + ")" + " | "
+        telemetry.addData("Intake Counts:", + previousRightIntakePosition + " | "
                         + String.format("%.1f", intakeStuckTimer.seconds()));
         telemetry.addData("Intake Stucked:", stuckDetected);
         telemetry.addData("relicElbowPosition: ", String.format("%.2f",relicElbowPosition));
