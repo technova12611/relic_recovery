@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name = "Auto RED Tile Runner 2", group = "Competition")
+@Autonomous(name = "Auto RED #2", group = "Competition")
 public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunnerAbstract {
     public AllianceColor getAllianceColor() {
         return AllianceColor.RED;

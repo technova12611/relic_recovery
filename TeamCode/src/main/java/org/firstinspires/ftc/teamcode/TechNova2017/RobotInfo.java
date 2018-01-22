@@ -5,11 +5,11 @@ public class RobotInfo {
     // ------------------------------------------------------------------
     // Jewel push servo positions
     //-------------------------------------------------------------------
-    public static double JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION = 0.88;
+    public static double JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION = 0.86;
 
-    public static double JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION = 0.88;
+    public static double JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION = 0.85;
     public static double JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION = 0.60;
-    public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.40;
+    public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.30;
 
     public static double JEWEL_PUSHER_SHORT_ARM_INITIAL_POSITION = 0.90;
     public static double JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION = 0.51;
@@ -59,19 +59,20 @@ public class RobotInfo {
 
     public static int GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION = 700;
 
-    public static double INTAKE_LEFT_HOLDER_INITIAL_POSITION = 1.0;
+    public static double INTAKE_LEFT_HOLDER_INITIAL_POSITION = 0.5;
     public static double INTAKE_LEFT_HOLDER_OPEN_POSITION = 0.25;
     public static double INTAKE_LEFT_HOLDER_CLOSE_POSITION = 0.80;
 
-    public static double INTAKE_RIGHT_HOLDER_INITIAL_POSITION = 1.0;
+    public static double INTAKE_RIGHT_HOLDER_INITIAL_POSITION = 0.5;
     public static double INTAKE_RIGHT_HOLDER_OPEN_POSITION = 0.25;
     public static double INTAKE_RIGHT_HOLDER_CLOSE_POSITION = 0.80;
 
-    public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.60;
+    public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.62;
+    public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.40;
     public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.02;
     public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.25;
     public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.33;
-    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.60;
+    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.62;
 
     // Driver control motor speed
     //-----------------------------------------------------------------------

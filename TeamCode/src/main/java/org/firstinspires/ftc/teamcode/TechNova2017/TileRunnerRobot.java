@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIVE_POWER;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_AUTO_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_1;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_2;
@@ -37,8 +38,10 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_PUSH_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_UP_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_LEFT_HOLDER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_LEFT_HOLDER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_RIGHT_HOLDER_CLOSE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_RIGHT_HOLDER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_RELEASE_POSITION;
@@ -65,7 +68,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_
  *     Wheel Intake holder (2)
  */
 public class TileRunnerRobot {
-    DcMotor lf, lr, rf, rr, glyphLift, relicSlider, intakeLeft, intakeRight;
+    DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider, intakeLeft, intakeRight;
     private Servo relicClaw, relicElbow, relicClawholder, longArm, intakeLeftHolder, intakeRightHolder,
                   glyphFlipper, glyphPusher;
 
@@ -97,12 +100,14 @@ public class TileRunnerRobot {
 
     boolean isRelicClawReleased = false;
 
+    boolean isIntakeStuck = false;
+
     // Encoder Driving
     // Assuming 4" wheels
     private static final double TICKS_PER_INCH = 1120 * (24./40.) / (Math.PI * 4.0);
     private static final double TICKS_PER_CM = TICKS_PER_INCH / 2.54;
 
-    private double encoder_drive_power = ENCODER_DRIVE_POWER;
+    protected double encoder_drive_power = ENCODER_DRIVE_POWER;
 
     /**
      * Wheel motors MUST be named: lf, rf, lr, rr
@@ -151,10 +156,10 @@ public class TileRunnerRobot {
 
         try {
             intakeLeftHolder = hardwareMap.servo.get("intakeLeftHolder");
-            intakeLeftHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
+            intakeLeftHolder.setPosition(INTAKE_LEFT_HOLDER_INITIAL_POSITION);
 
             intakeRightHolder = hardwareMap.servo.get("intakeRightHolder");
-            intakeRightHolder.setPosition(GLYPH_LIFT_STOPPER_OPEN_POSITION);
+            intakeRightHolder.setPosition(INTAKE_RIGHT_HOLDER_INITIAL_POSITION);
         } catch(Exception e) {
             logInfo(this.telemetry, "Init Intake Holders: ", e.getMessage());
         }
@@ -214,6 +219,14 @@ public class TileRunnerRobot {
             logInfo(this.telemetry, "Init intake motors failed", e.getMessage());
         }
 
+        try {
+            led = hardwareMap.dcMotor.get("led");
+            led.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        } catch (Exception e) {
+            logInfo(this.telemetry, "Led power control failed.", e.getMessage());
+        }
+
         logInfo(null, "Init Servos", " Servos are initialized ...");
 
         telemetry.addData("Robot initialized", "Ready to go...");
@@ -235,6 +248,7 @@ public class TileRunnerRobot {
 
     private void initMotors(HardwareMap hardwareMap) {
         lf = hardwareMap.dcMotor.get("lf");
+        lf = hardwareMap.dcMotor.get("lf");
         lr = hardwareMap.dcMotor.get("lr");
         rf = hardwareMap.dcMotor.get("rf");
         rr = hardwareMap.dcMotor.get("rr");
@@ -253,11 +267,12 @@ public class TileRunnerRobot {
     }
 
     private void initIntakeMotors(HardwareMap hardwareMap) {
+        intakeRight = hardwareMap.dcMotor.get("intake_right");
+        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER, intakeRight);
+
         intakeLeft = hardwareMap.dcMotor.get("intake_left");
         intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        intakeRight = hardwareMap.dcMotor.get("intake_right");
-        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER, intakeLeft, intakeRight);
+        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER, intakeLeft);
     }
 
     private void initGyro(HardwareMap hardwareMap) {
@@ -633,13 +648,17 @@ public class TileRunnerRobot {
 
     private void setMode(DcMotor.RunMode mode, DcMotor... ms) {
         for (DcMotor m : ms) {
-            m.setMode(mode);
+            if(m!= null) {
+                m.setMode(mode);
+            }
         }
     }
 
     private void setPower(double p, DcMotor... ms) {
         for (DcMotor m : ms) {
-            m.setPower(p);
+            if(m != null) {
+                m.setPower(p);
+            }
         }
     }
 
@@ -684,7 +703,7 @@ public class TileRunnerRobot {
     }
 
     public void encoderDriveInches(double direction, double inches) {
-        final WheelsSpeed w = getWheelsSpeed(direction, 1.0, 0.0);
+        final WheelsSpeed w = getWheelsSpeed(direction, encoder_drive_power, 0.0);
         final int ticks = (int)(inches * TICKS_PER_INCH);
         encoderDrive(ticks * w.lf, ticks * w.rf, ticks * w.lr, ticks * w.rr);
     }
@@ -949,32 +968,41 @@ public class TileRunnerRobot {
         return 0.0;
     }
 
-    double intakePower = -0.45;
+    double intakePower = -0.55;
     public void collectGlyph() {
-        if(this.intakeLeft != null && this.intakeRight != null) {
-            this.intakeLeft.setPower(intakePower);
+        if(this.intakeRight != null) {
             this.intakeRight.setPower(intakePower);
+        }
+        if(this.intakeLeft != null) {
+            this.intakeLeft.setPower(intakePower);
         }
     }
 
     public void setIntakePower(double power) {
-        if(this.intakeLeft != null && this.intakeRight != null) {
-            this.intakeLeft.setPower(power);
+        if(this.intakeRight != null) {
             this.intakeRight.setPower(power);
+        }
+        if(this.intakeLeft != null) {
+            this.intakeLeft.setPower(power);
         }
     }
 
     public void reverseGlyph() {
-        if(this.intakeLeft != null && this.intakeRight != null) {
-            this.intakeLeft.setPower(0.60);
-            this.intakeRight.setPower(0.60);
+        if(this.intakeRight != null) {
+            this.intakeRight.setPower(0.65);
+        }
+
+        if(this.intakeLeft != null) {
+            this.intakeLeft.setPower(0.65);
         }
     }
 
     public void stopIntake() {
-        if(this.intakeLeft != null && this.intakeRight != null) {
-            this.intakeLeft.setPower(0.0);
+        if(this.intakeRight != null) {
             this.intakeRight.setPower(0.0);
+        }
+        if(this.intakeLeft != null) {
+            this.intakeLeft.setPower(0.0);
         }
     }
 
@@ -999,6 +1027,12 @@ public class TileRunnerRobot {
     public void raiseGlyphTrayup2() {
         if(this.glyphFlipper !=  null) {
             this.glyphFlipper.setPosition(GLYPH_FLIPPER_FLAT_POSITION_2);
+        }
+    }
+
+    public void initGlyphTrayForAuto() {
+        if(this.glyphFlipper !=  null) {
+            this.glyphFlipper.setPosition(GLYPH_FLIPPER_AUTO_INITIAL_POSITION);
         }
     }
 
@@ -1048,6 +1082,41 @@ public class TileRunnerRobot {
         return false;
     }
 
+    public void turnOnBlueLed() {
+        if (led != null) {
+            led.setPower(0.95);
+            isBlueLedOn = true;
+        }
+    }
+
+    public void turnOffBlueLed() {
+        if (led != null) {
+            led.setPower(0.0);
+            isBlueLedOn = false;
+        }
+    }
+
+    public void turnOnGreenLed() {
+        if (led != null) {
+            led.setPower(-0.95);
+            isGreenLedOn = true;
+        }
+    }
+
+    public void turnOffGreenLed() {
+        if (led != null) {
+            led.setPower(0.0);
+            isGreenLedOn = false;
+        }
+    }
+
+    public boolean isBlueLedOn() {
+        return this.isBlueLedOn;
+    }
+
+    public boolean isGreenLedOn() {
+        return this.isGreenLedOn;
+    }
 
 }
 

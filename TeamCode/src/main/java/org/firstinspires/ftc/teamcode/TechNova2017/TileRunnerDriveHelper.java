@@ -44,18 +44,25 @@ public class TileRunnerDriveHelper {
 
         if(g.XOnce()) {
             slowDrive = false;
-
+            if(robot.isGreenLedOn()){
+                robot.turnOffGreenLed();
+            }
             verySlowDrive = !verySlowDrive;
             if(verySlowDrive) {
                 scaleToDrive = VERY_SLOW_MODE_SCALE_TO_DRIVE;
-
+                robot.turnOnBlueLed();
             } else {
                 scaleToDrive = 1.0;
+                if (robot.isBlueLedOn()) {
+                    robot.turnOffBlueLed();
+                }
             }
         }
         else if((g.rightBumperOnce() || g.leftBumperOnce()) && !g.A()) {
             verySlowDrive = false;
-
+            if (robot.isBlueLedOn()) {
+                robot.turnOffBlueLed();
+            }
             slowDrive = !slowDrive;
             if(slowDrive) {
                 scaleToDrive = SLOW_MODE_SCALE_TO_DRIVE;
@@ -86,7 +93,7 @@ public class TileRunnerDriveHelper {
 
             theta = Math.atan2(lx, ly);
             v_theta = Math.hypot(lx,ly);
-            v_rotation = Math.pow(g.right_stick_x, 3.0)*scaleToDrive*0.60;
+            v_rotation = Math.pow(g.right_stick_x, 3.0)*scaleToDrive*0.50;
 
             v_rotation = Range.clip(v_rotation,-1.0,1.0);
         }
@@ -108,11 +115,27 @@ public class TileRunnerDriveHelper {
             theta += Math.PI;
             theta %= 2*Math.PI;
         }
-        robot.drive(theta, v_theta, v_rotation);
+        robot.drive(theta, v_theta, -1.0*v_rotation);
+
+        if(slowDrive) {
+            robot.turnOnGreenLed();
+        } else if(robot.isGreenLedOn()){
+            robot.turnOffGreenLed();
+        }
+
+        // check if the glyph touched the bumper
+        //------------------------------------
+        if(!verySlowDrive && !slowDrive) {
+            if (robot.isIntakeStuck) {
+                robot.turnOnBlueLed();
+            } else if (robot.isBlueLedOn()) {
+                robot.turnOffBlueLed();
+            }
+        }
     }
 
     public static void logInfo(Telemetry telemetry, String tag, String message) {
-        Log.i("DriverHelper", tag + " | " + message);
+        Log.i("TileRunnerDriverHelper", tag + " | " + message);
 
         if(telemetry != null) {
             telemetry.addData(tag, message);

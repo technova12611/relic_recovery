@@ -51,7 +51,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             Log.e(this.getClass().getSimpleName(), "JewelPusher failed.", e);
         }
 
-        robot.raiseGlyphTrayup1();
+        robot.initGlyphTrayForAuto();
 
         // Activate vuMark
         //-----------------------------------------------------------
@@ -168,9 +168,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     /**
      * Using very basic control algorithm
      */
-    private static final double SAFE_TURN_SPEED = 0.12;
-    private static final double FAST_TURN_SPEED = 0.25;
-    private static final double SUPER_FAST_TURN_SPEED = 0.35;
+    private static final double SAFE_TURN_SPEED = 0.10;
+    private static final double FAST_TURN_SPEED = 0.18;
+    private static final double SUPER_FAST_TURN_SPEED = 0.25;
     private static final double FAST_TURN_THRESHOLD = 30.0;
 
     private static final double SUPER_FAST_TURN_THRESHOLD = 60.0;
@@ -186,7 +186,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         return SAFE_TURN_SPEED;
     }
 
-    private static final int MAX_HEADING_SLOP = 1;
+    private static final int MAX_HEADING_SLOP = 3;
 
     /**
      * Handles the turning logics, using simple control, could be using PID
@@ -197,7 +197,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     private void turnToAngle(double degrees) throws InterruptedException {
         ElapsedTime timer = new ElapsedTime();
 
-        while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 7500) {
+        while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 5000) {
             double diff = angleDifference(robot.getHeadingAngle(), degrees);
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 

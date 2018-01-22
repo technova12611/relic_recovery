@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import java.util.concurrent.TimeUnit;
 
 @Autonomous(name = "Auto Blue 2", group = "Competition")
+@Disabled
 public class RelicRecoveryAutoBlue2 extends RelicRecoveryAutoAbstract {
     public AllianceColor getAllianceColor() {
         return AllianceColor.BLUE;

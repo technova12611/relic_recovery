@@ -1,15 +1,17 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.END;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.START;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerTest.State.END;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerTest.State.START;
 
-public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunnerAbstract {
+@Autonomous(name = "Auto Test TileRunner", group = "Competition")
+public class RelicRecoveryAutoTileRunnerTest extends RelicRecoveryAutoTileRunnerAbstract {
 
      // make new States for each autonomous strategy
      // like Auto 2, Auto 3 etc.
@@ -17,7 +19,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
     //----------------------------------------------
      enum State implements AutoState {
          START,
-         PUSH_JEWEL,
          GET_OFF_STONE,
          TURN_TO_90_DEGREE,
          STRAFE_3_FEET,
@@ -75,7 +76,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         while (opModeIsActive() && v_state != END) {
 
             boolean detectVuMark = false;
-            double motorSpeed = 0.25;
+            double motorSpeed = 0.4;
+
+            robot.encoder_drive_power = 0.25;
 
             logStateInfo(v_state, "Start");
 
@@ -84,21 +87,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
             switch (step) {
                 case START:
                     detectVuMark = true;
-                    gotoNextState();
-                    break;
-
-                case PUSH_JEWEL:
-
-                    detectVuMark = true;
-
-                    // even if the pusher fails to initialize
-                    // we still want to perform the glyph
-                    if(pusher == null) {
-                        gotoNextState();
-                        break;
-                    }
-
-                    pusher.performTasks();
                     gotoNextState();
                     break;
 
@@ -112,18 +100,14 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         driveForwardInches(24.0, motorSpeed);
                     }
 
-                    gotoNextState();
+                    gotoState(END);
                     break;
 
                 case TURN_TO_90_DEGREE:
                     // turn right to 90 degree
                     // need to figure out the turn direction for
                     // red and blue alliance
-                    if(getAllianceColor() ==  AllianceColor.RED) {
-                        turnToAngle(90.0, 0.20);
-                    } else {
-                        turn(-90.0);
-                    }
+                    turn(-90.0);
                     gotoNextState();
                     break;
 
@@ -251,5 +235,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         robot.onStop();
     }
 
+    public AllianceColor getAllianceColor() {
+        return AllianceColor.RED;
+    }
     //------------------------------------
 }
