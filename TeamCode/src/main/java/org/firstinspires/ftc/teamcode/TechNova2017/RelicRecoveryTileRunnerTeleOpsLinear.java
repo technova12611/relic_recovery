@@ -141,7 +141,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.releaseClaw();
             relicClawLocked = false;
         } else if((g2.leftBumper() || g2.rightBumper()) && g2.right_trigger > 0.2) {
-            robot.resetGlyphLift();
+            robot.moveGlyphLift(0);
             glyphLiftInAutoMode = Boolean.TRUE;
         }
         else if(g2.leftBumper() || g1.X()){
@@ -246,7 +246,6 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.collectGlyph();
         } else {
             robot.stopIntake();
-
         }
 
         if(!intakeForward) {

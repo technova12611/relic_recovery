@@ -76,9 +76,7 @@ public class RelicRecoveryAutoTileRunnerTest extends RelicRecoveryAutoTileRunner
         while (opModeIsActive() && v_state != END) {
 
             boolean detectVuMark = false;
-            double motorSpeed = 0.4;
-
-            robot.encoder_drive_power = 0.25;
+            double motorSpeed = 0.25;
 
             logStateInfo(v_state, "Start");
 

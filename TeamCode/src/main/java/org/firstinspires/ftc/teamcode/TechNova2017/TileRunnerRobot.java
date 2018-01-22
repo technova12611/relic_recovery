@@ -453,24 +453,10 @@ public class TileRunnerRobot {
     /**
      * Move the glyph lift to zero position and get ready for the next task
      */
-    public void resetGlyphLift() {
-
+    public void moveGlyphLift(int position) {
         this.glyphLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        this.glyphLift.setTargetPosition(-100);
+        this.glyphLift.setTargetPosition(position);
         this.glyphLift.setPower(0.5);
-
-        ElapsedTime timer = new ElapsedTime();
-        while( glyphLift.isBusy() && timer.time(TimeUnit.SECONDS) < 3
-                && this.linearOpMode != null && this.linearOpMode.opModeIsActive()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        this.glyphLift.setPower(0.0);
-        this.glyphLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     /**
@@ -968,7 +954,7 @@ public class TileRunnerRobot {
         return 0.0;
     }
 
-    double intakePower = -0.55;
+    double intakePower = -0.60;
     public void collectGlyph() {
         if(this.intakeRight != null) {
             this.intakeRight.setPower(intakePower);
