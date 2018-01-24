@@ -106,7 +106,7 @@ public class TileRunnerRobot {
 
     // Encoder Driving
     // Assuming 4" wheels
-    private static final double TICKS_PER_INCH = 1120 * (24./40.) / (Math.PI * 4.0);
+    private static final double TICKS_PER_INCH = 1120.0 * (24./40.) / (Math.PI * 4.0);
     private static final double TICKS_PER_CM = TICKS_PER_INCH / 2.54;
 
     protected double encoder_drive_power = ENCODER_DRIVE_POWER;
@@ -685,8 +685,9 @@ public class TileRunnerRobot {
     }
 
     public void encoderDriveInches(double direction, double inches) {
-        final WheelsSpeed w = getWheelsSpeed(direction, encoder_drive_power, 0.0);
+        final WheelsSpeed w = getWheelsSpeed(direction, 1.0, 0.0);
         final int ticks = (int)(inches * TICKS_PER_INCH);
+        logInfo(telemetry,"Encoder:", String.format("%.2f", TICKS_PER_INCH) + " | " + ticks);
         encoderDrive(ticks * w.lf, ticks * w.rf, ticks * w.lr, ticks * w.rr);
     }
 

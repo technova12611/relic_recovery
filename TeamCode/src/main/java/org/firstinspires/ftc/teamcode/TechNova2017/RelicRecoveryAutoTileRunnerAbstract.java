@@ -186,7 +186,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         return SAFE_TURN_SPEED;
     }
 
-    private static final int MAX_HEADING_SLOP = 3;
+    private static final int MAX_HEADING_SLOP = 2;
 
     /**
      * Handles the turning logics, using simple control, could be using PID
@@ -202,7 +202,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 
             double speed = speedForTurnDistance(Math.abs(diff));
-            robot.drive(0.0, 0.0, diff > 0 ? -speed : speed);
+            robot.drive(0.0, 0.0, diff > 0 ? speed : -speed);
             idle();
         }
         robot.stopDriveMotors();
@@ -215,7 +215,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             double diff = angleDifference(robot.getHeadingAngle(), degrees);
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 
-            robot.drive(0.0, 0.0, diff > 0 ? -speed : speed);
+            logInfo("TurnToAngle: ", String.format("%.1f %.1f %.2f", robot.getHeadingAngle(), diff, speed));
+            robot.drive(0.0, 0.0, diff > 0 ? speed : -speed);
             idle();
         }
         robot.stopDriveMotors();
