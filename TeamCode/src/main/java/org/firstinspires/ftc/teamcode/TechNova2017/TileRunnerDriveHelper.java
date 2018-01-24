@@ -42,7 +42,13 @@ public class TileRunnerDriveHelper {
             //inverted = !inverted;
         }
 
-        if(g.XOnce()) {
+        if((g.leftBumper() || g.rightBumper()) && g.B()) {
+            robot.closeIntakeWheels();
+        }
+        else if(g.B()) {
+            robot.openIntakeWheels();
+        }
+        else if(g.XOnce()) {
             slowDrive = false;
             if(robot.isGreenLedOn()){
                 robot.turnOffGreenLed();

@@ -7,7 +7,6 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -38,13 +37,19 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_PUSH_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_UP_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_COLLECT_POWER;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_LEFT_HOLDER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_LEFT_HOLDER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_LEFT_HOLDER_OPEN_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_REVERSE_POWER;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_RIGHT_HOLDER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_RIGHT_HOLDER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_RIGHT_HOLDER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION_2;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_RELEASE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_RELEASE_POSITION_2;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_OPEN_POSITION;
@@ -91,9 +96,6 @@ public class TileRunnerRobot {
 
     private LinearOpMode linearOpMode;
 
-    private AnalogInput rangeSensor;
-    double maxRangeVol = 0.0;
-
     double previousDriveAvgEncoder = 0;
 
     MovingAverage driveEncodersMovingAvg = new MovingAverage(3);
@@ -126,7 +128,7 @@ public class TileRunnerRobot {
 
         try {
             relicClawholder = hardwareMap.servo.get("relicClawholder");
-            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION_2);
         } catch(Exception e) {
             logInfo(this.telemetry, "Init relic claw holder failed", e.getMessage());
         }
@@ -136,13 +138,6 @@ public class TileRunnerRobot {
         if(allianceColor != null) {
             initGyro(hardwareMap);
             initRangeSensor(hardwareMap, allianceColor);
-
-            try {
-                rangeSensor = hardwareMap.analogInput.get("range");
-                maxRangeVol= rangeSensor.getMaxVoltage();
-            }catch(Exception e) {
-            }
-
         } else {
             try {
                 longArm = hardwareMap.servo.get("longArm");
@@ -156,10 +151,8 @@ public class TileRunnerRobot {
 
         try {
             intakeLeftHolder = hardwareMap.servo.get("intakeLeftHolder");
-            intakeLeftHolder.setPosition(INTAKE_LEFT_HOLDER_INITIAL_POSITION);
-
             intakeRightHolder = hardwareMap.servo.get("intakeRightHolder");
-            intakeRightHolder.setPosition(INTAKE_RIGHT_HOLDER_INITIAL_POSITION);
+            initIntakeWheels();
         } catch(Exception e) {
             logInfo(this.telemetry, "Init Intake Holders: ", e.getMessage());
         }
@@ -193,6 +186,7 @@ public class TileRunnerRobot {
         try {
             relicSlider = hardwareMap.dcMotor.get("relicSlider");
             relicSlider.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            relicSlider.setDirection(DcMotorSimple.Direction.REVERSE);
             relicSlider.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         catch(Exception e) {
@@ -235,11 +229,12 @@ public class TileRunnerRobot {
     public void initServosForTeleOps() {
         try {
             if(relicClawholder != null) relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
-            if(intakeLeftHolder != null) intakeLeftHolder.setPosition(INTAKE_LEFT_HOLDER_OPEN_POSITION);
-            if(intakeRightHolder != null) intakeRightHolder.setPosition(INTAKE_RIGHT_HOLDER_CLOSE_POSITION);
+            openIntakeWheels();
             if(relicClaw != null) relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
             if(relicElbow != null) relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
             if(longArm != null) longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
+            if(glyphPusher != null) glyphPusher.setPosition(GLYPH_PUSHER_UP_POSITION);
+            if(glyphFlipper != null) glyphFlipper.setPosition(GLYPH_FLIPPER_INITIAL_POSITION);
         }
         catch(Exception e) {
             logInfo(this.telemetry, "Init servos failed", e.getMessage());
@@ -270,9 +265,9 @@ public class TileRunnerRobot {
         intakeRight = hardwareMap.dcMotor.get("intake_right");
         setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER, intakeRight);
 
-        intakeLeft = hardwareMap.dcMotor.get("intake_left");
-        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER, intakeLeft);
+        //intakeLeft = hardwareMap.dcMotor.get("intake_left");
+        //intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        //setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER, intakeLeft);
     }
 
     private void initGyro(HardwareMap hardwareMap) {
@@ -324,6 +319,7 @@ public class TileRunnerRobot {
     public void resetForTeleOps() {
         resetGlyphTray();
         moveUpGlyphPusher();
+        openIntakeWheels();
     }
 
     public void resetDriveMotors() {
@@ -920,13 +916,9 @@ public class TileRunnerRobot {
 
     public void releaseClaw() {
         if (relicClawholder != null) {
-            relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION);
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION_2);
             isRelicClawReleased = true;
         }
-
-//        if(relicClaw != null) {
-//            relicClaw.setPosition(RELIC_CLAW_OPEN_POSITION);
-//        }
     }
 
     public boolean isRelicClawReleased() {
@@ -935,7 +927,7 @@ public class TileRunnerRobot {
 
     public void closeRelicClawHolder() {
         if (relicClawholder != null) {
-            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION_2);
         }
     }
 
@@ -954,13 +946,12 @@ public class TileRunnerRobot {
         return 0.0;
     }
 
-    double intakePower = -0.60;
     public void collectGlyph() {
         if(this.intakeRight != null) {
-            this.intakeRight.setPower(intakePower);
+            this.intakeRight.setPower(INTAKE_COLLECT_POWER);
         }
         if(this.intakeLeft != null) {
-            this.intakeLeft.setPower(intakePower);
+            this.intakeLeft.setPower(INTAKE_COLLECT_POWER);
         }
     }
 
@@ -975,11 +966,11 @@ public class TileRunnerRobot {
 
     public void reverseGlyph() {
         if(this.intakeRight != null) {
-            this.intakeRight.setPower(0.65);
+            this.intakeRight.setPower(INTAKE_REVERSE_POWER);
         }
 
         if(this.intakeLeft != null) {
-            this.intakeLeft.setPower(0.65);
+            this.intakeLeft.setPower(INTAKE_REVERSE_POWER);
         }
     }
 
@@ -1102,6 +1093,21 @@ public class TileRunnerRobot {
 
     public boolean isGreenLedOn() {
         return this.isGreenLedOn;
+    }
+
+    public void initIntakeWheels() {
+        if(intakeLeftHolder != null) intakeLeftHolder.setPosition(INTAKE_LEFT_HOLDER_INITIAL_POSITION);
+        if(intakeRightHolder != null) intakeRightHolder.setPosition(INTAKE_RIGHT_HOLDER_INITIAL_POSITION);
+    }
+
+    public void openIntakeWheels() {
+        if(intakeLeftHolder != null) intakeLeftHolder.setPosition(INTAKE_LEFT_HOLDER_OPEN_POSITION);
+        if(intakeRightHolder != null) intakeRightHolder.setPosition(INTAKE_RIGHT_HOLDER_OPEN_POSITION);
+    }
+
+    public void closeIntakeWheels() {
+        if(intakeLeftHolder != null) intakeLeftHolder.setPosition(INTAKE_LEFT_HOLDER_CLOSE_POSITION);
+        if(intakeRightHolder != null) intakeRightHolder.setPosition(INTAKE_RIGHT_HOLDER_CLOSE_POSITION);
     }
 
 }

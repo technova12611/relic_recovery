@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTest.State.END;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTest.State.START;
 
 @Autonomous(name = "Auto Test", group = "Test")
+@Disabled
 public class RelicRecoveryAutoTest extends RelicRecoveryAutoAbstract {
 
     // make new States for each autonomous strategy
