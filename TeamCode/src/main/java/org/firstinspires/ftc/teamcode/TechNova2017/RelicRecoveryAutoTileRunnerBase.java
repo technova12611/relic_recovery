@@ -122,15 +122,14 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // turn right to 90 degree
                     // need to figure out the turn direction for
                     // red and blue alliance
-                    if(getAllianceColor() ==  AllianceColor.RED) {
-                        turnToAngle(-90.0, 0.20);
-                    } else {
-                        turnToAngle(-90.0, 0.20);
-                    }
+                    turn(-90.0);
                     gotoNextState();
                     break;
 
                 case STRAFE_3_FEET:
+
+                    // make sure it's at 90 degree to the wall
+                    turn(-90.0);
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
@@ -195,7 +194,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_1_FEET:
-                    driveForwardInches(4.0, motorSpeed);
+                    driveBackwardInches(4.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -208,13 +207,13 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         sleep(100);
                     }
 
-                    driveBackwardInches(2.0, 0.5);
+                    driveForwardInches(2.0, 0.35);
 
                     // move forward to push the glyph into the box
                     //-------------------------------------------------
                     logInfo(" --- Drive forward to push --- ");
                     ElapsedTime watcher = new ElapsedTime();
-                    driveForwardInches(7.0, motorSpeed);
+                    driveBackwardInches(5.0, motorSpeed);
 
                     logInfo(" Place Glyph into column (ms): " +
                             watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
@@ -223,7 +222,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // move backward to separate robot from glyph
                     //----------------------------------------------
                     logInfo(" --- Drive backward to finish --- ");
-                    driveBackwardInches(6.0, motorSpeed);
+                    driveForwardInches(6.0, motorSpeed);
 
                     gotoNextState();
 
@@ -234,7 +233,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     robot.resetForTeleOps();
 
                     // make sure robot is very close to 90 degree
-                    turnToAngle(90.0, 0.2);
+                    turn(-90.0);
 
                     if(getRuntime() > 20.0 || !pickupMoreGlyphs()) {
                         gotoState(END);

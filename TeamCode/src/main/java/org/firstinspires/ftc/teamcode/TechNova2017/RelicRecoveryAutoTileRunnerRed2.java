@@ -102,7 +102,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_3_FEET:
-                    driveForwardInches(25.0, motorSpeed);
+                    driveBackwardInches(25.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -147,7 +147,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_1_FEET:
-                    driveForwardInches(2.0, motorSpeed);
+                    driveBackwardInches(2.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -160,7 +160,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                         sleep(100);
                     }
 
-                    driveBackwardInches(2.0, motorSpeed);
+                    driveForwardInches(2.0, motorSpeed);
 
                     // move forward to push the glyph into the box
                     //-------------------------------------------------
@@ -175,13 +175,14 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     // move backward to separate robot from glyph
                     //----------------------------------------------
                     logInfo(" --- Drive backward to finish --- ");
-                    driveBackwardInches(7.0, motorSpeed);
+                    driveForwardInches(7.0, motorSpeed);
 
                     gotoNextState();
 
                     break;
 
                 case RESET_GLYPH_TRAY:
+
                     // move the glyph lift back to zero position
                     robot.resetGlyphTray();
                     gotoNextState();

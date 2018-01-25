@@ -37,7 +37,7 @@ public class TileRunnerDriveHelper {
         double lx = 0.0;
         double ly = 0.0;
 
-        if(g.YOnce()) {
+        if(g.Y()) {
             //arcadeDrive = !arcadeDrive;
             //inverted = !inverted;
         }
@@ -48,7 +48,7 @@ public class TileRunnerDriveHelper {
         else if(g.B()) {
             robot.openIntakeWheels();
         }
-        else if(g.XOnce()) {
+        else if(g.X()) {
             slowDrive = false;
             if(robot.isGreenLedOn()){
                 robot.turnOffGreenLed();

@@ -102,11 +102,15 @@ public class RelicRecoveryAutoTileRunnerTest extends RelicRecoveryAutoTileRunner
                     break;
 
                 case TURN_TO_90_DEGREE:
+
                     // turn right to 90 degree
                     // need to figure out the turn direction for
                     // red and blue alliance
-                    turnToAngle(-90.0, 0.16);
-                    gotoNextState();
+                    turnToAngle(-90.0, 0.15);
+
+                    turnToAngle(-90.0, 0.10);
+                    //gotoNextState();
+                    gotoState(END);
                     break;
 
                 case STRAFE_3_FEET:

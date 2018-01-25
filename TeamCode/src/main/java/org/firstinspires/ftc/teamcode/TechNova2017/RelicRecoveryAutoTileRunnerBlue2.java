@@ -103,7 +103,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case BACKWARD_3_FEET:
-                    driveBackwardInches(25.0, motorSpeed);
+                    driveForwardInches(25.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -113,6 +113,8 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case RIGHT_1_FEET:
+
+                    turn(180.0);
 
                     double distanceToWall = measureXDistance(500)/2.54;
                     if(distanceToWall > 28.0 || distanceToWall < 18.0) {
@@ -153,7 +155,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case FORWARD_1_FEET:
-                    driveForwardInches(2.0, motorSpeed);
+                    driveBackwardInches(2.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -166,13 +168,13 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                         sleep(100);
                     }
 
-                    driveBackwardInches(2.0, motorSpeed);
+                    driveForwardInches(2.0, motorSpeed);
 
                     // move forward to push the glyph into the box
                     //-------------------------------------------------
                     logInfo(" --- Drive forward to push --- ");
                     ElapsedTime watcher = new ElapsedTime();
-                    driveForwardInches(6.0, motorSpeed);
+                    driveBackwardInches(6.0, motorSpeed);
 
                     logInfo(" Place Glyph into column (ms): " +
                             watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark

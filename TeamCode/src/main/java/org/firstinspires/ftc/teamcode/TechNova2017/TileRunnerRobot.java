@@ -153,7 +153,7 @@ public class TileRunnerRobot {
             intakeLeftHolder = hardwareMap.servo.get("intakeLeftHolder");
             intakeRightHolder = hardwareMap.servo.get("intakeRightHolder");
             if(allianceColor != null) {
-                initGlyphTrayForAuto();
+                initIntakeWheelsForAuto();
             } else {
                 initIntakeWheels();
             }
@@ -171,7 +171,11 @@ public class TileRunnerRobot {
 
         try {
             glyphPusher = hardwareMap.servo.get("glyphPusher");
-            glyphPusher.setPosition(GLYPH_PUSHER_INITIAL_POSITION);
+            if(allianceColor != null) {
+                glyphPusher.setPosition(GLYPH_PUSHER_INITIAL_POSITION);
+            } else {
+                glyphPusher.setPosition(GLYPH_PUSHER_UP_POSITION);
+            }
 
         } catch(Exception e) {
             logInfo(this.telemetry, "Glyph Pusher: ", e.getMessage());
@@ -1105,8 +1109,8 @@ public class TileRunnerRobot {
     }
 
     public void initIntakeWheels() {
-        if(intakeLeftHolder != null) intakeLeftHolder.setPosition(INTAKE_LEFT_HOLDER_INITIAL_POSITION);
-        if(intakeRightHolder != null) intakeRightHolder.setPosition(INTAKE_RIGHT_HOLDER_INITIAL_POSITION);
+        if(intakeLeftHolder != null) intakeLeftHolder.setPosition(INTAKE_LEFT_HOLDER_OPEN_POSITION);
+        if(intakeRightHolder != null) intakeRightHolder.setPosition(INTAKE_RIGHT_HOLDER_OPEN_POSITION);
     }
 
     public void openIntakeWheels() {
