@@ -152,7 +152,11 @@ public class TileRunnerRobot {
         try {
             intakeLeftHolder = hardwareMap.servo.get("intakeLeftHolder");
             intakeRightHolder = hardwareMap.servo.get("intakeRightHolder");
-            initIntakeWheels();
+            if(allianceColor != null) {
+                initGlyphTrayForAuto();
+            } else {
+                initIntakeWheels();
+            }
         } catch(Exception e) {
             logInfo(this.telemetry, "Init Intake Holders: ", e.getMessage());
         }
@@ -313,7 +317,6 @@ public class TileRunnerRobot {
 
     public void onStart() {
         setMode(DcMotor.RunMode.RUN_USING_ENCODER, lf, lr, rr, rf, intakeLeft, intakeRight, glyphLift);
-        //glyphLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void resetForTeleOps() {
@@ -1094,6 +1097,11 @@ public class TileRunnerRobot {
 
     public boolean isGreenLedOn() {
         return this.isGreenLedOn;
+    }
+
+    public void initIntakeWheelsForAuto() {
+        if(intakeLeftHolder != null) intakeLeftHolder.setPosition(INTAKE_LEFT_HOLDER_INITIAL_POSITION);
+        if(intakeRightHolder != null) intakeRightHolder.setPosition(INTAKE_RIGHT_HOLDER_INITIAL_POSITION);
     }
 
     public void initIntakeWheels() {

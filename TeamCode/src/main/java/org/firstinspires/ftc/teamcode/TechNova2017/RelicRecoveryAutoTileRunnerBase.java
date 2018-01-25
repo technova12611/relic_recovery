@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.END;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.PICKUP_SECOND_GLYPH;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.START;
 
 public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunnerAbstract {
@@ -24,6 +25,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
          FORWARD_1_FEET,
          PLACE_GLYPH_INTO_CRYPTO,
          RESET_GLYPH_TRAY,
+         PICKUP_SECOND_GLYPH,
+         READY_FOR_TELEOPS,
          END;
 
          private static State[] vals = values();
@@ -75,7 +78,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         while (opModeIsActive() && v_state != END) {
 
             boolean detectVuMark = false;
-            double motorSpeed = 0.25;
+            double motorSpeed = 0.30;
 
             logStateInfo(v_state, "Start");
 
@@ -120,9 +123,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // need to figure out the turn direction for
                     // red and blue alliance
                     if(getAllianceColor() ==  AllianceColor.RED) {
-                        turnToAngle(90.0, 0.20);
+                        turnToAngle(-90.0, 0.20);
                     } else {
-                        turn(-90.0);
+                        turnToAngle(-90.0, 0.20);
                     }
                     gotoNextState();
                     break;
@@ -233,6 +236,21 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // make sure robot is very close to 90 degree
                     turnToAngle(90.0, 0.2);
 
+                    if(getRuntime() > 20.0 || !pickupMoreGlyphs()) {
+                        gotoState(END);
+                    } else {
+                        gotoNextState();
+                    }
+                    break;
+
+                case PICKUP_SECOND_GLYPH:
+                    driveForwardInches(24.0, 0.50);
+                    robot.collectGlyph();
+
+                    break;
+
+                case READY_FOR_TELEOPS:
+                    robot.resetForTeleOps();
                     gotoNextState();
                     break;
 
@@ -253,6 +271,10 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         }
 
         robot.onStop();
+    }
+
+    protected boolean pickupMoreGlyphs() {
+        return false;
     }
 
     //------------------------------------

@@ -59,13 +59,13 @@ public class RobotInfo {
 
     public static int GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION = 700;
 
-    public static double INTAKE_LEFT_HOLDER_INITIAL_POSITION = 0.07;
+    public static double INTAKE_LEFT_HOLDER_INITIAL_POSITION = 0.02;
     public static double INTAKE_LEFT_HOLDER_OPEN_POSITION = 0.70;
-    public static double INTAKE_LEFT_HOLDER_CLOSE_POSITION = 0.10;
+    public static double INTAKE_LEFT_HOLDER_CLOSE_POSITION = 0.08;
 
-    public static double INTAKE_RIGHT_HOLDER_INITIAL_POSITION = 0.93;
+    public static double INTAKE_RIGHT_HOLDER_INITIAL_POSITION = 0.98;
     public static double INTAKE_RIGHT_HOLDER_OPEN_POSITION = 0.29;
-    public static double INTAKE_RIGHT_HOLDER_CLOSE_POSITION = 0.90;
+    public static double INTAKE_RIGHT_HOLDER_CLOSE_POSITION = 0.93;
 
     public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.53;
     public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.40;
@@ -83,11 +83,11 @@ public class RobotInfo {
 
     // Relic delivery system
     //--------------------------------------------------------------------------
-    public static double RELIC_CLAW_INITIAL_POSITION = 0.81;
+    public static double RELIC_CLAW_INITIAL_POSITION = 0.58;
     public static double RELIC_CLAW_CLOSE_POSITION = 0.60;
     public static double RELIC_CLAW_OPEN_POSITION = 0.79;
 
-    public static double RELIC_ELBOW_INITIAL_POSITION = 0.22;
+    public static double RELIC_ELBOW_INITIAL_POSITION = 0.20;
     public static double RELIC_ELBOW_RELEASE_POSITION = 0.21;
     public static double RELIC_ELBOW_UP_POSITION = 0.62;
 
@@ -99,9 +99,10 @@ public class RobotInfo {
 
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.31;
     public static double GLYPH_PUSHER_PUSH_POSITION = 0.29;
+    public static double GLYPH_PUSHER_HOLD_POSITION = 0.50;
     public static double GLYPH_PUSHER_UP_POSITION = 0.88;
 
-    public static double INTAKE_REVERSE_POWER = 0.75;
-    public static double INTAKE_COLLECT_POWER = -0.52;
+    public static double INTAKE_REVERSE_POWER = -0.75;
+    public static double INTAKE_COLLECT_POWER = 0.60;
 
 }
