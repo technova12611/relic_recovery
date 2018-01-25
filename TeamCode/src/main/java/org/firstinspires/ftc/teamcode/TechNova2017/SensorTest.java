@@ -27,7 +27,7 @@ public class SensorTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        MecanumRobot robot = new MecanumRobot(this, hardwareMap, telemetry, null);
+        TileRunnerRobot robot = new TileRunnerRobot(this, hardwareMap, telemetry, AllianceColor.RED);
 
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, "jewelColor");
@@ -40,14 +40,7 @@ public class SensorTest extends LinearOpMode {
         }catch(Exception e) {
         }
 
-        double maxVoltage = 0.0;
-        try {
-            rangeSensor = hardwareMap.analogInput.get("range");
-            maxVoltage= rangeSensor.getMaxVoltage();
-        }catch(Exception e) {
-        }
-
-        glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
+        //glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
 
         VuMarkVision vuMarkVision = new VuMarkVision(hardwareMap, telemetry);
 
@@ -66,18 +59,11 @@ public class SensorTest extends LinearOpMode {
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
 
-            if(rangeSensor != null) {
-                telemetry.addData("Max Vol: ", "%.2f", maxVoltage);
-                telemetry.addData("Range Vol: ", "%.5f", rangeSensor.getVoltage());
-
-                Log.i("Range Sensor", String.format("%.5f",rangeSensor.getVoltage() ));
-                sleep(100);
-            }
-
-
             telemetry.addData("(x1,x2): ", "(%.2f, %.2f)",
-                    xRangeSensor!= null?xRangeSensor.getDistance(DistanceUnit.CM):0.0,
-                    yRangeSensor != null?yRangeSensor.getDistance(DistanceUnit.CM):0.0);
+                    xRangeSensor!= null?xRangeSensor.getDistance(DistanceUnit.INCH):0.0,
+                    yRangeSensor != null?yRangeSensor.getDistance(DistanceUnit.INCH):0.0);
+
+            telemetry.addData("IMU: ", "(%.2f", robot.getHeadingAngle());
 
             if(vuMark == RelicRecoveryVuMark.UNKNOWN) {
                 vuMark = vuMarkVision.detect(null);
@@ -97,18 +83,7 @@ public class SensorTest extends LinearOpMode {
                 robot.turnOffBlueLed();
             }
 
-            if(gamepad2.right_stick_y <0) {
-                robot.glyphHolder.setPosition(Range.clip(robot.glyphHolder.getPosition() + 0.02, 0.0, 1.00));
-                sleep(50);
-            }
-
-            if(gamepad2.right_stick_y >0) {
-                robot.glyphHolder.setPosition(Range.clip(robot.glyphHolder.getPosition() - 0.02, 0.0, 1.00));
-                sleep(50);
-            }
-
-            telemetry.addData("Glyph Distance: ", String.format("%.2f",glyphDistance.getDistance(DistanceUnit.INCH)));
-            telemetry.addData("Servo Position: ", String.format("%.2f",robot.glyphHolder.getPosition()));
+            telemetry.update();
         }
     }
 }

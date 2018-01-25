@@ -838,38 +838,18 @@ public class TileRunnerRobot {
 
     public double getX1Distance() {
         if(x1RangeSensor != null) {
-            try {
-                double distance = x1RangeSensor.getDistance(DistanceUnit.CM);
-                if (distance < 225.0 && distance > 25.0) {
-                    prevX1Distance = distance;
-                }
-            }catch(Exception e) {
-                Log.e(this.getClass().getSimpleName(), "X1 Range Failed: " + e.getMessage());
-                prevX1Distance = 0.0;
-            }
-        } else {
-            return 0.0;
+            return x1RangeSensor.getDistance(DistanceUnit.CM);
         }
 
-        return prevX1Distance;
+        return 0.0;
     }
 
     public double getX2Distance() {
         if(x2RangeSensor != null) {
-            try {
-                double distance = x2RangeSensor.getDistance(DistanceUnit.CM);
-                if (distance < 225.0 && distance > 25.0) {
-                    prevX2Distance = distance;
-                }
-            }catch(Exception e) {
-                Log.e(this.getClass().getSimpleName(), "X2 Range Failed: " + e.getMessage());
-                prevX2Distance = 0.0;
-            }
-        } else {
-            return 0.0;
+            return x2RangeSensor.getDistance(DistanceUnit.CM);
         }
 
-        return prevX2Distance;
+        return 0.0;
     }
 
     public int getGlyphLiftPosition() {

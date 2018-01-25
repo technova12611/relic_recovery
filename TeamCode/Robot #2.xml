@@ -4,17 +4,27 @@
         <LynxModule name="Expansion Hub 2" port="2">
             <RevRoboticsHDHexMotor name="lf" port="0" />
             <RevRoboticsHDHexMotor name="lr" port="1" />
-            <RevRoboticsCoreHexMotor name="intake_right" port="2" />
-            <Servo name="glyphFlipper" port="0" />
-            <LynxEmbeddedIMU name="imu" port="0" bus="0" />
+            <RevRoboticsCoreHexMotor name="led" port="2" />
+            <NeveRest20Gearmotor name="relicSlider" port="3" />
+            <Servo name="longArm" port="1" />
+            <Servo name="shortArm" port="2" />
+            <Servo name="intakeLeftHolder" port="3" />
+            <LynxColorSensor name="jewelColor" port="0" bus="1" />
+            <ModernRoboticsI2cRangeSensor name="x1Range" port="0" bus="3" />
         </LynxModule>
         <LynxModule name="Expansion Hub 3" port="3">
             <RevRoboticsHDHexMotor name="rr" port="0" />
             <RevRoboticsHDHexMotor name="rf" port="1" />
-            <RevRoboticsCoreHexMotor name="intake_left" port="2" />
+            <RevRoboticsCoreHexMotor name="intake_right" port="2" />
             <NeveRest40Gearmotor name="glyphLift" port="3" />
-            <Servo name="glyphPusher" port="5" />
-            <LynxEmbeddedIMU name="imu 1" port="0" bus="0" />
+            <Servo name="relicClaw" port="0" />
+            <Servo name="relicElbow" port="1" />
+            <Servo name="glyphFlipper" port="2" />
+            <Servo name="glyphPusher" port="3" />
+            <Servo name="intakeRightHolder" port="4" />
+            <Servo name="relicClawholder" port="5" />
+            <ModernRoboticsI2cRangeSensor name="x2Range" port="0" bus="1" />
+            <AdafruitBNO055IMU name="imu" port="0" bus="0" />
         </LynxModule>
     </LynxUsbDevice>
 </Robot>
