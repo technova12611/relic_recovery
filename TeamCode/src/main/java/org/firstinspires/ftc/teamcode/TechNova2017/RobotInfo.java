@@ -76,7 +76,7 @@ public class RobotInfo {
 
     // Driver control motor speed
     //-----------------------------------------------------------------------
-    public static double ENCODER_DRIVE_POWER = 0.32;
+    public static double ENCODER_DRIVE_POWER = 0.30;
     public static double SLOW_MODE_SCALE_TO_DRIVE = 0.70;
     public static double VERY_SLOW_MODE_SCALE_TO_DRIVE = 0.45;
     public static double DPAD_SCALE_TO_DRIVE = 0.28;
