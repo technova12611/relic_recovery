@@ -108,14 +108,16 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case TURN_TO_180_DEGREE:
-                    turn(170.0);
-                    sleepInAuto(1500);
+                    turn(165.0);
+                    sleepInAuto(1000);
                     gotoNextState();
                     break;
 
                 case RIGHT_1_FEET:
 
                     turnToAngle(175.0, 0.10);
+                    sleepInAuto(1000);
+                    turnToAngle(179.0, 0.10);
 
                     double distanceToWall = measureXDistance(500)/2.54;
                     if(distanceToWall > 28.0 || distanceToWall < 18.0) {

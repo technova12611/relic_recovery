@@ -184,7 +184,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     private static final double FAST_TURN_SPEED = 0.20;
     private static final double SUPER_FAST_TURN_SPEED = 0.25;
     private static final double FAST_TURN_THRESHOLD = 30.0;
-    private static final double FINAL_TURN_THRESHOLD = 20.0;
+    private static final double FINAL_TURN_THRESHOLD = 15.0;
 
     private static final double SUPER_FAST_TURN_THRESHOLD = 60.0;
 

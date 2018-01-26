@@ -124,14 +124,14 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // need to figure out the turn direction for
                     // red and blue alliance
                     turn(-86.0);
-                    sleepInAuto(1500);
+                    sleepInAuto(1000);
 
                     gotoNextState();
                     break;
 
                 case STRAFE_3_FEET:
                     // make sure it's at 90 degree to the wall
-                    turnToAngle(-85.0, 0.10);
+                    turnToAngle(-88.0, 0.10);
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control

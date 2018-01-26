@@ -108,6 +108,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                 case LEFT_1_FEET:
 
+                    turn(0.0);
                     double distanceToWall = measureXDistance(500)/2.54;
                     if(distanceToWall > 28.0 || distanceToWall < 18.0) {
                         distanceToWall = 20.0;
