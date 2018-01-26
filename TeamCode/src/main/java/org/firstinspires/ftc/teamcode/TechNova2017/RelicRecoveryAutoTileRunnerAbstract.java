@@ -99,12 +99,14 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected void sleepInAuto(long milSec) {
-        while(opModeIsActive() && timer.time() < milSec)  {
+        ElapsedTime sleepTimer = new ElapsedTime();
+        while(opModeIsActive() && sleepTimer.milliseconds() < milSec)  {
             sleep(50);
         }
     }
 
     protected void driveForwardInches(double inches, double power) throws InterruptedException {
+        logInfo("Drive forward:", String.format("%.2f, %.2f", inches, power));
         driveDirectionInches(Math.PI,inches, power);
     }
 
@@ -113,14 +115,17 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected void driveBackwardInches(double inches, double power) throws InterruptedException {
+        logInfo("Drive backward:", String.format("%.2f, %.2f", inches, power));
         driveDirectionInches(0,inches, power);
     }
 
     protected void driveLeftInches(double inches, double power) throws InterruptedException {
+        logInfo("Strafe left:", String.format("%.2f, %.2f", inches, power));
         driveDirectionInches(Math.PI*3/2.0,inches, power);
     }
 
     protected void driveRightInches(double inches, double power) throws InterruptedException {
+        logInfo("Strafe right:", String.format("%.2f, %.2f", inches, power));
         driveDirectionInches(Math.PI/2.0,inches, power);
     }
 
@@ -174,10 +179,12 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     /**
      * Using very basic control algorithm
      */
-    private static final double SAFE_TURN_SPEED = 0.12;
-    private static final double FAST_TURN_SPEED = 0.18;
+    private static final double VERY_SAFE_TURN_SPEED = 0.08;
+    private static final double SAFE_TURN_SPEED = 0.10;
+    private static final double FAST_TURN_SPEED = 0.20;
     private static final double SUPER_FAST_TURN_SPEED = 0.25;
     private static final double FAST_TURN_THRESHOLD = 30.0;
+    private static final double FINAL_TURN_THRESHOLD = 20.0;
 
     private static final double SUPER_FAST_TURN_THRESHOLD = 60.0;
 
@@ -189,7 +196,11 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             return FAST_TURN_SPEED;
         }
 
-        return SAFE_TURN_SPEED;
+        if(angle> FINAL_TURN_THRESHOLD) {
+            return SAFE_TURN_SPEED;
+        }
+
+        return VERY_SAFE_TURN_SPEED;
     }
 
     private static final double MAX_HEADING_SLOP = 1.5;
@@ -208,6 +219,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 
             double speed = speedForTurnDistance(Math.abs(diff));
+            logInfo("TurnToAngle: ", String.format("%.1f %.1f %.2f", robot.getHeadingAngle(), diff, speed));
             robot.drive(0.0, 0.0, diff > 0 ? speed : -speed);
             idle();
         }

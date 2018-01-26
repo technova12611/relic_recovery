@@ -321,7 +321,9 @@ public class TileRunnerRobot {
     }
 
     public void onStart() {
-        setMode(DcMotor.RunMode.RUN_USING_ENCODER, lf, lr, rr, rf, intakeLeft, intakeRight, glyphLift);
+        setMode(DcMotor.RunMode.RUN_USING_ENCODER, lf, lr, rr, rf, glyphLift);
+
+        intakeRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void resetForTeleOps() {

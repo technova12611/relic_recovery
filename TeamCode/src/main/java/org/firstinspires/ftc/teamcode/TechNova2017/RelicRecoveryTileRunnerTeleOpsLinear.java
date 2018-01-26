@@ -261,7 +261,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.holdGlyph();
         }
 
-        telemetry.addData("Intake Counts:", + previousRightIntakePosition + " | "
+        telemetry.addData("Intake Counts:", + robot.intakeRight.getCurrentPosition() + " | "
                         + String.format("%.1f", intakeStuckTimer.seconds()));
         telemetry.addData("Intake Stucked:", robot.isIntakeStuck);
         telemetry.addData("relicElbowPosition: ", String.format("%.2f",relicElbowPosition));

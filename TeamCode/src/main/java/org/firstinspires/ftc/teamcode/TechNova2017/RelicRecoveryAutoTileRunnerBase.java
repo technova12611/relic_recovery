@@ -79,7 +79,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         while (opModeIsActive() && v_state != END) {
 
             boolean detectVuMark = false;
-            double motorSpeed = 0.30;
+            double motorSpeed = 0.25;
 
             logStateInfo(v_state, "Start");
 
@@ -123,17 +123,15 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // turn right to 90 degree
                     // need to figure out the turn direction for
                     // red and blue alliance
-                    turn(-90.0);
-
-                    sleepInAuto(500);
+                    turn(-86.0);
+                    sleepInAuto(1500);
 
                     gotoNextState();
                     break;
 
                 case STRAFE_3_FEET:
-
                     // make sure it's at 90 degree to the wall
-                    turn(-90.0);
+                    turnToAngle(-85.0, 0.10);
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
