@@ -162,7 +162,11 @@ public class TileRunnerRobot {
 
         try {
             glyphFlipper = hardwareMap.servo.get("glyphFlipper");
-            glyphFlipper.setPosition(GLYPH_FLIPPER_INITIAL_POSITION);
+            if(allianceColor != null) {
+                glyphFlipper.setPosition(GLYPH_FLIPPER_AUTO_INITIAL_POSITION);
+            } else {
+                glyphFlipper.setPosition(GLYPH_FLIPPER_INITIAL_POSITION);
+            }
 
         } catch(Exception e) {
             logInfo(this.telemetry, "Glyph Flipper: ", e.getMessage());
