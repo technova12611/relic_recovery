@@ -48,8 +48,10 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
         // waiting for operator to press start button
         while(!isStarted()) {
-            telemetry.addData("Distance (x1, x2): ", String.format("(%.1f, %.1f)", robot.getX1Distance(), robot.getX2Distance()));
+            telemetry.addData("Distance (x1, x2): ",
+                    String.format("(%.1f, %.1f)", robot.getX1Distance(), robot.getX2Distance()));
             telemetry.update();
+            sleep(100);
         }
 
         //waitForStart();
@@ -70,7 +72,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         // starts the state machine
         //---------------------------------
         v_state = START;
-
 
         // 2. Run the state machine
         //  test, and more test
@@ -123,6 +124,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // need to figure out the turn direction for
                     // red and blue alliance
                     turn(-90.0);
+
+                    sleepInAuto(500);
+
                     gotoNextState();
                     break;
 
@@ -194,7 +198,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_1_FEET:
-                    driveBackwardInches(4.0, motorSpeed);
+                    driveBackwardInches(6.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -203,17 +207,16 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     logInfo(" --- Dump Glyph into column and push --- ");
                     robot.dumpGlyphsFromTray();
 
-                    while(opModeIsActive() && timer.time() < 1000)  {
-                        sleep(100);
-                    }
+                    sleepInAuto(1000);
 
+                    // forward is facing the glyph pit
                     driveForwardInches(2.0, 0.35);
 
                     // move forward to push the glyph into the box
                     //-------------------------------------------------
                     logInfo(" --- Drive forward to push --- ");
                     ElapsedTime watcher = new ElapsedTime();
-                    driveBackwardInches(5.0, motorSpeed);
+                    driveBackwardInches(4.0, motorSpeed);
 
                     logInfo(" Place Glyph into column (ms): " +
                             watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
@@ -245,10 +248,16 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                 case PICKUP_SECOND_GLYPH:
                     driveForwardInches(24.0, 0.50);
                     robot.collectGlyph();
+                    driveForwardInches(4.0, 0.30);
+                    sleepInAuto(1500);
+                    robot.pushGlyph();
+
+                    driveBackwardInches(30.0, 0.50);
 
                     break;
 
                 case READY_FOR_TELEOPS:
+
                     robot.resetForTeleOps();
                     gotoNextState();
                     break;

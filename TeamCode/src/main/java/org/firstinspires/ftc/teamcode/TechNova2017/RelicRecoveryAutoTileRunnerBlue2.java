@@ -108,13 +108,14 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case TURN_TO_180_DEGREE:
-                    turn(180.0);
+                    turn(179.0);
+                    sleepInAuto(500);
                     gotoNextState();
                     break;
 
                 case RIGHT_1_FEET:
 
-                    turn(180.0);
+                    turn(179.0);
 
                     double distanceToWall = measureXDistance(500)/2.54;
                     if(distanceToWall > 28.0 || distanceToWall < 18.0) {
@@ -129,25 +130,25 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(18.5+distanceToNearColumnInInches, motorSpeed);
+                            driveLeftInches(18.5+distanceToNearColumnInInches, motorSpeed);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed);
+                            driveLeftInches(8.5+distanceToNearColumnInInches,motorSpeed);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveRightInches(distanceToNearColumnInInches, motorSpeed);
+                            driveLeftInches(distanceToNearColumnInInches, motorSpeed);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed);
+                            driveLeftInches(8.5+distanceToNearColumnInInches,motorSpeed);
                             break;
                     }
 
@@ -164,7 +165,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     logInfo(" --- Dump Glyph from tray --- ");
                     robot.dumpGlyphsFromTray();
 
-                    while(opModeIsActive() && timer.time() < 300)  {
+                    while(opModeIsActive() && timer.time() < 750)  {
                         sleep(100);
                     }
 
@@ -183,7 +184,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     // move backward to separate robot from glyph
                     //----------------------------------------------
                     logInfo(" --- Drive backward to finish --- ");
-                    driveBackwardInches(5.0, motorSpeed);
+                    driveForwardInches(5.0, motorSpeed);
 
                     gotoNextState();
 

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,6 +11,7 @@ import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 @TeleOp(name = "Test Glyph Pickup Encoder", group = "Test")
+@Disabled
 public class TestGlyphCollector2 extends LinearOpMode {
 
     TileRunnerRobot robot;

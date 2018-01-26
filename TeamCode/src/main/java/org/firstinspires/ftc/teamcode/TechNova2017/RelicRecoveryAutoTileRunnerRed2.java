@@ -121,25 +121,25 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveLeftInches(distanceToNearColumnInInches, motorSpeed);
+                            driveRightInches(distanceToNearColumnInInches, motorSpeed);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveLeftInches(8.5+distanceToNearColumnInInches,motorSpeed);
+                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(17.5+distanceToNearColumnInInches, motorSpeed);
+                            driveRightInches(17.5+distanceToNearColumnInInches, motorSpeed);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveLeftInches(8.5+distanceToNearColumnInInches,motorSpeed);
+                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed);
                             break;
                     }
 
@@ -156,7 +156,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     logInfo(" --- Open Grabber --- ");
                     robot.dumpGlyphsFromTray();
 
-                    while(opModeIsActive() && timer.time() < 500)  {
+                    while(opModeIsActive() && timer.time() < 750)  {
                         sleep(100);
                     }
 
@@ -166,7 +166,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     //-------------------------------------------------
                     logInfo(" --- Drive forward to push --- ");
                     ElapsedTime watcher = new ElapsedTime();
-                    driveForwardInches(6.0, motorSpeed);
+                    driveBackwardInches(6.0, motorSpeed);
 
                     logInfo(" Place Glyph into column (ms): " +
                             watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
@@ -184,13 +184,12 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                 case RESET_GLYPH_TRAY:
 
                     // move the glyph lift back to zero position
-                    robot.resetGlyphTray();
+                    robot.resetForTeleOps();
                     gotoNextState();
                     break;
 
                 case END:
                     Default:
-                    gotoState(RelicRecoveryAutoTileRunnerRed2.State.END);
                     break;
             }
 

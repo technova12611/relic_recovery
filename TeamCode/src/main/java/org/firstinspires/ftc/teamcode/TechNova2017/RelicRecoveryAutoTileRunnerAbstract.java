@@ -98,6 +98,12 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.resetDriveMotors();
     }
 
+    protected void sleepInAuto(long milSec) {
+        while(opModeIsActive() && timer.time() < milSec)  {
+            sleep(50);
+        }
+    }
+
     protected void driveForwardInches(double inches, double power) throws InterruptedException {
         driveDirectionInches(Math.PI,inches, power);
     }
@@ -186,7 +192,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         return SAFE_TURN_SPEED;
     }
 
-    private static final int MAX_HEADING_SLOP = 2;
+    private static final double MAX_HEADING_SLOP = 1.5;
 
     /**
      * Handles the turning logics, using simple control, could be using PID

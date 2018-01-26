@@ -257,6 +257,10 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         //------------------------------------------------------
         TileRunnerDriveHelper.drive(g1, robot, telemetry);
 
+        if(g1.Y()) {
+            robot.holdGlyph();
+        }
+
         telemetry.addData("Intake Counts:", + previousRightIntakePosition + " | "
                         + String.format("%.1f", intakeStuckTimer.seconds()));
         telemetry.addData("Intake Stucked:", robot.isIntakeStuck);
