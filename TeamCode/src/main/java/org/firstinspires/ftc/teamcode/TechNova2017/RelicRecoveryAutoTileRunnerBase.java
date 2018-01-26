@@ -131,7 +131,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case STRAFE_3_FEET:
                     // make sure it's at 90 degree to the wall
-                    turnToAngle(-88.0, 0.10);
+                    turnToAngle(-88.0, 0.08);
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
@@ -201,35 +201,13 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
-
-                    logInfo(" --- Dump Glyph into column and push --- ");
-                    robot.dumpGlyphsFromTray();
-
-                    sleepInAuto(1000);
-
-                    // forward is facing the glyph pit
-                    driveForwardInches(2.0, 0.35);
-
-                    // move forward to push the glyph into the box
-                    //-------------------------------------------------
-                    logInfo(" --- Drive forward to push --- ");
-                    ElapsedTime watcher = new ElapsedTime();
-                    driveBackwardInches(4.0, motorSpeed);
-
-                    logInfo(" Place Glyph into column (ms): " +
-                            watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
-                            + " | " + String.format("%.2f cm", getXDistance()));
-
-                    // move backward to separate robot from glyph
-                    //----------------------------------------------
-                    logInfo(" --- Drive backward to finish --- ");
-                    driveForwardInches(6.0, motorSpeed);
-
+                    placeGlyphIntoColumn(motorSpeed);
                     gotoNextState();
 
                     break;
 
                 case RESET_GLYPH_TRAY:
+
                     // move the glyph lift back to zero position
                     robot.resetForTeleOps();
 
@@ -244,13 +222,32 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case PICKUP_SECOND_GLYPH:
+                    // drive to glyph pit
                     driveForwardInches(24.0, 0.50);
+
+                    // turn on the intake wheels
                     robot.collectGlyph();
+
+                    // push forward a bit to collect
                     driveForwardInches(4.0, 0.30);
                     sleepInAuto(1500);
+
+                    // move back and push the glyph into
+                    driveBackwardInches(6.0, 0.50);
                     robot.pushGlyph();
 
-                    driveBackwardInches(30.0, 0.50);
+                    driveBackwardInches(24.0, 0.50);
+
+                    if(getRuntime() < 27.0) {
+                        logInfo(" --- Flip Glyph Tray --- ");
+                        robot.dumpGlyphsFromTray();
+                        sleepInAuto(500);
+
+                        logInfo(" --- more backward to let glyph fall on the floor --- ");
+                        driveForwardInches(2.0, motorSpeed);
+                    }
+
+                    gotoNextState();
 
                     break;
 

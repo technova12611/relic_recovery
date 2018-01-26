@@ -115,9 +115,9 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case RIGHT_1_FEET:
 
-                    turnToAngle(175.0, 0.10);
+                    turn(175.0);
                     sleepInAuto(1000);
-                    turnToAngle(179.0, 0.10);
+                    turn(179.0);
 
                     double distanceToWall = measureXDistance(500)/2.54;
                     if(distanceToWall > 28.0 || distanceToWall < 18.0) {
@@ -163,29 +163,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
-
-                    logInfo(" --- Dump Glyph from tray --- ");
-                    robot.dumpGlyphsFromTray();
-
-                    sleepInAuto(1000);
-
-                    driveForwardInches(2.0, motorSpeed);
-
-                    // move forward to push the glyph into the box
-                    //-------------------------------------------------
-                    logInfo(" --- Drive forward to push --- ");
-                    ElapsedTime watcher = new ElapsedTime();
-                    driveBackwardInches(6.0, motorSpeed);
-
-                    logInfo(" Place Glyph into column (ms): " +
-                            watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
-                            + " | " + String.format("%.2f cm", getXDistance()));
-
-                    // move backward to separate robot from glyph
-                    //----------------------------------------------
-                    logInfo(" --- Drive backward to finish --- ");
-                    driveForwardInches(5.0, motorSpeed);
-
+                    placeGlyphIntoColumn(motorSpeed);
                     gotoNextState();
 
                     break;
@@ -198,7 +176,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case END:
                     Default:
-                    gotoState(RelicRecoveryAutoTileRunnerBlue2.State.END);
+                        gotoState(RelicRecoveryAutoTileRunnerBlue2.State.END);
                     break;
             }
 

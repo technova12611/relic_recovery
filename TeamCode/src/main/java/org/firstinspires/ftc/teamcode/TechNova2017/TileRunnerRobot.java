@@ -47,9 +47,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_RIGHT
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_RIGHT_HOLDER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_RIGHT_HOLDER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION_2;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_RELEASE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_RELEASE_POSITION_2;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_INITIAL_POSITION;
@@ -237,7 +235,7 @@ public class TileRunnerRobot {
 
     public void initServosForTeleOps() {
         try {
-            if(relicClawholder != null) relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+            if(relicClawholder != null) relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION_2);
             openIntakeWheels();
             if(relicClaw != null) relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
             if(relicElbow != null) relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
@@ -840,7 +838,7 @@ public class TileRunnerRobot {
 
     public double getX1Distance() {
         if(x1RangeSensor != null) {
-            return x1RangeSensor.getDistance(DistanceUnit.CM);
+            return Range.clip(x1RangeSensor.getDistance(DistanceUnit.CM), 0.0, 256.0);
         }
 
         return 0.0;
@@ -848,7 +846,7 @@ public class TileRunnerRobot {
 
     public double getX2Distance() {
         if(x2RangeSensor != null) {
-            return x2RangeSensor.getDistance(DistanceUnit.CM);
+            return Range.clip(x2RangeSensor.getDistance(DistanceUnit.CM), 0.0, 256.0);
         }
 
         return 0.0;

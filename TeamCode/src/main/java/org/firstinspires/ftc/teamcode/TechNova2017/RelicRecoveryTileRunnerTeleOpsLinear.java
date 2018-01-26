@@ -210,7 +210,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         // every 300 ms check the encoder against the previous measurement
         // if it's not increase enough, it's stucked
         //---------------------------------------------------------
-        if(intakeForward && !stuckDetected && intakeStuckTimer.seconds() > 1.0 && intakeSwitchTimer.seconds() >3.0) {
+        if(intakeForward && !stuckDetected  && intakeSwitchTimer.seconds() >3.0) {
             int rightPosition = robot.intakeRight.getCurrentPosition();
 
             if (Math.abs(rightPosition - previousRightIntakePosition) < 80)
@@ -235,6 +235,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
                 stuckDetected = false;
                 intakeForward = true;
                 intakeBackward = false;
+                robot.isIntakeStuck = false;
                 intakeStuckTimer.reset();
                 intakeSwitchTimer.reset();
             }

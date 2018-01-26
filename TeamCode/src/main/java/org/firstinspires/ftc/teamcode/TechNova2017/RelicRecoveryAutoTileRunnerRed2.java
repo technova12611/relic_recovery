@@ -154,29 +154,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                 case PLACE_GLYPH_INTO_CRYPTO:
 
-                    logInfo(" --- Open Grabber --- ");
-                    robot.dumpGlyphsFromTray();
-
-                    while(opModeIsActive() && timer.time() < 750)  {
-                        sleep(100);
-                    }
-
-                    driveForwardInches(2.0, motorSpeed);
-
-                    // move forward to push the glyph into the box
-                    //-------------------------------------------------
-                    logInfo(" --- Drive forward to push --- ");
-                    ElapsedTime watcher = new ElapsedTime();
-                    driveBackwardInches(6.0, motorSpeed);
-
-                    logInfo(" Place Glyph into column (ms): " +
-                            watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
-                            + " | " + String.format("%.2f cm", getXDistance()));
-
-                    // move backward to separate robot from glyph
-                    //----------------------------------------------
-                    logInfo(" --- Drive backward to finish --- ");
-                    driveForwardInches(7.0, motorSpeed);
+                    placeGlyphIntoColumn(motorSpeed);
 
                     gotoNextState();
 

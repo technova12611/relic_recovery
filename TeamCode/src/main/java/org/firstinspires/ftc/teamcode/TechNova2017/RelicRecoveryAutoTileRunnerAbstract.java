@@ -179,13 +179,12 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     /**
      * Using very basic control algorithm
      */
-    private static final double VERY_SAFE_TURN_SPEED = 0.08;
-    private static final double SAFE_TURN_SPEED = 0.10;
+    private static final double VERY_SAFE_TURN_SPEED = 0.06;
+    private static final double SAFE_TURN_SPEED = 0.12;
     private static final double FAST_TURN_SPEED = 0.20;
     private static final double SUPER_FAST_TURN_SPEED = 0.25;
-    private static final double FAST_TURN_THRESHOLD = 30.0;
-    private static final double FINAL_TURN_THRESHOLD = 15.0;
-
+    private static final double FAST_TURN_THRESHOLD = 45.0;
+    private static final double FINAL_TURN_THRESHOLD = 20.0;
     private static final double SUPER_FAST_TURN_THRESHOLD = 60.0;
 
     private double speedForTurnDistance(double angle) {
@@ -226,11 +225,11 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.stopDriveMotors();
     }
 
-    protected void turnToAngle(double degrees, double speed) throws InterruptedException {
+    protected void turnToAngle(double target, double speed) throws InterruptedException {
         ElapsedTime timer = new ElapsedTime();
 
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 5000) {
-            double diff = angleDifference(robot.getHeadingAngle(), degrees);
+            double diff = angleDifference(robot.getHeadingAngle(), target);
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 
             logInfo("TurnToAngle: ", String.format("%.1f %.1f %.2f", robot.getHeadingAngle(), diff, speed));
@@ -298,10 +297,34 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             sleep(35);
         }
 
-        logInfo(" Range Sensor: " + String.format("%.2f", avg) + " (in)" );
+        logInfo(" Range Sensor: " + String.format("%.2f", avg/2.54) + " (in)" );
 
         return avg;
 
+    }
+
+    protected void placeGlyphIntoColumn(double motorSpeed) throws InterruptedException {
+        logInfo(" --- Flip Glyph Tray --- ");
+        robot.dumpGlyphsFromTray();
+        sleepInAuto(500);
+
+        logInfo(" --- more backward to let glyph fall on the floor --- ");
+        driveForwardInches(2.0, motorSpeed);
+
+        // move forward to push the glyph into the box
+        //-------------------------------------------------
+        logInfo(" --- Drive forward to push --- ");
+        ElapsedTime watcher = new ElapsedTime();
+        driveBackwardInches(6.0, motorSpeed);
+
+        logInfo(" Place Glyph into column (ms): " +
+                watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
+                + " | " + String.format("%.2f cm", getXDistance()));
+
+        // move backward to separate robot from glyph
+        //----------------------------------------------
+        logInfo(" --- Drive backward to finish --- ");
+        driveForwardInches(7.0, motorSpeed);
     }
 
     // default is RED allaince
