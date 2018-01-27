@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
 
 @TeleOp(name = "Relic Recovery TeleOps (Linear)", group = "Competition")
+@Disabled
 public class RelicRecoveryTeleOpsLinear extends LinearOpMode {
     private MecanumRobot robot = null;
     private Controller g1, g2;

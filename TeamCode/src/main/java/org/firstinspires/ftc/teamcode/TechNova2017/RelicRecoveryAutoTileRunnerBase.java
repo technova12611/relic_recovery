@@ -123,7 +123,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // turn right to 90 degree
                     // need to figure out the turn direction for
                     // red and blue alliance
-                    turn(-86.0);
+                    if(getAllianceColor() == AllianceColor.RED) {
+                        turn(-83.0);
+                    } else {
+                        turn(-80.0);
+                    }
                     sleepInAuto(1000);
 
                     gotoNextState();
@@ -131,7 +135,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case STRAFE_3_FEET:
                     // make sure it's at 90 degree to the wall
-                    turnToAngle(-88.0, 0.08);
+                    if(getAllianceColor() == AllianceColor.RED) {
+                        turnToAngle(-88.0, 0.08);
+                    } else {
+                        turnToAngle(-82.0, 0.08);
+                    }
+
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
@@ -140,7 +149,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if(distanceToWall > 48.0 || distanceToWall < 36.0) {
                         distanceToWall = 39.0;
                     }
-                    double distanceToNearColumnInInches = 42.5 - distanceToWall;
+                    double distanceToNearColumnInInches = 44.5 - distanceToWall;
 
                     switch (vuMark) {
 
@@ -175,7 +184,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(1.0+distanceToNearColumnInInches, motorSpeed);
+                                driveRightInches(distanceToNearColumnInInches, motorSpeed);
                             }
                             break;
 
@@ -196,7 +205,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_1_FEET:
-                    driveBackwardInches(6.0, motorSpeed);
+                    driveBackwardInches(7.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -233,18 +242,13 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     sleepInAuto(1500);
 
                     // move back and push the glyph into
-                    driveBackwardInches(6.0, 0.50);
+                    driveBackwardInches(6.0, 0.60);
                     robot.pushGlyph();
 
-                    driveBackwardInches(24.0, 0.50);
+                    driveBackwardInches(25.0, 0.60);
 
-                    if(getRuntime() < 27.0) {
-                        logInfo(" --- Flip Glyph Tray --- ");
-                        robot.dumpGlyphsFromTray();
-                        sleepInAuto(500);
-
-                        logInfo(" --- more backward to let glyph fall on the floor --- ");
-                        driveForwardInches(2.0, motorSpeed);
+                    if(getRuntime() < 26.0) {
+                        placeGlyphIntoColumn(0.5);
                     }
 
                     gotoNextState();

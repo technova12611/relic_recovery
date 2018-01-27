@@ -9,7 +9,7 @@ public class RobotInfo {
 
     public static double JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION = 0.84;
     public static double JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION = 0.60;
-    public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.30;
+    public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.33;
 
     public static double JEWEL_PUSHER_SHORT_ARM_INITIAL_POSITION = 0.90;
     public static double JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION = 0.51;
@@ -67,8 +67,8 @@ public class RobotInfo {
     public static double INTAKE_RIGHT_HOLDER_OPEN_POSITION = 0.29;
     public static double INTAKE_RIGHT_HOLDER_CLOSE_POSITION = 0.93;
 
-    public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.53;
-    public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.40;
+    public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.50;
+    public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.32;
     public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.02;
     public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.25;
     public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.35;
@@ -94,8 +94,8 @@ public class RobotInfo {
     public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.73;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.15;
 
-    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.28;
-    public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.90;
+    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.25;
+    public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.60;
 
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.31;
     public static double GLYPH_PUSHER_PUSH_POSITION = 0.29;

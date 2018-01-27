@@ -309,13 +309,14 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         sleepInAuto(500);
 
         logInfo(" --- more backward to let glyph fall on the floor --- ");
-        driveForwardInches(2.0, motorSpeed);
+        driveForwardInches(5.0, motorSpeed);
+        robot.resetGlyphTray();
 
         // move forward to push the glyph into the box
         //-------------------------------------------------
         logInfo(" --- Drive forward to push --- ");
         ElapsedTime watcher = new ElapsedTime();
-        driveBackwardInches(6.0, motorSpeed);
+        driveBackwardInches(5.0, motorSpeed);
 
         logInfo(" Place Glyph into column (ms): " +
                 watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark

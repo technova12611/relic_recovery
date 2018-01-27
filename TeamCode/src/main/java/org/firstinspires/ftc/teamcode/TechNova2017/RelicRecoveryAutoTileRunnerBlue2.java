@@ -75,7 +75,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
         while (opModeIsActive() && v_state != RelicRecoveryAutoTileRunnerBlue2.State.END) {
 
             boolean detectVuMark = false;
-            double motorSpeed = 0.4;
+            double motorSpeed = 0.25;
 
             logStateInfo(v_state, "Start");
 
@@ -108,16 +108,16 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case TURN_TO_180_DEGREE:
-                    turn(165.0);
-                    sleepInAuto(1000);
+                    turn(170.0);
+                    sleepInAuto(500);
                     gotoNextState();
                     break;
 
                 case RIGHT_1_FEET:
 
                     turn(175.0);
-                    sleepInAuto(1000);
-                    turn(179.0);
+                    sleepInAuto(500);
+                    turn(178.0);
 
                     double distanceToWall = measureXDistance(500)/2.54;
                     if(distanceToWall > 28.0 || distanceToWall < 18.0) {
@@ -158,7 +158,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case FORWARD_1_FEET:
-                    driveBackwardInches(2.0, motorSpeed);
+                    driveBackwardInches(6.0, motorSpeed);
                     gotoNextState();
                     break;
 

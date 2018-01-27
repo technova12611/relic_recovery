@@ -74,7 +74,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
         while (opModeIsActive() && v_state != RelicRecoveryAutoTileRunnerRed2.State.END) {
 
             boolean detectVuMark = false;
-            double motorSpeed = 0.4;
+            double motorSpeed = 0.25;
 
             logStateInfo(v_state, "Start");
 
@@ -108,12 +108,11 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                 case LEFT_1_FEET:
 
-                    turn(0.0);
                     double distanceToWall = measureXDistance(500)/2.54;
                     if(distanceToWall > 28.0 || distanceToWall < 18.0) {
                         distanceToWall = 20.0;
                     }
-                    double distanceToNearColumnInInches = 25.5 - distanceToWall;
+                    double distanceToNearColumnInInches = 28.5 - distanceToWall;
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
@@ -148,7 +147,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_1_FEET:
-                    driveBackwardInches(2.0, motorSpeed);
+                    driveBackwardInches(6.0, motorSpeed);
                     gotoNextState();
                     break;
 
