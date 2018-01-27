@@ -9,7 +9,7 @@ public class RobotInfo {
 
     public static double JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION = 0.84;
     public static double JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION = 0.60;
-    public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.33;
+    public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.36;
 
     public static double JEWEL_PUSHER_SHORT_ARM_INITIAL_POSITION = 0.90;
     public static double JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION = 0.51;
@@ -71,8 +71,8 @@ public class RobotInfo {
     public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.32;
     public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.02;
     public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.25;
-    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.35;
-    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.53;
+    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.30;
+    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.51;
 
     // Driver control motor speed
     //-----------------------------------------------------------------------
