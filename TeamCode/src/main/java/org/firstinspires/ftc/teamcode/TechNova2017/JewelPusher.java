@@ -234,7 +234,7 @@ public class JewelPusher {
     /**
      * Enumeration for Jewel Color
      */
-    protected static enum Color {
+    public static enum Color {
         RED,
         BLUE,
         UNKNOWN

@@ -105,36 +105,45 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         }
     }
 
-    protected void driveForwardInches(double inches, double power) throws InterruptedException {
-        logInfo("Drive forward:", String.format("%.2f, %.2f", inches, power));
-        driveDirectionInches(Math.PI,inches, power);
+    protected void driveForwardInches(double inches, double power, double timeout) throws InterruptedException {
+        logInfo("Drive forward:", String.format("%.2f, %.2f", inches, power, timeout));
+        driveDirectionInches(Math.PI,inches, power, timeout);
     }
 
     protected void driveForwardInchesUntilGlyphHit(double inches, double power) throws InterruptedException {
         driveDirectionInchesUntilPlyphHit(0,inches, power);
     }
 
-    protected void driveBackwardInches(double inches, double power) throws InterruptedException {
-        logInfo("Drive backward:", String.format("%.2f, %.2f", inches, power));
-        driveDirectionInches(0,inches, power);
+    protected void driveBackwardInches(double inches, double power, double timeout) throws InterruptedException {
+        logInfo("Drive backward:", String.format("%.2f, %.2f, %.2f", inches, power, timeout));
+        driveDirectionInches(0,inches, power, timeout);
     }
 
-    protected void driveLeftInches(double inches, double power) throws InterruptedException {
-        logInfo("Strafe left:", String.format("%.2f, %.2f", inches, power));
-        driveDirectionInches(Math.PI*3/2.0,inches, power);
+    protected void driveLeftInches(double inches, double power, double timeout) throws InterruptedException {
+        logInfo("Strafe left:", String.format("%.2f, %.2f, %.2f", inches, power, timeout));
+        driveDirectionInches(Math.PI*3/2.0,inches, power, timeout, true);
     }
 
-    protected void driveRightInches(double inches, double power) throws InterruptedException {
-        logInfo("Strafe right:", String.format("%.2f, %.2f", inches, power));
-        driveDirectionInches(Math.PI/2.0,inches, power);
+    protected void driveRightInches(double inches, double power, double timeout) throws InterruptedException {
+        logInfo("Strafe right:", String.format("%.2f, %.2f, %.2f", inches, power, timeout));
+        driveDirectionInches(Math.PI/2.0,inches, power, timeout, true);
     }
 
     protected void driveDirectionInches(double directionRadians, double inches, double power) throws InterruptedException {
+        driveDirectionInches(directionRadians,inches, power, 5.0);
+    }
+
+    protected void driveDirectionInches(double directionRadians, double inches, double power, double timeout) throws InterruptedException {
+        driveDirectionInches(directionRadians,inches, power, timeout, false);
+    }
+
+    protected void driveDirectionInches(double directionRadians, double inches, double power, double timeout, boolean useColorSensor) throws InterruptedException {
         robot.setEncoderDrivePower(power);
         robot.encoderDriveInches(directionRadians, inches);
         ElapsedTime timer = new ElapsedTime();
 
-        while (opModeIsActive() && robot.driveMotorsBusy() && timer.time(TimeUnit.MILLISECONDS) < 5000) {
+
+        while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout && (!useColorSensor || !robot.tapeDetected())) {
             robot.updateSensorTelemetry();
             telemetry.update();
             //robot.loop();
@@ -144,6 +153,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.resetDriveMotorModes();
         robot.clearEncoderDrivePower();
     }
+
 
     protected void driveDirectionInchesUntilPlyphHit(double directionRadians, double inches, double power) throws InterruptedException {
         robot.setEncoderDrivePower(power);
@@ -309,23 +319,28 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         sleepInAuto(500);
 
         logInfo(" --- more backward to let glyph fall on the floor --- ");
-        driveForwardInches(5.0, motorSpeed);
+        driveForwardInches(5.0, motorSpeed, 2.0);
         robot.resetGlyphTray();
 
         // move forward to push the glyph into the box
         //-------------------------------------------------
         logInfo(" --- Drive forward to push --- ");
         ElapsedTime watcher = new ElapsedTime();
-        driveBackwardInches(5.0, motorSpeed);
+        driveBackwardInches(5.0, motorSpeed, 2.0);
 
         logInfo(" Place Glyph into column (ms): " +
                 watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
                 + " | " + String.format("%.2f cm", getXDistance()));
 
+        // need to push again
+        if(watcher.seconds() > 1.5) {
+            driveForwardInches(3.0, motorSpeed, 2.0);
+            driveBackwardInches(4.0, motorSpeed, 2.0);
+        }
         // move backward to separate robot from glyph
         //----------------------------------------------
         logInfo(" --- Drive backward to finish --- ");
-        driveForwardInches(7.0, motorSpeed);
+        driveForwardInches(6.0, motorSpeed, 2.0);
     }
 
     // default is RED allaince

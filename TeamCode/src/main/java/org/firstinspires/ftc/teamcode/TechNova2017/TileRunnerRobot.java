@@ -7,6 +7,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -25,6 +26,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import static org.firstinspires.ftc.teamcode.TechNova2017.JewelPusher.Color.BLUE;
+import static org.firstinspires.ftc.teamcode.TechNova2017.JewelPusher.Color.RED;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIVE_POWER;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_AUTO_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_CLOSE_POSITION;
@@ -78,6 +81,8 @@ public class TileRunnerRobot {
 
     private Telemetry telemetry;
     private VoltageSensor voltageSensor;
+
+    ColorSensor colorSensor1, colorSensor2;
 
     private boolean isBlueLedOn = false;
     private boolean isGreenLedOn = false;
@@ -232,6 +237,13 @@ public class TileRunnerRobot {
             logInfo(this.telemetry, "Led power control failed.", e.getMessage());
         }
 
+        try {
+            colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
+            colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Color Sensor init failed.", e.getMessage());
+        }
+
         logInfo(null, "Init Servos", " Servos are initialized ...");
 
         telemetry.addData("Robot initialized", "Ready to go...");
@@ -311,7 +323,7 @@ public class TileRunnerRobot {
             //    x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
             //} else {
                 x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
-                x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+                //x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
             //}
 
             logInfo(null, "Init Range Sesnor", " Range Sensor x1 and x2 are initialized ...");
@@ -1113,5 +1125,22 @@ public class TileRunnerRobot {
         if(intakeRightHolder != null) intakeRightHolder.setPosition(INTAKE_RIGHT_HOLDER_CLOSE_POSITION);
     }
 
+    public boolean tapeDetected() {
+        return tapeDetected(colorSensor1) || tapeDetected(colorSensor2);
+    }
+
+    private boolean tapeDetected(ColorSensor cs) {
+        if(cs == null) {
+            return false;
+        }
+
+        if(cs.red() > 10 && (cs.red() - cs.blue() >= 8) && cs.argb() > 0) {
+            return true;
+        } else if(cs.blue() > 10 &&  (cs.blue() - cs.red() >= 8) && cs.argb() > 0) {
+            return true;
+        }
+
+        return false;
+    }
 }
 

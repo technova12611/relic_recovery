@@ -102,16 +102,18 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_3_FEET:
-                    driveBackwardInches(25.0, motorSpeed);
+                    driveBackwardInches(27.0, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
                 case LEFT_1_FEET:
 
-                    double distanceToWall = measureXDistance(500)/2.54;
-                    if(distanceToWall > 28.0 || distanceToWall < 18.0) {
-                        distanceToWall = 20.0;
-                    }
+                    double distanceToWall = 21.0;
+
+//                            measureXDistance(500)/2.54;
+//                    if(distanceToWall > 28.0 || distanceToWall < 18.0) {
+//                        distanceToWall = 20.0;
+//                    }
                     double distanceToNearColumnInInches = 28.5 - distanceToWall;
 
                     // need more testing on each position
@@ -121,25 +123,25 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveLeftInches(distanceToNearColumnInInches, motorSpeed);
+                            driveLeftInches(distanceToNearColumnInInches, motorSpeed, 3.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveLeftInches(8.5+distanceToNearColumnInInches,motorSpeed);
+                            driveLeftInches(8.5+distanceToNearColumnInInches,motorSpeed, 3.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(17.5+distanceToNearColumnInInches, motorSpeed);
+                            driveLeftInches(17.5+distanceToNearColumnInInches, motorSpeed, 3.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveLeftInches(8.5+distanceToNearColumnInInches,motorSpeed);
+                            driveLeftInches(8.5+distanceToNearColumnInInches,motorSpeed, 3.0);
                             break;
                     }
 
@@ -147,7 +149,10 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_1_FEET:
-                    driveBackwardInches(6.0, motorSpeed);
+                    driveBackwardInches(3.0, motorSpeed, 2.0);
+
+                    turn(0.0);
+
                     gotoNextState();
                     break;
 

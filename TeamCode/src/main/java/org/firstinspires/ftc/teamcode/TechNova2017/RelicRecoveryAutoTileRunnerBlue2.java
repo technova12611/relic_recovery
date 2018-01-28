@@ -103,7 +103,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case BACKWARD_3_FEET:
-                    driveForwardInches(25.0, motorSpeed);
+                    driveForwardInches(25.0, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
@@ -114,15 +114,18 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case RIGHT_1_FEET:
+                    double turnAngle = 178.0;
+                    turn(turnAngle);
 
-                    turn(175.0);
-                    sleepInAuto(500);
-                    turn(178.0);
+                    driveBackwardInches(3.0, motorSpeed, 2.0);
+                    turn(turnAngle);
 
-                    double distanceToWall = measureXDistance(500)/2.54;
-                    if(distanceToWall > 28.0 || distanceToWall < 18.0) {
-                        distanceToWall = 20.0;
-                    }
+                    double distanceToWall = 21.0;
+
+//                    measureXDistance(500)/2.54;
+//                    if(distanceToWall > 28.0 || distanceToWall < 18.0) {
+//                        distanceToWall = 20.0;
+//                    }
                     double distanceToNearColumnInInches = 25.5 - distanceToWall;
 
                     // need more testing on each position
@@ -132,33 +135,35 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(18.5+distanceToNearColumnInInches, motorSpeed);
+                            driveRightInches(18.5+distanceToNearColumnInInches, motorSpeed, 3.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed);
+                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed, 3.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveRightInches(distanceToNearColumnInInches, motorSpeed);
+                            driveRightInches(distanceToNearColumnInInches, motorSpeed, 3.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed);
+                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed, 3.0);
                             break;
                     }
+
+                    turn(turnAngle);
 
                     gotoNextState();
                     break;
 
                 case FORWARD_1_FEET:
-                    driveBackwardInches(6.0, motorSpeed);
+                    driveBackwardInches(3.0, motorSpeed, 2.0);
                     gotoNextState();
                     break;
 

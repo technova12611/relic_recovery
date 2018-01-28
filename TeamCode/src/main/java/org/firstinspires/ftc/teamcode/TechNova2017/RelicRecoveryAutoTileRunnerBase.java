@@ -109,11 +109,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                 case GET_OFF_STONE:
                     if(getAllianceColor() ==  AllianceColor.RED) {
 
-                        driveBackwardInches(24.0, motorSpeed);
+                        driveBackwardInches(24.0, motorSpeed, 3.0);
                     }
                     // if this is BLUE Alliance
                     else {
-                        driveForwardInches(24.0, motorSpeed);
+                        driveForwardInches(24.0, motorSpeed,3.0);
                     }
 
                     gotoNextState();
@@ -123,32 +123,28 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // turn right to 90 degree
                     // need to figure out the turn direction for
                     // red and blue alliance
-                    if(getAllianceColor() == AllianceColor.RED) {
-                        turn(-83.0);
-                    } else {
-                        turn(-80.0);
-                    }
-                    sleepInAuto(1000);
+                    turn(-83.0);
+                    sleepInAuto(300);
 
                     gotoNextState();
                     break;
 
                 case STRAFE_3_FEET:
-                    // make sure it's at 90 degree to the wall
-                    if(getAllianceColor() == AllianceColor.RED) {
-                        turnToAngle(-88.0, 0.08);
-                    } else {
-                        turnToAngle(-82.0, 0.08);
-                    }
 
+                    // make sure it's at 90 degree to the wall
+                    turnToAngle(-88.0, 0.08);
+
+                    driveBackwardInches(3.0, motorSpeed, 2.0);
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
                     //-------------------------------------------------------------
-                    double distanceToWall = measureXDistance(500)/2.54;
-                    if(distanceToWall > 48.0 || distanceToWall < 36.0) {
-                        distanceToWall = 39.0;
-                    }
+                    double distanceToWall = 40.0;
+
+//                            measureXDistance(500)/2.54;
+//                    if(distanceToWall > 48.0 || distanceToWall < 36.0) {
+//                        distanceToWall = 39.0;
+//                    }
                     double distanceToNearColumnInInches = 44.5 - distanceToWall;
 
                     switch (vuMark) {
@@ -157,22 +153,22 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         case RIGHT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
 
-                                driveLeftInches(distanceToNearColumnInInches, motorSpeed);
+                                driveLeftInches(distanceToNearColumnInInches, motorSpeed, 3.0);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(18.0+distanceToNearColumnInInches, motorSpeed);
+                                driveRightInches(18.0+distanceToNearColumnInInches, motorSpeed, 3.0);
                             }
                             break;
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveLeftInches(8.5+distanceToNearColumnInInches, motorSpeed);
+                                driveLeftInches(8.5+distanceToNearColumnInInches, motorSpeed, 3.0);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(9.5+distanceToNearColumnInInches,motorSpeed);
+                                driveRightInches(9.5+distanceToNearColumnInInches,motorSpeed, 3.0);
                             }
                             break;
 
@@ -180,11 +176,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         case LEFT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveLeftInches(17.0+distanceToNearColumnInInches, motorSpeed);
+                                driveLeftInches(17.0+distanceToNearColumnInInches, motorSpeed, 3.0);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(distanceToNearColumnInInches, motorSpeed);
+                                driveRightInches(distanceToNearColumnInInches, motorSpeed, 3.0);
                             }
                             break;
 
@@ -192,11 +188,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         default:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveLeftInches(8.5+distanceToNearColumnInInches, motorSpeed);
+                                driveLeftInches(8.5+distanceToNearColumnInInches, motorSpeed, 3.0);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveRightInches(9.5+distanceToNearColumnInInches, motorSpeed);
+                                driveRightInches(9.5+distanceToNearColumnInInches, motorSpeed, 3.0);
                             }
                             break;
                     }
@@ -205,7 +201,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_1_FEET:
-                    driveBackwardInches(7.0, motorSpeed);
+                    driveBackwardInches(3.0, motorSpeed, 2.0);
                     gotoNextState();
                     break;
 
@@ -220,32 +216,42 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // move the glyph lift back to zero position
                     robot.resetForTeleOps();
 
-                    // make sure robot is very close to 90 degree
-                    turn(-90.0);
-
                     if(getRuntime() > 20.0 || !pickupMoreGlyphs()) {
                         gotoState(END);
                     } else {
+                        if(getAllianceColor() == AllianceColor.RED) {
+                            if (vuMark == RelicRecoveryVuMark.LEFT) {
+                                turn(-80.0);
+                            } else {
+                                turn(-100.0);
+                            }
+                        } else {
+                            if (vuMark == RelicRecoveryVuMark.RIGHT) {
+                                turn(-80.0);
+                            } else {
+                                turn(-100.0);
+                            }
+                        }
                         gotoNextState();
                     }
                     break;
 
                 case PICKUP_SECOND_GLYPH:
                     // drive to glyph pit
-                    driveForwardInches(24.0, 0.50);
+                    driveForwardInches(24.0, 0.50, 5.0);
 
                     // turn on the intake wheels
                     robot.collectGlyph();
 
                     // push forward a bit to collect
-                    driveForwardInches(4.0, 0.30);
+                    driveForwardInches(4.0, 0.30, 5.0);
                     sleepInAuto(1500);
 
                     // move back and push the glyph into
-                    driveBackwardInches(6.0, 0.60);
+                    driveBackwardInches(6.0, 0.60, 2.0);
                     robot.pushGlyph();
 
-                    driveBackwardInches(25.0, 0.60);
+                    driveBackwardInches(25.0, 0.60, 5.0);
 
                     if(getRuntime() < 26.0) {
                         placeGlyphIntoColumn(0.5);
