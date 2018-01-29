@@ -75,8 +75,8 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
     {
         // operator controller left joystick moves the relic slider
         // ----------------------------------------------------------
-        if (Math.abs(g2.left_stick_y) > 0 && !relicClawLocked) {
-            robot.moveRelicSlider(-1.0 * g2.left_stick_y);
+        if (Math.abs(g2.left_stick_y) > 0.05 && !relicClawLocked) {
+            robot.moveRelicSlider(-1.0 * (Math.abs(g2.left_stick_y) < 0.5? 0.5*g2.left_stick_y:g2.left_stick_y));
         } else {
             robot.moveRelicSlider(0.0);
         }
@@ -201,9 +201,11 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             intakeBackward = false;
             intakeStuckTimer.reset();
             intakeSwitchTimer.reset();
+            stuckDetected = false;
         } else if(g1.A()) {
             robot.stopIntake();
             stopIntake();
+            stuckDetected = false;
         }
 
         // intake stuck detection

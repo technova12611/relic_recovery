@@ -21,7 +21,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
          PUSH_JEWEL,
          GET_OFF_STONE,
          TURN_TO_90_DEGREE,
-         STRAFE_3_FEET,
          FORWARD_1_FEET,
          PLACE_GLYPH_INTO_CRYPTO,
          RESET_GLYPH_TRAY,
@@ -114,12 +113,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         case RIGHT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
 
-                                driveBackwardInches(41.0, motorSpeed, 3.0);
+                                driveBackwardInches(41.0, motorSpeed, 5.0);
 
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(28.0, motorSpeed, 3.0);
+                                driveForwardInches(28.0, motorSpeed, 5.0);
 
                             }
                             break;

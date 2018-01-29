@@ -20,10 +20,11 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
     enum State implements AutoState {
         START,
         PUSH_JEWEL,
-        BACKWARD_3_FEET,
+        FORWARD_3_FEET,
+        TURN_TO_90_DEGREE,
+        BACKWARD_1_FEET,
         TURN_TO_180_DEGREE,
-        RIGHT_1_FEET,
-        FORWARD_1_FEET,
+        BACKWARD_7_INCHES,
         PLACE_GLYPH_INTO_CRYPTO,
         RESET_GLYPH_TRAY,
         END;
@@ -102,31 +103,19 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     gotoNextState();
                     break;
 
-                case BACKWARD_3_FEET:
-                    driveForwardInches(25.0, motorSpeed, 5.0);
+                case FORWARD_3_FEET:
+                    driveForwardInches(26.0, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
-                case TURN_TO_180_DEGREE:
-                    turn(170.0);
+                case TURN_TO_90_DEGREE:
+                    turn(86.0);
                     sleepInAuto(500);
                     gotoNextState();
                     break;
 
-                case RIGHT_1_FEET:
-                    double turnAngle = 178.0;
-                    turn(turnAngle);
-
-                    driveBackwardInches(3.0, motorSpeed, 2.0);
-                    turn(turnAngle);
-
-                    double distanceToWall = 21.0;
-
-//                    measureXDistance(500)/2.54;
-//                    if(distanceToWall > 28.0 || distanceToWall < 18.0) {
-//                        distanceToWall = 20.0;
-//                    }
-                    double distanceToNearColumnInInches = 25.5 - distanceToWall;
+                case BACKWARD_1_FEET:
+                    turnToAngle(90.0, 0.08);
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
@@ -135,35 +124,42 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(18.5+distanceToNearColumnInInches, motorSpeed, 3.0);
+                            driveBackwardInches(21.5, motorSpeed, 3.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed, 3.0);
+                            driveBackwardInches(12.5, motorSpeed, 3.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveRightInches(distanceToNearColumnInInches, motorSpeed, 3.0);
+                            driveBackwardInches(4.0, motorSpeed, 3.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveRightInches(8.5+distanceToNearColumnInInches,motorSpeed, 3.0);
+                            driveBackwardInches(4.0,motorSpeed, 3.0);
                             break;
                     }
-
-                    turn(turnAngle);
 
                     gotoNextState();
                     break;
 
-                case FORWARD_1_FEET:
-                    driveBackwardInches(3.0, motorSpeed, 2.0);
+                case TURN_TO_180_DEGREE:
+                    turn(175.0);
+                    sleepInAuto(500);
+                    turnToAngle(179.0, 0.08);
+
+                    gotoNextState();
+                    break;
+
+                case BACKWARD_7_INCHES:
+
+                    driveBackwardInches(4.0, motorSpeed, 3.0);
                     gotoNextState();
                     break;
 
