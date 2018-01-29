@@ -82,7 +82,7 @@ public class RobotInfo {
     public static double DPAD_SCALE_TO_DRIVE = 0.28;
 
     // Relic delivery system
-    //--------------------------------------------------------------------------
+        //--------------------------------------------------------------------------
     public static double RELIC_CLAW_INITIAL_POSITION = 0.58;
     public static double RELIC_CLAW_CLOSE_POSITION = 0.60;
     public static double RELIC_CLAW_OPEN_POSITION = 0.79;
@@ -99,7 +99,7 @@ public class RobotInfo {
 
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.31;
     public static double GLYPH_PUSHER_PUSH_POSITION = 0.25;
-    public static double GLYPH_PUSHER_HOLD_POSITION = 0.50;
+    public static double GLYPH_PUSHER_HOLD_POSITION = 0.55;
     public static double GLYPH_PUSHER_UP_POSITION = 0.88;
 
     public static double INTAKE_REVERSE_POWER = 0.85;

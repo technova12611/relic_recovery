@@ -189,7 +189,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     /**
      * Using very basic control algorithm
      */
-    private static final double VERY_SAFE_TURN_SPEED = 0.06;
+    private static final double VERY_SAFE_TURN_SPEED = 0.08;
     private static final double SAFE_TURN_SPEED = 0.12;
     private static final double FAST_TURN_SPEED = 0.20;
     private static final double SUPER_FAST_TURN_SPEED = 0.25;

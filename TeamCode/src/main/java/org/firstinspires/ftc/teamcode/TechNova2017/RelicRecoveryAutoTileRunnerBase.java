@@ -107,13 +107,61 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case GET_OFF_STONE:
-                    if(getAllianceColor() ==  AllianceColor.RED) {
 
-                        driveBackwardInches(24.0, motorSpeed, 3.0);
-                    }
-                    // if this is BLUE Alliance
-                    else {
-                        driveForwardInches(24.0, motorSpeed,3.0);
+                    switch (vuMark) {
+
+                        // need to place glyph into RIGHT Crypto box
+                        case RIGHT:
+                            if(getAllianceColor() ==  AllianceColor.RED) {
+
+                                driveBackwardInches(41.0, motorSpeed, 3.0);
+
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveForwardInches(28.0, motorSpeed, 3.0);
+
+                            }
+                            break;
+                        // need to place glyph into CENTER Crypto box
+                        // -------------------------------------------------
+                        case CENTER:
+                            if(getAllianceColor() ==  AllianceColor.RED) {
+                                driveBackwardInches(36.0, motorSpeed, 5.0);
+
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveForwardInches(36.0, motorSpeed, 5.0);
+
+                            }
+                            break;
+
+                        // need to place glyph into LEFT Crypto box
+                        // -------------------------------------------------
+                        case LEFT:
+                            if(getAllianceColor() ==  AllianceColor.RED) {
+                                driveBackwardInches(41.0, motorSpeed, 5.0);
+
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveForwardInches(28.0, motorSpeed, 5.0);
+
+                            }
+                            break;
+
+                        // Default is CENTER position, in case Vumark is not visible
+                        // -------------------------------------------------
+                        default:
+                            if(getAllianceColor() ==  AllianceColor.RED) {
+                                driveBackwardInches(36.0, motorSpeed, 5.0);
+                            }
+                            // if this is BLUE Alliance
+                            else {
+                                driveForwardInches(36.0, motorSpeed, 5.0);
+                            }
+                            break;
                     }
 
                     gotoNextState();
@@ -123,89 +171,19 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // turn right to 90 degree
                     // need to figure out the turn direction for
                     // red and blue alliance
-                    turn(-83.0);
-                    sleepInAuto(300);
-
-                    gotoNextState();
-                    break;
-
-                case STRAFE_3_FEET:
-
-                    // make sure it's at 90 degree to the wall
-                    turnToAngle(-88.0, 0.08);
-
-                    driveBackwardInches(3.0, motorSpeed, 2.0);
-
-                    // need more testing on each position
-                    // may need to add range sensor to have better distance control
-                    //-------------------------------------------------------------
-                    double distanceToWall = 40.0;
-
-//                            measureXDistance(500)/2.54;
-//                    if(distanceToWall > 48.0 || distanceToWall < 36.0) {
-//                        distanceToWall = 39.0;
-//                    }
-                    double distanceToNearColumnInInches = 44.5 - distanceToWall;
-
-                    switch (vuMark) {
-
-                        // need to place glyph into RIGHT Crypto box
-                        case RIGHT:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-
-                                driveLeftInches(distanceToNearColumnInInches, motorSpeed, 3.0);
-                            }
-                            // if this is BLUE Alliance
-                            else {
-                                driveRightInches(18.0+distanceToNearColumnInInches, motorSpeed, 3.0);
-                            }
-                            break;
-                        // need to place glyph into CENTER Crypto box
-                        // -------------------------------------------------
-                        case CENTER:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveLeftInches(8.5+distanceToNearColumnInInches, motorSpeed, 3.0);
-                            }
-                            // if this is BLUE Alliance
-                            else {
-                                driveRightInches(9.5+distanceToNearColumnInInches,motorSpeed, 3.0);
-                            }
-                            break;
-
-                        // need to place glyph into LEFT Crypto box
-                        // -------------------------------------------------
-                        case LEFT:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveLeftInches(17.0+distanceToNearColumnInInches, motorSpeed, 3.0);
-                            }
-                            // if this is BLUE Alliance
-                            else {
-                                driveRightInches(distanceToNearColumnInInches, motorSpeed, 3.0);
-                            }
-                            break;
-
-                        // Default is CENTER position, in case Vumark is not visible
-                        // -------------------------------------------------
-                        default:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveLeftInches(8.5+distanceToNearColumnInInches, motorSpeed, 3.0);
-                            }
-                            // if this is BLUE Alliance
-                            else {
-                                driveRightInches(9.5+distanceToNearColumnInInches, motorSpeed, 3.0);
-                            }
-                            break;
-                    }
-
+                    turn(-82.0);
+                    sleepInAuto(1000);
                     gotoNextState();
                     break;
 
                 case FORWARD_1_FEET:
-                    driveBackwardInches(3.0, motorSpeed, 2.0);
+                    turnToAngle(-88.0, 0.08);
+                    driveBackwardInches(7.0, motorSpeed, 2.0);
                     gotoNextState();
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
+                    turnToAngle(-90.0, 0.08);
                     placeGlyphIntoColumn(motorSpeed);
                     gotoNextState();
 
@@ -238,7 +216,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case PICKUP_SECOND_GLYPH:
                     // drive to glyph pit
-                    driveForwardInches(24.0, 0.50, 5.0);
+                    driveForwardInches(26.0, 0.50, 5.0);
 
                     // turn on the intake wheels
                     robot.collectGlyph();
@@ -251,9 +229,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     driveBackwardInches(6.0, 0.60, 2.0);
                     robot.pushGlyph();
 
-                    driveBackwardInches(25.0, 0.60, 5.0);
+                    driveBackwardInches(30.0, 0.60, 5.0);
 
-                    if(getRuntime() < 26.0) {
+                    if(getRuntime() < 27.0) {
                         placeGlyphIntoColumn(0.5);
                     }
 

@@ -1037,7 +1037,7 @@ public class TileRunnerRobot {
 
     public void moveUpGlyphPusher() {
         if(glyphPusher != null) {
-            glyphPusher.setPosition(GLYPH_PUSHER_UP_POSITION);
+            glyphPusher.setPosition(GLYPH_PUSHER_HOLD_POSITION);
         }
     }
 

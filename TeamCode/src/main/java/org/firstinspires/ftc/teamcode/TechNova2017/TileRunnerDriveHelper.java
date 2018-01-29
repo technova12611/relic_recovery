@@ -44,6 +44,7 @@ public class TileRunnerDriveHelper {
 
         if((g.leftBumper() || g.rightBumper()) && g.B()) {
             robot.closeIntakeWheels();
+            robot.pushGlyph();
         }
         else if(g.B()) {
             robot.openIntakeWheels();
