@@ -68,7 +68,7 @@ public class RobotInfo {
     public static double INTAKE_RIGHT_HOLDER_CLOSE_POSITION = 0.93;
 
     public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.55;
-    public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.32;
+    public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.42;
     public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.04;
     public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.25;
     public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.35;

@@ -118,7 +118,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(28.0, motorSpeed, 5.0);
+                                driveForwardInches(42.0, motorSpeed, 5.0);
 
                             }
                             break;
@@ -131,7 +131,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(36.0, motorSpeed, 5.0);
+                                driveForwardInches(34.0, motorSpeed, 5.0);
 
                             }
                             break;
@@ -145,7 +145,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(28.0, motorSpeed, 5.0);
+                                driveForwardInches(27.5, motorSpeed, 5.0);
 
                             }
                             break;
@@ -158,7 +158,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(36.0, motorSpeed, 5.0);
+                                driveForwardInches(34.0, motorSpeed, 5.0);
                             }
                             break;
                     }
@@ -176,13 +176,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_1_FEET:
-                    turnToAngle(-88.0, 0.08);
-                    driveBackwardInches(7.0, motorSpeed, 2.0);
+                    driveBackwardInches(8.5, motorSpeed, 2.0);
                     gotoNextState();
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
-                    turnToAngle(-90.0, 0.08);
                     placeGlyphIntoColumn(motorSpeed);
                     gotoNextState();
 
