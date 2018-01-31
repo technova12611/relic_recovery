@@ -1,10 +1,6 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
-import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-
-import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.END;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.START;
@@ -215,21 +211,19 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case PICKUP_SECOND_GLYPH:
-                    // drive to glyph pit
-                    driveForwardInches(26.0, 0.50, 5.0);
-
                     // turn on the intake wheels
                     robot.collectGlyph();
+                    // drive to glyph pit
+                    driveForwardInches(26.0, 0.50, 5.0);
+                    sleepInAuto(500);
 
                     // push forward a bit to collect
-                    driveForwardInches(4.0, 0.30, 5.0);
-                    sleepInAuto(1500);
+                    driveForwardInches(4.0, 0.25, 2.0);
+                    sleepInAuto(1000);
 
-                    // move back and push the glyph into
-                    driveBackwardInches(6.0, 0.60, 2.0);
                     robot.pushGlyph();
 
-                    driveBackwardInches(30.0, 0.60, 5.0);
+                    driveBackwardInches(32.0, 0.60, 5.0);
 
                     if(getRuntime() < 27.0) {
                         placeGlyphIntoColumn(0.5);

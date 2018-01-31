@@ -347,7 +347,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         // move backward to separate robot from glyph
         //----------------------------------------------
         logInfo(" --- Drive backward to finish --- ");
-        driveForwardInches(6.0, motorSpeed, 2.0);
+        driveForwardInches(4.0, 0.5, 2.0);
     }
 
     // default is RED allaince

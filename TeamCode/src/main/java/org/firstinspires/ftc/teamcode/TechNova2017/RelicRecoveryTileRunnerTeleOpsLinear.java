@@ -38,6 +38,10 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
     ElapsedTime glyphLiftTimer = new ElapsedTime();
     int glyphLastPosition = 0;
 
+    int numOfTrips = 0;
+
+    ElapsedTime tripTimer = new ElapsedTime();
+
     ElapsedTime intakeSwitchTimer = new ElapsedTime();
 
     @Override
@@ -60,6 +64,8 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         waitForStart();
 
         robot.onStart();
+
+        tripTimer.reset();
 
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         while (opModeIsActive()) {
@@ -145,10 +151,16 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
                 robot.closeIntakeWheels();
                 robot.pushGlyph();
                 relicClawLocked = false;
+
+                Log.i("Release Relic Claw:", "Recovery starts ...");
             }
         } else if((g2.leftBumper() || g2.rightBumper()) && g2.right_trigger > 0.2) {
             robot.moveGlyphLift(0);
             glyphLiftInAutoMode = Boolean.TRUE;
+        }
+        else if(g2.leftBumper() && g2.Y()) {
+            robot.resetGlyphTray();
+            robot.holdGlyph();
         }
         else if(g2.leftBumper() || g1.X()){
            robot.holdGlyph();
@@ -175,13 +187,9 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.setGlyphLiftToRunEncoderMode();
             robot.stopGlyphLiftMotor();
         }
-
         // use gamepad 2 A/B/X/Y to move the glyph tray
         //-----------------------------------------------
-        if(g2.leftBumper() && g2.Y()) {
-            robot.resetGlyphTray();
-            robot.holdGlyph();
-        }
+
         else if(g2.A()) {
             robot.raiseGlyphTrayup2();
             stopIntake();
@@ -193,6 +201,9 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         else if(g2.X()) {
             robot.dumpGlyphsFromTray();
             stopIntake();
+
+            Log.i("Place Glyph:", "Trip #:" + (++numOfTrips) + " | " + String.format("%.1f", tripTimer.seconds()));
+            tripTimer.reset();
         }
 
         // use gamepad 1 triggers to control the intake wheels
