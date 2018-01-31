@@ -142,8 +142,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.encoderDriveInches(directionRadians, inches);
         ElapsedTime timer = new ElapsedTime();
 
-
-        while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout && (!useColorSensor || !robot.tapeDetected())) {
+        while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout && (!useColorSensor
+                || !robot.tapeDetected())) {
             robot.updateSensorTelemetry();
             telemetry.update();
             //robot.loop();
@@ -223,30 +223,38 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     private void turnToAngle(double degrees) throws InterruptedException {
         ElapsedTime timer = new ElapsedTime();
 
+        double headingAngle = 0.0;
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 5000) {
-            double diff = angleDifference(robot.getHeadingAngle(), degrees);
+            headingAngle = robot.getHeadingAngle();
+            double diff = angleDifference(headingAngle, degrees);
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 
             double speed = speedForTurnDistance(Math.abs(diff));
-            logInfo("TurnToAngle: ", String.format("%.1f %.1f %.2f", robot.getHeadingAngle(), diff, speed));
+            logInfo("** TurnToAngle 1: ", String.format("%.1f %.1f %.2f", headingAngle, diff, speed));
             robot.drive(0.0, 0.0, diff > 0 ? speed : -speed);
             idle();
         }
         robot.stopDriveMotors();
+
+        logInfo(" -- Angle Reached -- :", String.format("%.1f", headingAngle));
     }
 
     protected void turnToAngle(double target, double speed) throws InterruptedException {
         ElapsedTime timer = new ElapsedTime();
 
+        double headingAngle = 0.0;
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 5000) {
-            double diff = angleDifference(robot.getHeadingAngle(), target);
+            headingAngle = robot.getHeadingAngle();
+            double diff = angleDifference(headingAngle, target);
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 
-            logInfo("TurnToAngle: ", String.format("%.1f %.1f %.2f", robot.getHeadingAngle(), diff, speed));
+            logInfo("TurnToAngle 2: ", String.format("%.1f %.1f %.2f", headingAngle, diff, speed));
             robot.drive(0.0, 0.0, diff > 0 ? speed : -speed);
             idle();
         }
         robot.stopDriveMotors();
+
+        logInfo(" -- Angle Reached -- :", String.format("%.1f", headingAngle));
     }
 
     /**
@@ -310,7 +318,6 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         logInfo(" Range Sensor: " + String.format("%.2f", avg/2.54) + " (in)" );
 
         return avg;
-
     }
 
     protected void placeGlyphIntoColumn(double motorSpeed) throws InterruptedException {
@@ -318,7 +325,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.dumpGlyphsFromTray();
         sleepInAuto(500);
 
-        logInfo(" --- more backward to let glyph fall on the floor --- ");
+        logInfo(" --- More backward to let glyph fall on the floor --- ");
         driveForwardInches(5.0, motorSpeed, 2.0);
         robot.resetGlyphTray();
 
@@ -326,7 +333,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         //-------------------------------------------------
         logInfo(" --- Drive forward to push --- ");
         ElapsedTime watcher = new ElapsedTime();
-        driveBackwardInches(5.0, motorSpeed, 2.0);
+        driveBackwardInches(6.5, motorSpeed, 2.0);
 
         logInfo(" Place Glyph into column (ms): " +
                 watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
@@ -334,7 +341,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         // need to push again
         if(watcher.seconds() > 1.5) {
-            driveForwardInches(3.0, motorSpeed, 2.0);
+            driveForwardInches(3.0, motorSpeed, 1.0);
             driveBackwardInches(4.0, motorSpeed, 2.0);
         }
         // move backward to separate robot from glyph

@@ -182,7 +182,7 @@ public class TileRunnerRobot {
             if(allianceColor != null) {
                 glyphPusher.setPosition(GLYPH_PUSHER_INITIAL_POSITION);
             } else {
-                glyphPusher.setPosition(GLYPH_PUSHER_UP_POSITION);
+                glyphPusher.setPosition(GLYPH_PUSHER_HOLD_POSITION);
             }
 
         } catch(Exception e) {
@@ -337,11 +337,12 @@ public class TileRunnerRobot {
         setMode(DcMotor.RunMode.RUN_USING_ENCODER, lf, lr, rr, rf, glyphLift);
 
         intakeRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void resetForTeleOps() {
         resetGlyphTray();
-        moveUpGlyphPusher();
+        holdGlyph();
         openIntakeWheels();
     }
 
@@ -381,7 +382,7 @@ public class TileRunnerRobot {
     }
 
     private static int SLOW_DOWN_HERE = 1120;
-    private static double ARBITRARY_SLOW_SPEED = .3;
+    private static double ARBITRARY_SLOW_SPEED = .15;
     private boolean slowedDown = false;
     private void encoderDriveSlowdown() {
         if (! slowedDown) {
@@ -400,7 +401,6 @@ public class TileRunnerRobot {
      * start slow and end slow
      */
     public void loop() {
-        //setMode(DcMotor.RunMode.RUN_USING_ENCODER, lf, lr, rr, rf, glyphLift);
         encoderDriveSlowdown();
         manageEncoderAccelleration(lf, lr, rf, rr);
     }
@@ -744,7 +744,7 @@ public class TileRunnerRobot {
     // All motors start out at ENCODER_DRIVE_POWER power. Once we get one revolution
     // in, go ahead and speed up. When we get within a revolution of the end of our
     // run, start slowing down. The idea here is to avoid slip.
-    private static final int ACCEL_THRESHOLD = 1120 * 24 / 32; // one wheel revolution, for starters
+    private static final int ACCEL_THRESHOLD = 1120 * 24 / 40; // one wheel revolution, for starters
     private boolean atSteadyState = false;
     private void manageEncoderAccelleration(DcMotor... ms) {
         if (encoder_drive_power > ENCODER_DRIVE_POWER) {

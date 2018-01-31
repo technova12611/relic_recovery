@@ -7,7 +7,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.END;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.PICKUP_SECOND_GLYPH;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.START;
 
 public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunnerAbstract {
@@ -113,7 +112,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         case RIGHT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
 
-                                driveBackwardInches(41.0, motorSpeed, 5.0);
+                                driveBackwardInches(26.0, motorSpeed, 5.0);
 
                             }
                             // if this is BLUE Alliance
@@ -126,7 +125,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         case CENTER:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(36.0, motorSpeed, 5.0);
+                                driveBackwardInches(35.0, motorSpeed, 5.0);
 
                             }
                             // if this is BLUE Alliance
@@ -170,7 +169,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // turn right to 90 degree
                     // need to figure out the turn direction for
                     // red and blue alliance
-                    turn(-82.0);
+                    if(getAllianceColor() ==AllianceColor.RED) {
+                        turn(-85.0);
+                    } else {
+                        turn(-84.0);
+                    }
                     sleepInAuto(1000);
                     gotoNextState();
                     break;
@@ -196,13 +199,13 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     } else {
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                turn(-80.0);
+                                turn(-75.0);
                             } else {
                                 turn(-100.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                                turn(-80.0);
+                                turn(-75.0);
                             } else {
                                 turn(-100.0);
                             }

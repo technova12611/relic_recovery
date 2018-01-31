@@ -89,6 +89,8 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
 
         if(g2.dpadDown() && !clawClosed) {
             robot.closeRelicClawHolder();
+            robot.closeIntakeWheels();
+            robot.pushGlyph();
             relicClawLocked = true;
         }
 
@@ -138,14 +140,18 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         }
 
         if (g2.rightBumper() && g2.leftBumper()) {
-            robot.releaseClaw();
-            relicClawLocked = false;
+            if(g2.rightBumper_long() && g2.leftBumper_long()) {
+                robot.releaseClaw();
+                robot.closeIntakeWheels();
+                robot.pushGlyph();
+                relicClawLocked = false;
+            }
         } else if((g2.leftBumper() || g2.rightBumper()) && g2.right_trigger > 0.2) {
             robot.moveGlyphLift(0);
             glyphLiftInAutoMode = Boolean.TRUE;
         }
         else if(g2.leftBumper() || g1.X()){
-           robot.moveUpGlyphPusher();
+           robot.holdGlyph();
         }
         else if(g2.rightBumper() || g1.Y()){
             robot.pushGlyph();
@@ -174,19 +180,18 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         //-----------------------------------------------
         if(g2.leftBumper() && g2.Y()) {
             robot.resetGlyphTray();
-            robot.moveUpGlyphPusher();
+            robot.holdGlyph();
         }
         else if(g2.A()) {
             robot.raiseGlyphTrayup2();
             stopIntake();
         }
-        else if(g2.B()) {
+        else if(g2.B() && !gamepad2.start) {
             robot.raiseGlyphTrayup2();
             stopIntake();
         }
         else if(g2.X()) {
             robot.dumpGlyphsFromTray();
-            robot.moveUpGlyphPusher();
             stopIntake();
         }
 
@@ -209,17 +214,22 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         }
 
         // intake stuck detection
-        // every 300 ms check the encoder against the previous measurement
-        // if it's not increase enough, it's stucked
-        //---------------------------------------------------------
-        if(intakeForward && !stuckDetected  && intakeStuckTimer.seconds() > 1.0 && intakeSwitchTimer.seconds() >3.0) {
+        // every 1 second, check the encoder against the previous measurement
+        // if it's not increase enough, it's stuck
+        //---------------------------------------------------------------------
+        if(intakeForward && !stuckDetected
+                && intakeStuckTimer.seconds() > 1.0
+                && intakeSwitchTimer.seconds() >3.0) {
+
             int rightPosition = robot.intakeRight.getCurrentPosition();
 
+            // encoder should have changed by 80, otherwise it's stuck
+            //---------------------------------------------------------------
             if (Math.abs(rightPosition - previousRightIntakePosition) < 80)
             {
-                Log.i("Intake Detection:" , "Current: " + rightPosition + " | Previous: " + previousRightIntakePosition);
-//                stuckDetected = true;
-                robot.isIntakeStuck = true;
+                Log.i("Intake Detection:" , "Current: " + rightPosition
+                                  + " | Previous: " + previousRightIntakePosition);
+                stuckDetected = true;
             }
 
             previousRightIntakePosition = rightPosition;
@@ -233,16 +243,24 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             intakeBackward = true;
             intakeForward = false;
 
-            if(intakeStuckTimer.time(TimeUnit.SECONDS) > 2.5) {
-                stuckDetected = false;
+            if(intakeStuckTimer.time(TimeUnit.SECONDS) > 1.5) {
                 intakeForward = true;
                 intakeBackward = false;
-                robot.isIntakeStuck = false;
+                stuckDetected = false;
                 intakeStuckTimer.reset();
                 intakeSwitchTimer.reset();
             }
+
+            // turn on BLUE LED to alert intake is stuck
+            //----------------------------------------------
+            robot.turnOnBlueLed();
+        } else if(robot.isBlueLedOn()){
+            robot.turnOffBlueLed();
         }
 
+        // run intake wheels based on the setting
+        //  intake or outtake
+        //------------------------------------------
         if(intakeBackward) {
             robot.reverseGlyph();
         } else if(intakeForward) {
@@ -259,10 +277,6 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         // driving the robot
         //------------------------------------------------------
         TileRunnerDriveHelper.drive(g1, robot, telemetry);
-
-        if(g1.Y()) {
-            robot.holdGlyph();
-        }
 
         telemetry.addData("Intake Counts:", + robot.intakeRight.getCurrentPosition() + " | "
                         + String.format("%.1f", intakeStuckTimer.seconds()));

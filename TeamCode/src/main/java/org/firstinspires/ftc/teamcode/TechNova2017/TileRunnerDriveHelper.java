@@ -76,6 +76,12 @@ public class TileRunnerDriveHelper {
             } else {
                 scaleToDrive = 1.0;
             }
+
+            if(slowDrive) {
+                robot.turnOnGreenLed();
+            } else if(robot.isGreenLedOn()){
+                robot.turnOffGreenLed();
+            }
         }
 
         if (g.dpadUp()) {
@@ -106,9 +112,9 @@ public class TileRunnerDriveHelper {
         }
 
         if(slowDrive || verySlowDrive) {
-            v_rotation = 0.90*v_rotation;
+            v_rotation = 0.80*v_rotation;
         } else if(robot.isRelicClawReleased){
-            v_rotation = 0.5*v_rotation;
+            v_rotation = 0.60*v_rotation;
         }
 
         telemetry.addData("Joystick: ", String.format("%.2f %.2f %.2f", g.left_stick_x, g.left_stick_y, g.right_stick_x));
@@ -123,22 +129,6 @@ public class TileRunnerDriveHelper {
             theta %= 2*Math.PI;
         }
         robot.drive(theta, v_theta, -1.0*v_rotation);
-
-        if(slowDrive) {
-            robot.turnOnGreenLed();
-        } else if(robot.isGreenLedOn()){
-            robot.turnOffGreenLed();
-        }
-
-        // check if the glyph touched the bumper
-        //------------------------------------
-        if(!verySlowDrive && !slowDrive) {
-            if (robot.isIntakeStuck) {
-                robot.turnOnBlueLed();
-            } else if (robot.isBlueLedOn()) {
-                robot.turnOffBlueLed();
-            }
-        }
     }
 
     public static void logInfo(Telemetry telemetry, String tag, String message) {

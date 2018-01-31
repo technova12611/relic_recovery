@@ -48,6 +48,9 @@ public class Controller {
     public boolean leftBumper() { return 0 < left_bumper; }
     public boolean rightBumper() { return 0 < right_bumper; }
 
+    public boolean rightBumper_long() { return 10 < right_bumper; }
+    public boolean leftBumper_long() { return 10 < left_bumper; }
+
     public boolean dpadUpOnce() { return 1 == dpad_up; }
     public boolean dpadDownOnce() { return 1 == dpad_down; }
     public boolean dpadLeftOnce() { return 1 == dpad_left; }
