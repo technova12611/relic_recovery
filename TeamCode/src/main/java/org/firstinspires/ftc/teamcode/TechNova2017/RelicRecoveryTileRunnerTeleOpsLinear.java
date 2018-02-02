@@ -82,7 +82,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         // operator controller left joystick moves the relic slider
         // ----------------------------------------------------------
         if (Math.abs(g2.left_stick_y) > 0.05 && !relicClawLocked) {
-            robot.moveRelicSlider(-1.0 * (Math.abs(g2.left_stick_y) < 0.5? 0.5*g2.left_stick_y:g2.left_stick_y));
+            robot.moveRelicSlider(-1.0 * Math.pow(g2.left_stick_y, 3.0));
         } else {
             robot.moveRelicSlider(0.0);
         }
@@ -230,13 +230,13 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         //---------------------------------------------------------------------
         if(intakeForward && !stuckDetected
                 && intakeStuckTimer.seconds() > 1.0
-                && intakeSwitchTimer.seconds() >3.0) {
+                && intakeSwitchTimer.seconds() >2.2) {
 
             int rightPosition = robot.intakeRight.getCurrentPosition();
 
             // encoder should have changed by 80, otherwise it's stuck
             //---------------------------------------------------------------
-            if (Math.abs(rightPosition - previousRightIntakePosition) < 80)
+            if (Math.abs(rightPosition - previousRightIntakePosition) < 120)
             {
                 Log.i("Intake Detection:" , "Current: " + rightPosition
                                   + " | Previous: " + previousRightIntakePosition);
@@ -248,13 +248,13 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         }
 
         // intake stuck detected
-        // set to run intake in reverse for 1.5 seconds
+        // set to run intake in reverse for 2.5 seconds
         //---------------------------------------------------------------
         if(stuckDetected) {
             intakeBackward = true;
             intakeForward = false;
 
-            if(intakeStuckTimer.time(TimeUnit.SECONDS) > 1.5) {
+            if(intakeStuckTimer.time(TimeUnit.SECONDS) > 2.5) {
                 intakeForward = true;
                 intakeBackward = false;
                 stuckDetected = false;
