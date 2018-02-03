@@ -108,7 +108,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         case RIGHT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
 
-                                driveBackwardInches(26.0, motorSpeed, 5.0);
+                                driveBackwardInches(29.0, motorSpeed, 5.0);
 
                             }
                             // if this is BLUE Alliance
@@ -121,12 +121,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         case CENTER:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(35.0, motorSpeed, 5.0);
+                                driveBackwardInches(36.5, motorSpeed, 5.0);
 
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(34.0, motorSpeed, 5.0);
+                                driveForwardInches(35.0, motorSpeed, 5.0);
 
                             }
                             break;
@@ -135,7 +135,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         case LEFT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(41.0, motorSpeed, 5.0);
+                                driveBackwardInches(45.5, motorSpeed, 5.0);
 
                             }
                             // if this is BLUE Alliance
@@ -153,7 +153,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(34.0, motorSpeed, 5.0);
+                                driveForwardInches(35.0, motorSpeed, 5.0);
                             }
                             break;
                     }
@@ -175,7 +175,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_1_FEET:
-                    driveBackwardInches(8.5, motorSpeed, 2.0);
+                    driveBackwardInches(7.0, motorSpeed, 2.0);
                     gotoNextState();
                     break;
 
@@ -195,15 +195,15 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     } else {
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                turn(-75.0);
+                                turn(-74.0);
                             } else {
-                                turn(-100.0);
+                                turn(-99.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                                turn(-75.0);
+                                turn(-94.0);
                             } else {
-                                turn(-100.0);
+                                turn(-84.0);
                             }
                         }
                         gotoNextState();
@@ -220,10 +220,10 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // push forward a bit to collect
                     driveForwardInches(4.0, 0.25, 2.0);
                     sleepInAuto(1000);
-
+                    turn(-90.0);
                     robot.pushGlyph();
 
-                    driveBackwardInches(32.0, 0.60, 5.0);
+                    driveBackwardInches(30.0, 0.60, 5.0);
 
                     if(getRuntime() < 27.0) {
                         placeGlyphIntoColumn(0.5);
