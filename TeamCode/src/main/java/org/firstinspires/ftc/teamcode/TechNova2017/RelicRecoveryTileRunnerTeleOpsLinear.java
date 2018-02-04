@@ -80,6 +80,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
     private void gamepadLoop()
     {
         // operator controller left joystick moves the relic slider
+        // using x^3 function to slow down at the low range
         // ----------------------------------------------------------
         if (Math.abs(g2.left_stick_y) > 0.05 && !relicClawLocked) {
             robot.moveRelicSlider(-1.0 * Math.pow(g2.left_stick_y, 3.0));
@@ -158,11 +159,21 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.moveGlyphLift(0);
             glyphLiftInAutoMode = Boolean.TRUE;
         }
-        else if(g2.leftBumper() || g1.X()){
+        else if(g2.leftBumper()){
            robot.holdGlyph();
         }
-        else if(g2.rightBumper() || g1.Y()){
+        else if(g2.rightBumper()){
             robot.pushGlyph();
+        }
+
+        // use gamepad 1 Y button to move the pusher all the way up
+        //--------------------------------------------------------------
+        if(g1.Y()) {
+            if(robot.pusherStateClosed == null) {
+                robot.pushGlyph();
+            } else {
+                robot.pushGlyph();
+            }
         }
 
         // use gamepad2 triggers to move the glyph slider lift
@@ -183,7 +194,9 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.setGlyphLiftToRunEncoderMode();
             robot.stopGlyphLiftMotor();
         }
+
         // use gamepad 2 A/B/X/Y to move the glyph tray
+        // also sync the intake and pusher
         //-----------------------------------------------
 
         if(g2.A()) {
@@ -196,6 +209,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         }
         else if(g2.X()) {
             robot.dumpGlyphsFromTray();
+            robot.holdGlyph();
             stopIntake();
 
             Log.i("Place Glyph:", "Trip #:" + (++numOfTrips) + " | " + String.format("%.1f", tripTimer.seconds()));
@@ -204,6 +218,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         else if(g2.leftBumper() && g2.Y()) {
             robot.resetGlyphTray();
             robot.holdGlyph();
+            collectGlyph();
         }
 
         // use gamepad 1 triggers to control the intake wheels
@@ -213,11 +228,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             intakeForward = false;
             intakeBackward = true;
         } else if(g1.right_trigger > 0.5) {
-            intakeForward = true;
-            intakeBackward = false;
-            intakeStuckTimer.reset();
-            intakeSwitchTimer.reset();
-            stuckDetected = false;
+            collectGlyph();
         } else if(g1.A()) {
             robot.stopIntake();
             stopIntake();
@@ -255,11 +266,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             intakeForward = false;
 
             if(intakeStuckTimer.time(TimeUnit.SECONDS) > 2.5) {
-                intakeForward = true;
-                intakeBackward = false;
-                stuckDetected = false;
-                intakeStuckTimer.reset();
-                intakeSwitchTimer.reset();
+               collectGlyph();
             }
 
             // turn on BLUE LED to alert intake is stuck
@@ -300,5 +307,13 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
     private void stopIntake() {
         intakeForward = false;
         intakeBackward = false;
+    }
+
+    private void collectGlyph() {
+        intakeForward = true;
+        intakeBackward = false;
+        intakeStuckTimer.reset();
+        intakeSwitchTimer.reset();
+        stuckDetected = false;
     }
 }

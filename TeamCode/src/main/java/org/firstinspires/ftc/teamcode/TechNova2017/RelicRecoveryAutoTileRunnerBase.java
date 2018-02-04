@@ -166,11 +166,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // need to figure out the turn direction for
                     // red and blue alliance
                     if(getAllianceColor() ==AllianceColor.RED) {
-                        turn(-85.0);
+                        turn(-82.5);
                     } else {
-                        turn(-84.0);
+                        turn(-82.5);
                     }
-                    sleepInAuto(1000);
+
+                    sleepInAuto(250);
                     gotoNextState();
                     break;
 
@@ -195,15 +196,15 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     } else {
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                turn(-74.0);
+                                turn(-85.0);
                             } else {
-                                turn(-99.0);
+                                turn(-95.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                                turn(-94.0);
+                                turn(-95.0);
                             } else {
-                                turn(-84.0);
+                                turn(-85.0);
                             }
                         }
                         gotoNextState();
@@ -215,18 +216,28 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     robot.collectGlyph();
                     // drive to glyph pit
                     driveForwardInches(26.0, 0.50, 5.0);
-                    sleepInAuto(500);
+                    sleepInAuto(300);
 
                     // push forward a bit to collect
                     driveForwardInches(4.0, 0.25, 2.0);
-                    sleepInAuto(1000);
+                    sleepInAuto(700);
                     turn(-90.0);
+
                     robot.pushGlyph();
 
                     driveBackwardInches(30.0, 0.60, 5.0);
 
                     if(getRuntime() < 27.0) {
-                        placeGlyphIntoColumn(0.5);
+                        int previousIntakeCount = robot.intakeRight.getCurrentPosition();
+                        sleepInAuto(200);
+                        if(previousIntakeCount - robot.intakeRight.getCurrentPosition() < 100) {
+                            robot.reverseGlyph();
+                            sleepInAuto(1500);
+                            robot.resetForTeleOps();
+                        } else {
+                            robot.stopIntake();
+                            placeGlyphIntoColumn(0.35);
+                        }
                     }
 
                     gotoNextState();

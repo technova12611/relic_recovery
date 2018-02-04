@@ -26,8 +26,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import static org.firstinspires.ftc.teamcode.TechNova2017.JewelPusher.Color.BLUE;
-import static org.firstinspires.ftc.teamcode.TechNova2017.JewelPusher.Color.RED;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIVE_POWER;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_AUTO_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_CLOSE_POSITION;
@@ -35,12 +35,10 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPE
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_2;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_LIFT_STOPPER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_HOLD_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_PUSH_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_UP_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_TOP_HOLDER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_COLLECT_POWER;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_LEFT_HOLDER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_LEFT_HOLDER_INITIAL_POSITION;
@@ -107,6 +105,12 @@ public class TileRunnerRobot {
     boolean isRelicClawReleased = false;
 
     boolean isIntakeStuck = false;
+
+    int previousIntakeEncoder = 0;
+
+    Boolean collectGlyph = null;
+
+    Boolean pusherStateClosed = null;
 
     // Encoder Driving
     // Assuming 4" wheels
@@ -341,8 +345,9 @@ public class TileRunnerRobot {
     }
 
     public void resetForTeleOps() {
+        stopIntake();
         resetGlyphTray();
-        holdGlyph();
+        moveUpPusher();
         openIntakeWheels();
     }
 
@@ -953,10 +958,13 @@ public class TileRunnerRobot {
     public void collectGlyph() {
         if(this.intakeRight != null) {
             this.intakeRight.setPower(INTAKE_COLLECT_POWER);
+            collectGlyph = TRUE;
         }
         if(this.intakeLeft != null) {
             this.intakeLeft.setPower(INTAKE_COLLECT_POWER);
         }
+
+        collectGlyph = TRUE;
     }
 
     public void setIntakePower(double power) {
@@ -976,6 +984,8 @@ public class TileRunnerRobot {
         if(this.intakeLeft != null) {
             this.intakeLeft.setPower(INTAKE_REVERSE_POWER);
         }
+
+        collectGlyph = Boolean.FALSE;
     }
 
     public void stopIntake() {
@@ -985,6 +995,12 @@ public class TileRunnerRobot {
         if(this.intakeLeft != null) {
             this.intakeLeft.setPower(0.0);
         }
+
+        collectGlyph = null;
+    }
+
+    public boolean isCollectingGlyph() {
+        return collectGlyph;
     }
 
     public void resetGlyphTray() {
@@ -1027,18 +1043,28 @@ public class TileRunnerRobot {
         if(glyphPusher != null) {
             glyphPusher.setPosition(GLYPH_PUSHER_PUSH_POSITION);
         }
+
+        pusherStateClosed = TRUE;
     }
 
     public void holdGlyph() {
         if(glyphPusher != null) {
             glyphPusher.setPosition(GLYPH_PUSHER_HOLD_POSITION);
         }
+
+        pusherStateClosed = FALSE;
     }
 
-    public void moveUpGlyphPusher() {
+    public void moveUpPusher() {
         if(glyphPusher != null) {
             glyphPusher.setPosition(GLYPH_PUSHER_HOLD_POSITION);
         }
+
+        pusherStateClosed = null;
+    }
+
+    public Boolean getPusherState() {
+        return pusherStateClosed;
     }
 
     public void setGlyphPusherPosition(double position) {

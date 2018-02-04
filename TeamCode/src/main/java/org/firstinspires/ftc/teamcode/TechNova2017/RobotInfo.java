@@ -68,10 +68,10 @@ public class RobotInfo {
     public static double INTAKE_RIGHT_HOLDER_CLOSE_POSITION = 0.93;
 
     public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.57;
-    public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.39;
-    public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.08;
+    public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.36;
+    public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.06;
     public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.25;
-    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.35;
+    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.32;
     public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.57;
 
     // Driver control motor speed
@@ -97,9 +97,9 @@ public class RobotInfo {
     public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.25;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.60;
 
-    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.25;
-    public static double GLYPH_PUSHER_PUSH_POSITION = 0.25;
-    public static double GLYPH_PUSHER_HOLD_POSITION = 0.69;
+    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.28;
+    public static double GLYPH_PUSHER_PUSH_POSITION = 0.24;
+    public static double GLYPH_PUSHER_HOLD_POSITION = 0.70;
     public static double GLYPH_PUSHER_UP_POSITION = 0.88;
 
     public static double INTAKE_REVERSE_POWER = -0.90;
