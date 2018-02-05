@@ -343,14 +343,14 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 + " | " + String.format("%.2f cm", getXDistance()));
 
         // need to push again
-        if(watcher.seconds() > 1.5) {
+        if(watcher.seconds() > 1.8) {
             driveForwardInches(2.0, motorSpeed, 1.0);
             driveBackwardInches(4.0, motorSpeed, 2.0);
         }
         // move backward to separate robot from glyph
         //----------------------------------------------
         logInfo(" --- Drive backward to finish --- ");
-        driveForwardInches(6.0, 0.5, 2.0);
+        driveForwardInches(5.0, 0.5, 2.0);
     }
 
     // default is RED allaince

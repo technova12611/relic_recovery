@@ -132,19 +132,19 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveBackwardInches(14.5, motorSpeed, 5.0);
+                            driveBackwardInches(12.5, motorSpeed, 5.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveBackwardInches(21.0, motorSpeed, 5.0);
+                            driveBackwardInches(19.5, motorSpeed, 5.0);
                             break;
 
                         // Default is RIGHT position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveBackwardInches(4.0, motorSpeed, 5.0);
+                            driveBackwardInches(12.5, motorSpeed, 5.0);
                             break;
                     }
 

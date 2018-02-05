@@ -9,7 +9,7 @@ public class RobotInfo {
 
     public static double JEWEL_PUSHER_LONG_ARM_INITIAL_POSITION = 0.84;
     public static double JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION = 0.60;
-    public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.36;
+    public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.38;
 
     public static double JEWEL_PUSHER_SHORT_ARM_INITIAL_POSITION = 0.90;
     public static double JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION = 0.51;
@@ -87,7 +87,7 @@ public class RobotInfo {
     public static double RELIC_CLAW_CLOSE_POSITION = 0.58;
     public static double RELIC_CLAW_OPEN_POSITION = 0.77;
 
-    public static double RELIC_ELBOW_INITIAL_POSITION = 0.19;
+    public static double RELIC_ELBOW_INITIAL_POSITION = 0.15;
     public static double RELIC_ELBOW_RELEASE_POSITION = 0.21;
     public static double RELIC_ELBOW_UP_POSITION = 0.62;
 

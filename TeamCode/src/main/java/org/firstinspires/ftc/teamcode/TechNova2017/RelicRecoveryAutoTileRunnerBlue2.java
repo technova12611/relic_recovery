@@ -115,7 +115,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case BACKWARD_1_FEET:
-                    turnToAngle(90.0, 0.08);
+                    turnToAngle(89.0, 0.08);
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
@@ -130,19 +130,19 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveBackwardInches(8.5, motorSpeed, 3.0);
+                            driveBackwardInches(11.5, motorSpeed, 3.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveBackwardInches(2.0, motorSpeed, 3.0);
+                            driveBackwardInches(3.0, motorSpeed, 3.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveBackwardInches(8.5,motorSpeed, 3.0);
+                            driveBackwardInches(11.5,motorSpeed, 3.0);
                             break;
                     }
 
@@ -150,16 +150,16 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case TURN_TO_180_DEGREE:
-                    turn(167.0);
-                    sleepInAuto(500);
-                    turnToAngle(170.0, 0.08);
+                    turn(178.0);
+                   // sleepInAuto(500);
+                   // turnToAngle(170.0, 0.08);
 
                     gotoNextState();
                     break;
 
                 case BACKWARD_7_INCHES:
 
-                    driveBackwardInches(5.0, motorSpeed, 3.0);
+                    driveBackwardInches(4.0, motorSpeed, 3.0);
                     gotoNextState();
                     break;
 

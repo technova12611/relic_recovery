@@ -149,7 +149,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         default:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(36.0, motorSpeed, 5.0);
+                                driveBackwardInches(36.5, motorSpeed, 5.0);
                             }
                             // if this is BLUE Alliance
                             else {
@@ -166,7 +166,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // need to figure out the turn direction for
                     // red and blue alliance
                     if(getAllianceColor() ==AllianceColor.RED) {
-                        turn(-82.5);
+                        turn(-88.5);
                     } else {
                         turn(-82.5);
                     }
@@ -196,15 +196,15 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     } else {
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                turn(-85.0);
+                                turn(-80.0);
                             } else {
-                                turn(-95.0);
+                                turn(-105.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                                turn(-95.0);
+                                turn(-105.0);
                             } else {
-                                turn(-85.0);
+                                turn(-80.0);
                             }
                         }
                         gotoNextState();
@@ -230,7 +230,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if(getRuntime() < 27.0) {
                         int previousIntakeCount = robot.intakeRight.getCurrentPosition();
                         sleepInAuto(200);
-                        if(previousIntakeCount - robot.intakeRight.getCurrentPosition() < 100) {
+                        if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 30) {
                             robot.reverseGlyph();
                             sleepInAuto(1500);
                             robot.resetForTeleOps();
