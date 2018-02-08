@@ -241,11 +241,13 @@ public class TileRunnerRobot {
             logInfo(this.telemetry, "Led power control failed.", e.getMessage());
         }
 
-        try {
-            colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
-            colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
-        } catch(Exception e) {
-            logInfo(this.telemetry, "Color Sensor init failed.", e.getMessage());
+        if(allianceColor != null) {
+            try {
+                colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
+                colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
+            } catch(Exception e) {
+                logInfo(null, "Color Sensor init failed.", e.getMessage());
+            }
         }
 
         logInfo(null, "Init Servos", " Servos are initialized ...");
@@ -347,7 +349,7 @@ public class TileRunnerRobot {
     public void resetForTeleOps() {
         stopIntake();
         resetGlyphTray();
-        moveUpPusher();
+        holdGlyph();
         openIntakeWheels();
     }
 
@@ -997,6 +999,7 @@ public class TileRunnerRobot {
         }
 
         collectGlyph = null;
+        isIntakeStuck = false;
     }
 
     public boolean isCollectingGlyph() {
@@ -1057,9 +1060,10 @@ public class TileRunnerRobot {
 
     public void moveUpPusher() {
         if(glyphPusher != null) {
-            glyphPusher.setPosition(GLYPH_PUSHER_HOLD_POSITION);
+            glyphPusher.setPosition(GLYPH_PUSHER_UP_POSITION);
         }
 
+        
         pusherStateClosed = null;
     }
 

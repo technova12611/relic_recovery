@@ -89,21 +89,21 @@ public class JewelPusher {
         //--------------------------------------
         longArm.setPosition(JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION);
 
-        waitForMS(750);
+        waitForMS(200);
 
         // set to the correct position (middle position)
         // then wait a bit
         shortArm.setPosition(JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION);
 
         // wait for ~ 1.0 seconds
-        waitForMS(750);
+        waitForMS(500);
 
         // long arm down
         //--------------------------------------
         longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TARGET_POSITION);
 
         // wait for 2 seconds
-        waitForMS(1000);
+        waitForMS(500);
     }
 
     /**
@@ -115,10 +115,10 @@ public class JewelPusher {
         Log.i(this.getClass().getSimpleName(), "Retracting jewel pusher arms ...");
 
         longArm.setPosition(JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION);
-        waitForMS(200);
+        waitForMS(300);
 
         shortArm.setPosition(JEWEL_PUSHER_SHORT_ARM_INITIAL_POSITION);
-        waitForMS(500);
+        waitForMS(200);
 
         // long arm up
         //--------------------------------------

@@ -37,11 +37,6 @@ public class TileRunnerDriveHelper {
         double lx = 0.0;
         double ly = 0.0;
 
-        if(g.Y()) {
-            //arcadeDrive = !arcadeDrive;
-            //inverted = !inverted;
-        }
-
         if((g.leftBumper() || g.rightBumper()) && g.B()) {
             robot.closeIntakeWheels();
             robot.pushGlyph();
@@ -49,7 +44,7 @@ public class TileRunnerDriveHelper {
         else if(g.B()) {
             robot.openIntakeWheels();
         }
-        else if(g.X()) {
+        else if(g.XOnce()) {
             slowDrive = false;
             if(robot.isGreenLedOn()){
                 robot.turnOffGreenLed();
@@ -60,9 +55,6 @@ public class TileRunnerDriveHelper {
                 robot.turnOnBlueLed();
             } else {
                 scaleToDrive = 1.0;
-                if (robot.isBlueLedOn()) {
-                    robot.turnOffBlueLed();
-                }
             }
         }
         else if((g.rightBumperOnce() || g.leftBumperOnce()) && !g.A()) {
@@ -106,13 +98,13 @@ public class TileRunnerDriveHelper {
 
             theta = Math.atan2(lx, ly);
             v_theta = Math.hypot(lx,ly);
-            v_rotation = Math.pow(g.right_stick_x, 3.0)*scaleToDrive*0.40;
+            v_rotation = Math.pow(g.right_stick_x, 3.0)*scaleToDrive*0.50;
 
             v_rotation = Range.clip(v_rotation,-1.0,1.0);
         }
 
         if(slowDrive || verySlowDrive) {
-            v_rotation = 0.80*v_rotation;
+            v_rotation = 0.75*v_rotation;
         } else if(robot.isRelicClawReleased){
             v_rotation = 0.60*v_rotation;
         }
@@ -123,6 +115,14 @@ public class TileRunnerDriveHelper {
         telemetry.addData("Glyph Lift Position: ", robot.getGlyphLiftPosition());
 
         robot.logMotorEncoders(telemetry, false);
+
+        // turn on BLUE LED to alert intake is stuck
+        //----------------------------------------------
+        if(robot.isIntakeStuck || verySlowDrive) {
+            robot.turnOnBlueLed();
+        } else if(!slowDrive){
+            robot.turnOffBlueLed();
+        }
 
         if(inverted) {
             theta += Math.PI;

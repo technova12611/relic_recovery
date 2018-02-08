@@ -67,7 +67,7 @@ public class RelicRecoveryAutoTest extends RelicRecoveryAutoAbstract {
         //-------------------------------------------------------------------
         while (opModeIsActive() && v_state != END) {
 
-            double motorSpeed = 0.4;
+            double motorSpeed = 0.25;
 
             logStateInfo(v_state, "Start");
 
@@ -81,13 +81,13 @@ public class RelicRecoveryAutoTest extends RelicRecoveryAutoAbstract {
                 case PICK_UP_GLYPH:
 
                     // close the grabber, and move up the lift by 1 or 2 inches
-                    robot.pickupGlyphInAuto();
+                   // robot.pickupGlyphInAuto();
 
                     gotoNextState();
                     break;
 
                 case FORWARD_2_FEET:
-                    driveForwardInches(26.0, motorSpeed);
+                    driveBackwardInches(6.0, motorSpeed);
                     gotoNextState();
                     break;
 
@@ -98,7 +98,8 @@ public class RelicRecoveryAutoTest extends RelicRecoveryAutoAbstract {
 
                 case SIDEWAY_RIGHT_1_FEET:
                     driveRightInches(12.0, motorSpeed);
-                    gotoNextState();
+                    gotoState(END);
+                    //gotoNextState();
                     break;
 
                 case TURN_TO_90_DEGREE:

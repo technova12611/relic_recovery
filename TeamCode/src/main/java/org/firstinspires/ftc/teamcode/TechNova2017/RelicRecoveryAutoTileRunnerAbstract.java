@@ -326,9 +326,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         sleepInAuto(300);
 
         logInfo(" --- More backward to let glyph fall on the floor --- ");
-        driveForwardInches(2.5, motorSpeed, 1.2);
+        driveForwardInches(1.5, motorSpeed, 1.2);
         sleepInAuto(200);
-        driveForwardInches(2.5, motorSpeed, 1.2);
+        driveForwardInches(1.5, motorSpeed, 1.2);
 
         robot.resetGlyphTray();
 
@@ -336,7 +336,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         //-------------------------------------------------
         logInfo(" --- Drive forward to push --- ");
         ElapsedTime watcher = new ElapsedTime();
-        driveBackwardInches(7.0, motorSpeed, 2.0);
+        driveBackwardInches(5.0, motorSpeed, 2.0);
 
         logInfo(" Place Glyph into column (ms): " +
                 watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
@@ -344,13 +344,17 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         // need to push again
         if(watcher.seconds() > 1.8) {
-            driveForwardInches(2.0, motorSpeed, 1.0);
+            logInfo(" --- Missed the column, push again --- ");
+            driveForwardInches(2.0, motorSpeed, 2.0);
             driveBackwardInches(4.0, motorSpeed, 2.0);
         }
         // move backward to separate robot from glyph
         //----------------------------------------------
         logInfo(" --- Drive backward to finish --- ");
         driveForwardInches(5.0, 0.5, 2.0);
+
+        logInfo(" --- Turn to 90 degree --- ");
+        turn(-89.0);
     }
 
     // default is RED allaince

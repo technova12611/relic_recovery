@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
@@ -11,6 +12,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileR
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerTest.State.START;
 
 @Autonomous(name = "Auto Test TileRunner", group = "Competition")
+@Disabled
 public class RelicRecoveryAutoTileRunnerTest extends RelicRecoveryAutoTileRunnerAbstract {
 
      // make new States for each autonomous strategy

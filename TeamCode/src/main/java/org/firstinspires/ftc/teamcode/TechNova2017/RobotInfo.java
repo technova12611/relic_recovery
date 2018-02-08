@@ -61,18 +61,38 @@ public class RobotInfo {
 
     public static double INTAKE_LEFT_HOLDER_INITIAL_POSITION = 0.02;
     public static double INTAKE_LEFT_HOLDER_OPEN_POSITION = 0.70;
-    public static double INTAKE_LEFT_HOLDER_CLOSE_POSITION = 0.08;
+    public static double INTAKE_LEFT_HOLDER_CLOSE_POSITION = 0.05;
 
     public static double INTAKE_RIGHT_HOLDER_INITIAL_POSITION = 0.98;
     public static double INTAKE_RIGHT_HOLDER_OPEN_POSITION = 0.29;
     public static double INTAKE_RIGHT_HOLDER_CLOSE_POSITION = 0.93;
 
+    // REV Smart Servo positions
+    //---------------------------------------------
     public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.57;
-    public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.36;
-    public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.06;
+    public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.40;
+    public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.08;
     public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.25;
-    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.32;
+    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.38;
     public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.57;
+
+    // HiTec Servo #1 positions
+    //----------------------------------------------
+//    public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.61;
+//    public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.48;
+//    public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.20;
+//    public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.45;
+//    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.50;
+//    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.61;
+
+    // HiTec Servo #2 positions
+    //----------------------------------------------
+//    public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.61;
+//    public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.50;
+//    public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.20;
+//    public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.40;
+//    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.48;
+//    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.61;
 
     // Driver control motor speed
     //-----------------------------------------------------------------------
@@ -95,7 +115,7 @@ public class RobotInfo {
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.15;
 
     public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.25;
-    public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.60;
+    public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.65;
 
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.28;
     public static double GLYPH_PUSHER_PUSH_POSITION = 0.24;
