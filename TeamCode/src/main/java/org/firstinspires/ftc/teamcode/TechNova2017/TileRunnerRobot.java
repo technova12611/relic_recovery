@@ -928,6 +928,8 @@ public class TileRunnerRobot {
     public void releaseClaw() {
         if (relicClawholder != null) {
             relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION_2);
+            relicElbow.setPosition(RELIC_ELBOW_RELEASE_POSITION);
+
             isRelicClawReleased = true;
         }
     }

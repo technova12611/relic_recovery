@@ -44,6 +44,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         while(!isStarted()) {
             telemetry.addData("Distance (x1, x2): ",
                     String.format("(%.1f, %.1f)", robot.getX1Distance(), robot.getX2Distance()));
+
+            telemetry.addData("IMU : ",
+                    String.format("(%.1f)", robot.getHeadingAngle()));
             telemetry.update();
             sleep(100);
         }
@@ -218,10 +221,13 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // push forward a bit to collect
                     driveForwardInches(4.0, 0.25, 2.0);
                     sleepInAuto(750);
-
                     turn(-89.0);
-
                     robot.pushGlyph();
+
+                    if(knockoffGlyphs() && getRuntime() < 22.0) {
+                        turnToAngle(0,0.5);
+                        turnToAngle(-89.0,0.5);
+                    }
 
                     driveBackwardInches(30.0, 0.60, 5.0);
 
@@ -233,6 +239,10 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             sleepInAuto(1500);
                             robot.resetForTeleOps();
                         } else {
+                            robot.holdGlyph();
+                            sleepInAuto(200);
+                            robot.pushGlyph();
+                            sleepInAuto(300);
                             robot.stopIntake();
                             placeGlyphIntoColumn(fasterMotorSpeed);
                         }
@@ -270,6 +280,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
     protected boolean pickupMoreGlyphs() {
         return false;
     }
+
+    protected boolean knockoffGlyphs() { return false; }
 
     //------------------------------------
 }
