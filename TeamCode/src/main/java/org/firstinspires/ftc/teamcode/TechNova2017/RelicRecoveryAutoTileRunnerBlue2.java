@@ -154,7 +154,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case TURN_TO_180_DEGREE:
-                    turn(178.0);
+                    turn(176.0);
                    // sleepInAuto(500);
                    // turnToAngle(170.0, 0.08);
 

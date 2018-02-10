@@ -328,7 +328,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         logInfo(" --- More backward to let glyph fall on the floor --- ");
         driveForwardInches(1.5, motorSpeed, 1.2);
         sleepInAuto(200);
-        driveForwardInches(1.5, motorSpeed, 1.2);
+        driveForwardInches(3.5, motorSpeed, 1.2);
 
         robot.resetGlyphTray();
 
