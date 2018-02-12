@@ -108,7 +108,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case FORWARD_3_FEET:
-                    driveForwardInches(26.0, motorSpeed, 5.0);
+                    driveForwardInches(25.0, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 

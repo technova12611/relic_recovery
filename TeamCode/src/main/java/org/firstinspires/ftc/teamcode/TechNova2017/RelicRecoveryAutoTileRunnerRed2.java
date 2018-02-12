@@ -156,7 +156,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     break;
 
                 case TURN_RIGHT_TO_0:
-                    turn(0.0);
+                    turn(2.0);
                     sleepInAuto(500);
                     gotoNextState();
                     break;

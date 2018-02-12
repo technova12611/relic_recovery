@@ -77,7 +77,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
             boolean detectVuMark = false;
             double motorSpeed = 0.25;
-            double fasterMotorSpeed = 0.40;
+            double fasterMotorSpeed = 0.25;
 
             logStateInfo(v_state, "Start");
 
@@ -105,6 +105,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case GET_OFF_STONE:
+                    detectVuMark = true;
 
                     switch (vuMark) {
 
@@ -136,7 +137,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         case LEFT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(45.5, motorSpeed, 5.0);
+                                driveBackwardInches(44.0, motorSpeed, 5.0);
                             }
                             // if this is BLUE Alliance
                             else {
@@ -193,17 +194,21 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if(getRuntime() > 20.0 || !pickupMoreGlyphs()) {
                         gotoState(END);
                     } else {
-                        double oneColumnDistance = 7.0;
+                        double oneColumnDistance = 9.0;
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.RIGHT) {
                                 driveLeftInches(oneColumnDistance, fasterMotorSpeed, 2.0);
-                            } else {
+                            } else if (vuMark == RelicRecoveryVuMark.LEFT){
+                                driveRightInches(12.0, fasterMotorSpeed, 2.0);
+                            } else{
                                 driveRightInches(oneColumnDistance, fasterMotorSpeed, 2.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
                                 driveRightInches(oneColumnDistance, fasterMotorSpeed, 2.0);
-                            } else {
+                            } else if (vuMark == RelicRecoveryVuMark.RIGHT){
+                                driveLeftInches(12.0, fasterMotorSpeed, 2.0);
+                            }else {
                                 driveLeftInches(oneColumnDistance, fasterMotorSpeed, 2.0);
                             }
                         }
@@ -232,6 +237,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     }
 
                     driveBackwardInches(28.5, 0.60, 5.0);
+                    robot.pushGlyph();
+                    sleepInAuto(500);
 
                     if(getRuntime() < 27.0) {
                         int previousIntakeCount = robot.intakeRight.getCurrentPosition();

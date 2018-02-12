@@ -186,7 +186,7 @@ public class TileRunnerRobot {
             if(allianceColor != null) {
                 glyphPusher.setPosition(GLYPH_PUSHER_INITIAL_POSITION);
             } else {
-                glyphPusher.setPosition(GLYPH_PUSHER_HOLD_POSITION);
+                glyphPusher.setPosition(GLYPH_PUSHER_INITIAL_POSITION);
             }
 
         } catch(Exception e) {
@@ -353,6 +353,13 @@ public class TileRunnerRobot {
         openIntakeWheels();
     }
 
+    public void resetForTeleOpsInAuto() {
+        stopIntake();
+        resetGlyphTray();
+        holdGlyph();
+        openIntakeWheels();
+    }
+
     public void resetDriveMotors() {
         stopDriveMotors();
         setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -417,7 +424,7 @@ public class TileRunnerRobot {
      */
     public void updateSensorTelemetry() {
 
-        double currentAvgRemaning = averageRemainingTicks(lf, lr, rf, rr);
+        double currentAvgRemaning = averageRemainingTicks(lr, rf, rr);
         double currentMovingAvg = driveEncodersMovingAvg.next(currentAvgRemaning);
 
         logInfo(telemetry,"Encoder Remain", String.format("\t%.1f\t%.1f\t%.1f", currentAvgRemaning, currentMovingAvg, previousDriveAvgEncoder));
@@ -702,7 +709,7 @@ public class TileRunnerRobot {
     }
 
     public boolean driveMotorsBusy() {
-        return busy(lf, lr, rf, rr);
+        return busy(lf,lr, rf, rr);
     }
 
     /**

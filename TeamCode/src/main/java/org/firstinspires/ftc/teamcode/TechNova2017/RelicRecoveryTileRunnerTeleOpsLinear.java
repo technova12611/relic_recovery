@@ -218,7 +218,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         else if(g2.leftBumper() && g2.Y()) {
             robot.resetGlyphTray();
             robot.holdGlyph();
-            collectGlyph();
+            //collectGlyph();
         }
 
         // use gamepad 1 triggers to control the intake wheels
@@ -240,14 +240,14 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         // if it's not increase enough, it's stuck
         //---------------------------------------------------------------------
         if(intakeForward && !stuckDetected
-                && intakeStuckTimer.seconds() > 1.0
-                && intakeSwitchTimer.seconds() >2.2) {
+                && intakeStuckTimer.seconds() > 1.00
+                && intakeSwitchTimer.seconds() > 2.2) {
 
             int rightPosition = robot.intakeRight.getCurrentPosition();
 
             // encoder should have changed by 80, otherwise it's stuck
             //---------------------------------------------------------------
-            if (Math.abs(rightPosition - previousRightIntakePosition) < 200)
+            if (Math.abs(rightPosition - previousRightIntakePosition) < 150)
             {
                 Log.i("Intake Detection:" , "Current: " + rightPosition
                                   + " | Previous: " + previousRightIntakePosition);
