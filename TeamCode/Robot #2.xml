@@ -9,8 +9,10 @@
             <Servo name="longArm" port="1" />
             <Servo name="shortArm" port="2" />
             <Servo name="intakeLeftHolder" port="3" />
+            <Servo name="glyphFlipper" port="4" />
             <LynxColorSensor name="jewelColor" port="0" bus="1" />
             <ModernRoboticsI2cRangeSensor name="x1Range" port="0" bus="3" />
+            <AdafruitBNO055IMU name="imu" port="0" bus="0" />
         </LynxModule>
         <LynxModule name="Expansion Hub 3" port="3">
             <RevRoboticsHDHexMotor name="rr" port="0" />
@@ -23,8 +25,6 @@
             <Servo name="glyphPusher" port="3" />
             <Servo name="intakeRightHolder" port="4" />
             <Servo name="relicClawholder" port="5" />
-            <ModernRoboticsI2cRangeSensor name="x2Range" port="0" bus="1" />
-            <AdafruitBNO055IMU name="imu" port="0" bus="0" />
         </LynxModule>
     </LynxUsbDevice>
 </Robot>

@@ -48,7 +48,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
         // waiting for operator to press start button
         while(!isStarted()) {
-            telemetry.addData("Distance (x1, x2): ", "(%.1f, %.1f)", robot.getX1Distance(), robot.getX2Distance());
+            telemetry.addData("Distance (x1, x2): ", "(%.1f, %.1f)", robot.getX1Distance(), robot.getColDistance());
             telemetry.addData("IMU : ",
                     String.format("(%.1f)", robot.getHeadingAngle()));
             telemetry.update();

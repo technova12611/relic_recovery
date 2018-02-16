@@ -125,4 +125,12 @@ public class RobotInfo {
     public static double INTAKE_REVERSE_POWER = -0.90;
     public static double INTAKE_COLLECT_POWER = 0.65;
 
+    public static double DISTANCE_SENSOR_INITIAL_POSITION = 0.87;
+    public static double DISTANCE_SENSOR_EXTEND_POSITION = 0.15;
+    public static double DISTANCE_SENSOR_TELEOPS_POSITION = 0.75;
+    public static double DISTANCE_SENSOR_UPRIGHT_POSITION = 0.50;
+
+    public static double GLYPH_BLOCKER_INIT_POSITION = 0.2;
+    public static double GLYPH_BLOCKER_OPEN_POSITION = 0.8;
+    public static double GLYPH_BLOCKER_CLOSE_POSITION = 0.6;
 }

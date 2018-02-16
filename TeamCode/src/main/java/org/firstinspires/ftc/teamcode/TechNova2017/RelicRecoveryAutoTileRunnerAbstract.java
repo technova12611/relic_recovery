@@ -20,7 +20,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     VuMarkVision vuMarkVision;
     RelicRecoveryVuMark vuMark;
 
-    MovingAverage xAvgDistance = new MovingAverage(10);
+    MovingAverage colAvgDistance = new MovingAverage(10);
 
     ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
@@ -282,7 +282,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                             + " | " + String.format("%6.1f", getRuntime() * 1000.0)
                             + " | " + String.format("%5d", timer.time(TimeUnit.MILLISECONDS))
                             + " | " + String.format("IMU: %.1f", robot.getHeadingAngle())
-                            + " | " + String.format("(x1,x2): %3.1f, %3.1f", robot.getX1Distance(), robot.getX2Distance())
+                            + " | " + String.format("(x1,x2): %3.1f, %3.1f", robot.getX1Distance(), robot.getColDistance())
                             + " | " + "Glyph count:" + String.format("%5d", robot.getGlyphLiftPosition())
                             + " | " + (vuMark != null ? vuMark : "")
                             + " | " + String.format("Battery: %3.2f", robot.getBatteryVoltage())
@@ -301,26 +301,46 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected double getXDistance() {
-        return getAllianceColor() == AllianceColor.RED? robot.getX1Distance(): robot.getX2Distance();
+        return getAllianceColor() == AllianceColor.RED? robot.getX1Distance(): robot.getColDistance();
     }
 
-    protected double measureXDistance(long elapseTime) {
+    protected double measureColDistance(long elapseTime) {
         ElapsedTime timer = new ElapsedTime();
         double avg = 0.0;
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < elapseTime) {
-            double distance = getXDistance();
-            if(distance > 10.0 && distance < 200 ) {
-                avg = xAvgDistance.next(distance);
+            double distance = robot.getColDistance();
+            if(distance > 0.5 && distance < 25 ) {
+                avg = colAvgDistance.next(distance);
             }
             sleep(35);
         }
 
-        logInfo(" Range Sensor: " + String.format("%.2f", avg/2.54) + " (in)" );
+        logInfo("Col Range Sensor: " + String.format("%.2f", avg) + " (in)" );
 
         return avg;
     }
 
     protected void placeGlyphIntoColumn(double motorSpeed) throws InterruptedException {
+
+        logInfo(" --- Get the distance sensor in place --- ");
+        robot.extendDistanceSensorArmServo();
+        robot.openGlyphBlocker();
+        sleepInAuto(500);
+
+        double distance = measureColDistance(300) ;
+        logInfo("Distance from the column (in): " + String.format("%.1f", distance));
+
+        // measurement as inches
+        // need to test and tweak this to make it accurate
+        //---------------------------------------------------
+        //
+        double desiredDistance = 3.5;
+        if(distance > desiredDistance) {
+            driveLeftInches((distance - desiredDistance), 0.25, 1.5);
+        } else if(distance < desiredDistance) {
+            driveRightInches((desiredDistance-distance), 0.25, 1.5);
+        }
+
         logInfo(" --- Flip Glyph Tray --- ");
         robot.dumpGlyphsFromTray();
         sleepInAuto(300);

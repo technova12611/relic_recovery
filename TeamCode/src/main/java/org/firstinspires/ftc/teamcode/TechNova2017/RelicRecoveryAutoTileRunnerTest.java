@@ -48,7 +48,7 @@ public class RelicRecoveryAutoTileRunnerTest extends RelicRecoveryAutoTileRunner
 
         // waiting for operator to press start button
         while(!isStarted()) {
-            telemetry.addData("Distance (x1, x2): ", String.format("(%.1f, %.1f)", robot.getX1Distance(), robot.getX2Distance()));
+            telemetry.addData("Distance (x1, x2): ", String.format("(%.1f, %.1f)", robot.getX1Distance(), robot.getColDistance()));
             telemetry.update();
         }
 
@@ -127,7 +127,7 @@ public class RelicRecoveryAutoTileRunnerTest extends RelicRecoveryAutoTileRunner
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
                     //-------------------------------------------------------------
-                    double distanceToWall = measureXDistance(500)/2.54;
+                    double distanceToWall = measureColDistance(500)/2.54;
                     if(distanceToWall > 48.0 || distanceToWall < 36.0) {
                         distanceToWall = 39.0;
                     }

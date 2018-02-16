@@ -4,6 +4,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.END;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.START;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_UPRIGHT_POSITION;
 
 public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunnerAbstract {
 
@@ -15,6 +16,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
          START,
          PUSH_JEWEL,
          GET_OFF_STONE,
+         ALIGN_TO_COLUMN,
          TURN_TO_90_DEGREE,
          FORWARD_1_FEET,
          PLACE_GLYPH_INTO_CRYPTO,
@@ -43,8 +45,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         // waiting for operator to press start button
         while(!isStarted()) {
             telemetry.addData("Distance (x1, x2): ",
-                    String.format("(%.1f, %.1f)", robot.getX1Distance(), robot.getX2Distance()));
-
+                    String.format("(%.1f, %.1f)", robot.getX1Distance(), robot.getColDistance()));
+            telemetry.addData("Glyph Color : ",robot.getGlyphColorRGB() +"");
             telemetry.addData("IMU : ",
                     String.format("(%.1f)", robot.getHeadingAngle()));
             telemetry.update();
@@ -107,29 +109,43 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                 case GET_OFF_STONE:
                     detectVuMark = true;
 
+                    robot.setServoPosition(robot.distSensorServo, DISTANCE_SENSOR_UPRIGHT_POSITION);
+
+                    if(getAllianceColor() ==  AllianceColor.RED) {
+                        driveBackwardInches(24.5, motorSpeed, 5.0);
+                    }
+                    // if this is BLUE Alliance
+                    else {
+                        driveForwardInches(24.5, motorSpeed, 5.0);
+                    }
+
+                    gotoNextState();
+                    break;
+
+                case ALIGN_TO_COLUMN:
                     switch (vuMark) {
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
 
-                                driveBackwardInches(29.0, motorSpeed, 5.0);
+                                driveBackwardInches(4.5, motorSpeed, 2.0);
 
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(42.0, motorSpeed, 5.0);
+                                driveForwardInches(17.5, motorSpeed, 5.0);
                             }
                             break;
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(36.5, motorSpeed, 5.0);
+                                driveBackwardInches(12.0, motorSpeed, 5.0);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(35.0, motorSpeed, 5.0);
+                                driveForwardInches(11.0, motorSpeed, 5.0);
                             }
                             break;
 
@@ -137,11 +153,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         case LEFT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(44.0, motorSpeed, 5.0);
+                                driveBackwardInches(19.5, motorSpeed, 5.0);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(27.5, motorSpeed, 5.0);
+                                driveForwardInches(3.0, motorSpeed, 2.0);
                             }
                             break;
 
@@ -149,11 +165,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         default:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(36.5, motorSpeed, 5.0);
+                                driveBackwardInches(12.0, motorSpeed, 5.0);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(35.0, motorSpeed, 5.0);
+                                driveForwardInches(11.0, motorSpeed, 5.0);
                             }
                             break;
                     }

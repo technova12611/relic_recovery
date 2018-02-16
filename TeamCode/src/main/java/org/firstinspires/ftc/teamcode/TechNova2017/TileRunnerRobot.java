@@ -28,7 +28,13 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_EXTEND_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_TELEOPS_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIVE_POWER;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_BLOCKER_CLOSE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_BLOCKER_INIT_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_BLOCKER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_AUTO_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_1;
@@ -74,13 +80,13 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_
  */
 public class TileRunnerRobot {
     DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider, intakeLeft, intakeRight;
-    private Servo relicClaw, relicElbow, relicClawholder, longArm, intakeLeftHolder, intakeRightHolder,
-                  glyphFlipper, glyphPusher;
+    Servo relicClaw, relicElbow, relicClawholder, longArm, intakeLeftHolder, intakeRightHolder,
+                  glyphFlipper, glyphPusher, distSensorServo, glyphBlocker;
 
     private Telemetry telemetry;
     private VoltageSensor voltageSensor;
 
-    ColorSensor colorSensor1, colorSensor2;
+    ColorSensor glyphColor;
 
     private boolean isBlueLedOn = false;
     private boolean isGreenLedOn = false;
@@ -89,7 +95,7 @@ public class TileRunnerRobot {
     private Orientation angles;
 
     private ModernRoboticsI2cRangeSensor x1RangeSensor;
-    private ModernRoboticsI2cRangeSensor x2RangeSensor;
+    private ModernRoboticsI2cRangeSensor distRangeSensor;
 
     private double headingOffset = 0.0;
 
@@ -241,13 +247,28 @@ public class TileRunnerRobot {
             logInfo(this.telemetry, "Led power control failed.", e.getMessage());
         }
 
-        if(allianceColor != null) {
-            try {
-                colorSensor1 = hardwareMap.colorSensor.get("colorSensor1");
-                colorSensor2 = hardwareMap.colorSensor.get("colorSensor2");
-            } catch(Exception e) {
-                logInfo(null, "Color Sensor init failed.", e.getMessage());
+        try {
+            glyphColor = hardwareMap.colorSensor.get("glyphColor");
+        } catch(Exception e) {
+            logInfo(null, "Color Sensor init failed.", e.getMessage());
+        }
+
+        try {
+            distSensorServo = hardwareMap.servo.get("distSensor");
+            if(allianceColor != null) {
+                distSensorServo.setPosition(DISTANCE_SENSOR_INITIAL_POSITION);
+            } else {
+                distSensorServo.setPosition(DISTANCE_SENSOR_TELEOPS_POSITION);
             }
+        } catch(Exception e) {
+            logInfo(null, "Distance sensor servo failed", e.getMessage());
+        }
+
+        try {
+            glyphBlocker = hardwareMap.servo.get("glyphBlocker");
+            glyphBlocker.setPosition(GLYPH_BLOCKER_INIT_POSITION);
+        } catch(Exception e) {
+            logInfo(null, "Glyph blocker servo failed", e.getMessage());
         }
 
         logInfo(null, "Init Servos", " Servos are initialized ...");
@@ -264,6 +285,7 @@ public class TileRunnerRobot {
             if(longArm != null) longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
             if(glyphPusher != null) glyphPusher.setPosition(GLYPH_PUSHER_UP_POSITION);
             if(glyphFlipper != null) glyphFlipper.setPosition(GLYPH_FLIPPER_INITIAL_POSITION);
+            if(distSensorServo != null) distSensorServo.setPosition(DISTANCE_SENSOR_TELEOPS_POSITION);
         }
         catch(Exception e) {
             logInfo(this.telemetry, "Init servos failed", e.getMessage());
@@ -325,12 +347,12 @@ public class TileRunnerRobot {
 
     private void initRangeSensor(HardwareMap hardwareMap, AllianceColor alliance) {
         try {
-            //if(alliance == AllianceColor.RED) {
-            //    x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
-            //} else {
+//            if(alliance == AllianceColor.RED) {
+//                x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
+//            } else {
                 x1RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
-                //x2RangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
-            //}
+                distRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
+//            }
 
             logInfo(null, "Init Range Sesnor", " Range Sensor x1 and x2 are initialized ...");
         }
@@ -351,6 +373,7 @@ public class TileRunnerRobot {
         resetGlyphTray();
         holdGlyph();
         openIntakeWheels();
+        closeGlyphBlocker();
     }
 
     public void resetForTeleOpsInAuto() {
@@ -874,9 +897,9 @@ public class TileRunnerRobot {
         return 0.0;
     }
 
-    public double getX2Distance() {
-        if(x2RangeSensor != null) {
-            return Range.clip(x2RangeSensor.getDistance(DistanceUnit.CM), 0.0, 256.0);
+    public double getColDistance() {
+        if(distRangeSensor != null) {
+            return Range.clip(distRangeSensor.getDistance(DistanceUnit.INCH), 0.0, 256.0);
         }
 
         return 0.0;
@@ -1056,6 +1079,10 @@ public class TileRunnerRobot {
             glyphPusher.setPosition(GLYPH_PUSHER_PUSH_POSITION);
         }
 
+        if(glyphBlocker != null) {
+            closeGlyphBlocker();
+        }
+
         pusherStateClosed = TRUE;
     }
 
@@ -1165,7 +1192,7 @@ public class TileRunnerRobot {
     }
 
     public boolean tapeDetected() {
-        return tapeDetected(colorSensor1) || tapeDetected(colorSensor2);
+        return false;
     }
 
     private boolean tapeDetected(ColorSensor cs) {
@@ -1180,6 +1207,62 @@ public class TileRunnerRobot {
         }
 
         return false;
+    }
+
+    public void extendDistanceSensorArmServo() {
+        if(this.distSensorServo != null) {
+            this.distSensorServo.setPosition(DISTANCE_SENSOR_EXTEND_POSITION);
+        }
+    }
+
+    public void resetDistanceSensorServoArm() {
+        if(this.distSensorServo != null) {
+            this.distSensorServo.setPosition(DISTANCE_SENSOR_INITIAL_POSITION);
+        }
+    }
+
+    protected GlyphColor getGlyphColor() {
+        if(glyphColor != null) {
+            if(glyphColor.argb() > 1000) {
+                return GlyphColor.GRAY;
+            } else {
+                return GlyphColor.BROWN;
+            }
+        }
+
+        return GlyphColor.UNKNOWN;
+    }
+
+    public int getGlyphColorRGB() {
+        if(glyphColor != null) {
+            return glyphColor.argb();
+        }
+
+        return 0;
+    }
+
+    public void setServoPosition(Servo servo, double position) {
+        if(servo != null) {
+            servo.setPosition(position);
+        }
+    }
+
+    public void openGlyphBlocker() {
+        if(glyphBlocker != null) {
+            glyphBlocker.setPosition(GLYPH_BLOCKER_OPEN_POSITION);
+        }
+    }
+
+    public void closeGlyphBlocker() {
+        if(glyphBlocker != null) {
+            glyphBlocker.setPosition(GLYPH_BLOCKER_CLOSE_POSITION);
+        }
+    }
+
+    enum GlyphColor {
+        GRAY,
+        BROWN,
+        UNKNOWN;
     }
 }
 

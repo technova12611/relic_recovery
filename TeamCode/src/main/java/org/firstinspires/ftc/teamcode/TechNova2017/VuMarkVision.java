@@ -80,6 +80,10 @@ public class VuMarkVision {
     }
 
     public RelicRecoveryVuMark detect (Telemetry telemetry) {
+        return detect(telemetry, true);
+    }
+
+    public RelicRecoveryVuMark detect (Telemetry telemetry, boolean doLog) {
         /**
          * See if any of the instances of {@link relicTemplate} are currently visible.
          * {@link RelicRecoveryVuMark} is an enum which can have the following values:
@@ -95,7 +99,7 @@ public class VuMarkVision {
             telemetry.update();
         }
 
-        logInfo("VuMark", message);
+        if(doLog) logInfo("VuMark", message);
         return vuMark;
     }
 

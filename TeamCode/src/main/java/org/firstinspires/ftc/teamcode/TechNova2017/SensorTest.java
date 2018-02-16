@@ -1,16 +1,14 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
-import android.util.Log;
-
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 @TeleOp(name = "Sensor Test", group = "Sensor")
@@ -24,6 +22,9 @@ public class SensorTest extends LinearOpMode {
     AnalogInput rangeSensor;
     DistanceSensor glyphDistance;
 
+    double servoPosition = 0.0;
+    ElapsedTime servoTimer = new ElapsedTime();
+
     @Override
     public void runOpMode() {
 
@@ -34,11 +35,6 @@ public class SensorTest extends LinearOpMode {
 
         // get a reference to the distance sensor that shares the same name.
         sensorDistance = hardwareMap.get(DistanceSensor.class, "jewelColor");
-        try {
-            xRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x1Range");
-            yRangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "x2Range");
-        }catch(Exception e) {
-        }
 
         //glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
 
@@ -59,14 +55,13 @@ public class SensorTest extends LinearOpMode {
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
 
-            telemetry.addData("(x1,x2): ", "(%.2f, %.2f)",
-                    xRangeSensor!= null?xRangeSensor.getDistance(DistanceUnit.INCH):0.0,
-                    yRangeSensor != null?yRangeSensor.getDistance(DistanceUnit.INCH):0.0);
+            telemetry.addData("(x1,x2): ", "(%.2f, %.2f)", robot.getX1Distance(), robot.getColDistance());
 
-            telemetry.addData("IMU: ", "(%.2f", robot.getHeadingAngle());
+            telemetry.addData("IMU: ", "%.2f", robot.getHeadingAngle());
+
+            vuMark = vuMarkVision.detect(null, false);
 
             if(vuMark == RelicRecoveryVuMark.UNKNOWN) {
-                vuMark = vuMarkVision.detect(null);
                 robot.turnOffBlueLed();
             } else {
                 robot.turnOnBlueLed();
@@ -75,14 +70,31 @@ public class SensorTest extends LinearOpMode {
             String message =String.format("%s visible", vuMark);
             telemetry.addData("VuMark", message);
 
-            telemetry.update();
-
             if(gamepad1.left_stick_y > 0.5) {
                 robot.turnOnBlueLed();
             } else if(gamepad1.left_stick_y < -0.5) {
                 robot.turnOffBlueLed();
             }
+            if(gamepad1.a) {
+                robot.extendDistanceSensorArmServo();
+            }
 
+            if(gamepad1.b) {
+                robot.resetDistanceSensorServoArm();
+            }
+
+            servoPosition = robot.distSensorServo.getPosition();
+            if (gamepad1.right_stick_y < 0) {
+                servoPosition = Range.clip(servoPosition + 0.05, 0.01, 1.0);
+                robot.setServoPosition(robot.distSensorServo, servoPosition);
+                servoTimer.reset();
+            } else if (gamepad1.right_stick_y > 0) {
+                servoPosition = Range.clip(servoPosition - 0.05, 0.01, 1.0);
+                robot.setServoPosition(robot.distSensorServo, servoPosition);
+                servoTimer.reset();
+            }
+
+            telemetry.addData("Servo Position: ", "%.1f", servoPosition);
             telemetry.update();
         }
     }
