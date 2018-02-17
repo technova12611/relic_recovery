@@ -117,10 +117,17 @@ public class RobotInfo {
     public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.25;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.65;
 
+
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.28;
     public static double GLYPH_PUSHER_PUSH_POSITION = 0.22;
     public static double GLYPH_PUSHER_HOLD_POSITION = 0.70;
     public static double GLYPH_PUSHER_UP_POSITION = 0.88;
+
+    // HSB9485 servo positions
+//    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.35;
+//    public static double GLYPH_PUSHER_PUSH_POSITION = 0.28;
+//    public static double GLYPH_PUSHER_HOLD_POSITION = 0.61;
+//    public static double GLYPH_PUSHER_UP_POSITION = 0.80;
 
     public static double INTAKE_REVERSE_POWER = -0.90;
     public static double INTAKE_COLLECT_POWER = 0.65;
