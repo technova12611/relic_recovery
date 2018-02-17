@@ -208,6 +208,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             stopIntake();
         }
         else if(g2.X()) {
+            robot.openGlyphBlocker();
             robot.dumpGlyphsFromTray();
             robot.holdGlyph();
             stopIntake();
@@ -219,6 +220,8 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.resetGlyphTray();
             robot.holdGlyph();
             //collectGlyph();
+        } else if(g2.YOnce()) {
+            robot.openGlyphBlocker();
         }
 
         // use gamepad 1 triggers to control the intake wheels

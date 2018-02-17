@@ -309,7 +309,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         double avg = 0.0;
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < elapseTime) {
             double distance = robot.getColDistance();
-            if(distance > 0.5 && distance < 25 ) {
+            if(distance > 0.5 && distance < 7 ) {
                 avg = colAvgDistance.next(distance);
             }
             sleep(35);
@@ -334,12 +334,14 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         // need to test and tweak this to make it accurate
         //---------------------------------------------------
         //
-        double desiredDistance = 3.5;
-        if(distance > desiredDistance) {
-            driveLeftInches((distance - desiredDistance), 0.25, 1.5);
-        } else if(distance < desiredDistance) {
-            driveRightInches((desiredDistance-distance), 0.25, 1.5);
+        double desiredDistance = 3.25;
+        if(distance - desiredDistance > 0.5) {
+            driveRightInches((distance - desiredDistance), 0.25, 1.5);
+        } else if( desiredDistance-distance > 0.5) {
+            driveLeftInches((desiredDistance-distance), 0.25, 1.5);
         }
+
+        robot.resetDistanceSensorServoArm();
 
         logInfo(" --- Flip Glyph Tray --- ");
         robot.dumpGlyphsFromTray();
@@ -375,6 +377,10 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         logInfo(" --- Turn to 90 degree --- ");
         turn(-89.0);
+
+        // close the glyphBlocker
+        //----------------------------------------
+        robot.closeGlyphBlocker();
     }
 
     // default is RED allaince

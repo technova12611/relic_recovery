@@ -120,7 +120,7 @@ public class TileRunnerRobot {
 
     // Encoder Driving
     // Assuming 4" wheels
-    private static final double TICKS_PER_INCH = 1120.0 * (24./40.) / (Math.PI * 4.0);
+    private static final double TICKS_PER_INCH = 1120.0 * (24./42.) / (Math.PI * 4.0);
     private static final double TICKS_PER_CM = TICKS_PER_INCH / 2.54;
 
     protected double encoder_drive_power = ENCODER_DRIVE_POWER;
@@ -1075,12 +1075,12 @@ public class TileRunnerRobot {
     }
 
     public void pushGlyph() {
-        if(glyphPusher != null) {
-            glyphPusher.setPosition(GLYPH_PUSHER_PUSH_POSITION);
-        }
-
         if(glyphBlocker != null) {
             closeGlyphBlocker();
+        }
+
+        if(glyphPusher != null) {
+            glyphPusher.setPosition(GLYPH_PUSHER_PUSH_POSITION);
         }
 
         pusherStateClosed = TRUE;
