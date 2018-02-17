@@ -78,8 +78,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         while (opModeIsActive() && v_state != END) {
 
             boolean detectVuMark = false;
-            double motorSpeed = 0.25;
-            double fasterMotorSpeed = 0.25;
+            double motorSpeed = 0.225;
+            double fasterMotorSpeed = 0.325;
 
             logStateInfo(v_state, "Start");
 

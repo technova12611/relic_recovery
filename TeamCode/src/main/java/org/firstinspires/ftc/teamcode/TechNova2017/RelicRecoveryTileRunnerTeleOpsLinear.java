@@ -200,10 +200,12 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         //-----------------------------------------------
 
         if(g2.A()) {
+            robot.openGlyphBlocker();
             robot.raiseGlyphTrayup2();
             stopIntake();
         }
         else if(g2.B() && !gamepad2.start) {
+            robot.openGlyphBlocker();
             robot.raiseGlyphTrayup2();
             stopIntake();
         }

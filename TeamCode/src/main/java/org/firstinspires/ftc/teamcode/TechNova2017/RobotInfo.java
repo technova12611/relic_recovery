@@ -102,12 +102,12 @@ public class RobotInfo {
     public static double DPAD_SCALE_TO_DRIVE = 0.28;
 
     // Relic delivery system
-        //--------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
     public static double RELIC_CLAW_INITIAL_POSITION = 0.45;
     public static double RELIC_CLAW_CLOSE_POSITION = 0.50;
     public static double RELIC_CLAW_OPEN_POSITION = 0.70;
 
-    public static double RELIC_ELBOW_INITIAL_POSITION = 0.16;
+    public static double RELIC_ELBOW_INITIAL_POSITION = 0.17;
     public static double RELIC_ELBOW_RELEASE_POSITION = 0.19;
     public static double RELIC_ELBOW_UP_POSITION = 0.65;
 
@@ -132,7 +132,7 @@ public class RobotInfo {
     public static double INTAKE_REVERSE_POWER = -0.90;
     public static double INTAKE_COLLECT_POWER = 0.65;
 
-    public static double DISTANCE_SENSOR_INITIAL_POSITION = 0.87;
+    public static double DISTANCE_SENSOR_INITIAL_POSITION = 0.82;
     public static double DISTANCE_SENSOR_EXTEND_POSITION = 0.15;
     public static double DISTANCE_SENSOR_TELEOPS_POSITION = 0.75;
     public static double DISTANCE_SENSOR_UPRIGHT_POSITION = 0.50;

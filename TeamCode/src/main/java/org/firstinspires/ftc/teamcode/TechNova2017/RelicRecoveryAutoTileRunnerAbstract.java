@@ -335,10 +335,13 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         //---------------------------------------------------
         //
         double desiredDistance = 3.25;
-        if(distance - desiredDistance > 0.5) {
-            driveRightInches((distance - desiredDistance), 0.25, 1.5);
-        } else if( desiredDistance-distance > 0.5) {
-            driveLeftInches((desiredDistance-distance), 0.25, 1.5);
+        double delta = distance - desiredDistance;
+        logInfo("Delta from the column (in): " + String.format("%.1f", delta));
+
+        if(delta > 0.5) {
+            driveRightInches(delta, 0.25, 1.5);
+        } else if( delta < -0.5) {
+            driveLeftInches(-delta, 0.25, 1.5);
         }
 
         robot.resetDistanceSensorServoArm();
