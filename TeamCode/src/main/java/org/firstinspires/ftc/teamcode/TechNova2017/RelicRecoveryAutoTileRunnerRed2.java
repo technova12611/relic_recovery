@@ -108,6 +108,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     break;
 
                 case BACKWARD_3_FEET:
+                    detectVuMark = true;
                     driveBackwardInches(28.0, motorSpeed, 5.0);
                     gotoNextState();
                     break;
