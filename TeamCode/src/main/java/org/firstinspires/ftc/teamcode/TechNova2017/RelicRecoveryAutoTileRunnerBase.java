@@ -129,7 +129,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         case RIGHT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
 
-                                driveBackwardInches(4.5, motorSpeed, 2.0);
+                                driveBackwardInches(3.0, motorSpeed, 2.0);
 
                             }
                             // if this is BLUE Alliance
@@ -182,7 +182,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // need to figure out the turn direction for
                     // red and blue alliance
                     if(getAllianceColor() ==AllianceColor.RED) {
-                        turn(-85.5);
+                        turn(-83.5);
                     } else {
                         turn(-84.5);
                     }
@@ -192,7 +192,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_1_FEET:
-                    driveBackwardInches(6.0, fasterMotorSpeed, 2.0);
+                    driveBackwardInches(5.5, fasterMotorSpeed, 2.0);
                     gotoNextState();
                     break;
 

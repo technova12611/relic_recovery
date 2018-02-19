@@ -139,5 +139,5 @@ public class RobotInfo {
 
     public static double GLYPH_BLOCKER_INIT_POSITION = 0.2;
     public static double GLYPH_BLOCKER_OPEN_POSITION = 0.8;
-    public static double GLYPH_BLOCKER_CLOSE_POSITION = 0.6;
+    public static double GLYPH_BLOCKER_CLOSE_POSITION = 0.4;
 }

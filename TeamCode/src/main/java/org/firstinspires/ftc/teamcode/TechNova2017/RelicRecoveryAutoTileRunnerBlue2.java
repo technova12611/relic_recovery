@@ -120,7 +120,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case BACKWARD_1_FEET:
-                    turnToAngle(89.0, 0.08);
+                    turnToAngle(90.0, 0.08);
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
@@ -163,8 +163,9 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case BACKWARD_7_INCHES:
-
-                    driveBackwardInches(4.0, motorSpeed, 3.0);
+                    turn(178.0);
+                    turn(181.0);
+                    driveBackwardInches(4.7, motorSpeed, 3.0);
                     gotoNextState();
                     break;
 

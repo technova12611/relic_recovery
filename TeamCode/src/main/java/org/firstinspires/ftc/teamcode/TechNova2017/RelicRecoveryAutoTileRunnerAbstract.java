@@ -334,7 +334,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         // need to test and tweak this to make it accurate
         //---------------------------------------------------
         //
-        double desiredDistance = 3.25;
+        double desiredDistance = 3.15;
         double delta = distance - desiredDistance;
         logInfo("Delta from the column (in): " + String.format("%.1f", delta));
 
@@ -361,7 +361,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         //-------------------------------------------------
         logInfo(" --- Drive forward to push --- ");
         ElapsedTime watcher = new ElapsedTime();
-        driveBackwardInches(6.0, motorSpeed, 2.0);
+        driveBackwardInches(6.7, motorSpeed, 2.0);
 
         logInfo(" Place Glyph into column (ms): " +
                 watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
