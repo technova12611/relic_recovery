@@ -975,7 +975,7 @@ public class TileRunnerRobot {
     }
 
     public void logMotorEncoders(Telemetry telemetry, boolean inLogCat) {
-        logInfo(telemetry, "Mode Encoder: ", lf.getCurrentPosition()
+        logInfo(telemetry, "(lf,rf,lr,rr): ", lf.getCurrentPosition()
          + " | " + rf.getCurrentPosition()
          + " | " + lr.getCurrentPosition()
          + " | " + rr.getCurrentPosition(), inLogCat);

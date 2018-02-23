@@ -155,7 +155,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case TURN_TO_180_DEGREE:
-                    turn(176.0);
+                    turn(179.0);
                    // sleepInAuto(500);
                    // turnToAngle(170.0, 0.08);
 
@@ -163,8 +163,6 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case BACKWARD_7_INCHES:
-                    turn(178.0);
-                    turn(181.0);
                     driveBackwardInches(4.7, motorSpeed, 3.0);
                     gotoNextState();
                     break;
