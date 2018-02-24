@@ -334,6 +334,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         // need to test and tweak this to make it accurate
         //---------------------------------------------------
         //
+
         double desiredDistance = 3.13;
         double delta = distance - desiredDistance;
         logInfo("Delta from the column (in): " + String.format("%.1f", delta));
@@ -341,7 +342,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         if(delta > 0.5) {
             driveRightInches(delta, 0.25, 1.5);
         } else if( delta < -0.5) {
-            driveLeftInches(-delta, 0.25, 1.5);
+            driveLeftInches(-delta, 0.25, 1.5 );
         }
 
         robot.resetDistanceSensorServoArm();
