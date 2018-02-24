@@ -334,7 +334,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         // need to test and tweak this to make it accurate
         //---------------------------------------------------
         //
-        double desiredDistance = 3.15;
+        double desiredDistance = 3.13;
         double delta = distance - desiredDistance;
         logInfo("Delta from the column (in): " + String.format("%.1f", delta));
 
