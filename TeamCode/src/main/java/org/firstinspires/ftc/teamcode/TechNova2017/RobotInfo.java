@@ -69,7 +69,7 @@ public class RobotInfo {
 
     // REV Smart Servo positions
     //---------------------------------------------
-    public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.57;
+    public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.52;
     public static double GLYPH_FLIPPER_AUTO_INITIAL_POSITION = 0.40;
     public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.08;
     public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.25;

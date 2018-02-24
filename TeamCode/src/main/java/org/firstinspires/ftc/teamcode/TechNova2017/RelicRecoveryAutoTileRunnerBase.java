@@ -192,7 +192,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case FORWARD_1_FEET:
-                    driveBackwardInches(6.0, fasterMotorSpeed, 2.0);
+                    driveBackwardInches(7.0, fasterMotorSpeed, 2.0);
                     gotoNextState();
                     break;
 
