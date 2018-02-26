@@ -35,7 +35,8 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIV
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_BLOCKER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_BLOCKER_INIT_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_BLOCKER_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_AUTO_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_AUTO_BLUE_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_AUTO_RED_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_1;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_2;
@@ -178,7 +179,11 @@ public class TileRunnerRobot {
         try {
             glyphFlipper = hardwareMap.servo.get("glyphFlipper");
             if(allianceColor != null) {
-                glyphFlipper.setPosition(GLYPH_FLIPPER_AUTO_INITIAL_POSITION);
+                if(allianceColor == AllianceColor.RED) {
+                    glyphFlipper.setPosition(GLYPH_FLIPPER_AUTO_RED_INITIAL_POSITION);
+                } else {
+                    glyphFlipper.setPosition(GLYPH_FLIPPER_AUTO_BLUE_INITIAL_POSITION);
+                }
             } else {
                 glyphFlipper.setPosition(GLYPH_FLIPPER_INITIAL_POSITION);
             }
@@ -1059,12 +1064,6 @@ public class TileRunnerRobot {
     public void raiseGlyphTrayup2() {
         if(this.glyphFlipper !=  null) {
             this.glyphFlipper.setPosition(GLYPH_FLIPPER_FLAT_POSITION_2);
-        }
-    }
-
-    public void initGlyphTrayForAuto() {
-        if(this.glyphFlipper !=  null) {
-            this.glyphFlipper.setPosition(GLYPH_FLIPPER_AUTO_INITIAL_POSITION);
         }
     }
 
