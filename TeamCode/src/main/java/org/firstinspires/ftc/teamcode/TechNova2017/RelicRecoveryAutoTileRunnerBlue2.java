@@ -129,7 +129,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveBackwardInches(18.5, motorSpeed, 3.0);
+                            driveBackwardInches(16.5, motorSpeed, 3.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
@@ -155,7 +155,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case TURN_TO_180_DEGREE:
-                    turn(179.0);
+                    turn(179.5);
                    // sleepInAuto(500);
                    // turnToAngle(170.0, 0.08);
 
@@ -163,7 +163,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case BACKWARD_7_INCHES:
-                    driveBackwardInches(4.7, motorSpeed, 3.0);
+                    driveBackwardInches(5.7, motorSpeed, 3.0);
                     gotoNextState();
                     break;
 

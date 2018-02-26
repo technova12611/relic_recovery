@@ -163,7 +163,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     break;
 
                 case BACKWARD_7_INCHES:
-                    driveBackwardInches(3.0, motorSpeed, 5.0);
+                    driveBackwardInches(2.5, motorSpeed, 5.0);
 
                     gotoNextState();
                     break;
