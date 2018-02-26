@@ -163,21 +163,17 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     break;
 
                 case BACKWARD_7_INCHES:
+                    robot.extendDistanceSensorArmServo();
                     driveBackwardInches(2.5, motorSpeed, 5.0);
-
                     gotoNextState();
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
-
                     placeGlyphIntoColumn(motorSpeed);
-
                     gotoNextState();
-
                     break;
 
                 case RESET_GLYPH_TRAY:
-
                     // move the glyph lift back to zero position
                     robot.resetForTeleOps();
                     gotoNextState();

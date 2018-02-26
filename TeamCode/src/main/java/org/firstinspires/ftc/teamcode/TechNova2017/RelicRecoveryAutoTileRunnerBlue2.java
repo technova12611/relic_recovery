@@ -115,7 +115,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case TURN_TO_90_DEGREE:
                     turn(86.0);
-                    sleepInAuto(500);
+                    sleepInAuto(300);
                     gotoNextState();
                     break;
 
@@ -155,15 +155,16 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case TURN_TO_180_DEGREE:
-                    turn(179.5);
-                   // sleepInAuto(500);
-                   // turnToAngle(170.0, 0.08);
+                    turn(178.5);
+                    sleepInAuto(200);
+                    turnToAngle(-175.0, 0.08);
 
                     gotoNextState();
                     break;
 
                 case BACKWARD_7_INCHES:
-                    driveBackwardInches(5.7, motorSpeed, 3.0);
+                    robot.extendDistanceSensorArmServo();
+                    driveBackwardInches(6.0, motorSpeed, 3.0);
                     gotoNextState();
                     break;
 

@@ -20,8 +20,6 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     VuMarkVision vuMarkVision;
     RelicRecoveryVuMark vuMark;
 
-    MovingAverage colAvgDistance = new MovingAverage(10);
-
     ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
     protected void initOpMode() throws InterruptedException {
@@ -230,7 +228,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 
             double speed = speedForTurnDistance(Math.abs(diff));
-            logInfo("** TurnToAngle 1: ", String.format("%.1f %.1f %.2f", headingAngle, diff, speed));
+            logInfo("** TurnToAngle: ", String.format("%.1f %.1f %.2f", headingAngle, diff, speed));
             robot.drive(0.0, 0.0, diff > 0 ? speed : -speed);
             idle();
         }
@@ -307,15 +305,18 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     protected double measureColDistance(long elapseTime) {
         ElapsedTime timer = new ElapsedTime();
         double avg = 0.0;
+        MovingAverage colAvgDistance = new MovingAverage(10);
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < elapseTime) {
             double distance = robot.getColDistance();
-            if(distance > 0.5 && distance < 7 ) {
+            if(distance > 0.5 && distance < 7.0 ) {
                 avg = colAvgDistance.next(distance);
+                logInfo("Raw Col Range Sensor (in): " +
+                        String.format("%.2f, %.1f", avg,timer.time(TimeUnit.MILLISECONDS)));
             }
-            sleep(35);
+            sleep(50);
         }
 
-        logInfo("Col Range Sensor: " + String.format("%.2f", avg) + " (in)" );
+        logInfo("Avg. Range Col Sensor: " + String.format("%.2f", avg) + " (in)" );
 
         return avg;
     }
@@ -323,26 +324,27 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     protected void placeGlyphIntoColumn(double motorSpeed) throws InterruptedException {
 
         logInfo(" --- Get the distance sensor in place --- ");
-        robot.extendDistanceSensorArmServo();
-        robot.openGlyphBlocker();
-        sleepInAuto(500);
+        //robot.extendDistanceSensorArmServo();
+        //robot.openGlyphBlocker();
+        //sleepInAuto(600);
 
-        double distance = measureColDistance(300) ;
+        double distance = measureColDistance(500) ;
         logInfo("Distance from the column (in): " + String.format("%.1f", distance));
 
         // measurement as inches
         // need to test and tweak this to make it accurate
         //---------------------------------------------------
         //
+        if(distance > 0.0) {
+            double desiredDistance = 3.13;
+            double delta = distance - desiredDistance;
+            logInfo("Delta from the column (in): " + String.format("%.1f", delta));
 
-        double desiredDistance = 3.13;
-        double delta = distance - desiredDistance;
-        logInfo("Delta from the column (in): " + String.format("%.1f", delta));
-
-        if(delta > 0.5) {
-            driveRightInches(delta, 0.25, 1.5);
-        } else if( delta < -0.5) {
-            driveLeftInches(-delta, 0.25, 1.5 );
+            if (delta > 0.5) {
+                driveRightInches(delta, 0.25, 1.5);
+            } else if (delta < -0.5) {
+                driveLeftInches(-delta, 0.25, 1.5);
+            }
         }
 
         robot.resetDistanceSensorServoArm();
