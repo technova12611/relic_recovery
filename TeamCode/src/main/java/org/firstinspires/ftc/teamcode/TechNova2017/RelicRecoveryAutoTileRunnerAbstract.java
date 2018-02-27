@@ -49,8 +49,6 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             Log.e(this.getClass().getSimpleName(), "JewelPusher failed.", e);
         }
 
-        robot.initGlyphTrayForAuto();
-
         // Activate vuMark
         //-----------------------------------------------------------
         vuMarkVision.activate();
