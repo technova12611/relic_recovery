@@ -33,10 +33,10 @@ public class SensorTest extends LinearOpMode {
         TileRunnerRobot robot = new TileRunnerRobot(this, hardwareMap, telemetry, AllianceColor.RED);
 
         // get a reference to the color sensor.
-        sensorColor = hardwareMap.get(ColorSensor.class, "jewelColor");
+        sensorColor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
         // get a reference to the distance sensor that shares the same name.
-        sensorDistance = hardwareMap.get(DistanceSensor.class, "jewelColor");
+        sensorDistance = hardwareMap.get(DistanceSensor.class, "colorSensor");
 
         //glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
 
@@ -56,6 +56,8 @@ public class SensorTest extends LinearOpMode {
             telemetry.addData("Red  ", sensorColor.red());
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
+            telemetry.addData("Alpha ", sensorColor.alpha());
+            telemetry.addData("RGB ", sensorColor.argb());
 
             telemetry.addData("(x1,x2): ", "(%.2f, %.2f)", robot.getX1Distance(), robot.getColDistance());
 

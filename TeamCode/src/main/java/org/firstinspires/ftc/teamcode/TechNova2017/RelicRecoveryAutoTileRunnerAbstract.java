@@ -309,7 +309,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             if(distance > 0.5 && distance < 7.0 ) {
                 avg = colAvgDistance.next(distance);
                 logInfo("Raw Col Range Sensor (in): " +
-                        String.format("%.2f, %.1f", avg,timer.time(TimeUnit.MILLISECONDS)));
+                        String.format("%.2f, %.2f", distance, avg) + " | " + timer.time(TimeUnit.MILLISECONDS));
             }
             sleep(50);
         }
@@ -365,8 +365,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         driveBackwardInches(6.7, motorSpeed, 2.0);
 
         logInfo(" Place Glyph into column (ms): " +
-                watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark
-                + " | " + String.format("%.2f cm", getXDistance()));
+                watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark);
 
         // need to push again
         if(watcher.seconds() > 1.8) {
