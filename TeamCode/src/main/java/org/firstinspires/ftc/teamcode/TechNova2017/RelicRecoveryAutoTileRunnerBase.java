@@ -182,9 +182,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // need to figure out the turn direction for
                     // red and blue alliance
                     if(getAllianceColor() ==AllianceColor.RED) {
-                        turn(-83.5);
+                        turn(-85.5);
                     } else {
-                        turn(-84.5);
+                        turn(-86.5);
                     }
 
                     sleepInAuto(250);
@@ -193,7 +193,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case FORWARD_1_FEET:
                     robot.extendDistanceSensorArmServo();
-                    driveBackwardInches(7.0, fasterMotorSpeed, 2.0);
+                    driveBackwardInches(6.25, fasterMotorSpeed, 2.0);
                     gotoNextState();
                     break;
 
@@ -211,20 +211,16 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if(getRuntime() > 20.0 || !pickupMoreGlyphs()) {
                         gotoState(END);
                     } else {
-                        double oneColumnDistance = 8.0;
+                        double oneColumnDistance = 9.5;
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.RIGHT) {
                                 driveLeftInches(oneColumnDistance, fasterMotorSpeed, 2.0);
-                            } else if (vuMark == RelicRecoveryVuMark.LEFT){
-                                driveRightInches(12.0, fasterMotorSpeed, 2.0);
                             } else{
                                 driveRightInches(oneColumnDistance, fasterMotorSpeed, 2.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
                                 driveRightInches(oneColumnDistance, fasterMotorSpeed, 2.0);
-                            } else if (vuMark == RelicRecoveryVuMark.RIGHT){
-                                driveLeftInches(12.0, fasterMotorSpeed, 2.0);
                             }else {
                                 driveLeftInches(oneColumnDistance, fasterMotorSpeed, 2.0);
                             }
@@ -237,14 +233,14 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // turn on the intake wheels
                     robot.collectGlyph();
                     // drive to glyph pit
-                    driveForwardInches(26.0, 0.50, 5.0);
+                    driveForwardInches(26.0, 0.60, 5.0);
                     sleepInAuto(300);
 
                     // push forward a bit to collect
                     driveForwardInches(4.0, 0.25, 2.0);
                     sleepInAuto(750);
                     turn(-89.0);
-                    robot.pushGlyph();
+                    //robot.pushGlyph();
 
                     if(knockoffGlyphs() && getRuntime() < 22.0) {
                         turnToAngle(0,0.5);
@@ -253,10 +249,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         turn(-89.0);
                     }
 
+                    driveBackwardInches(24.0, 0.75, 5.0);
+
                     robot.extendDistanceSensorArmServo();
-                    driveBackwardInches(29.5, 0.60, 5.0);
                     robot.pushGlyph();
-                    sleepInAuto(500);
+
+                    driveBackwardInches(6.0, 0.35, 5.0);
 
                     if(getRuntime() < 27.0) {
                         int previousIntakeCount = robot.intakeRight.getCurrentPosition();

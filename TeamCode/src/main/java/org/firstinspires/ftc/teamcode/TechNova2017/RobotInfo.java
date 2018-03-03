@@ -120,8 +120,9 @@ public class RobotInfo {
 
 
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.28;
-    public static double GLYPH_PUSHER_PUSH_POSITION = 0.24;
-    public static double GLYPH_PUSHER_HOLD_POSITION = 0.72;
+    //public static double GLYPH_PUSHER_PUSH_POSITION = 0.24;
+    public static double GLYPH_PUSHER_PUSH_POSITION = 0.21;
+    public static double GLYPH_PUSHER_HOLD_POSITION = 0.70;
     public static double GLYPH_PUSHER_UP_POSITION = 0.88;
 
     // HSB9485 servo positions
