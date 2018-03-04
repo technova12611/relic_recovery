@@ -115,14 +115,14 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                 case TURN_LEFT_TO_90:
 
-                    turn(86);
+                    turn(86.0);
                     sleepInAuto(500);
                     gotoNextState();
                     break;
 
                 case BACKWARD_1_FEET:
                     // make sure it's at 90 degree
-                    turnToAngle(90, 0.08);
+                    turnToAngle(90.0, 0.08);
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
@@ -170,6 +170,14 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                 case PLACE_GLYPH_INTO_CRYPTO:
                     placeGlyphIntoColumn(motorSpeed);
+
+                    if(vuMark == RelicRecoveryVuMark.CENTER) {
+                        driveBackwardInches(6.0, 0.35,2.0);
+                    } else if (vuMark == RelicRecoveryVuMark.RIGHT){
+                        driveForwardInches(12.0, 0.35, 2.0);
+                    }
+                    turn(-45.0);
+
                     gotoNextState();
                     break;
 

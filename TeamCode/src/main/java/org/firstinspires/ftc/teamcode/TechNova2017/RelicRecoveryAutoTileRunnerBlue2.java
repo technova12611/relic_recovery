@@ -114,13 +114,14 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     break;
 
                 case TURN_TO_90_DEGREE:
-                    turn(88.0);
+                    turn(89.0);
                     sleepInAuto(300);
+                    turnToAngle(91.0, 0.08);
+
                     gotoNextState();
                     break;
 
                 case BACKWARD_1_FEET:
-                    turnToAngle(89.0, 0.08);
 
                     // need more testing on each position
                     // may need to add range sensor to have better distance control
@@ -129,13 +130,13 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveBackwardInches(16.5, motorSpeed, 3.0);
+                            driveBackwardInches(19.0, motorSpeed, 3.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveBackwardInches(11.5, motorSpeed, 3.0);
+                            driveBackwardInches(12.5, motorSpeed, 3.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
@@ -164,12 +165,19 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case BACKWARD_7_INCHES:
                     robot.extendDistanceSensorArmServo();
-                    driveBackwardInches(6.0, motorSpeed, 3.0);
+                    driveBackwardInches(6.75, motorSpeed, 3.0);
                     gotoNextState();
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
                     placeGlyphIntoColumn(motorSpeed);
+
+                    if(vuMark == RelicRecoveryVuMark.CENTER) {
+                        driveForwardInches(6.0, 0.35,2.0);
+                    } else if (vuMark == RelicRecoveryVuMark.LEFT){
+                        driveForwardInches(12.0, 0.35, 2.0);
+                    }
+                    turn(-145.0);
                     gotoNextState();
 
                     break;

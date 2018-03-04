@@ -376,7 +376,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         ElapsedTime timer1 = new ElapsedTime();
 
         int count = 0;
-        while(timer1.seconds() < timeOutInSeconds) {
+        while(opModeIsActive() && timer1.seconds() < timeOutInSeconds) {
             distance = measureColDistance(500);
             logInfo("Initial Distance from the column (in): " + String.format("%.1f", distance));
 
@@ -389,9 +389,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 double delta = distance - desiredDistance;
                 logInfo("Delta from the column (in): " + String.format("%.1f", delta));
 
-                if (delta > 0.5) {
+                if (delta > 0.4) {
                     driveRightInches(delta, 0.35, 3.0);
-                } else if (delta < -0.5) {
+                } else if (delta < -0.4) {
                     driveLeftInches(-delta, 0.35, 3.0);
                 } else {
                     logInfo("Aligned correctly.");
@@ -399,7 +399,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 }
             } else {
                 logInfo("Range Sensor out of range.");
-                break;
+                //break;
             }
 
             logInfo(" " + (++count) + " Distance from the column (in): " + String.format("%.1f", robot.getColDistance()));

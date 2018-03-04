@@ -138,7 +138,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(17.5, motorSpeed, 5.0);
+                                driveForwardInches(16.5, motorSpeed, 5.0);
                             }
                             break;
                         // need to place glyph into CENTER Crypto box
@@ -149,7 +149,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(11.0, motorSpeed, 5.0);
+                                driveForwardInches(10.0, motorSpeed, 5.0);
                             }
                             break;
 
@@ -193,7 +193,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     sleepInAuto(250);
 
-                    turn(-88.5);
+                    //turn(-88.5);
 
                     gotoNextState();
                     break;
@@ -244,7 +244,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     sleepInAuto(300);
 
                     // push forward a bit to collect
-                    driveForwardInches(4.0, 0.25, 2.0);
+                    driveForwardInches(5.0, 0.25, 2.0);
                     sleepInAuto(750);
                     turn(-89.0);
                     //robot.pushGlyph();
@@ -279,7 +279,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                             ElapsedTime timer2 = new ElapsedTime();
 
-                            while(timer.time(TimeUnit.MILLISECONDS) < 2000) {
+                            while(opModeIsActive() && timer2.seconds() < 2.0) {
                                 double columnDist = robot.getColDistance();
                                 if (columnDist < 0.5 || columnDist > 8.0) {
                                     driveBackwardInches(1.0, 0.25, 2.0);
