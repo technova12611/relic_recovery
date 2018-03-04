@@ -306,46 +306,26 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         MovingAverage colAvgDistance = new MovingAverage(10);
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < elapseTime) {
             double distance = robot.getColDistance();
-            if(distance > 0.5 && distance < 7.0 ) {
+            logInfo("        * Raw Col Range Sensor (in): " + String.format("%.2f", distance));
+            if(distance > 0.5 && distance < 8.0 ) {
                 avg = colAvgDistance.next(distance);
-                logInfo("Raw Col Range Sensor (in): " +
-                        String.format("%.2f, %.2f", distance, avg) + " | " + timer.time(TimeUnit.MILLISECONDS));
+                logInfo("        * Moving Avg. Range Sensor (in): " +
+                        String.format("%.2f", avg) + " | " + timer.time(TimeUnit.MILLISECONDS));
+            } else {
+                logInfo("        * Raw Col Range Sensor out of range. ( < 0.5 or > 8.0)");
             }
             sleep(50);
         }
 
-        logInfo("Avg. Range Col Sensor: " + String.format("%.2f", avg) + " (in)" );
+        logInfo("    Avg. Range Col Sensor (in): " + String.format("%.2f", avg));
 
         return avg;
     }
 
     protected void placeGlyphIntoColumn(double motorSpeed) throws InterruptedException {
 
-        logInfo(" --- Get the distance sensor in place --- ");
-        //robot.extendDistanceSensorArmServo();
-        //robot.openGlyphBlocker();
-        //sleepInAuto(600);
-
-        double distance = measureColDistance(500) ;
-        logInfo("Distance from the column (in): " + String.format("%.1f", distance));
-
-        // measurement as inches
-        // need to test and tweak this to make it accurate
-        //---------------------------------------------------
-        //
-        if(distance > 0.0) {
-            double desiredDistance = 3.5;
-            double delta = distance - desiredDistance;
-            logInfo("Delta from the column (in): " + String.format("%.1f", delta));
-
-            if (delta > 0.5) {
-                driveRightInches(delta, 0.25, 1.5);
-            } else if (delta < -0.5) {
-                driveLeftInches(-delta, 0.25, 1.5);
-            }
-        }
-
-        robot.resetDistanceSensorServoArm();
+        logInfo(" --- Align robot to the cryptobox --- ");
+        alignCryptoBoxInAuto(5.0);
 
         logInfo(" --- Flip Glyph Tray --- ");
         robot.dumpGlyphsFromTray();
@@ -384,6 +364,50 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         // close the glyphBlocker
         //----------------------------------------
         robot.closeGlyphBlocker();
+    }
+
+    public void alignCryptoBoxInAuto(double timeOutInSeconds) throws InterruptedException {
+
+        logInfo(" --- Get the distance sensor in place --- ");
+        //robot.extendDistanceSensorArmServo();
+
+        double distance = 0.0;
+
+        ElapsedTime timer1 = new ElapsedTime();
+
+        int count = 0;
+        while(timer1.seconds() < timeOutInSeconds) {
+            distance = measureColDistance(500);
+            logInfo("Initial Distance from the column (in): " + String.format("%.1f", distance));
+
+            // measurement as inches
+            // need to test and tweak this to make it accurate
+            //---------------------------------------------------
+            //
+            if (distance > 0.0) {
+                double desiredDistance = 3.15;
+                double delta = distance - desiredDistance;
+                logInfo("Delta from the column (in): " + String.format("%.1f", delta));
+
+                if (delta > 0.5) {
+                    driveRightInches(delta, 0.35, 3.0);
+                } else if (delta < -0.5) {
+                    driveLeftInches(-delta, 0.35, 3.0);
+                } else {
+                    logInfo("Aligned correctly.");
+                    break;
+                }
+            } else {
+                logInfo("Range Sensor out of range.");
+                break;
+            }
+
+            logInfo(" " + (++count) + " Distance from the column (in): " + String.format("%.1f", robot.getColDistance()));
+        }
+
+        logInfo("Final Distance from the column (in): " + String.format("%.1f", robot.getColDistance()));
+
+        robot.resetDistanceSensorServoArm();
     }
 
     // default is RED allaince

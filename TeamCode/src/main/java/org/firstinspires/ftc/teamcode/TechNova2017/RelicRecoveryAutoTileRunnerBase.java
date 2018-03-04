@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.END;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.START;
@@ -252,12 +256,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         turn(-89.0);
                     }
 
-                    driveBackwardInches(24.0, 0.75, 5.0);
+                    driveBackwardInches(28.0, 0.75, 5.0);
 
                     robot.extendDistanceSensorArmServo();
                     robot.pushGlyph();
 
-                    driveBackwardInches(8.0, 0.35, 5.0);
+                    driveBackwardInches(3.25, 0.35, 5.0);
 
                     if(getRuntime() < 27.0) {
                         int previousIntakeCount = robot.intakeRight.getCurrentPosition();
@@ -272,6 +276,18 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             robot.pushGlyph();
                             sleepInAuto(300);
                             robot.stopIntake();
+
+                            ElapsedTime timer2 = new ElapsedTime();
+
+                            while(timer.time(TimeUnit.MILLISECONDS) < 2000) {
+                                double columnDist = robot.getColDistance();
+                                if (columnDist < 0.5 || columnDist > 8.0) {
+                                    driveBackwardInches(1.0, 0.25, 2.0);
+                                } else {
+                                    break;
+                                }
+                            }
+
                             placeGlyphIntoColumn(fasterMotorSpeed);
                         }
                     }

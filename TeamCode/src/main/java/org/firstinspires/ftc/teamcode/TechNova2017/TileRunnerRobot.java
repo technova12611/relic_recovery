@@ -415,7 +415,7 @@ public class TileRunnerRobot {
         int total = 0;
         int count = 0;
         for (DcMotor m : ms) {
-            if (m.getMode() == DcMotor.RunMode.RUN_TO_POSITION && 100 < Math.abs(m.getTargetPosition())) {
+            if (m.getMode() == DcMotor.RunMode.RUN_TO_POSITION && 10 < Math.abs(m.getTargetPosition())) {
                 total += Math.abs(m.getTargetPosition() - m.getCurrentPosition());
                 count += 1;
             }
@@ -452,7 +452,7 @@ public class TileRunnerRobot {
      */
     public void updateSensorTelemetry() {
 
-        double currentAvgRemaning = averageRemainingTicks(lr, rf, rr);
+        double currentAvgRemaning = averageRemainingTicks(lf,lr, rf, rr);
         double currentMovingAvg = driveEncodersMovingAvg.next(currentAvgRemaning);
 
         logInfo(telemetry,"Encoder Remain", String.format("\t%.1f\t%.1f\t%.1f", currentAvgRemaning, currentMovingAvg, previousDriveAvgEncoder));

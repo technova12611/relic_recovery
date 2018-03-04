@@ -12,7 +12,6 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileR
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerTest.State.START;
 
 @Autonomous(name = "Auto Test TileRunner", group = "Competition")
-@Disabled
 public class RelicRecoveryAutoTileRunnerTest extends RelicRecoveryAutoTileRunnerAbstract {
 
      // make new States for each autonomous strategy
@@ -84,10 +83,28 @@ public class RelicRecoveryAutoTileRunnerTest extends RelicRecoveryAutoTileRunner
 
             State step = (State)v_state;
 
+            boolean firstTime = true;
             switch (step) {
                 case START:
                     detectVuMark = true;
-                    gotoNextState();
+
+                    if(firstTime) {
+                        driveLeftInches(4.0, 0.35, 5.5);
+                        sleepInAuto(300);
+
+                        driveRightInches(4.0, 0.35, 5.5);
+
+                        firstTime = false;
+                    }
+
+                    robot.extendDistanceSensorArmServo();
+                    sleepInAuto(500);
+
+                    alignCryptoBoxInAuto(7.0);
+
+                    sleepInAuto(2000);
+
+                    //gotoNextState();
                     break;
 
                 case GET_OFF_STONE:
