@@ -182,18 +182,21 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // need to figure out the turn direction for
                     // red and blue alliance
                     if(getAllianceColor() ==AllianceColor.RED) {
-                        turn(-85.5);
+                        turn(-83.5);
                     } else {
-                        turn(-86.5);
+                        turn(-84.5);
                     }
 
                     sleepInAuto(250);
+
+                    turn(-88.5);
+
                     gotoNextState();
                     break;
 
                 case FORWARD_1_FEET:
                     robot.extendDistanceSensorArmServo();
-                    driveBackwardInches(6.25, fasterMotorSpeed, 2.0);
+                    driveBackwardInches(6.75, fasterMotorSpeed, 2.0);
                     gotoNextState();
                     break;
 
@@ -254,7 +257,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     robot.extendDistanceSensorArmServo();
                     robot.pushGlyph();
 
-                    driveBackwardInches(6.0, 0.35, 5.0);
+                    driveBackwardInches(8.0, 0.35, 5.0);
 
                     if(getRuntime() < 27.0) {
                         int previousIntakeCount = robot.intakeRight.getCurrentPosition();

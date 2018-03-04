@@ -334,7 +334,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         //---------------------------------------------------
         //
         if(distance > 0.0) {
-            double desiredDistance = 3.13;
+            double desiredDistance = 3.5;
             double delta = distance - desiredDistance;
             logInfo("Delta from the column (in): " + String.format("%.1f", delta));
 
