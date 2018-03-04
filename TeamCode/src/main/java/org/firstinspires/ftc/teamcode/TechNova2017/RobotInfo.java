@@ -119,7 +119,7 @@ public class RobotInfo {
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.65;
 
 
-    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.24;
+    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.22;
     //public static double GLYPH_PUSHER_PUSH_POSITION = 0.24;
     public static double GLYPH_PUSHER_PUSH_POSITION = 0.21;
     public static double GLYPH_PUSHER_HOLD_POSITION = 0.70;
