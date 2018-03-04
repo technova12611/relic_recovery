@@ -377,7 +377,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         int count = 0;
         while(opModeIsActive() && timer1.seconds() < timeOutInSeconds) {
-            distance = measureColDistance(500);
+            distance = measureColDistance(300);
             logInfo("Initial Distance from the column (in): " + String.format("%.1f", distance));
 
             // measurement as inches
@@ -399,7 +399,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 }
             } else {
                 logInfo("Range Sensor out of range.");
-                //break;
+                if(count >=3) {
+                    break;
+                }
             }
 
             logInfo(" " + (++count) + " Distance from the column (in): " + String.format("%.1f", robot.getColDistance()));

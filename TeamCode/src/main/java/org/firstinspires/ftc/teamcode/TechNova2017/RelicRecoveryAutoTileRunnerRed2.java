@@ -172,7 +172,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     placeGlyphIntoColumn(motorSpeed);
 
                     if(vuMark == RelicRecoveryVuMark.CENTER) {
-                        driveBackwardInches(6.0, 0.35,2.0);
+                        driveForwardInches(6.0, 0.35,2.0);
                     } else if (vuMark == RelicRecoveryVuMark.RIGHT){
                         driveForwardInches(12.0, 0.35, 2.0);
                     }
