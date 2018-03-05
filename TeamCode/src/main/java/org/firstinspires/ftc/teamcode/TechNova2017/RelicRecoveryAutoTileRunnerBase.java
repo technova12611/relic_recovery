@@ -218,7 +218,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if(getRuntime() > 20.0 || !pickupMoreGlyphs()) {
                         gotoState(END);
                     } else {
-                        double oneColumnDistance = 9.75;
+                        double oneColumnDistance = 10.5;
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.RIGHT) {
                                 driveLeftInches(oneColumnDistance, fasterMotorSpeed, 2.0);
