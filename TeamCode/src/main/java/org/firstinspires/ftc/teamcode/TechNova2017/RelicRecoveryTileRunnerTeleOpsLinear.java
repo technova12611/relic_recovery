@@ -94,7 +94,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.raiseRelicOverTheWall();
         }
 
-        if(g2.dpadDown() && !clawClosed) {
+        if(g2.dpadDown()) {
             robot.closeRelicClawHolder();
             robot.closeIntakeWheels();
             robot.pushGlyph();

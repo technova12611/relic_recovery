@@ -69,13 +69,13 @@ public class RobotInfo {
 
     // REV Smart Servo positions
     //---------------------------------------------
-    public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.52;
+    public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.54;
     public static double GLYPH_FLIPPER_AUTO_RED_INITIAL_POSITION = 0.43;
     public static double GLYPH_FLIPPER_AUTO_BLUE_INITIAL_POSITION = 0.37;
-    public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.08;
+    public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.07;
     public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.25;
     public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.40;
-    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.52;
+    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.54;
 
     // HiTec Servo #1 positions
     //----------------------------------------------
@@ -113,10 +113,10 @@ public class RobotInfo {
     public static double RELIC_ELBOW_UP_POSITION = 0.65;
 
     public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.73;
-    public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.09;
+    public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.02;
 
-    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.25;
-    public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.65;
+    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.15;
+    public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.75;
 
 
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.22;
@@ -138,6 +138,7 @@ public class RobotInfo {
     public static double DISTANCE_SENSOR_EXTEND_POSITION = 0.15;
     public static double DISTANCE_SENSOR_TELEOPS_POSITION = 0.75;
     public static double DISTANCE_SENSOR_UPRIGHT_POSITION = 0.50;
+    public static double DISTANCE_SENSOR_UPRIGHT_POSITION_2 = 0.35;
 
     public static double GLYPH_BLOCKER_INIT_POSITION = 0.2;
     public static double GLYPH_BLOCKER_OPEN_POSITION = 0.8;

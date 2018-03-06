@@ -9,6 +9,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_UPRIGHT_POSITION_2;
+
 /**
  * Provide the basic functions for robot to perform run to distance and turn to angle
  * and other sensor related control algorithms
@@ -356,7 +358,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         // move backward to separate robot from glyph
         //----------------------------------------------
         logInfo(" --- Drive backward to finish --- ");
-        driveForwardInches(5.0, 0.5, 2.0);
+        driveForwardInches(5.25, 0.5, 2.0);
 
         logInfo(" --- Turn to 90 degree --- ");
         turn(-89.0);
@@ -371,10 +373,16 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         logInfo(" --- Get the distance sensor in place --- ");
         //robot.extendDistanceSensorArmServo();
 
-        double distance = 0.0;
+        double distance = robot.getColDistance();
+
+        if(distance > 200.0) {
+            robot.moveDistanceSensorArmServo(DISTANCE_SENSOR_UPRIGHT_POSITION_2);
+            sleepInAuto(200);
+            robot.extendDistanceSensorArmServo();
+            sleepInAuto(500);
+        }
 
         ElapsedTime timer1 = new ElapsedTime();
-
         int count = 0;
         while(opModeIsActive() && timer1.seconds() < timeOutInSeconds) {
             distance = measureColDistance(300);
@@ -399,7 +407,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 }
             } else {
                 logInfo("Range Sensor out of range.");
-                if(count >=3) {
+                if(count >=2) {
                     break;
                 }
             }

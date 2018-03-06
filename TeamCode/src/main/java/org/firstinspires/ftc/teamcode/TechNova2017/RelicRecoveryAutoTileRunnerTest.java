@@ -12,6 +12,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileR
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerTest.State.START;
 
 @Autonomous(name = "Auto Test TileRunner", group = "Competition")
+@Disabled
 public class RelicRecoveryAutoTileRunnerTest extends RelicRecoveryAutoTileRunnerAbstract {
 
      // make new States for each autonomous strategy

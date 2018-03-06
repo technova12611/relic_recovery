@@ -1220,6 +1220,12 @@ public class TileRunnerRobot {
         }
     }
 
+    public void moveDistanceSensorArmServo(double position) {
+        if(this.distSensorServo != null) {
+            this.distSensorServo.setPosition(position);
+        }
+    }
+
     protected GlyphColor getGlyphColor() {
         if(glyphColor != null) {
             if(glyphColor.argb() > 1000) {
