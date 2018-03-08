@@ -221,17 +221,15 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         turn(-92.0);
                         double oneColumnDistance = 12.5;
                         if(getAllianceColor() == AllianceColor.RED) {
-                            if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                                driveLeftInches(oneColumnDistance, motorSpeed, 2.0);
-                            } else if (vuMark == RelicRecoveryVuMark.LEFT) {
+                            if (vuMark == RelicRecoveryVuMark.LEFT) {
                                 driveRightInches(oneColumnDistance+2.0, motorSpeed, 2.0);
                             } else {
-                                driveRightInches(oneColumnDistance, motorSpeed, 2.0);
+                                driveLeftInches(oneColumnDistance, motorSpeed, 2.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                driveRightInches(oneColumnDistance, motorSpeed, 2.0);
-                            }else {
+                                driveRightInches(oneColumnDistance +2.0, motorSpeed, 2.0);
+                            } else {
                                 driveLeftInches(oneColumnDistance, motorSpeed, 2.0);
                             }
                         }
@@ -269,12 +267,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     turn(-89.0);
 
-                    driveBackwardInches(2.50, 0.25, 2.0);
+                    driveBackwardInches(3.00, 0.25, 2.0);
 
                     if(getRuntime() < 25.0) {
                         int previousIntakeCount = robot.intakeRight.getCurrentPosition();
                         sleepInAuto(200);
-                        if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 30) {
+                        if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
                             driveForwardInches(2.50, 0.25, 2.0);
                             robot.reverseGlyph();
                             sleepInAuto(1500);
@@ -292,7 +290,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                                 double columnDist = robot.getColDistance();
                                 logInfo(" Second glyph distance:" + String.format("%.1f", columnDist));
 
-                                if (columnDist < 0.5 || columnDist > 8.0) {
+                                if (columnDist > 10.0) {
                                     driveBackwardInches(1.0, 0.25, 2.0);
                                 }  else {
                                     break;
@@ -303,7 +301,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         }
                     }
 
-                    driveBackwardInches(1.0, 0.5, 1.0);
+                    driveBackwardInches(2.0, 0.5, 1.0);
 
                     gotoNextState();
 

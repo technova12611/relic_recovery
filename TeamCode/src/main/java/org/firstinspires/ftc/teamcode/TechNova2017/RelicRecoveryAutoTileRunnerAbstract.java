@@ -309,7 +309,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < elapseTime) {
             double distance = robot.getColDistance();
             logInfo("        * Raw Col Range Sensor (in): " + String.format("%.2f", distance));
-            if(distance > 0.5 && distance < 8.0 ) {
+            if(distance > 0.05 && distance < 8.0 ) {
                 avg = colAvgDistance.next(distance);
                 logInfo("        * Moving Avg. Range Sensor (in): " +
                         String.format("%.2f", avg) + " | " + timer.time(TimeUnit.MILLISECONDS));
@@ -379,6 +379,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         double distance = robot.getColDistance();
 
         if(distance > 200.0) {
+            logInfo("Couldn't read range sensor data.");
             robot.moveDistanceSensorArmServo(DISTANCE_SENSOR_UPRIGHT_POSITION_2);
             sleepInAuto(200);
             robot.extendDistanceSensorArmServo();
@@ -410,9 +411,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 }
             } else {
                 logInfo("Range Sensor out of range.");
-                if(count >=2) {
-                    break;
-                }
+                break;
             }
 
             logInfo(" " + (++count) + " Distance from the column (in): " + String.format("%.1f", robot.getColDistance()));
