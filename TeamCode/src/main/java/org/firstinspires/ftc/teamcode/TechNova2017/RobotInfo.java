@@ -121,7 +121,7 @@ public class RobotInfo {
 
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.22;
     //public static double GLYPH_PUSHER_PUSH_POSITION = 0.24;
-    public static double GLYPH_PUSHER_PUSH_POSITION = 0.21;
+    public static double GLYPH_PUSHER_PUSH_POSITION = 0.19;
     public static double GLYPH_PUSHER_HOLD_POSITION = 0.67;
     public static double GLYPH_PUSHER_UP_POSITION = 0.88;
 

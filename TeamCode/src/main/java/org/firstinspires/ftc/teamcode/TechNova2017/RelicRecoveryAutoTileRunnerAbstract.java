@@ -340,28 +340,31 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         robot.resetGlyphTray();
 
-        // move forward to push the glyph into the box
-        //-------------------------------------------------
-        logInfo(" --- Drive forward to push --- ");
-        ElapsedTime watcher = new ElapsedTime();
-        driveBackwardInches(6.7, motorSpeed, 2.0);
+        if(getRuntime() < 28.5) {
 
-        logInfo(" Place Glyph into column (ms): " +
-                watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark);
+            // move forward to push the glyph into the box
+            //-------------------------------------------------
+            logInfo(" --- Drive forward to push --- ");
+            ElapsedTime watcher = new ElapsedTime();
+            driveBackwardInches(6.7, motorSpeed, 2.0);
 
-        // need to push again
-        if(watcher.seconds() > 1.8) {
-            logInfo(" --- Missed the column, push again --- ");
-            driveForwardInches(2.0, motorSpeed, 2.0);
-            driveBackwardInches(4.0, motorSpeed, 2.0);
+            logInfo(" Place Glyph into column (ms): " +
+                    watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark);
+
+            // need to push again
+            if (watcher.seconds() > 1.8) {
+                logInfo(" --- Missed the column, push again --- ");
+                driveForwardInches(2.0, motorSpeed, 2.0);
+                driveBackwardInches(4.0, motorSpeed, 2.0);
+            }
+            // move backward to separate robot from glyph
+            //----------------------------------------------
+            logInfo(" --- Drive backward to finish --- ");
+            driveForwardInches(5.5, 0.5, 2.0);
+
+            logInfo(" --- Turn to 90 degree --- ");
+            turn(-89.0);
         }
-        // move backward to separate robot from glyph
-        //----------------------------------------------
-        logInfo(" --- Drive backward to finish --- ");
-        driveForwardInches(5.25, 0.5, 2.0);
-
-        logInfo(" --- Turn to 90 degree --- ");
-        turn(-89.0);
 
         // close the glyphBlocker
         //----------------------------------------
@@ -384,7 +387,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         ElapsedTime timer1 = new ElapsedTime();
         int count = 0;
-        while(opModeIsActive() && timer1.seconds() < timeOutInSeconds) {
+        while(opModeIsActive() && timer1.seconds() < timeOutInSeconds && getRuntime() < 27.0) {
             distance = measureColDistance(300);
             logInfo("Initial Distance from the column (in): " + String.format("%.1f", distance));
 
