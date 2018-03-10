@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
-import java.util.concurrent.TimeUnit;
-
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.END;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.START;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_UPRIGHT_POSITION;
@@ -113,7 +111,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                 case GET_OFF_STONE:
                     detectVuMark = true;
 
-                    robot.setServoPosition(robot.distSensorServo, DISTANCE_SENSOR_UPRIGHT_POSITION);
 
                     if(getAllianceColor() ==  AllianceColor.RED) {
                         driveBackwardInches(24.5, motorSpeed, 5.0);
@@ -182,6 +179,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case TURN_TO_90_DEGREE:
+
+                    robot.setServoPosition(robot.distSensorServo, DISTANCE_SENSOR_UPRIGHT_POSITION);
+
                     // turn right to 90 degree
                     // need to figure out the turn direction for
                     // red and blue alliance
@@ -253,19 +253,18 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     turn(-89.0);
                     //robot.pushGlyph();
 
-                    if(knockoffGlyphs() && getRuntime() < 22.0) {
-                        turnToAngle(0,0.5);
-                        turnToAngle(-86.0,0.3);
-                        sleepInAuto(500);
-                        turn(-89.0);
-                    }
-
                     driveBackwardInches(27.5, 0.50, 5.0);
 
                     robot.extendDistanceSensorArmServo();
                     robot.pushGlyph();
 
                     turn(-89.0);
+
+                    if(!dumpglyphs()) {
+                        driveBackwardInches(1.50, 0.25, 2.0);
+                        gotoNextState();
+                        break;
+                    }
 
                     driveBackwardInches(3.00, 0.25, 2.0);
 
@@ -336,7 +335,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         return false;
     }
 
-    protected boolean knockoffGlyphs() { return false; }
+    protected boolean dumpglyphs() { return false; }
 
     //------------------------------------
 }
