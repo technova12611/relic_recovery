@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
-import android.util.Log;
-
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -98,11 +96,11 @@ public class SensorTest extends LinearOpMode {
             else if(gamepad2.x) {
                 robot.openGlyphBlocker();
                 robot.dumpGlyphsFromTray();
-                robot.holdGlyph();
+                robot.holdPusher();
             }
             else if(gamepad2.left_bumper && gamepad2.y) {
                 robot.resetGlyphTray();
-                robot.holdGlyph();
+                robot.holdPusher();
                 //collectGlyph();
             } else if(gamepad2.y) {
                 robot.openGlyphBlocker();

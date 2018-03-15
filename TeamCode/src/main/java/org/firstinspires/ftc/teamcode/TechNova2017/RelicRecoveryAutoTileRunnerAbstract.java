@@ -334,25 +334,25 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         sleepInAuto(300);
 
         logInfo(" --- More backward to let glyph fall on the floor --- ");
-        driveForwardInches(2.5, motorSpeed, 1.2);
+        driveForwardInches(2.5, motorSpeed, 2.2);
         sleepInAuto(200);
-        driveForwardInches(6.0, motorSpeed, 1.2);
+        driveForwardInches(6.0, motorSpeed, 2.2);
 
         robot.resetGlyphTray();
 
-        if(getRuntime() < 28.5) {
+        if(getRuntime() < 27.5) {
 
             // move forward to push the glyph into the box
             //-------------------------------------------------
             logInfo(" --- Drive forward to push --- ");
             ElapsedTime watcher = new ElapsedTime();
-            driveBackwardInches(9.2, motorSpeed, 2.0);
+            driveBackwardInches(9.5, motorSpeed, 2.0);
 
             logInfo(" Place Glyph into column (ms): " +
                     watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark);
 
             // need to push again
-            if (watcher.seconds() > 1.8) {
+            if (watcher.seconds() > 1.8 && getRuntime() < 28.5) {
                 logInfo(" --- Missed the column, push again --- ");
                 driveForwardInches(2.0, motorSpeed, 2.0);
                 driveBackwardInches(4.0, motorSpeed, 2.0);
@@ -360,7 +360,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             // move backward to separate robot from glyph
             //----------------------------------------------
             logInfo(" --- Drive backward to finish --- ");
-            driveForwardInches(6.5, 0.5, 2.0);
+            driveForwardInches(7.5, 0.5, 2.0);
 
             logInfo(" --- Turn to 90 degree --- ");
             turn(-89.0);
@@ -383,13 +383,13 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             robot.moveDistanceSensorArmServo(DISTANCE_SENSOR_UPRIGHT_POSITION_2);
             sleepInAuto(200);
             robot.extendDistanceSensorArmServo();
-            sleepInAuto(500);
+            sleepInAuto(300);
         }
 
         ElapsedTime timer1 = new ElapsedTime();
         int count = 0;
-        while(opModeIsActive() && timer1.seconds() < timeOutInSeconds && getRuntime() < 27.0) {
-            distance = measureColDistance(300);
+        while(opModeIsActive() && timer1.seconds() < timeOutInSeconds && getRuntime() < 26.0) {
+            distance = measureColDistance(150);
             logInfo("Initial Distance from the column (in): " + String.format("%.1f", distance));
 
             // measurement as inches
@@ -428,5 +428,11 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     public AllianceColor getAllianceColor() {
         return AllianceColor.RED;
     }
+
+    protected boolean pickupMoreGlyphs() {
+        return false;
+    }
+
+    protected boolean dumpMoreGlyphs() { return false; }
 
 }

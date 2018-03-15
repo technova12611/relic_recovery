@@ -4,11 +4,8 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.concurrent.TimeUnit;
 
@@ -160,7 +157,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             glyphLiftInAutoMode = Boolean.TRUE;
         }
         else if(g2.leftBumperOnce() && !g2.rightBumper()){
-           robot.holdGlyph();
+           robot.holdPusher();
         }
         else if(g2.rightBumperOnce() || g2.rightBumper()){
             robot.pushGlyph();
@@ -212,7 +209,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         else if(g2.X()) {
             robot.openGlyphBlocker();
             robot.dumpGlyphsFromTray();
-            robot.holdGlyph();
+            robot.holdPusher();
             stopIntake();
 
             Log.i("Place Glyph:", "Trip #:" + (++numOfTrips) + " | " + String.format("%.1f", tripTimer.seconds()));
@@ -220,7 +217,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         }
         else if(g2.leftBumper() && g2.Y()) {
             robot.resetGlyphTray();
-            robot.holdGlyph();
+            robot.holdPusher();
             //collectGlyph();
         } else if(g2.YOnce()) {
             robot.openGlyphBlocker();

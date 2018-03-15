@@ -201,11 +201,13 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
             if(vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 robot.turnOnBlueLed();
+                vuMarkVision.setFlashTorchMode(false);
             }
         }
 
         robot.onStop();
     }
 
-    //------------------------------------
+
+    //-------------------------------------------------------
 }

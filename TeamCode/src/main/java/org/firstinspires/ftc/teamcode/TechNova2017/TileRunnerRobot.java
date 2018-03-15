@@ -376,7 +376,7 @@ public class TileRunnerRobot {
     public void resetForTeleOps() {
         stopIntake();
         resetGlyphTray();
-        holdGlyph();
+        holdPusher();
         openIntakeWheels();
         closeGlyphBlocker();
     }
@@ -384,7 +384,7 @@ public class TileRunnerRobot {
     public void resetForTeleOpsInAuto() {
         stopIntake();
         resetGlyphTray();
-        holdGlyph();
+        holdPusher();
         openIntakeWheels();
     }
 
@@ -1085,7 +1085,7 @@ public class TileRunnerRobot {
         pusherStateClosed = TRUE;
     }
 
-    public void holdGlyph() {
+    public void holdPusher() {
         if(glyphPusher != null) {
             glyphPusher.setPosition(GLYPH_PUSHER_HOLD_POSITION);
         }

@@ -111,7 +111,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                 case GET_OFF_STONE:
                     detectVuMark = true;
 
-
                     if(getAllianceColor() ==  AllianceColor.RED) {
                         driveBackwardInches(24.5, motorSpeed, 5.0);
                     }
@@ -219,7 +218,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         gotoState(END);
                     } else {
                         turn(-92.0);
-                        double oneColumnDistance = 12.5;
+                        double oneColumnDistance = 10.5;
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
                                 driveRightInches(oneColumnDistance+2.0, motorSpeed, 2.0);
@@ -240,27 +239,45 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case PICKUP_SECOND_GLYPH:
-                    // turn on the intake wheels
-                    robot.collectGlyph();
 
                     // drive to glyph pit
                     driveForwardInches(26.0, 0.60, 5.0);
-                    sleepInAuto(300);
+                    // turn on the intake wheels
+                    robot.collectGlyph();
+                    sleepInAuto(500);
 
+                    turn(-75.0);
                     // push forward a bit to collect
-                    driveForwardInches(5.0, 0.25, 2.0);
+                    driveForwardInches(7.0, 0.25, 2.0);
                     sleepInAuto(750);
                     turn(-89.0);
                     //robot.pushGlyph();
 
-                    driveBackwardInches(27.5, 0.50, 5.0);
+                    driveBackwardInches(29.5, 0.50, 5.0);
 
                     robot.extendDistanceSensorArmServo();
                     robot.pushGlyph();
 
                     turn(-89.0);
 
-                    if(!dumpglyphs()) {
+                    robot.holdPusher();
+                    sleepInAuto(300);
+                    robot.pushGlyph();
+
+                    int previousIntakeCount = robot.intakeRight.getCurrentPosition();
+                    sleepInAuto(200);
+                    robot.holdPusher();
+
+                    boolean glyphStucked = false;
+                    if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
+                        robot.reverseGlyph();
+                        sleepInAuto(1500);
+                        glyphStucked = true;
+                    }
+
+                    robot.stopIntake();
+
+                    if(!dumpMoreGlyphs() || glyphStucked) {
                         driveBackwardInches(1.50, 0.25, 2.0);
                         gotoNextState();
                         break;
@@ -269,38 +286,27 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     driveBackwardInches(3.00, 0.25, 2.0);
 
                     if(getRuntime() < 25.0) {
-                        int previousIntakeCount = robot.intakeRight.getCurrentPosition();
-                        sleepInAuto(200);
-                        if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
-                            driveForwardInches(2.50, 0.25, 2.0);
-                            robot.reverseGlyph();
-                            sleepInAuto(1500);
-                            robot.resetForTeleOps();
-                        } else {
-                            robot.holdGlyph();
-                            sleepInAuto(200);
-                            robot.pushGlyph();
-                            sleepInAuto(300);
-                            robot.stopIntake();
+                        // push glyph again
+                        robot.pushGlyph();
+                        sleepInAuto(300);
 
-                            ElapsedTime timer2 = new ElapsedTime();
+                        ElapsedTime timer2 = new ElapsedTime();
 
-                            while(opModeIsActive() && timer2.seconds() < 2.0) {
-                                double columnDist = robot.getColDistance();
-                                logInfo(" Second glyph distance:" + String.format("%.1f", columnDist));
+                        while(opModeIsActive() && timer2.seconds() < 2.0) {
+                            double columnDist = robot.getColDistance();
+                            logInfo(" Second glyph distance:" + String.format("%.1f", columnDist));
 
-                                if (columnDist > 10.0) {
-                                    driveBackwardInches(1.0, 0.25, 2.0);
-                                }  else {
-                                    break;
-                                }
+                            if (columnDist > 10.0) {
+                                driveBackwardInches(1.0, 0.25, 2.0);
+                            }  else {
+                                break;
                             }
-
-                            placeGlyphIntoColumn(fasterMotorSpeed);
                         }
+
+                        placeGlyphIntoColumn(fasterMotorSpeed);
                     }
 
-                    driveBackwardInches(2.0, 0.5, 1.0);
+                    driveBackwardInches(4.0, 0.5, 1.0);
 
                     gotoNextState();
 
@@ -325,17 +331,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
             if(vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 robot.turnOnBlueLed();
+                vuMarkVision.setFlashTorchMode(false);
             }
         }
 
         robot.onStop();
     }
-
-    protected boolean pickupMoreGlyphs() {
-        return false;
-    }
-
-    protected boolean dumpglyphs() { return false; }
 
     //------------------------------------
 }
