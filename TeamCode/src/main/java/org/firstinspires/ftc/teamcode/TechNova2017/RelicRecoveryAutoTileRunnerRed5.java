@@ -1,16 +1,11 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
-import java.util.concurrent.TimeUnit;
-
-import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBlue2.State.RESET_GLYPH_TRAY;
-
-@Autonomous(name = "Auto RED #2 (Strafe)", group = "Competition")
-public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunnerAbstract {
+@Autonomous(name = "Auto RED #2 (Turn)", group = "Competition")
+public class RelicRecoveryAutoTileRunnerRed5 extends RelicRecoveryAutoTileRunnerAbstract {
     public AllianceColor getAllianceColor() {
         return AllianceColor.RED;
     }
@@ -23,17 +18,16 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
         START,
         PUSH_JEWEL,
         BACKWARD_3_FEET,
-        STRAFE_LEFT,
+        TURN_LEFT_TO_90,
         BACKWARD_1_FEET,
         TURN_RIGHT_TO_0,
         BACKWARD_7_INCHES,
         PLACE_GLYPH_INTO_CRYPTO,
-        PICKUP_SECOND_GLYPH,
         RESET_GLYPH_TRAY,
         END;
 
-        private static RelicRecoveryAutoTileRunnerRed2.State[] vals = values();
-        public RelicRecoveryAutoTileRunnerRed2.State next()
+        private static RelicRecoveryAutoTileRunnerRed5.State[] vals = values();
+        public RelicRecoveryAutoTileRunnerRed5.State next()
         {
             return vals[(this.ordinal()+1) % vals.length];
         }
@@ -74,20 +68,20 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
         // starts the state machine
         //---------------------------------
-        v_state = RelicRecoveryAutoTileRunnerRed2.State.START;
+        v_state = RelicRecoveryAutoTileRunnerRed5.State.START;
 
 
         // 2. Run the state machine
         //  test, and more test
         //-------------------------------------------------------------------
-        while (opModeIsActive() && v_state != RelicRecoveryAutoTileRunnerRed2.State.END) {
+        while (opModeIsActive() && v_state != RelicRecoveryAutoTileRunnerRed5.State.END) {
 
             boolean detectVuMark = false;
             double motorSpeed = 0.25;
 
             logStateInfo(v_state, "Start");
 
-            RelicRecoveryAutoTileRunnerRed2.State step = (RelicRecoveryAutoTileRunnerRed2.State)v_state;
+            RelicRecoveryAutoTileRunnerRed5.State step = (RelicRecoveryAutoTileRunnerRed5.State)v_state;
 
             switch (step) {
                 case START:
@@ -116,144 +110,70 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     gotoNextState();
                     break;
 
-                case STRAFE_LEFT:
+                case TURN_LEFT_TO_90:
 
+                    turn(86.0);
+                    sleepInAuto(500);
+                    gotoNextState();
+                    break;
+
+                case BACKWARD_1_FEET:
+                    // make sure it's at 90 degree
+                    turnToAngle(90.0, 0.08);
+
+                    // need more testing on each position
+                    // may need to add range sensor to have better distance control
+                    //-------------------------------------------------------------
                     switch (vuMark) {
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveLeftInches(7.0, motorSpeed, 2.0);
+                            driveBackwardInches(6.0, motorSpeed, 5.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveLeftInches(15.5, motorSpeed, 5.0);
+                            driveBackwardInches(12.5, motorSpeed, 5.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(25.0, motorSpeed,5.0);
+                            driveBackwardInches(19.5, motorSpeed, 5.0);
                             break;
 
-                        // Default is CENTER position, in case Vumark is not visible
+                        // Default is RIGHT position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveLeftInches(15.5, motorSpeed,5.0);
+                            driveBackwardInches(12.5, motorSpeed, 5.0);
                             break;
                     }
 
-                    turnToAngle(0.0, 0.10);
+                    gotoNextState();
+                    break;
 
+                case TURN_RIGHT_TO_0:
+                    turn(2.0);
+                    sleepInAuto(500);
                     gotoNextState();
                     break;
 
                 case BACKWARD_7_INCHES:
                     robot.extendDistanceSensorArmServo();
-                    driveBackwardInches(1.0, motorSpeed, 5.0);
+                    driveBackwardInches(2.5, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
                     placeGlyphIntoColumn(motorSpeed);
 
-                    gotoNextState();
-                    break;
-
-                case PICKUP_SECOND_GLYPH:
-
-                    if(getRuntime() > 23.0 || !pickupMoreGlyphs()) {
-                        gotoState(RESET_GLYPH_TRAY);
-                        break;
+                    if(vuMark == RelicRecoveryVuMark.CENTER) {
+                        driveForwardInches(6.0, 0.35,2.0);
+                    } else if (vuMark == RelicRecoveryVuMark.RIGHT){
+                        driveForwardInches(12.0, 0.35, 2.0);
                     }
-
-                    switch (vuMark) {
-
-                        // need to place glyph into RIGHT Crypto box
-                        case RIGHT:
-                            driveLeftInches(27.0, motorSpeed,5.0);
-                            break;
-
-                        // need to place glyph into CENTER Crypto box
-                        // -------------------------------------------------
-                        case CENTER:
-                            driveLeftInches(17.0, motorSpeed, 4.0);
-                            break;
-
-                        // need to place glyph into LEFT Crypto box
-                        // -------------------------------------------------
-                        case LEFT:
-                            driveLeftInches(7.0, motorSpeed, 3.0);
-                            break;
-
-                        // Default is CENTER position, in case Vumark is not visible
-                        // -------------------------------------------------
-                        default:
-                            driveLeftInches(17.0, motorSpeed, 4.0);
-                            break;
-                    }
-
-                    turnToAngle(0.0, 0.10);
-
-                    robot.resetForTeleOps();
-
-                    // drive to glyph pit
-                    driveForwardInches(26.0, 0.60, 5.0);
-                    // turn on the intake wheels
-                    robot.collectGlyph();
-                    sleepInAuto(500);
-
-                    // push forward a bit to collect
-                    driveForwardInches(5.0, 0.25, 2.0);
-                    sleepInAuto(750);
-
-                    driveBackwardInches(29.5, 0.50, 5.0);
-
-                    robot.extendDistanceSensorArmServo();
-                    robot.pushGlyph();
-
-                    driveRightInches(7.0, motorSpeed,3.0);
-
-                    int previousIntakeCount = robot.intakeRight.getCurrentPosition();
-                    boolean glyphStucked = false;
-                    if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
-                        robot.reverseGlyph();
-                        sleepInAuto(1500);
-                        glyphStucked = true;
-                    }
-
-                    robot.stopIntake();
-
-                    if(!dumpMoreGlyphs() || glyphStucked) {
-                        gotoNextState();
-                        break;
-                    }
-
-                    turn(0.0);
-
-                    driveBackwardInches(1.0, 0.25, 2.0);
-
-                    if(getRuntime() < 26.0) {
-                        // push glyph again
-                        robot.pushGlyph();
-                        sleepInAuto(300);
-
-                        ElapsedTime timer2 = new ElapsedTime();
-
-                        while(opModeIsActive() && timer2.seconds() < 2.0) {
-                            double columnDist = robot.getColDistance();
-                            logInfo(" Second glyph distance:" + String.format("%.1f", columnDist));
-
-                            if (columnDist > 10.0) {
-                                driveBackwardInches(1.0, 0.25, 2.0);
-                            }  else {
-                                break;
-                            }
-                        }
-
-                        placeGlyphIntoColumn(0.35);
-                    }
+                    turn(-45.0);
 
                     gotoNextState();
                     break;

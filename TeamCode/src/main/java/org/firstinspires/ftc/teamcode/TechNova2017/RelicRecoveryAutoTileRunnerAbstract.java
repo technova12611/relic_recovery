@@ -325,6 +325,10 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected void placeGlyphIntoColumn(double motorSpeed) throws InterruptedException {
+        placeGlyphIntoColumn(motorSpeed, true);
+    }
+
+    protected void placeGlyphIntoColumn(double motorSpeed, boolean makeTurn) throws InterruptedException {
 
         logInfo(" --- Align robot to the cryptobox --- ");
         alignCryptoBoxInAuto(5.0);
@@ -362,8 +366,10 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             logInfo(" --- Drive backward to finish --- ");
             driveForwardInches(7.5, 0.5, 2.0);
 
-            logInfo(" --- Turn to 90 degree --- ");
-            turn(-89.0);
+            if(makeTurn) {
+                logInfo(" --- Turn to 90 degree --- ");
+                turn(-89.0);
+            }
         }
 
         // close the glyphBlocker
