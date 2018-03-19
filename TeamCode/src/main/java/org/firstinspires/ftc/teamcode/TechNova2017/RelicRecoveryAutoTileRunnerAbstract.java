@@ -188,9 +188,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
      * Using very basic control algorithm
      */
     private static final double VERY_SAFE_TURN_SPEED = 0.08;
-    private static final double SAFE_TURN_SPEED = 0.12;
-    private static final double FAST_TURN_SPEED = 0.20;
-    private static final double SUPER_FAST_TURN_SPEED = 0.25;
+    private static final double SAFE_TURN_SPEED = 0.15;
+    private static final double FAST_TURN_SPEED = 0.25;
+    private static final double SUPER_FAST_TURN_SPEED = 0.35;
     private static final double FAST_TURN_THRESHOLD = 45.0;
     private static final double FINAL_TURN_THRESHOLD = 20.0;
     private static final double SUPER_FAST_TURN_THRESHOLD = 60.0;
@@ -336,11 +336,11 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         logInfo(" --- More backward to let glyph fall on the floor --- ");
         driveForwardInches(2.5, motorSpeed, 2.2);
         sleepInAuto(200);
-        driveForwardInches(6.0, motorSpeed, 2.2);
+        driveForwardInches(5.75, motorSpeed, 2.2);
 
         robot.resetGlyphTray();
 
-        if(getRuntime() < 27.5) {
+        if(getRuntime() < 28.5) {
 
             // move forward to push the glyph into the box
             //-------------------------------------------------

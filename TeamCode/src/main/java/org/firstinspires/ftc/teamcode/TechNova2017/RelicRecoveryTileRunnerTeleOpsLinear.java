@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_RELEASE_POSITION;
 
 @TeleOp(name = "Tile Runner (New) TeleOps", group = "Competition")
 public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
@@ -64,6 +65,8 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
 
         tripTimer.reset();
 
+        robot.holdPusher();
+
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         while (opModeIsActive()) {
             g1.update();
@@ -92,10 +95,16 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         }
 
         if(g2.dpadDown()) {
+            robot.setRelicElbowPosition(RELIC_ELBOW_RELEASE_POSITION);
+        }
+
+        if(g2.start() && g2.dpadDown()) {
             robot.closeRelicClawHolder();
             robot.closeIntakeWheels();
             robot.pushGlyph();
             //relicClawLocked = true;
+        } else if(g2.dpadDown()) {
+            robot.setRelicElbowPosition(RELIC_ELBOW_RELEASE_POSITION);
         }
 
         // operator controller DPAD left/right to grab/release RELIC
@@ -167,7 +176,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         //--------------------------------------------------------------
         if(g1.YOnce()) {
             if(robot.pusherStateClosed == null) {
-                robot.pushGlyph();
+                robot.pushHarderGlyph();
             } else {
                 robot.moveUpPusher();
             }
@@ -268,7 +277,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             intakeBackward = true;
             intakeForward = false;
 
-            if(intakeStuckTimer.time(TimeUnit.SECONDS) > 2.5) {
+            if(intakeStuckTimer.time(TimeUnit.SECONDS) > 1.5) {
                 robot.isIntakeStuck = false;
                 collectGlyph();
             }

@@ -62,4 +62,6 @@ public class Controller {
     public boolean leftBumperOnce() { return 1 == left_bumper; }
     public boolean rightBumperOnce() { return 1 == right_bumper; }
 
+    public boolean start() {return gamepad.start;}
+
 }

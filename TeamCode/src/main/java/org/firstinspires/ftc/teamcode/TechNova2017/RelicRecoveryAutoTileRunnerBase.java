@@ -80,8 +80,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         while (opModeIsActive() && v_state != END) {
 
             boolean detectVuMark = false;
-            double motorSpeed = 0.225;
-            double fasterMotorSpeed = 0.325;
+            double motorSpeed = 0.275;
+            double fasterMotorSpeed = 0.355;
 
             logStateInfo(v_state, "Start");
 
@@ -134,7 +134,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(16.5, motorSpeed, 5.0);
+                                driveForwardInches(16.25, motorSpeed, 5.0);
                             }
                             break;
                         // need to place glyph into CENTER Crypto box
@@ -190,7 +190,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         turn(-84.5);
                     }
 
-                    sleepInAuto(250);
+                    //sleepInAuto(250);
 
                     //turn(-88.5);
 
@@ -199,7 +199,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case FORWARD_1_FEET:
                     robot.extendDistanceSensorArmServo();
-                    driveBackwardInches(6.75, fasterMotorSpeed, 2.0);
+                    driveBackwardInches(6.0, fasterMotorSpeed, 2.0);
                     gotoNextState();
                     break;
 
@@ -214,7 +214,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // move the glyph lift back to zero position
                     robot.resetForTeleOps();
 
-                    if(getRuntime() > 20.0 || !pickupMoreGlyphs()) {
+                    if(getRuntime() > 23.0 || !pickupMoreGlyphs()) {
                         gotoState(END);
                     } else {
                         turn(-92.0);
@@ -241,14 +241,15 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                 case PICKUP_SECOND_GLYPH:
 
                     // drive to glyph pit
-                    driveForwardInches(26.0, 0.60, 5.0);
+                    driveForwardInches(24.0, 0.60, 5.0);
                     // turn on the intake wheels
                     robot.collectGlyph();
+
+                    driveForwardInches(3.0, 0.25, 2.0);
                     sleepInAuto(500);
 
-                    turn(-75.0);
                     // push forward a bit to collect
-                    driveForwardInches(7.0, 0.25, 2.0);
+                    driveForwardInches(6.0, 0.25, 2.0);
                     sleepInAuto(750);
                     turn(-89.0);
                     //robot.pushGlyph();
@@ -267,28 +268,30 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     int previousIntakeCount = robot.intakeRight.getCurrentPosition();
                     sleepInAuto(200);
                     robot.holdPusher();
+                    sleepInAuto(100);
 
                     boolean glyphStucked = false;
                     if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
                         robot.reverseGlyph();
                         sleepInAuto(1500);
+                        robot.collectGlyph();
                         glyphStucked = true;
                     }
 
-                    robot.stopIntake();
-
                     if(!dumpMoreGlyphs() || glyphStucked) {
                         driveBackwardInches(1.50, 0.25, 2.0);
+                        robot.stopIntake();
                         gotoNextState();
                         break;
                     }
 
-                    driveBackwardInches(3.00, 0.25, 2.0);
+                    robot.stopIntake();
+                    robot.pushGlyph();
 
-                    if(getRuntime() < 25.0) {
-                        // push glyph again
-                        robot.pushGlyph();
-                        sleepInAuto(300);
+                    if(getRuntime() < 28.0) {
+
+                        logInfo(" Move forward to dump second glyph...");
+                        driveBackwardInches(3.00, 0.25, 2.0);
 
                         ElapsedTime timer2 = new ElapsedTime();
 

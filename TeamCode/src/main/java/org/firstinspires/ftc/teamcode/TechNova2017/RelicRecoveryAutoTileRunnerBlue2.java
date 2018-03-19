@@ -26,6 +26,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
         TURN_TO_180_DEGREE,
         BACKWARD_7_INCHES,
         PLACE_GLYPH_INTO_CRYPTO,
+        PICKUP_SECOND_GLYPH,
         RESET_GLYPH_TRAY,
         END;
 
@@ -177,9 +178,71 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     } else if (vuMark == RelicRecoveryVuMark.LEFT){
                         driveForwardInches(12.0, 0.35, 2.0);
                     }
-                    turn(-145.0);
+                    turn(-125.0);
                     gotoNextState();
 
+                    break;
+
+                case PICKUP_SECOND_GLYPH:
+
+                    // drive to glyph pit
+                    driveForwardInches(26.0, 0.60, 5.0);
+                    // turn on the intake wheels
+                    robot.collectGlyph();
+                    sleepInAuto(500);
+
+                    // push forward a bit to collect
+                    driveForwardInches(5.0, 0.25, 2.0);
+                    sleepInAuto(750);
+                    turn(-125.0);
+                    //robot.pushGlyph();
+
+                    driveBackwardInches(29.5, 0.50, 5.0);
+
+                    robot.extendDistanceSensorArmServo();
+                    robot.pushGlyph();
+
+                    int previousIntakeCount = robot.intakeRight.getCurrentPosition();
+                    boolean glyphStucked = false;
+                    if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
+                        robot.reverseGlyph();
+                        sleepInAuto(1500);
+                        glyphStucked = true;
+                    }
+
+                    robot.stopIntake();
+
+                    if(!dumpMoreGlyphs() || glyphStucked) {
+                        gotoNextState();
+                        break;
+                    }
+
+                    turn(-90.0);
+
+                    driveBackwardInches(3.0, 0.25, 2.0);
+
+                    if(getRuntime() < 26.0) {
+                        // push glyph again
+                        robot.pushGlyph();
+                        sleepInAuto(300);
+
+                        ElapsedTime timer2 = new ElapsedTime();
+
+                        while(opModeIsActive() && timer2.seconds() < 2.0) {
+                            double columnDist = robot.getColDistance();
+                            logInfo(" Second glyph distance:" + String.format("%.1f", columnDist));
+
+                            if (columnDist > 10.0) {
+                                driveBackwardInches(1.0, 0.25, 2.0);
+                            }  else {
+                                break;
+                            }
+                        }
+
+                        placeGlyphIntoColumn(0.35);
+                    }
+
+                    gotoNextState();
                     break;
 
                 case RESET_GLYPH_TRAY:

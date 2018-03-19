@@ -122,7 +122,8 @@ public class RobotInfo {
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.19;
     //public static double GLYPH_PUSHER_PUSH_POSITION = 0.24;
     public static double GLYPH_PUSHER_PUSH_POSITION = 0.14;
-    public static double GLYPH_PUSHER_HOLD_POSITION = 0.62;
+    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.12;
+    public static double GLYPH_PUSHER_HOLD_POSITION = 0.60;
     public static double GLYPH_PUSHER_UP_POSITION = 0.88;
 
     // HSB9485 servo positions
@@ -132,7 +133,7 @@ public class RobotInfo {
 //    public static double GLYPH_PUSHER_UP_POSITION = 0.80;
 
     public static double INTAKE_REVERSE_POWER = -0.95;
-    public static double INTAKE_COLLECT_POWER = 0.80;
+    public static double INTAKE_COLLECT_POWER = 0.85;
 
     public static double DISTANCE_SENSOR_INITIAL_POSITION = 0.82;
     public static double DISTANCE_SENSOR_EXTEND_POSITION = 0.15;

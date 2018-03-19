@@ -44,6 +44,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPE
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_HOLD_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_PUSH_HARDER_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_PUSH_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_UP_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.INTAKE_COLLECT_POWER;
@@ -1080,6 +1081,18 @@ public class TileRunnerRobot {
 
         if(glyphPusher != null) {
             glyphPusher.setPosition(GLYPH_PUSHER_PUSH_POSITION);
+        }
+
+        pusherStateClosed = TRUE;
+    }
+
+    public void pushHarderGlyph() {
+        if(glyphBlocker != null) {
+            closeGlyphBlocker();
+        }
+
+        if(glyphPusher != null) {
+            glyphPusher.setPosition(GLYPH_PUSHER_PUSH_HARDER_POSITION);
         }
 
         pusherStateClosed = TRUE;

@@ -54,7 +54,7 @@ public class VuMarkVision {
          * Here we chose the back (HiRes) camera (for greater range), but
          * for a competition robot, the front camera might be more convenient.
          */
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
         /**
@@ -80,7 +80,7 @@ public class VuMarkVision {
     }
 
     public void setFlashTorchMode(boolean flash) {
-        CameraDevice.getInstance().setFlashTorchMode(flash);
+        CameraDevice.getInstance().setFlashTorchMode(false);
     }
 
     public RelicRecoveryVuMark detect (Telemetry telemetry, boolean doLog) {
