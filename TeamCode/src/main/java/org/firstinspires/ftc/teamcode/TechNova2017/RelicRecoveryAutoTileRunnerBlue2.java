@@ -295,6 +295,10 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
         robot.onStop();
     }
 
+    protected boolean pickupMoreGlyphs() {
+        return true;
+    }
 
+    protected boolean dumpMoreGlyphs() { return false; }
     //-------------------------------------------------------
 }

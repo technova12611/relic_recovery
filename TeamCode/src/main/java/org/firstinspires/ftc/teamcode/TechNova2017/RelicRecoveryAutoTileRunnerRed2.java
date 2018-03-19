@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBlue2.State.RESET_GLYPH_TRAY;
 
-@Autonomous(name = "Auto RED #2 (Strafe)", group = "Competition")
+@Autonomous(name = "Auto RED #2 More Glyph (Strafe)", group = "Competition")
 public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunnerAbstract {
     public AllianceColor getAllianceColor() {
         return AllianceColor.RED;
@@ -282,6 +282,12 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
         robot.onStop();
     }
+
+    protected boolean pickupMoreGlyphs() {
+        return true;
+    }
+
+    protected boolean dumpMoreGlyphs() { return false; }
 
     //------------------------------------
 }
