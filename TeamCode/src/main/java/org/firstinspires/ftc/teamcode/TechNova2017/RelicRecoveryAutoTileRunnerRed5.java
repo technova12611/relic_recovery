@@ -173,7 +173,7 @@ public class RelicRecoveryAutoTileRunnerRed5 extends RelicRecoveryAutoTileRunner
                     } else if (vuMark == RelicRecoveryVuMark.RIGHT){
                         driveForwardInches(12.0, 0.35, 2.0);
                     }
-                    turn(-45.0);
+                    turn(-35.0);
 
                     gotoNextState();
                     break;

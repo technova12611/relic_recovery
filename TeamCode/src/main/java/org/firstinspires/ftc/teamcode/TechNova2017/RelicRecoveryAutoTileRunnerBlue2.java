@@ -183,29 +183,29 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(7.0, motorSpeed,3.0);
+                            driveLeftInches(7.0, motorSpeed,3.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(17.0, motorSpeed, 4.0);
+                            driveRightInches(7.0, motorSpeed, 4.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveRightInches(27.0, motorSpeed, 5.0);
+                            driveRightInches(7.0, motorSpeed, 5.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveRightInches(17.0, motorSpeed, 4.0);
+                            driveRightInches(7.0, motorSpeed, 4.0);
                             break;
                     }
 
-                    turnToAngle(180.0, 0.10);
+                    turnToAngle(-135.0, 0.10);
 
                     robot.resetForTeleOps();
 

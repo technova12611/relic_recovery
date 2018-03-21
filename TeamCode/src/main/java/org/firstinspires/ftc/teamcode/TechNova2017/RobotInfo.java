@@ -115,22 +115,30 @@ public class RobotInfo {
     public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.73;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.02;
 
-    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.15;
+    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.20;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.75;
 
 
-    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.19;
-    //public static double GLYPH_PUSHER_PUSH_POSITION = 0.24;
-    public static double GLYPH_PUSHER_PUSH_POSITION = 0.14;
-    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.12;
-    public static double GLYPH_PUSHER_HOLD_POSITION = 0.60;
-    public static double GLYPH_PUSHER_UP_POSITION = 0.88;
+//    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.19;
+//    //public static double GLYPH_PUSHER_PUSH_POSITION = 0.24;
+//    public static double GLYPH_PUSHER_PUSH_POSITION = 0.14;
+//    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.12;
+//    public static double GLYPH_PUSHER_HOLD_POSITION = 0.60;
+//    public static double GLYPH_PUSHER_UP_POSITION = 0.88;
 
-    // HSB9485 servo positions
+//     HSB9485 servo positions
 //    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.35;
 //    public static double GLYPH_PUSHER_PUSH_POSITION = 0.28;
+//    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.26;
 //    public static double GLYPH_PUSHER_HOLD_POSITION = 0.61;
 //    public static double GLYPH_PUSHER_UP_POSITION = 0.80;
+
+    //DS 180 Servo positions
+    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.96;
+    public static double GLYPH_PUSHER_PUSH_POSITION = 0.96;
+    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.98;
+    public static double GLYPH_PUSHER_HOLD_POSITION = 0.35;
+    public static double GLYPH_PUSHER_UP_POSITION = 0.01;
 
     public static double INTAKE_REVERSE_POWER = -0.95;
     public static double INTAKE_COLLECT_POWER = 0.85;

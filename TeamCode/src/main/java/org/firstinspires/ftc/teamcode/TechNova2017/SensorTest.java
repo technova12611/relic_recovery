@@ -38,7 +38,7 @@ public class SensorTest extends LinearOpMode {
 
         //glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
 
-        VuMarkVision vuMarkVision = new VuMarkVision(hardwareMap, telemetry);
+        VuMarkVision vuMarkVision = new VuMarkVision(hardwareMap, telemetry, false);
 
         // wait for the start button to be pressed.
         waitForStart();

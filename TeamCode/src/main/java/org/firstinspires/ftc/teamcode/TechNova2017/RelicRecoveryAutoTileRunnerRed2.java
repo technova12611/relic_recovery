@@ -172,19 +172,19 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveLeftInches(27.0, motorSpeed,5.0);
+                            driveLeftInches(7.0, motorSpeed,5.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveLeftInches(17.0, motorSpeed, 4.0);
+                            driveLeftInches(7.0, motorSpeed, 4.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(7.0, motorSpeed, 3.0);
+                            driveRightInches(7.0, motorSpeed, 3.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
@@ -194,7 +194,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                             break;
                     }
 
-                    turnToAngle(0.0, 0.10);
+                    turnToAngle(-35.0, 0.10);
 
                     robot.resetForTeleOps();
 
@@ -213,7 +213,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     robot.extendDistanceSensorArmServo();
                     robot.pushGlyph();
 
-                    driveRightInches(7.0, motorSpeed,3.0);
+                    //driveRightInches(7.0, motorSpeed,3.0);
 
                     int previousIntakeCount = robot.intakeRight.getCurrentPosition();
                     boolean glyphStucked = false;

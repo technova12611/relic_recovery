@@ -24,6 +24,10 @@ public class VuMarkVision {
     VuforiaTrackable relicTemplate;
 
     public VuMarkVision(HardwareMap hardwareMap, Telemetry telemetry) {
+        this(hardwareMap, telemetry, true);
+    }
+
+    public VuMarkVision(HardwareMap hardwareMap, Telemetry telemetry, boolean useFrontCamera) {
 
         /*
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
@@ -54,7 +58,12 @@ public class VuMarkVision {
          * Here we chose the back (HiRes) camera (for greater range), but
          * for a competition robot, the front camera might be more convenient.
          */
-        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
+        if(useFrontCamera) {
+            parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
+        } else {
+            parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        }
+
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
         /**
@@ -80,7 +89,7 @@ public class VuMarkVision {
     }
 
     public void setFlashTorchMode(boolean flash) {
-        CameraDevice.getInstance().setFlashTorchMode(false);
+        CameraDevice.getInstance().setFlashTorchMode(flash);
     }
 
     public RelicRecoveryVuMark detect (Telemetry telemetry, boolean doLog) {
@@ -90,8 +99,6 @@ public class VuMarkVision {
          * UNKNOWN, LEFT, CENTER, and RIGHT. When a VuMark is visible, something other than
          * UNKNOWN will be returned by {@link RelicRecoveryVuMark#from(VuforiaTrackable)}.
          */
-        setFlashTorchMode(true);
-
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
 
         String message = String.format("%s visible", vuMark);
