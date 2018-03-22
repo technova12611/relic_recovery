@@ -331,7 +331,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     protected void placeGlyphIntoColumn(double motorSpeed, boolean makeTurn) throws InterruptedException {
 
         logInfo(" --- Align robot to the cryptobox --- ");
-        alignCryptoBoxInAuto(5.0);
+        if(getRuntime() < 28.5) {
+            alignCryptoBoxInAuto(5.0);
+        }
 
         logInfo(" --- Flip Glyph Tray --- ");
         robot.dumpGlyphsFromTray();
@@ -352,7 +354,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             ElapsedTime watcher = new ElapsedTime();
             driveBackwardInches(9.5, motorSpeed, 2.0);
 
-            logInfo(" Place Glyph into column (ms): " +
+            logInfo(" --- Place Glyph into column (ms): " +
                     watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark);
 
             // need to push again

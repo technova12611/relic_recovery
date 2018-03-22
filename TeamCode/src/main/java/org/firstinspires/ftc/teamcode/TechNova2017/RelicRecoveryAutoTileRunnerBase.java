@@ -241,15 +241,19 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                 case PICKUP_SECOND_GLYPH:
 
                     // drive to glyph pit
-                    driveForwardInches(24.0, 0.60, 5.0);
+                    driveForwardInches(24.0, 0.70, 5.0);
                     // turn on the intake wheels
                     robot.collectGlyph();
 
+                    driveForwardInches(4.0, 0.25, 2.0);
+                    sleepInAuto(400);
+                    driveBackwardInches(2.0, 0.25, 2.0);
+
                     driveForwardInches(3.0, 0.25, 2.0);
-                    sleepInAuto(500);
+                    sleepInAuto(300);
 
                     // push forward a bit to collect
-                    driveForwardInches(6.0, 0.25, 2.0);
+                    driveForwardInches(3.0, 0.25, 2.0);
                     sleepInAuto(750);
                     turn(-89.0);
                     //robot.pushGlyph();
@@ -288,14 +292,14 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     robot.stopIntake();
                     robot.pushGlyph();
 
-                    if(getRuntime() < 28.0) {
+                    if(getRuntime() < 27.0) {
 
                         logInfo(" Move forward to dump second glyph...");
                         driveBackwardInches(3.00, 0.25, 2.0);
 
                         ElapsedTime timer2 = new ElapsedTime();
 
-                        while(opModeIsActive() && timer2.seconds() < 2.0) {
+                        while(opModeIsActive() && timer2.seconds() < 2.0 && getRuntime() < 28.5) {
                             double columnDist = robot.getColDistance();
                             logInfo(" Second glyph distance:" + String.format("%.1f", columnDist));
 

@@ -100,7 +100,7 @@ public class RobotInfo {
     public static double ENCODER_DRIVE_POWER = 0.30;
     public static double SLOW_MODE_SCALE_TO_DRIVE = 0.70;
     public static double VERY_SLOW_MODE_SCALE_TO_DRIVE = 0.45;
-    public static double DPAD_SCALE_TO_DRIVE = 0.28;
+    public static double DPAD_SCALE_TO_DRIVE = 0.30;
 
     // Relic delivery system
     // --------------------------------------------------------------------------
@@ -115,7 +115,7 @@ public class RobotInfo {
     public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.73;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.02;
 
-    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.20;
+    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.19;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.75;
 
 
@@ -140,8 +140,8 @@ public class RobotInfo {
     public static double GLYPH_PUSHER_HOLD_POSITION = 0.35;
     public static double GLYPH_PUSHER_UP_POSITION = 0.01;
 
-    public static double INTAKE_REVERSE_POWER = -0.95;
-    public static double INTAKE_COLLECT_POWER = 0.85;
+    public static double INTAKE_REVERSE_POWER = -0.90;
+    public static double INTAKE_COLLECT_POWER = 0.75;
 
     public static double DISTANCE_SENSOR_INITIAL_POSITION = 0.82;
     public static double DISTANCE_SENSOR_EXTEND_POSITION = 0.15;
