@@ -250,7 +250,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     sleepInAuto(400);
                     driveBackwardInches(2.0, collectSpeed, 2.0);
 
-                    turn(-82.0);
+                    //turn(-82.0);
 
                     driveForwardInches(4.0, collectSpeed, 2.0);
                     sleepInAuto(300);
@@ -294,6 +294,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     robot.stopIntake();
                     robot.pushGlyph();
+                    sleepInAuto(200);
+                    robot.moveUpPusher();
 
                     if(getRuntime() < 27.0) {
 
