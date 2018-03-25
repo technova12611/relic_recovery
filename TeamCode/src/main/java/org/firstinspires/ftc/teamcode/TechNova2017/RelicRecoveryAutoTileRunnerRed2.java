@@ -156,7 +156,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
-                    placeGlyphIntoColumn(motorSpeed);
+                    placeGlyphIntoColumn(motorSpeed, false);
 
                     gotoNextState();
                     break;

@@ -28,7 +28,7 @@ public class SensorTest extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        TileRunnerRobot robot = new TileRunnerRobot(this, hardwareMap, telemetry, null);
+        TileRunnerRobot robot = new TileRunnerRobot(this, hardwareMap, telemetry, AllianceColor.RED);
 
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, "jewelColor");
@@ -51,14 +51,7 @@ public class SensorTest extends LinearOpMode {
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         while (opModeIsActive()) {
             // send the info back to driver station using telemetry function.
-            telemetry.addData("Red  ", sensorColor.red());
-            telemetry.addData("Green", sensorColor.green());
-            telemetry.addData("Blue ", sensorColor.blue());
-            telemetry.addData("Alpha ", sensorColor.alpha());
-            telemetry.addData("RGB ", sensorColor.argb());
-
             telemetry.addData("(x1,x2): ", "(%.2f, %.2f)", robot.getX1Distance(), robot.getColDistance());
-
             telemetry.addData("IMU: ", "%.2f", robot.getHeadingAngle());
 
             vuMark = vuMarkVision.detect(null, false);
@@ -71,6 +64,12 @@ public class SensorTest extends LinearOpMode {
 
             String message =String.format("%s visible", vuMark);
             telemetry.addData("VuMark", message);
+
+            telemetry.addData("Red  ", sensorColor.red());
+            telemetry.addData("Green", sensorColor.green());
+            telemetry.addData("Blue ", sensorColor.blue());
+            telemetry.addData("Alpha ", sensorColor.alpha());
+            telemetry.addData("RGB ", sensorColor.argb());
 
             if(gamepad1.left_stick_y > 0.5) {
                 robot.turnOnBlueLed();

@@ -72,9 +72,9 @@ public class RobotInfo {
     public static double GLYPH_FLIPPER_INITIAL_POSITION = 0.54;
     public static double GLYPH_FLIPPER_AUTO_RED_INITIAL_POSITION = 0.43;
     public static double GLYPH_FLIPPER_AUTO_BLUE_INITIAL_POSITION = 0.35;
-    public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.07;
+    public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.02;
     public static double GLYPH_FLIPPER_FLAT_POSITION_1  = 0.25;
-    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.40;
+    public static double GLYPH_FLIPPER_FLAT_POSITION_2  = 0.35;
     public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.54;
 
     // HiTec Servo #1 positions
@@ -133,15 +133,22 @@ public class RobotInfo {
 //    public static double GLYPH_PUSHER_HOLD_POSITION = 0.61;
 //    public static double GLYPH_PUSHER_UP_POSITION = 0.80;
 
-    //DS 180 Servo positions
-    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.96;
-    public static double GLYPH_PUSHER_PUSH_POSITION = 0.96;
-    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.98;
-    public static double GLYPH_PUSHER_HOLD_POSITION = 0.35;
+    //DS 180 degree Servo positions
+    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.88;
+    public static double GLYPH_PUSHER_PUSH_POSITION = 0.90;
+    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.93;
+    public static double GLYPH_PUSHER_HOLD_POSITION = 0.27;
     public static double GLYPH_PUSHER_UP_POSITION = 0.01;
 
+    //DS 270 degree Servo positions
+//    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.86;
+//    public static double GLYPH_PUSHER_PUSH_POSITION = 0.88;
+//    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.90;
+//    public static double GLYPH_PUSHER_HOLD_POSITION = 0.28;
+//    public static double GLYPH_PUSHER_UP_POSITION = 0.01;
+
     public static double INTAKE_REVERSE_POWER = -0.90;
-    public static double INTAKE_COLLECT_POWER = 0.75;
+    public static double INTAKE_COLLECT_POWER = 0.80;
 
     public static double DISTANCE_SENSOR_INITIAL_POSITION = 0.82;
     public static double DISTANCE_SENSOR_EXTEND_POSITION = 0.15;
