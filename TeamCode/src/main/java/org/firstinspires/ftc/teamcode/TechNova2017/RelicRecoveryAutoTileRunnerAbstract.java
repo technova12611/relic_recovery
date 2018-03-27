@@ -104,12 +104,14 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected void driveForwardInches(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(String.format("%.2f", getRuntime()) + " Drive forward:", String.format("%.2f, %.2f, %.2f", inches, power, timeout));
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + " Drive forward:",
+                String.format("%.2f, %.2f, %.2f", inches, power, timeout));
         driveDirectionInches(Math.PI,inches, power, timeout);
     }
 
     protected void driveForwardInchesToColumn(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(String.format("%.2f", getRuntime()) + " Drive forward to Column:", String.format("%.2f, %.2f, %.2f, %.2f", inches, power, timeout, robot.getColDistance()));
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + " Drive forward to Column:",
+                String.format("%.2f, %.2f, %.2f, %.2f", inches, power, timeout, robot.getColDistance()));
         driveDirectionInches(Math.PI,inches, power, timeout, true);
     }
 
@@ -118,22 +120,26 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected void driveBackwardInches(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(String.format("%.2f", getRuntime()) + " Drive backward:", String.format("%.2f, %.2f, %.2f", inches, power, timeout));
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + " Drive backward:",
+                String.format("%.2f, %.2f, %.2f", inches, power, timeout));
         driveDirectionInches(0,inches, power, timeout);
     }
 
     protected void driveBackwardInchesToColumn(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(String.format("%.2f", getRuntime()) + " Drive backward to Column:", String.format("%.2f, %.2f, %.2f, %.2f", inches, power, timeout, robot.getColDistance()));
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + " Drive backward to Column:",
+                String.format("%.2f, %.2f, %.2f, %.2f", inches, power, timeout, robot.getColDistance()));
         driveDirectionInches(0,inches, power, timeout, true);
     }
 
     protected void driveLeftInches(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(String.format("%.2f", getRuntime()) + " Strafe left:", String.format("%.2f, %.2f, %.2f", inches, power, timeout));
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + " Strafe left:",
+                String.format("%.2f, %.2f, %.2f", inches, power, timeout));
         driveDirectionInches(Math.PI*3/2.0,inches, power, timeout);
     }
 
     protected void driveRightInches(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(String.format("%.2f", getRuntime()) + " Strafe right:", String.format("%.2f, %.2f, %.2f", inches, power, timeout));
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + " " +
+                "Strafe right:", String.format("%.2f, %.2f, %.2f", inches, power, timeout));
         driveDirectionInches(Math.PI/2.0,inches, power, timeout);
     }
 
@@ -237,13 +243,13 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 
             double speed = speedForTurnDistance(Math.abs(diff));
-            logInfo("** TurnToAngle: ", String.format("%.1f %.1f %.2f", headingAngle, diff, speed));
+            //logInfo("** TurnToAngle: ", String.format("%.1f %.1f %.2f", headingAngle, diff, speed));
             robot.drive(0.0, 0.0, diff > 0 ? speed : -speed);
             idle();
         }
         robot.stopDriveMotors();
 
-        logInfo(String.format("%.2f", getRuntime()) + " -- Angle Reached -- :", String.format("%.1f", headingAngle));
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + " -- Angle Reached -- :", String.format("%.1f", headingAngle) + String.format(" Elapsed: %.2f", timer.seconds()));
     }
 
     protected void turnToAngle(double target, double speed) throws InterruptedException {
@@ -255,13 +261,13 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             double diff = angleDifference(headingAngle, target);
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 
-            logInfo("TurnToAngle 2: ", String.format("%.1f %.1f %.2f", headingAngle, diff, speed));
+            //logInfo("TurnToAngle 2: ", String.format("%.1f %.1f %.2f", headingAngle, diff, speed));
             robot.drive(0.0, 0.0, diff > 0 ? speed : -speed);
             idle();
         }
         robot.stopDriveMotors();
 
-        logInfo(String.format("%.2f", getRuntime()) + " -- Angle Reached -- :", String.format("%.1f", headingAngle));
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + " -- Angle Reached -- :", String.format("%.1f", headingAngle));
     }
 
     /**
@@ -328,7 +334,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             sleep(50);
         }
 
-        logInfo(String.format("%.2f", getRuntime()) + "    Avg. Range Col Sensor (in): " + String.format("%.2f", avg));
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + "    Avg. Range Col Sensor (in): " + String.format("%.2f", avg));
 
         return avg;
     }
@@ -339,21 +345,21 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
     protected void placeGlyphIntoColumn(double motorSpeed, boolean makeTurn) throws InterruptedException {
 
-        logInfo(String.format("%.2f", getRuntime()) + " --- Align robot to the cryptobox --- ");
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + " --- Align robot to the cryptobox --- ");
         boolean aligned = false;
-        if(getRuntime() < 28.5) {
+        if(getRuntime() < 27.5) {
             aligned = alignCryptoBoxInAuto(5.0);
         }
 
-        logInfo(String.format("%.2f", getRuntime()) + " --- Flip Glyph Tray --- ");
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + " --- Flip Glyph Tray --- ");
         robot.dumpGlyphsFromTray();
         sleepInAuto(300);
 
-        logInfo(String.format("%.2f", getRuntime()) + " --- More backward to let glyph fall on the floor --- ");
+        logInfo(String.format("Runtime: %.2f", getRuntime()) + " --- More backward to let glyph fall on the floor --- ");
 
         driveForwardInches(2.0, motorSpeed, 2.2);
         sleepInAuto(200);
-        driveForwardInches(3.5, motorSpeed, 2.2);
+        driveForwardInches(2.5, motorSpeed, 2.2);
 
         robot.resetGlyphTray();
 
@@ -380,9 +386,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             //----------------------------------------------
             logInfo(" --- Drive backward to finish --- ");
             if(!aligned) {
-                driveForwardInches(7.5, 0.5, 2.0);
+                driveForwardInches(8.5, 0.5, 2.0);
             } else {
-                driveForwardInches(3.0, 0.5, 2.0);
+                driveForwardInches(2.0, 0.5, 2.0);
             }
 
             if(makeTurn) {

@@ -135,8 +135,8 @@ public class RobotInfo {
 
     //DS 180 degree Servo positions
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.88;
-    public static double GLYPH_PUSHER_PUSH_POSITION = 0.90;
-    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.93;
+    public static double GLYPH_PUSHER_PUSH_POSITION = 0.88;
+    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.91;
     public static double GLYPH_PUSHER_HOLD_POSITION = 0.27;
     public static double GLYPH_PUSHER_UP_POSITION = 0.01;
 

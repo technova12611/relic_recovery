@@ -89,21 +89,21 @@ public class JewelPusher {
         //--------------------------------------
         longArm.setPosition(JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION);
 
-        waitForMS(200);
+        waitForMS(150);
 
         // set to the correct position (middle position)
         // then wait a bit
         shortArm.setPosition(JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION);
 
         // wait for ~ 1.0 seconds
-        waitForMS(500);
+        waitForMS(300);
 
         // long arm down
         //--------------------------------------
         longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TARGET_POSITION);
 
         // wait for 2 seconds
-        waitForMS(500);
+        waitForMS(400);
     }
 
     /**
@@ -118,7 +118,7 @@ public class JewelPusher {
         waitForMS(300);
 
         shortArm.setPosition(JEWEL_PUSHER_SHORT_ARM_INITIAL_POSITION);
-        waitForMS(200);
+        //waitForMS(200);
 
         // long arm up
         //--------------------------------------
@@ -164,7 +164,7 @@ public class JewelPusher {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
         Color jewelColor = getJewelColor();
-        while(timer.time() < 3000 && jewelColor == UNKNOWN) {
+        while(_autoOpMode.opModeIsActive() && timer.time() < 1500 && jewelColor == UNKNOWN) {
             jewelColor = getJewelColor();
             waitForMS(100);
         }
