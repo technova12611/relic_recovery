@@ -133,12 +133,19 @@ public class RobotInfo {
 //    public static double GLYPH_PUSHER_HOLD_POSITION = 0.61;
 //    public static double GLYPH_PUSHER_UP_POSITION = 0.80;
 
-    //DS 180 degree Servo positions
+    //DS 3218 180 degree Servo positions
+//    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.88;
+//    public static double GLYPH_PUSHER_PUSH_POSITION = 0.88;
+//    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.91;
+//    public static double GLYPH_PUSHER_HOLD_POSITION = 0.27;
+//    public static double GLYPH_PUSHER_UP_POSITION = 0.01;
+
+    //DS 3218 270 degree Servo positions
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.88;
     public static double GLYPH_PUSHER_PUSH_POSITION = 0.88;
     public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.91;
-    public static double GLYPH_PUSHER_HOLD_POSITION = 0.27;
-    public static double GLYPH_PUSHER_UP_POSITION = 0.01;
+    public static double GLYPH_PUSHER_HOLD_POSITION = 0.40;
+    public static double GLYPH_PUSHER_UP_POSITION = 0.15;
 
     //DS 270 degree Servo positions
 //    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.86;
