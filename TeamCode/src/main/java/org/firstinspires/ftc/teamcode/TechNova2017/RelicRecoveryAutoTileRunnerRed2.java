@@ -194,29 +194,31 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                             break;
                     }
 
-                    turnToAngle(-15.0, 0.10);
+                    turn(-25.0);
 
                     robot.resetForTeleOps();
 
-                    // drive to glyph pit
-                    driveForwardInches(33.0, 0.75, 5.0);
                     // turn on the intake wheels
                     robot.collectGlyph();
-                    sleepInAuto(500);
+
+                    // drive to glyph pit
+                    driveForwardInches(33.0, 0.75, 5.0);
+                    sleepInAuto(200);
 
                     // push forward a bit to collect
                     driveForwardInches(7.0, 0.25, 2.0);
-                    sleepInAuto(500);
+                    sleepInAuto(300);
 
-                    driveBackwardInches(39.5, 0.75, 5.0);
+                    driveBackwardInches(37.5, 0.75, 5.0);
 
                     robot.pushGlyph();
 
                     //driveRightInches(7.0, motorSpeed,3.0);
 
                     int previousIntakeCount = robot.intakeRight.getCurrentPosition();
-                    robot.holdPusher();
                     sleepInAuto(200);
+                    robot.holdPusher();
+
                     boolean glyphStucked = false;
                     if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
                         robot.reverseGlyph();
@@ -233,29 +235,18 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     turn(0.0);
 
-                    driveRightInches(5.0, 0.35, 2.0);
+                    if(vuMark == RelicRecoveryVuMark.LEFT) {
+                        driveRightInches(10.0, 0.35, 2.0);
+                    }
 
                     robot.extendDistanceSensorArmServo();
 
-                    driveBackwardInches(3.0, 0.25, 2.0);
+                    driveBackwardInchesToColumn(3.0, 0.25, 2.0);
 
                     if(getRuntime() < 26.0) {
                         // push glyph again
                         robot.pushGlyph();
                         sleepInAuto(300);
-
-                        ElapsedTime timer2 = new ElapsedTime();
-
-                        while(opModeIsActive() && timer2.seconds() < 2.0) {
-                            double columnDist = robot.getColDistance();
-                            logInfo(" Second glyph distance:" + String.format("%.1f", columnDist));
-
-                            if (columnDist > 10.0) {
-                                driveBackwardInches(1.0, 0.25, 2.0);
-                            }  else {
-                                break;
-                            }
-                        }
 
                         placeGlyphIntoColumn(0.35);
                     }

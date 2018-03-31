@@ -253,11 +253,11 @@ public class TileRunnerRobot {
             logInfo(this.telemetry, "Led power control failed.", e.getMessage());
         }
 
-        try {
-            glyphColor = hardwareMap.colorSensor.get("glyphColor");
-        } catch(Exception e) {
-            logInfo(null, "Color Sensor init failed.", e.getMessage());
-        }
+//        try {
+//            glyphColor = hardwareMap.colorSensor.get("glyphColor");
+//        } catch(Exception e) {
+//            logInfo(null, "Color Sensor init failed.", e.getMessage());
+//        }
 
         try {
             distSensorServo = hardwareMap.servo.get("distSensor");
@@ -270,12 +270,12 @@ public class TileRunnerRobot {
             logInfo(null, "Distance sensor servo failed", e.getMessage());
         }
 
-        try {
-            glyphBlocker = hardwareMap.servo.get("glyphBlocker");
-            glyphBlocker.setPosition(GLYPH_BLOCKER_INIT_POSITION);
-        } catch(Exception e) {
-            logInfo(null, "Glyph blocker servo failed", e.getMessage());
-        }
+//        try {
+//            glyphBlocker = hardwareMap.servo.get("glyphBlocker");
+//            glyphBlocker.setPosition(GLYPH_BLOCKER_INIT_POSITION);
+//        } catch(Exception e) {
+//            logInfo(null, "Glyph blocker servo failed", e.getMessage());
+//        }
 
         logInfo(null, "Init Servos", " Servos are initialized ...");
 

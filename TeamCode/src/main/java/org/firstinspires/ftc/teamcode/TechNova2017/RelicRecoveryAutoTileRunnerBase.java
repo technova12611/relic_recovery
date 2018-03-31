@@ -145,7 +145,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(9.5, motorSpeed, 5.0);
+                                driveForwardInches(8.0, motorSpeed, 5.0);
                             }
                             break;
 
@@ -204,7 +204,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
-                    placeGlyphIntoColumn(fasterMotorSpeed);
+                    placeGlyphIntoColumn(fasterMotorSpeed, false);
                     gotoNextState();
 
                     break;
@@ -218,7 +218,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         gotoState(END);
                     } else {
                         //turn(-92.0);
-                        double oneColumnDistance = 5.75;
+                        double oneColumnDistance = 6.75;
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
                                 driveRightInches(oneColumnDistance+0.5, fasterMotorSpeed, 2.0);
@@ -245,31 +245,32 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     double collectSpeed = 0.35;
                     // drive to glyph pit
-                    driveForwardInches(22.0, 0.80, 5.0);
+                    driveForwardInches(24.0, 0.80, 5.0);
                     sleepInAuto(200);
 
-                    driveForwardInches(6.0, 0.25, 2.0);
+                    driveForwardInches(3.0, collectSpeed, 2.0);
                     sleepInAuto(200);
 
-                    driveBackwardInches(2.0, collectSpeed, 2.0);
+                    //driveBackwardInches(2.0, collectSpeed, 2.0);
 
-                    turn(-115.0);
+                    turn(-102.5);
 
-                    driveForwardInches(4.0, collectSpeed, 2.0);
+                    driveForwardInches(6.0, collectSpeed, 2.0);
                     sleepInAuto(300);
 
                     // push forward a bit to collect
-                    driveForwardInches(4.0, collectSpeed, 2.0);
+                    driveForwardInches(6.0, collectSpeed, 2.0);
                     sleepInAuto(500);
 
-                    driveBackwardInches(8.0, collectSpeed, 2.0);
+                    driveBackwardInches(11.0, 0.5, 2.0);
                     turn(-89.0);
                     //robot.pushGlyph();
 
-                    driveBackwardInches(27.0, 0.75, 5.0);
+                    driveBackwardInches(22.5, 0.75, 5.0);
 
                     robot.extendDistanceSensorArmServo();
                     robot.pushGlyph();
+                    sleepInAuto(200);
 
                     turn(-89.0);
 
@@ -278,9 +279,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     robot.pushGlyph();
 
                     int previousIntakeCount = robot.intakeRight.getCurrentPosition();
-                    sleepInAuto(200);
+                    sleepInAuto(500);
                     robot.holdPusher();
-                    sleepInAuto(200);
+                    //sleepInAuto(500);
 
                     boolean glyphStucked = false;
                     if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
@@ -298,30 +299,21 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     }
 
                     robot.stopIntake();
-                    robot.pushGlyph();
-                    sleepInAuto(200);
-                    robot.moveUpPusher();
+                    //robot.pushGlyph();
+                    //sleepInAuto(200);
+                    //robot.moveUpPusher();
 
                     if(getRuntime() < 27.0) {
 
                         logInfo(" Move forward to dump second glyph...");
-                        driveBackwardInchesToColumn(5.25, collectSpeed, 2.0);
+                        double columnDist = robot.getColDistance();
 
-                        ElapsedTime timer2 = new ElapsedTime();
-
-                        while(opModeIsActive() && timer2.seconds() < 2.0 && getRuntime() < 28.5) {
-                            double columnDist = robot.getColDistance();
-                            logInfo(" Second glyph distance:" + String.format("%.1f", columnDist));
-
-                            if (columnDist > 10.0) {
-                                driveBackwardInches(2.0, 0.25, 2.0);
-                            }  else {
-                                break;
-                            }
+                        if(columnDist > 10.0) {
+                            driveBackwardInchesToColumn(2.25, collectSpeed, 2.0);
                         }
 
-                        robot.holdPusher();
-                        sleepInAuto(200);
+                        //robot.holdPusher();
+                        //sleepInAuto(200);
                         robot.pushGlyph();
 
                         placeGlyphIntoColumn(fasterMotorSpeed);
