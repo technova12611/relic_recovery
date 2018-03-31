@@ -245,22 +245,22 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     double collectSpeed = 0.35;
                     // drive to glyph pit
-                    driveForwardInches(24.0, 0.80, 5.0);
+                    driveForwardInches(22.0, 0.80, 5.0);
                     sleepInAuto(200);
 
-                    driveForwardInches(4.0, 0.25, 2.0);
+                    driveForwardInches(6.0, 0.25, 2.0);
                     sleepInAuto(200);
 
                     driveBackwardInches(2.0, collectSpeed, 2.0);
 
-                    turn(-125.0);
+                    turn(-115.0);
 
                     driveForwardInches(4.0, collectSpeed, 2.0);
-                    sleepInAuto(200);
+                    sleepInAuto(300);
 
                     // push forward a bit to collect
                     driveForwardInches(4.0, collectSpeed, 2.0);
-                    sleepInAuto(300);
+                    sleepInAuto(500);
 
                     driveBackwardInches(8.0, collectSpeed, 2.0);
                     turn(-89.0);
