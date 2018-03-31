@@ -23,11 +23,14 @@ public class VuMarkVision {
     VuforiaTrackables relicTrackables;
     VuforiaTrackable relicTemplate;
 
+    boolean useFrontCamera = true;
+    boolean turnOnFlash = false;
+
     public VuMarkVision(HardwareMap hardwareMap, Telemetry telemetry) {
         this(hardwareMap, telemetry, true);
     }
 
-    public VuMarkVision(HardwareMap hardwareMap, Telemetry telemetry, boolean useFrontCamera) {
+    public VuMarkVision(HardwareMap hardwareMap, Telemetry telemetry, boolean frontCamera) {
 
         /*
          * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
@@ -58,11 +61,13 @@ public class VuMarkVision {
          * Here we chose the back (HiRes) camera (for greater range), but
          * for a competition robot, the front camera might be more convenient.
          */
-        if(useFrontCamera) {
+        if(frontCamera) {
             parameters.cameraDirection = VuforiaLocalizer.CameraDirection.FRONT;
         } else {
             parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+            setFlashTorchMode(true);
         }
+        this.useFrontCamera = frontCamera;
 
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
 
@@ -88,8 +93,8 @@ public class VuMarkVision {
         return detect(telemetry, true);
     }
 
-    public void setFlashTorchMode(boolean flash) {
-        CameraDevice.getInstance().setFlashTorchMode(flash);
+    public void setFlashTorchMode(boolean flashOn) {
+        turnOnFlash = flashOn;
     }
 
     public RelicRecoveryVuMark detect (Telemetry telemetry, boolean doLog) {
@@ -99,6 +104,11 @@ public class VuMarkVision {
          * UNKNOWN, LEFT, CENTER, and RIGHT. When a VuMark is visible, something other than
          * UNKNOWN will be returned by {@link RelicRecoveryVuMark#from(VuforiaTrackable)}.
          */
+
+        if(turnOnFlash) {
+            CameraDevice.getInstance().setFlashTorchMode(true);
+        }
+
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
 
         String message = String.format("%s visible", vuMark);
@@ -109,6 +119,10 @@ public class VuMarkVision {
         }
 
         if(doLog) logInfo("VuMark", message);
+
+        if(vuMark != RelicRecoveryVuMark.UNKNOWN) {
+            setFlashTorchMode(false);
+        }
         return vuMark;
     }
 

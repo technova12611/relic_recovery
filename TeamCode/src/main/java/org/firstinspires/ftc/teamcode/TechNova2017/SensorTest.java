@@ -62,7 +62,7 @@ public class SensorTest extends LinearOpMode {
                 robot.turnOnBlueLed();
             }
 
-            String message =String.format("%s visible", vuMark);
+            String message = String.format("%s visible", vuMark);
             telemetry.addData("VuMark", message);
 
             telemetry.addData("Red  ", sensorColor.red());
@@ -76,6 +76,7 @@ public class SensorTest extends LinearOpMode {
             } else if(gamepad1.left_stick_y < -0.5) {
                 robot.turnOffBlueLed();
             }
+
             if(gamepad1.a) {
                 robot.extendDistanceSensorArmServo();
             }
