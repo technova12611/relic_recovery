@@ -237,11 +237,13 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     if(vuMark == RelicRecoveryVuMark.LEFT) {
                         driveRightInches(10.0, 0.35, 2.0);
+                    } else {
+                        driveRightInches(3.0, 0.35, 2.0);
                     }
 
                     robot.extendDistanceSensorArmServo();
 
-                    driveBackwardInchesToColumn(3.0, 0.25, 2.0);
+                    driveBackwardInchesToColumn(8.0, 0.35, 2.0);
 
                     if(getRuntime() < 26.0) {
                         // push glyph again

@@ -156,7 +156,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.encoderDriveInches(directionRadians, inches);
         ElapsedTime timer = new ElapsedTime();
 
-        while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout && (!useRangerSensor || robot.getColDistance() < 10.0)) {
+        while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout && (!useRangerSensor || robot.columnDetected() == null || robot.columnDetected())) {
             robot.updateSensorTelemetry();
             telemetry.update();
             //robot.loop();

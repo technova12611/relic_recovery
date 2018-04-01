@@ -54,7 +54,11 @@ public class SensorTest extends LinearOpMode {
             telemetry.addData("(x1,x2): ", "(%.2f, %.2f)", robot.getX1Distance(), robot.getColDistance());
             telemetry.addData("IMU: ", "%.2f", robot.getHeadingAngle());
 
-            vuMark = vuMarkVision.detect(null, false);
+            if(robot.proximitySensor != null){
+                telemetry.addData("Proximity: ", robot.proximitySensor.getState());
+            }
+
+            vuMark = vuMarkVision.detect(null, true);
 
             if(vuMark == RelicRecoveryVuMark.UNKNOWN) {
                 robot.turnOffBlueLed();

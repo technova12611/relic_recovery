@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -89,6 +90,8 @@ public class TileRunnerRobot {
     private VoltageSensor voltageSensor;
 
     ColorSensor glyphColor;
+
+    DigitalChannel proximitySensor = null;
 
     private boolean isBlueLedOn = false;
     private boolean isGreenLedOn = false;
@@ -276,6 +279,16 @@ public class TileRunnerRobot {
 //        } catch(Exception e) {
 //            logInfo(null, "Glyph blocker servo failed", e.getMessage());
 //        }
+
+        try{
+            // get a reference to our proximity object.
+            proximitySensor = hardwareMap.get(DigitalChannel.class, "proximity");
+
+            // set the digital channel to input.
+            proximitySensor.setMode(DigitalChannel.Mode.INPUT);
+        } catch(Exception e) {
+            // ignore
+        }
 
         logInfo(null, "Init Servos", " Servos are initialized ...");
 
@@ -1274,6 +1287,14 @@ public class TileRunnerRobot {
     public void closeGlyphBlocker() {
         if(glyphBlocker != null) {
             glyphBlocker.setPosition(GLYPH_BLOCKER_CLOSE_POSITION);
+        }
+    }
+
+    public Boolean columnDetected() {
+        if(proximitySensor != null) {
+            return !proximitySensor.getState();
+        } else {
+            return null;
         }
     }
 

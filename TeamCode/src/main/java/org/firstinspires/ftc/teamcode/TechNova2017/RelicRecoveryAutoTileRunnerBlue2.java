@@ -253,7 +253,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                         driveLeftInches(3.0, motorSpeed, 3.0);
                     }
 
-                    driveBackwardInchesToColumn(5.0, 0.35, 2.0);
+                    driveBackwardInchesToColumn(8.0, 0.35, 3.0);
 
                     if(getRuntime() < 26.0) {
                         // push glyph again

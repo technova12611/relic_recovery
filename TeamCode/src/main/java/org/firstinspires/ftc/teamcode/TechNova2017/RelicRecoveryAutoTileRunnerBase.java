@@ -248,25 +248,25 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     driveForwardInches(24.0, 0.80, 5.0);
                     sleepInAuto(200);
 
-                    driveForwardInches(3.0, collectSpeed, 2.0);
+                    driveForwardInches(4.0, collectSpeed, 2.0);
                     sleepInAuto(200);
 
                     //driveBackwardInches(2.0, collectSpeed, 2.0);
 
                     turn(-102.5);
 
-                    driveForwardInches(6.0, collectSpeed, 2.0);
+                    driveForwardInches(4.0, collectSpeed, 2.0);
                     sleepInAuto(300);
 
                     // push forward a bit to collect
                     driveForwardInches(6.0, collectSpeed, 2.0);
                     sleepInAuto(500);
 
-                    driveBackwardInches(11.0, 0.5, 2.0);
+                    driveBackwardInches(10.0, 0.5, 2.0);
                     turn(-89.0);
                     //robot.pushGlyph();
 
-                    driveBackwardInches(22.5, 0.75, 5.0);
+                    driveBackwardInches(24.5, 0.75, 5.0);
 
                     robot.extendDistanceSensorArmServo();
                     robot.pushGlyph();
@@ -309,7 +309,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         double columnDist = robot.getColDistance();
 
                         if(columnDist > 10.0) {
-                            driveBackwardInchesToColumn(2.25, collectSpeed, 2.0);
+                            driveBackwardInchesToColumn(7.25, collectSpeed, 2.0);
                         }
 
                         //robot.holdPusher();
