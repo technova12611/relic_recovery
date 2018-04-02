@@ -158,8 +158,13 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout &&
                 (!useRangerSensor
-                        || (robot.columnDetected() != null && !robot.columnDetected()) || robot.getColDistance() < 6.5)
+                        || (robot.columnDetected() != null && !robot.columnDetected()))
                 ) {
+            double colDist = robot.getColDistance();
+            if(colDist < 7.0) {
+                break;
+            }
+
             robot.updateSensorTelemetry();
             telemetry.update();
             //robot.loop();
@@ -459,6 +464,22 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         robot.resetDistanceSensorServoArm();
         return aligned;
+    }
+
+    protected boolean isGlyphStucked() {
+        sleep(300);
+        int previousIntakeCount = robot.intakeRight.getCurrentPosition();
+        sleepInAuto(200);
+        robot.holdPusher();
+
+        boolean glyphStucked = false;
+        if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
+            robot.reverseGlyph();
+            sleepInAuto(1500);
+            robot.collectGlyph();
+            glyphStucked = true;
+        }
+        return glyphStucked;
     }
 
     // default is RED allaince

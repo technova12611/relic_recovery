@@ -194,7 +194,7 @@ public class JewelPusher {
             }
         }
 
-        waitForMS(1000);
+        waitForMS(600);
     }
 
     /**

@@ -218,16 +218,16 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         gotoState(END);
                     } else {
                         //turn(-92.0);
-                        double oneColumnDistance = 6.75;
+                        double oneColumnDistance = 8.75;
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                                driveRightInches(oneColumnDistance+5.5, fasterMotorSpeed, 2.0);
+                                driveRightInches(oneColumnDistance+4.5, fasterMotorSpeed, 2.0);
                             } else {
                                 driveLeftInches(oneColumnDistance, fasterMotorSpeed, 2.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                driveRightInches(oneColumnDistance + 5.5, fasterMotorSpeed, 2.0);
+                                driveRightInches(oneColumnDistance + 4.5, fasterMotorSpeed, 2.0);
                             } else {
                                 driveLeftInches(oneColumnDistance, fasterMotorSpeed, 2.0);
                             }
@@ -280,18 +280,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     logInfo( getRuntime() + " Col Dist: " + String.format("%.2f", robot.getColDistance()));
 
-                    int previousIntakeCount = robot.intakeRight.getCurrentPosition();
-                    sleepInAuto(500);
-                    robot.holdPusher();
-                    //sleepInAuto(500);
-
-                    boolean glyphStucked = false;
-                    if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
-                        robot.reverseGlyph();
-                        sleepInAuto(1500);
-                        robot.collectGlyph();
-                        glyphStucked = true;
-                    }
+                    boolean glyphStucked = isGlyphStucked();
 
                     if(!dumpMoreGlyphs() || glyphStucked) {
                         //driveBackwardInches(2.50, 0.25, 2.0);
@@ -309,7 +298,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                         double columnDist = robot.getColDistance();
 
-                        if( (robot.columnDetected() != null && !robot.columnDetected()) || columnDist > 7.0) {
+                        if( (robot.columnDetected() != null && !robot.columnDetected()) || (columnDist > 7.0 && columnDist < 100)) {
                             logInfo( getRuntime() + " Move to column: " + String.format("%.2f", columnDist));
                             driveBackwardInchesToColumn(7.25, collectSpeed, 2.0);
                         }
@@ -354,6 +343,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
         robot.onStop();
     }
+
+
 
     //------------------------------------
 }

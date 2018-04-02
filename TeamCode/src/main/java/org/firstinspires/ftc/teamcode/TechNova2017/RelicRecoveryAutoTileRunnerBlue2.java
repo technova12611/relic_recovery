@@ -226,16 +226,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                     robot.pushGlyph();
 
-                    int previousIntakeCount = robot.intakeRight.getCurrentPosition();
-                    boolean glyphStucked = false;
-                    sleepInAuto(300);
-                    if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
-                        robot.reverseGlyph();
-                        sleepInAuto(1500);
-                        glyphStucked = true;
-                    }
-
-                    robot.holdPusher();
+                    boolean glyphStucked = isGlyphStucked();
 
                     robot.stopIntake();
 
