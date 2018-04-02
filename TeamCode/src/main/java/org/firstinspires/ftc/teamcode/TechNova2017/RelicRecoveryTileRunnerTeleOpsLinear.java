@@ -61,9 +61,11 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         // wait for the start button to be pressed.
         waitForStart();
 
+        resetStartTime();
+
         robot.onStart();
 
-        tripTimer.reset();
+        tripTimer = new ElapsedTime();
 
         robot.holdPusher();
 
@@ -112,9 +114,14 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         if(g2.dpadLeft()) {
             robot.releaseRelic();
             clawClosed = false;
+
+            Log.i("Release Relic", "@ " + String.format("%.2f", getRuntime()));
+
         } else if(g2.dpadRight()) {
             robot.grabRelic();
             clawClosed = true;
+
+            Log.i("Grab Relic", "@ " + String.format("%.2f", getRuntime()));
         }
 
         // operator controller right joystick Y to move Relic Elbow up and down
@@ -159,7 +166,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
                 robot.pushGlyph();
                 relicClawLocked = false;
 
-                Log.i("Release Relic Claw:", "Recovery starts ...");
+                Log.i("Release Relic Claw", "Relic starts @ " + String.format("%.2f", getRuntime()));
             }
         } else if((g2.leftBumper() || g2.rightBumper()) && g2.right_trigger > 0.2) {
             robot.moveGlyphLift(0);
@@ -221,8 +228,10 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.holdPusher();
             stopIntake();
 
-            Log.i("Place Glyph:", "Trip #:" + (++numOfTrips) + " | " + String.format("%.1f", tripTimer.seconds()));
-            tripTimer.reset();
+            if(tripTimer.milliseconds() < 100) {
+                Log.i("Place Glyph", "Trip #" + (++numOfTrips) + " | " + String.format("%.1f", tripTimer.seconds()));
+                tripTimer.reset();
+            }
         }
         else if(g2.leftBumper() && g2.Y()) {
             robot.resetGlyphTray();
@@ -305,7 +314,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
         telemetry.addData("Intake Counts:", + robot.intakeRight.getCurrentPosition() + " | "
                         + String.format("%.1f", intakeStuckTimer.seconds()));
         telemetry.addData("Intake Stucked:", robot.isIntakeStuck);
-        telemetry.addData("relicElbowPosition: ", String.format("%.2f",relicElbowPosition));
+        telemetry.addData("RelicElbowPosition: ", String.format("%.2f",relicElbowPosition));
         telemetry.addData("Relic Elbow Position: ", String.format("%.2f",robot.getRelicElbowPosition()));
         telemetry.addData("Glyph Lift Count: ", robot.getGlyphLiftPosition());
     }
