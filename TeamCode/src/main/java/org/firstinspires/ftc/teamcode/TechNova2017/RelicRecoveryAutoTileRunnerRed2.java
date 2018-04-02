@@ -146,12 +146,14 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     turnToAngle(0.0, 0.10);
 
+                    robot.extendDistanceSensorArmServo();
+
                     gotoNextState();
                     break;
 
                 case BACKWARD_7_INCHES:
-                    robot.extendDistanceSensorArmServo();
-                    driveBackwardInches(1.0, motorSpeed, 5.0);
+
+                    driveBackwardInchesToColumn(3.0, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
@@ -172,29 +174,29 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveLeftInches(5.0, motorSpeed,5.0);
+                            driveLeftInches(23.0, motorSpeed,5.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveLeftInches(12.0, motorSpeed, 4.0);
+                            driveLeftInches(15.0, motorSpeed, 4.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(19.0, motorSpeed, 3.0);
+                            driveLeftInches(7.0, motorSpeed, 3.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveLeftInches(12.0, motorSpeed, 4.0);
+                            driveLeftInches(15.0, motorSpeed, 4.0);
                             break;
                     }
 
-                    turn(-25.0);
+                    turn(-20.0);
 
                     robot.resetForTeleOps();
 
@@ -203,27 +205,28 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     // drive to glyph pit
                     driveForwardInches(33.0, 0.75, 5.0);
-                    sleepInAuto(200);
+                    sleepInAuto(500);
 
+                    turn(0.0);
                     // push forward a bit to collect
                     driveForwardInches(7.0, 0.25, 2.0);
-                    sleepInAuto(300);
+                    sleepInAuto(500);
 
-                    driveBackwardInches(37.5, 0.75, 5.0);
+                    driveBackwardInches(7.0, 0.5, 2.0);
+
+                    turn(-20.0);
+
+                    driveBackwardInches(31.5, 0.75, 5.0);
 
                     robot.pushGlyph();
 
                     //driveRightInches(7.0, motorSpeed,3.0);
 
-                    int previousIntakeCount = robot.intakeRight.getCurrentPosition();
-                    sleepInAuto(200);
-                    robot.holdPusher();
 
-                    boolean glyphStucked = false;
-                    if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
-                        robot.reverseGlyph();
-                        sleepInAuto(1500);
-                        glyphStucked = true;
+                    boolean glyphStucked = isGlyphStucked();
+
+                    if(glyphStucked) {
+                        glyphStucked = isGlyphStucked();
                     }
 
                     robot.stopIntake();
@@ -236,22 +239,30 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     turn(0.0);
 
                     if(vuMark == RelicRecoveryVuMark.LEFT) {
-                        driveRightInches(10.0, 0.35, 2.0);
+                        driveRightInches(12.0, 0.35, 2.0);
                     } else {
-                        driveRightInches(3.0, 0.35, 2.0);
+                        driveRightInches(7.0, 0.35, 2.0);
                     }
 
                     robot.extendDistanceSensorArmServo();
 
-                    driveBackwardInchesToColumn(8.0, 0.35, 2.0);
+                    driveBackwardInchesToColumn(6.0, 0.35, 2.0);
 
                     if(getRuntime() < 26.0) {
                         // push glyph again
                         robot.pushGlyph();
                         sleepInAuto(300);
 
-                        placeGlyphIntoColumn(0.35);
+                        placeGlyphIntoColumn(0.35, false);
+
+                        driveBackwardInches(2.0, 0.35, 2.0);
+                    } else {
+                        driveBackwardInches(3.0, 0.35, 2.0);
                     }
+
+                    robot.holdPusher();
+
+                    turn(-35.0);
 
                     gotoNextState();
                     break;

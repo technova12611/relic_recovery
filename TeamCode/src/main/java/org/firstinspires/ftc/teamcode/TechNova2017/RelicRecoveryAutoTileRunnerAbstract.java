@@ -165,11 +165,15 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 break;
             }
 
-            robot.updateSensorTelemetry();
-            telemetry.update();
+            //robot.updateSensorTelemetry();
+            //telemetry.update();
             //robot.loop();
             idle();
         }
+
+        robot.updateSensorTelemetry();
+        telemetry.update();
+
         robot.stopDriveMotors();
         robot.resetDriveMotorModes();
         robot.clearEncoderDrivePower();
@@ -182,11 +186,15 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
 
         while (opModeIsActive() && robot.driveMotorsBusy() && timer.time(TimeUnit.MILLISECONDS) < 5000 ) {
-            robot.updateSensorTelemetry();
-            telemetry.update();
+            //robot.updateSensorTelemetry();
+            //telemetry.update();
             //robot.loop();
             idle();
         }
+
+        robot.updateSensorTelemetry();
+        telemetry.update();
+
         robot.stopDriveMotors();
         robot.resetDriveMotorModes();
         robot.clearEncoderDrivePower();
@@ -307,7 +315,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                             + " | " + String.format("%6.1f", getRuntime() * 1000.0)
                             + " | " + String.format("%5d", timer.time(TimeUnit.MILLISECONDS))
                             + " | " + String.format("IMU: %.1f", robot.getHeadingAngle())
-                            + " | " + String.format("(x1,x2): %3.1f, %3.1f", robot.getX1Distance(), robot.getColDistance())
+                            + " | " + String.format("(x1,x2): %3.1f, %3.1f", robot.getX1Distance(), robot.getColDistance()) + ", " + robot.columnDetected()
                             + " | " + "Glyph count:" + String.format("%5d", robot.getGlyphLiftPosition())
                             + " | " + (vuMark != null ? vuMark : "")
                             + " | " + String.format("Battery: %3.2f", robot.getBatteryVoltage())
@@ -359,7 +367,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         logInfo(getRunTime() + " --- Align robot to the cryptobox --- ");
         boolean aligned = false;
-        if(getRuntime() < 27.5) {
+        if(getRuntime() < 27.0) {
             aligned = alignCryptoBoxInAuto(5.0);
         }
 
@@ -369,7 +377,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         logInfo(getRunTime() + " --- More backward to let glyph fall on the floor --- ");
 
-        driveForwardInches(3.0, motorSpeed, 2.2);
+        driveForwardInches(2.0, motorSpeed, 2.2);
         if(!aligned) {
             sleepInAuto(200);
             driveForwardInches(2.5, motorSpeed, 2.2);
@@ -391,8 +399,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                     watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark);
 
             // need to push again
-            if (watcher.seconds() > 1.8 && getRuntime() < 28.5) {
-                logInfo(" --- Missed the column, push again --- ");
+            if (watcher.seconds() > 1.8) {
+                logInfo(getRunTime() + " --- Missed the column, push again --- ");
                 //driveForwardInches(2.0, motorSpeed, 2.0);
                 //driveBackwardInches(4.0, motorSpeed, 2.0);
             }
@@ -408,8 +416,6 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 turn(-89.0);
             }
         }
-
-        driveForwardInches(2.0, 0.5, 2.0);
 
         // close the glyphBlocker
         //----------------------------------------
@@ -466,7 +472,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         return aligned;
     }
 
-    protected boolean isGlyphStucked() {
+    protected boolean isGlyphStucked() throws InterruptedException {
         sleep(300);
         int previousIntakeCount = robot.intakeRight.getCurrentPosition();
         sleepInAuto(200);
@@ -475,8 +481,10 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         boolean glyphStucked = false;
         if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
             robot.reverseGlyph();
-            sleepInAuto(1500);
+            sleepInAuto(1000);
             robot.collectGlyph();
+            driveForwardInches(3.0, 0.5, 2.0);
+            driveBackwardInches(3.0, 0.5, 2.0);
             glyphStucked = true;
         }
         return glyphStucked;
