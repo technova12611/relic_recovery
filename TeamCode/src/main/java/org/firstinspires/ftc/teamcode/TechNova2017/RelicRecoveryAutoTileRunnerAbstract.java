@@ -156,7 +156,10 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.encoderDriveInches(directionRadians, inches);
         ElapsedTime timer = new ElapsedTime();
 
-        while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout && (!useRangerSensor || robot.columnDetected() == null || robot.columnDetected())) {
+        while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout &&
+                (!useRangerSensor
+                        || (robot.columnDetected() != null && !robot.columnDetected()) || robot.getColDistance() < 6.5)
+                ) {
             robot.updateSensorTelemetry();
             telemetry.update();
             //robot.loop();
@@ -351,7 +354,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         logInfo(getRunTime() + " --- Align robot to the cryptobox --- ");
         boolean aligned = false;
-        if(getRuntime() < 26.5) {
+        if(getRuntime() < 27.5) {
             aligned = alignCryptoBoxInAuto(5.0);
         }
 
@@ -361,7 +364,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         logInfo(getRunTime() + " --- More backward to let glyph fall on the floor --- ");
 
-        driveForwardInches(2.0, motorSpeed, 2.2);
+        driveForwardInches(3.0, motorSpeed, 2.2);
         if(!aligned) {
             sleepInAuto(200);
             driveForwardInches(2.5, motorSpeed, 2.2);
@@ -376,7 +379,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             logInfo(getRunTime() + " --- Drive forward to push --- ");
             ElapsedTime watcher = new ElapsedTime();
             if(!aligned) {
-                driveBackwardInches(5.5, motorSpeed, 2.0);
+                driveBackwardInches(6.5, motorSpeed, 2.0);
             }
 
             logInfo(getRunTime() + " --- Place Glyph into column (ms): " +
@@ -400,6 +403,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 turn(-89.0);
             }
         }
+
+        driveForwardInches(2.0, 0.5, 2.0);
 
         // close the glyphBlocker
         //----------------------------------------

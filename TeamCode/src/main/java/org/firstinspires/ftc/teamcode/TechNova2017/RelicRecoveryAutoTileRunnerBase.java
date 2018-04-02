@@ -157,7 +157,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(2.5, motorSpeed, 2.0);
+                                driveForwardInches(2.0, motorSpeed, 2.0);
                             }
                             break;
 
@@ -220,14 +220,14 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         //turn(-92.0);
                         double oneColumnDistance = 6.75;
                         if(getAllianceColor() == AllianceColor.RED) {
-                            if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                driveRightInches(oneColumnDistance+0.5, fasterMotorSpeed, 2.0);
+                            if (vuMark == RelicRecoveryVuMark.RIGHT) {
+                                driveRightInches(oneColumnDistance+5.5, fasterMotorSpeed, 2.0);
                             } else {
                                 driveLeftInches(oneColumnDistance, fasterMotorSpeed, 2.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                driveRightInches(oneColumnDistance + 2.5, fasterMotorSpeed, 2.0);
+                                driveRightInches(oneColumnDistance + 5.5, fasterMotorSpeed, 2.0);
                             } else {
                                 driveLeftInches(oneColumnDistance, fasterMotorSpeed, 2.0);
                             }
@@ -248,8 +248,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     driveForwardInches(24.0, 0.80, 5.0);
                     sleepInAuto(200);
 
-                    driveForwardInches(4.0, collectSpeed, 2.0);
-                    sleepInAuto(200);
+                    //driveForwardInches(4.0, collectSpeed, 2.0);
+                    //sleepInAuto(200);
 
                     //driveBackwardInches(2.0, collectSpeed, 2.0);
 
@@ -259,24 +259,26 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     sleepInAuto(300);
 
                     // push forward a bit to collect
-                    driveForwardInches(6.0, collectSpeed, 2.0);
-                    sleepInAuto(500);
+                    driveForwardInches(4.0, collectSpeed, 2.0);
+                    sleepInAuto(300);
 
                     driveBackwardInches(10.0, 0.5, 2.0);
                     turn(-89.0);
                     //robot.pushGlyph();
 
-                    driveBackwardInches(24.5, 0.75, 5.0);
+                    driveBackwardInches(20.0, 0.80, 5.0);
 
                     robot.extendDistanceSensorArmServo();
                     robot.pushGlyph();
-                    sleepInAuto(200);
+                    sleepInAuto(350);
 
                     turn(-89.0);
 
                     robot.holdPusher();
-                    sleepInAuto(300);
+                    sleepInAuto(500);
                     robot.pushGlyph();
+
+                    logInfo( getRuntime() + " Col Dist: " + String.format("%.2f", robot.getColDistance()));
 
                     int previousIntakeCount = robot.intakeRight.getCurrentPosition();
                     sleepInAuto(500);
@@ -305,21 +307,23 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     if(getRuntime() < 27.0) {
 
-                        logInfo(" Move forward to dump second glyph...");
                         double columnDist = robot.getColDistance();
 
-                        if(columnDist > 10.0) {
+                        if( (robot.columnDetected() != null && !robot.columnDetected()) || columnDist > 7.0) {
+                            logInfo( getRuntime() + " Move to column: " + String.format("%.2f", columnDist));
                             driveBackwardInchesToColumn(7.25, collectSpeed, 2.0);
                         }
 
                         //robot.holdPusher();
-                        //sleepInAuto(200);
+                        sleepInAuto(200);
                         robot.pushGlyph();
+
+                        turn(-89.0);
 
                         placeGlyphIntoColumn(fasterMotorSpeed);
                     }
 
-                    driveBackwardInches(3.0, 0.5, 1.0);
+                    driveBackwardInches(1.0, 0.5, 1.0);
 
                     gotoNextState();
 

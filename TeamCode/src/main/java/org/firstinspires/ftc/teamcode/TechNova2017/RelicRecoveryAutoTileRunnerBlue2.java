@@ -112,12 +112,12 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case FORWARD_3_FEET:
                     detectVuMark = true;
-                    driveForwardInches(27.5, motorSpeed, 5.0);
+                    driveForwardInches(28.25, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
                 case TURN_TO_180_DEGREE:
-                    turn(172.0);
+                    turn(175.0);
                     sleepInAuto(300);
                     turnToAngle(-176.0, 0.10);
 
@@ -139,7 +139,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(15.0, motorSpeed, 4.0);
+                            driveRightInches(13.5, motorSpeed, 4.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
@@ -254,6 +254,8 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     }
 
                     driveBackwardInchesToColumn(8.0, 0.35, 3.0);
+
+                    turn(-178.0);
 
                     if(getRuntime() < 26.0) {
                         // push glyph again
