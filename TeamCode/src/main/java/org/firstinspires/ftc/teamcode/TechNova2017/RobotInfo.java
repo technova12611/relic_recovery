@@ -118,17 +118,17 @@ public class RobotInfo {
     // Relic delivery system
     // --------------------------------------------------------------------------
     public static double RELIC_CLAW_INITIAL_POSITION = 0.51;
-    public static double RELIC_CLAW_CLOSE_POSITION = 0.54;
+    public static double RELIC_CLAW_CLOSE_POSITION = 0.53;
     public static double RELIC_CLAW_OPEN_POSITION = 0.70;
 
-    public static double RELIC_ELBOW_INITIAL_POSITION = 0.17;
-    public static double RELIC_ELBOW_RELEASE_POSITION = 0.19;
+    public static double RELIC_ELBOW_INITIAL_POSITION = 0.18;
+    public static double RELIC_ELBOW_RELEASE_POSITION = 0.20;
     public static double RELIC_ELBOW_UP_POSITION = 0.65;
 
     public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.73;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.02;
 
-    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.17;
+    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.18;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.75;
 
 

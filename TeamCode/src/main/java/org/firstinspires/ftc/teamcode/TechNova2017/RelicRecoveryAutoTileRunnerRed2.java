@@ -28,7 +28,9 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
         TURN_RIGHT_TO_0,
         BACKWARD_7_INCHES,
         PLACE_GLYPH_INTO_CRYPTO,
-        PICKUP_SECOND_GLYPH,
+        PREPARE_FOR_MORE_GLYPHS,
+        PICKUP_MORE_GLYPHS,
+        PLACE_MORE_GLYPHS,
         RESET_GLYPH_TRAY,
         END;
 
@@ -159,12 +161,12 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                 case PLACE_GLYPH_INTO_CRYPTO:
                     placeGlyphIntoColumn(motorSpeed, false);
+                    driveForwardInches(1.5, motorSpeed, 1.5);
 
                     gotoNextState();
                     break;
 
-                case PICKUP_SECOND_GLYPH:
-
+                case PREPARE_FOR_MORE_GLYPHS:
                     if(getRuntime() > 23.0 || !pickupMoreGlyphs()) {
                         gotoState(RESET_GLYPH_TRAY);
                         break;
@@ -203,6 +205,11 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     // turn on the intake wheels
                     robot.collectGlyph();
 
+                    gotoNextState();
+                    break;
+
+                case PICKUP_MORE_GLYPHS:
+
                     // drive to glyph pit
                     driveForwardInches(33.0, 0.75, 5.0);
                     sleepInAuto(500);
@@ -238,6 +245,11 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     turn(0.0);
 
+                    gotoNextState();
+                    break;
+
+                case PLACE_MORE_GLYPHS:
+
                     if(vuMark == RelicRecoveryVuMark.LEFT) {
                         driveRightInches(12.0, 0.35, 2.0);
                     } else {
@@ -246,7 +258,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     robot.extendDistanceSensorArmServo();
 
-                    driveBackwardInchesToColumn(6.0, 0.35, 2.0);
+                    driveBackwardInchesToColumn(8.0, 0.35, 2.0);
 
                     if(getRuntime() < 26.0) {
                         // push glyph again
@@ -254,11 +266,9 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                         sleepInAuto(300);
 
                         placeGlyphIntoColumn(0.35, false);
-
-                        driveBackwardInches(2.0, 0.35, 2.0);
-                    } else {
-                        driveBackwardInches(3.0, 0.35, 2.0);
                     }
+
+                    driveBackwardInches(3.0, 0.35, 2.0);
 
                     robot.holdPusher();
 

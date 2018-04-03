@@ -46,6 +46,10 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         //------------------------------------------------------------------------
         initOpMode();
 
+        if(do4Glyphs()) {
+            robot.resetGlyphTray();
+        }
+
         // waiting for operator to press start button
         while(!isStarted()) {
             telemetry.addData("Distance (x1, x2): ",

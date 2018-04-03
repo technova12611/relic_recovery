@@ -28,7 +28,9 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
         STRAFE_RIGHT,
         BACKWARD_3_INCHES,
         PLACE_GLYPH_INTO_CRYPTO,
-        PICKUP_SECOND_GLYPH,
+        PREPARE_FOR_MORE_GLYPHS,
+        PICKUP_MORE_GLYPHS,
+        PLACE_MORE_GLYPHS,
         RESET_GLYPH_TRAY,
         END;
 
@@ -179,8 +181,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                     break;
 
-                case PICKUP_SECOND_GLYPH:
-
+                case PREPARE_FOR_MORE_GLYPHS:
                     if(getRuntime() > 23.0 || !pickupMoreGlyphs()) {
                         gotoState(RESET_GLYPH_TRAY);
                         break;
@@ -221,6 +222,11 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     // turn on the intake wheels
                     robot.collectGlyph();
 
+                    gotoNextState();
+                    break;
+
+                case PICKUP_MORE_GLYPHS:
+
                     // drive to glyph pit
                     driveForwardInches(33.0, 0.60, 5.0);
                     sleepInAuto(500);
@@ -228,6 +234,8 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     // push forward a bit to collect
                     driveForwardInches(7.0, 0.25, 2.0);
                     sleepInAuto(300);
+
+                    turn(-160.0);
 
                     driveBackwardInches(37.5, 0.75, 5.0);
 
@@ -249,6 +257,11 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     turn(-178.0);
                     robot.extendDistanceSensorArmServo();
 
+                    gotoNextState();
+                    break;
+
+                case PLACE_MORE_GLYPHS:
+
                     if(vuMark == RelicRecoveryVuMark.RIGHT) {
                         driveLeftInches(12.0, motorSpeed, 3.0);
                     } else {
@@ -259,21 +272,19 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                     turn(-178.0);
 
-                    if(getRuntime() < 26.0) {
+                    if(getRuntime() < 27.0) {
                         // push glyph again
                         robot.pushGlyph();
                         sleepInAuto(500);
 
                         placeGlyphIntoColumn(0.35, false);
-
-                        driveBackwardInches(2.0, 0.5, 2.0);
-                    } else {
-                        driveForwardInches(2.0, 0.5, 2.0);
                     }
+
+                    driveForwardInches(2.0, 0.5, 2.0);
 
                     robot.holdPusher();
 
-                    turn(-125);
+                    turn(-125.0);
 
                     gotoNextState();
                     break;
@@ -286,7 +297,6 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case END:
                     Default:
-                        gotoState(RelicRecoveryAutoTileRunnerBlue2.State.END);
                     break;
             }
 
