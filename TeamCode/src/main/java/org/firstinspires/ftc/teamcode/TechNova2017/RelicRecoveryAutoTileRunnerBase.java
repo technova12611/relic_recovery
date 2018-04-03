@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
-import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.END;
@@ -21,10 +19,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
          GET_OFF_STONE,
          ALIGN_TO_COLUMN,
          TURN_TO_90_DEGREE,
-         FORWARD_1_FEET,
+         PICKUP_ANOTHER_GLYPH,
+         FORWARD_TO_CRYPTOBOX,
          PLACE_GLYPH_INTO_CRYPTO,
-         RESET_GLYPH_TRAY,
-         PICKUP_SECOND_GLYPH,
+         PREPARE_FOR_MORE_GLYPHS,
+         PICKUP_MORE_GLYPH,
+         PLACE_MORE_GLYPHS_INTO_CRYPTO,
          READY_FOR_TELEOPS,
          END;
 
@@ -198,9 +198,43 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     gotoNextState();
                     break;
 
-                case FORWARD_1_FEET:
+                case PICKUP_ANOTHER_GLYPH:
+
+                    robot.resetForTeleOps();
+
+                    if(do4Glyphs()) {
+
+                        robot.resetGlyphTray();
+                        robot.collectGlyph();
+
+                        driveForwardInches(12.0, 0.75, 2.0);
+                        sleepInAuto(200);
+
+                        driveForwardInches(6.0, 0.35, 2.0);
+                        sleepInAuto(300);
+
+                        robot.pushGlyph();
+
+                        driveBackwardInches(18.0,0.5,3.0);
+
+                        turn(-88.0);
+
+                        if(isGlyphStucked()) {
+                            robot.pushGlyph();
+                            isGlyphStucked();
+                        }
+
+                        robot.stopIntake();
+                    }
+
                     robot.extendDistanceSensorArmServo();
-                    driveBackwardInches(6.75, motorSpeed, 2.0);
+
+                    gotoNextState();
+                    break;
+
+                case FORWARD_TO_CRYPTOBOX:
+
+                    driveBackwardInchesToColumn(7.50, motorSpeed, 3.0);
                     gotoNextState();
                     break;
 
@@ -210,13 +244,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     break;
 
-                case RESET_GLYPH_TRAY:
-
-                    // move the glyph lift back to zero position
-                    robot.resetForTeleOps();
+                case PREPARE_FOR_MORE_GLYPHS:
 
                     if(getRuntime() > 22.0 || !pickupMoreGlyphs()) {
                         gotoState(READY_FOR_TELEOPS);
+                        break;
                     } else {
                         //turn(-92.0);
                         double oneColumnDistance = 8.75;
@@ -239,7 +271,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     }
                     break;
 
-                case PICKUP_SECOND_GLYPH:
+                case PICKUP_MORE_GLYPH:
 
                     // turn on the intake wheels
                     robot.collectGlyph();
@@ -294,7 +326,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if(!dumpMoreGlyphs() || glyphStucked) {
                         driveBackwardInches(3.50, 0.25, 2.0);
                         robot.stopIntake();
-                        gotoNextState();
+                        gotoState(READY_FOR_TELEOPS);
                         break;
                     }
 
@@ -302,6 +334,13 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     //robot.pushGlyph();
                     //sleepInAuto(200);
                     //robot.moveUpPusher();
+
+                    gotoNextState();
+                    break;
+
+                case PLACE_MORE_GLYPHS_INTO_CRYPTO:
+
+                    collectSpeed = 0.35;
 
                     if(getRuntime() < 27.0) {
 
@@ -362,7 +401,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         robot.onStop();
     }
 
-
+    protected boolean do4Glyphs() {
+        return false;
+    }
 
     //------------------------------------
 }
