@@ -284,7 +284,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     double collectSpeed = 0.35;
                     // drive to glyph pit
                     driveForwardInches(24.0, 0.80, 5.0);
-                    sleepInAuto(500);
+                    sleepInAuto(350);
 
                     //driveForwardInches(4.0, collectSpeed, 2.0);
                     //sleepInAuto(200);
@@ -292,14 +292,17 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     turn(-103.5);
 
-                    driveForwardInches(7.0, collectSpeed, 2.0);
-                    sleepInAuto(500);
+                    driveForwardInches(3.0, collectSpeed, 2.0);
+                    sleepInAuto(250);
+
+                    driveForwardInches(4.0, collectSpeed, 2.0);
+                    sleepInAuto(250);
 
                     // push forward a bit to collect
                     //driveForwardInches(4.0, collectSpeed, 2.0);
                     //sleepInAuto(300);
 
-                    driveBackwardInches(9.0, 0.5, 2.0);
+                    driveBackwardInches(7.5, 0.5, 2.0);
                     turn(-89.0);
                     //robot.pushGlyph();
 
@@ -312,29 +315,31 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     robot.extendDistanceSensorArmServo();
                     robot.pushGlyph();
-                    sleepInAuto(400);
+                    sleepInAuto(300);
 
                     turn(-89.0);
 
                     // push #1
                     robot.holdPusher();
-                    sleepInAuto(500);
+                    sleepInAuto(400);
 
+                    // push #2
                     robot.pushGlyph();
 
                     logInfo( getRuntime() + " Col Dist: " + String.format("%.2f", robot.getColDistance()) + ", " + robot.columnDetected());
 
-                    // push #2
+                    // detect if glyph is stuck
                     boolean glyphStucked = isGlyphStucked();
 
                     if(glyphStucked) {
+                        // push again if glyph is stuck
                         robot.pushGlyph();
                         glyphStucked = isGlyphStucked();
                     }
 
                     robot.stopIntake();
 
-                    if(!dumpMoreGlyphs() || glyphStucked) {
+                    if(!dumpMoreGlyphs() || glyphStucked || getRuntime() > 27.0) {
                         driveBackwardInches(3.50, 0.25, 2.0);
                         gotoState(READY_FOR_TELEOPS);
                         break;
@@ -351,35 +356,28 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     collectSpeed = 0.35;
 
-                    if(getRuntime() < 27.0) {
+                    double columnDist = robot.getColDistance();
 
-                        double columnDist = robot.getColDistance();
-
-                        if( (robot.columnDetected() != null && !robot.columnDetected()) || (columnDist > 7.0 && columnDist < 100)) {
-                            logInfo( getRuntime() + " Move to column: " + String.format("%.2f", columnDist));
-                            driveBackwardInchesToColumn(7.25, collectSpeed, 2.0);
-                        }
-
-                        //robot.holdPusher();
-                        sleepInAuto(200);
-
-                        robot.pushGlyph();
-
-                        turn(-89.0);
-
-                        placeGlyphIntoColumn(fasterMotorSpeed, false);
-
-                        driveForwardInches(2.0, 0.5, 1.0);
-                    }
-                    else {
-                        // move robot closer to the safe zone if not dumping glyph
-                        driveBackwardInches(3.0, 0.5, 1.0);
+                    if( (robot.columnDetected() != null && !robot.columnDetected()) || (columnDist > 7.0 && columnDist < 100)) {
+                        logInfo( getRuntime() + " Move to column: " + String.format("%.2f", columnDist));
+                        driveBackwardInchesToColumn(7.25, collectSpeed, 2.0);
                     }
 
-                    //driveBackwardInches(1.0, 0.5, 1.0);
+                    //robot.holdPusher();
+                    sleepInAuto(200);
+                    robot.pushGlyph();
+
+                    // make sure 90 degree
+                    turn(-89.0);
+
+                    placeGlyphIntoColumn(fasterMotorSpeed, false);
 
                     // move pusher to hold position
                     robot.holdPusher();
+
+                    // if have time, move back from the cryptobox
+                    driveForwardInches(2.0, 0.5, 1.0);
+
                     gotoNextState();
 
                     break;
