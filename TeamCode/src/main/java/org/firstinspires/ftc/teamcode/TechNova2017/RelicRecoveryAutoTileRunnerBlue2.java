@@ -214,7 +214,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                             break;
                     }
 
-                    turn(-160.0);
+                    turnToAngle(-160.0, 0.2);
                     //turnToAngle(-135.0, 0.10);
 
                     robot.resetForTeleOps();
@@ -255,7 +255,6 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     }
 
                     turn(-178.0);
-                    robot.extendDistanceSensorArmServo();
 
                     gotoNextState();
                     break;
@@ -267,6 +266,8 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     } else {
                         driveLeftInches(5.0, motorSpeed, 3.0);
                     }
+
+                    robot.extendDistanceSensorArmServo();
 
                     driveBackwardInchesToColumn(8.0, 0.35, 3.0);
 
@@ -284,7 +285,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                     robot.holdPusher();
 
-                    turn(-125.0);
+                    turnToAngle(-125.0,0.25);
 
                     gotoNextState();
                     break;

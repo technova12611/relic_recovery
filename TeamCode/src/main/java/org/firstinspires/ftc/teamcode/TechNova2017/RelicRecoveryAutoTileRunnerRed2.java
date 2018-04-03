@@ -198,7 +198,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                             break;
                     }
 
-                    turn(-20.0);
+                    turnToAngle(-20.0, 0.20);
 
                     robot.resetForTeleOps();
 
@@ -260,7 +260,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     driveBackwardInchesToColumn(8.0, 0.35, 2.0);
 
-                    if(getRuntime() < 26.0) {
+                    if(getRuntime() < 27.0) {
                         // push glyph again
                         robot.pushGlyph();
                         sleepInAuto(300);
@@ -272,7 +272,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     robot.holdPusher();
 
-                    turn(-35.0);
+                    turnToAngle(-35.0, 0.25);
 
                     gotoNextState();
                     break;

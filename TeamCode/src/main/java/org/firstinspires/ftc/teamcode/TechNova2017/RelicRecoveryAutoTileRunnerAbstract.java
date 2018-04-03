@@ -216,7 +216,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     /**
      * Using very basic control algorithm
      */
-    private static final double VERY_SAFE_TURN_SPEED = 0.08;
+    private static final double VERY_SAFE_TURN_SPEED = 0.10;
     private static final double SAFE_TURN_SPEED = 0.15;
     private static final double FAST_TURN_SPEED = 0.25;
     private static final double SUPER_FAST_TURN_SPEED = 0.35;
@@ -459,9 +459,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 logInfo("    Delta from the column (in): " + String.format("%.2f", delta));
 
                 if (delta > 0.4) {
-                    driveRightInches(delta, 0.35, 3.0);
+                    driveRightInches(delta*1.5, 0.35, 3.0);
                 } else if (delta < -0.4) {
-                    driveLeftInches(-delta, 0.35, 3.0);
+                    driveLeftInches(-delta*1.5, 0.35, 3.0);
                 } else {
                     aligned = true;
                     logInfo("**** Aligned correctly.");
