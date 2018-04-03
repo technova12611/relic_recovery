@@ -47,6 +47,8 @@ public class SensorTest extends LinearOpMode {
 
         RelicRecoveryVuMark vuMark = vuMarkVision.detect(telemetry);
 
+        ElapsedTime timer2 = new ElapsedTime();
+
         // loop and read the RGB and distance data.
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         while (opModeIsActive()) {
@@ -55,7 +57,7 @@ public class SensorTest extends LinearOpMode {
             telemetry.addData("IMU: ", "%.2f", robot.getHeadingAngle());
 
             if(robot.proximitySensor != null){
-                telemetry.addData("Proximity: ", robot.proximitySensor.getState());
+                telemetry.addData("Proximity: ", robot.columnDetected());
             }
 
             vuMark = vuMarkVision.detect(null, true);
@@ -81,12 +83,33 @@ public class SensorTest extends LinearOpMode {
                 robot.turnOffBlueLed();
             }
 
-            if(gamepad1.a) {
+            if(gamepad1.a && !gamepad1.start) {
                 robot.extendDistanceSensorArmServo();
             }
 
             if(gamepad1.b) {
                 robot.resetDistanceSensorServoArm();
+            }
+
+            if(gamepad1.x) {
+                timer2.reset();
+
+                robot.pushGlyph();
+
+                while(timer2.milliseconds() < 500.0) {
+                    idle();
+                }
+
+                robot.holdPusher();
+            }
+
+            if(gamepad1.right_trigger > 0.5 && gamepad1.left_trigger > 0.5) {
+                robot.stopIntake();
+            }
+            else if(gamepad1.right_trigger > 0.5) {
+                robot.collectGlyph();
+            } else if(gamepad1.left_trigger > 0.5) {
+                robot.reverseGlyph();
             }
 
             if(gamepad2.a) {
@@ -95,7 +118,7 @@ public class SensorTest extends LinearOpMode {
             }
             else if(gamepad2.b && !gamepad2.start) {
                 robot.openGlyphBlocker();
-                robot.raiseGlyphTrayup2();
+                robot.raiseGlyphTrayup1();
             }
             else if(gamepad2.x) {
                 robot.openGlyphBlocker();

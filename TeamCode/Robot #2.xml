@@ -25,6 +25,7 @@
             <Servo name="glyphPusher" port="3" />
             <Servo name="intakeRightHolder" port="4" />
             <Servo name="relicClawholder" port="5" />
+            <DigitalDevice name="proximity" port="1" />
             <ModernRoboticsI2cRangeSensor name="x2Range" port="0" bus="1" />
         </LynxModule>
     </LynxUsbDevice>

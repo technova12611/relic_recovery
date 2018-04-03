@@ -17,6 +17,9 @@ public class RobotInfo {
     public static double JEWEL_PUSHER_SHORT_ARM_LEFT_PUSH_POSITION = 0.95;
     public static double JEWEL_PUSHER_SHORT_ARM_RIGHT_PUSH_POSITION = 0.05;
 
+    public static double JEWEL_PUSHER_SHORT_ARM_LEFT_SOFT_PUSH_POSITION = 0.75;
+    public static double JEWEL_PUSHER_SHORT_ARM_RIGHT_SOFT_PUSH_POSITION = 0.25;
+
     //----------------------------------------------------------------
     // Glyph grabbers servo positions
     //

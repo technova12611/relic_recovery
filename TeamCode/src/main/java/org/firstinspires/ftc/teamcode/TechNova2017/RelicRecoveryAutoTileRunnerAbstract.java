@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_UPRIGHT_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_UPRIGHT_POSITION_2;
 
 /**
@@ -104,13 +105,13 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected void driveForwardInches(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(getRunTime() + " Drive forward:",
+        logInfo(" Drive forward:",
                 String.format("%.2f, %.2f, %.2f", inches, power, timeout));
         driveDirectionInches(Math.PI,inches, power, timeout);
     }
 
     protected void driveForwardInchesToColumn(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(getRunTime() + " Drive forward to Column:",
+        logInfo(" Drive forward to Column:",
                 String.format("%.2f, %.2f, %.2f, %.2f", inches, power, timeout, robot.getColDistance()));
         driveDirectionInches(Math.PI,inches, power, timeout, true);
     }
@@ -120,26 +121,25 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected void driveBackwardInches(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(getRunTime() + " Drive backward:",
+        logInfo(" Drive backward:",
                 String.format("%.2f, %.2f, %.2f", inches, power, timeout));
         driveDirectionInches(0,inches, power, timeout);
     }
 
     protected void driveBackwardInchesToColumn(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(getRunTime() + " Drive backward to Column:",
+        logInfo(" Drive backward to Column:",
                 String.format("%.2f, %.2f, %.2f, %.2f", inches, power, timeout, robot.getColDistance()));
         driveDirectionInches(0,inches, power, timeout, true);
     }
 
     protected void driveLeftInches(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(getRunTime() + " Strafe left:",
+        logInfo(" Strafe left:",
                 String.format("%.2f, %.2f, %.2f", inches, power, timeout));
         driveDirectionInches(Math.PI*3/2.0,inches, power, timeout);
     }
 
     protected void driveRightInches(double inches, double power, double timeout) throws InterruptedException {
-        logInfo(getRunTime() + " " +
-                "Strafe right:", String.format("%.2f, %.2f, %.2f", inches, power, timeout));
+        logInfo(" Strafe right:", String.format("%.2f, %.2f, %.2f", inches, power, timeout));
         driveDirectionInches(Math.PI/2.0,inches, power, timeout);
     }
 
@@ -263,7 +263,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         }
         robot.stopDriveMotors();
 
-        logInfo(getRunTime() + " -- Angle Reached -- :", String.format("%.1f", headingAngle) + String.format(" Elapsed: %.2f", timer.seconds()));
+        logInfo(" -- Angle Reached -- :", String.format("%.1f", headingAngle) + String.format(" Elapsed: %.2f", timer.seconds()));
     }
 
     protected void turnToAngle(double target, double speed) throws InterruptedException {
@@ -281,12 +281,13 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         }
         robot.stopDriveMotors();
 
-        logInfo(getRunTime() + " -- Angle Reached -- :", String.format("%.1f", headingAngle));
+        logInfo(" -- Angle Reached -- :", String.format("%.1f", headingAngle));
     }
 
-    private String getRunTime() {
-        return String.format("Runtime: %.2f", getRuntime());
+    private String getRunTimeString() {
+        return String.format(" RT (s): %.2f ", getRuntime());
     }
+
 
     /**
      * Turning left is positive angle, turning right is negative angle
@@ -324,11 +325,11 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     void logInfo(String tag, String message) {
-        Log.i("TechNova: " + this.getClass().getSimpleName(), tag + " | " + message);
+        Log.i("TechNova: " + this.getClass().getSimpleName(), tag + " | " + getRunTimeString() + message);
     }
 
     void logInfo(String message) {
-        Log.i("TechNova: " + this.getClass().getSimpleName(), message);
+        Log.i("TechNova: " + this.getClass().getSimpleName(), getRunTimeString() + message);
     }
 
     protected double getXDistance() {
@@ -352,7 +353,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             sleep(50);
         }
 
-        logInfo(getRunTime() + "    Avg. Range Col Sensor (in): " + String.format("%.2f", avg));
+        logInfo("    Avg. Range Col Sensor (in): " + String.format("%.2f", avg));
 
         return avg;
     }
@@ -363,22 +364,31 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
     protected void placeGlyphIntoColumn(double motorSpeed, boolean makeTurn) throws InterruptedException {
 
-        logInfo(getRunTime() + " --- Align robot to the cryptobox --- ");
+        logInfo(" --- Align robot to the cryptobox --- ");
         boolean aligned = false;
         if(getRuntime() < 27.0) {
             aligned = alignCryptoBoxInAuto(5.0);
         }
 
-        logInfo(getRunTime() + " --- Flip Glyph Tray --- ");
+        robot.setServoPosition(robot.distSensorServo, DISTANCE_SENSOR_UPRIGHT_POSITION);
+
+        logInfo(" --- Flip Glyph Tray --- ");
         robot.dumpGlyphsFromTray();
-        sleepInAuto(300);
+        sleepInAuto(500);
 
-        logInfo(getRunTime() + " --- More backward to let glyph fall on the floor --- ");
+        logInfo(" --- More backward to let glyph fall on the floor --- ");
 
-        driveForwardInches(2.0, motorSpeed, 2.2);
-        if(!aligned) {
-            sleepInAuto(200);
-            driveForwardInches(2.5, motorSpeed, 2.2);
+        if(getRuntime() > 29.5) {
+            driveForwardInches(4.0, motorSpeed, 1.0);
+        } else if(getRuntime() > 28.75){
+            driveBackwardInches(3.0, motorSpeed, 1.0);
+            driveForwardInches(5.0, motorSpeed, 1.0);
+        } else {
+            driveForwardInches(2.0, motorSpeed, 1.0);
+            if (!aligned) {
+                sleepInAuto(200);
+                driveForwardInches(2.5, motorSpeed, 1.0);
+            }
         }
 
         robot.resetGlyphTray();
@@ -387,30 +397,30 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
             // move forward to push the glyph into the box
             //-------------------------------------------------
-            logInfo(getRunTime() + " --- Drive forward to push --- ");
+            logInfo(" --- Drive forward to push --- ");
             ElapsedTime watcher = new ElapsedTime();
             if(!aligned) {
-                driveBackwardInches(6.5, motorSpeed, 2.0);
+                driveBackwardInches(6.5, motorSpeed, 1.25);
             }
 
-            logInfo(getRunTime() + " --- Place Glyph into column (ms): " +
+            logInfo(" --- Place Glyph into column (ms): " +
                     watcher.time(TimeUnit.MILLISECONDS) + " | " + vuMark);
 
             // need to push again
             if (watcher.seconds() > 1.8) {
-                logInfo(getRunTime() + " --- Missed the column, push again --- ");
+                logInfo(" --- Missed the column, push again --- ");
                 //driveForwardInches(2.0, motorSpeed, 2.0);
                 //driveBackwardInches(4.0, motorSpeed, 2.0);
             }
             // move backward to separate robot from glyph
             //----------------------------------------------
-            logInfo(getRunTime() + " --- Drive backward to finish --- ");
+            logInfo(" --- Drive backward to finish --- ");
             if(!aligned) {
                 driveForwardInches(8.5, 0.5, 2.0);
             }
 
             if(makeTurn) {
-                logInfo(getRunTime() + " --- Turn to 90 degree --- ");
+                logInfo(" --- Turn to 90 degree --- ");
                 turn(-89.0);
             }
         }
@@ -423,7 +433,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     public boolean alignCryptoBoxInAuto(double timeOutInSeconds) throws InterruptedException {
 
         boolean aligned = false;
-        logInfo(getRunTime() + " --- Get the distance sensor in place --- ");
+        logInfo(" --- Get the distance sensor in place --- ");
         //robot.extendDistanceSensorArmServo();
 
         double distance = robot.getColDistance();
@@ -434,7 +444,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         ElapsedTime timer1 = new ElapsedTime();
         int count = 0;
-        while(opModeIsActive() && timer1.seconds() < timeOutInSeconds && getRuntime() < 27.0) {
+        double runtime = 27.0;
+        while(opModeIsActive() && timer1.seconds() < timeOutInSeconds && getRuntime() < runtime) {
             distance = measureColDistance(150);
             logInfo("    Initial Distance from the column (in): " + String.format("%.2f", distance));
 
@@ -456,6 +467,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                     logInfo("**** Aligned correctly.");
                     break;
                 }
+
+                runtime = 28.0;
             } else {
                 logInfo("!!!! Range Sensor out of range.");
                 break;
@@ -464,9 +477,10 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             logInfo("    " + (++count) + " Distance from the column (in): " + String.format("%.2f", robot.getColDistance()));
         }
 
-        logInfo(getRunTime() + "    Final Distance from the column (in): " + String.format("%.2f", robot.getColDistance()));
+        logInfo("    Final Distance from the column (in): " + String.format("%.2f", robot.getColDistance()));
 
-        robot.resetDistanceSensorServoArm();
+        robot.setServoPosition(robot.distSensorServo, DISTANCE_SENSOR_UPRIGHT_POSITION);
+
         return aligned;
     }
 

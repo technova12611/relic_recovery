@@ -181,8 +181,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case TURN_TO_90_DEGREE:
 
-                    robot.setServoPosition(robot.distSensorServo, DISTANCE_SENSOR_UPRIGHT_POSITION);
-
                     // turn right to 90 degree
                     // need to figure out the turn direction for
                     // red and blue alliance
@@ -201,6 +199,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                 case PICKUP_ANOTHER_GLYPH:
 
                     robot.resetForTeleOps();
+
+                    robot.setServoPosition(robot.distSensorServo, DISTANCE_SENSOR_UPRIGHT_POSITION);
 
                     if(do4Glyphs()) {
 
@@ -233,11 +233,17 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case FORWARD_TO_CRYPTOBOX:
 
-                    driveBackwardInchesToColumn(7.50, motorSpeed, 3.0);
+                    if(do4Glyphs()) {
+                        driveBackwardInchesToColumn(7.50, motorSpeed, 3.0);
+                    } else {
+                        driveBackwardInches(6.25, motorSpeed, 3.0);
+                    }
+
                     gotoNextState();
                     break;
 
                 case PLACE_GLYPH_INTO_CRYPTO:
+
                     placeGlyphIntoColumn(fasterMotorSpeed, false);
                     gotoNextState();
 
