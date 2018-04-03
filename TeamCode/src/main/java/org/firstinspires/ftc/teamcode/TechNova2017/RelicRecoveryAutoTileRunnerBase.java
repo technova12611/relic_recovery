@@ -24,6 +24,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
          PLACE_GLYPH_INTO_CRYPTO,
          PREPARE_FOR_MORE_GLYPHS,
          PICKUP_MORE_GLYPH,
+         DRIVE_BACK_TO_CRYPTO,
          PLACE_MORE_GLYPHS_INTO_CRYPTO,
          READY_FOR_TELEOPS,
          END;
@@ -166,11 +167,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         default:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(12.0, motorSpeed, 5.0);
+                                driveBackwardInches(11.0, motorSpeed, 5.0);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(11.0, motorSpeed, 5.0);
+                                driveForwardInches(8.0, motorSpeed, 5.0);
                             }
                             break;
                     }
@@ -186,13 +187,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // need to figure out the turn direction for
                     // red and blue alliance
                     if(getAllianceColor() ==AllianceColor.RED) {
-                        turn(-83.5);
+                        turn(-85.5);
                     } else {
-                        turn(-84.5);
+                        turn(-86.5);
                     }
 
                     //sleepInAuto(250);
-
                     //turn(-88.5);
 
                     gotoNextState();
@@ -217,13 +217,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                         driveBackwardInches(18.0,0.5,3.0);
 
-                        turn(-88.0);
-
                         if(isGlyphStucked()) {
                             robot.pushGlyph();
                             isGlyphStucked();
                         }
 
+                        turn(-88.0);
                         robot.stopIntake();
                     }
 
@@ -283,7 +282,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     //driveForwardInches(4.0, collectSpeed, 2.0);
                     //sleepInAuto(200);
-
                     //driveBackwardInches(2.0, collectSpeed, 2.0);
 
                     turn(-103.5);
@@ -298,6 +296,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     driveBackwardInches(9.0, 0.5, 2.0);
                     turn(-89.0);
                     //robot.pushGlyph();
+
+                    gotoNextState();
+                    break;
+
+                case DRIVE_BACK_TO_CRYPTO:
 
                     driveBackwardInches(20.0, 0.80, 5.0);
 
@@ -323,14 +326,14 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         glyphStucked = isGlyphStucked();
                     }
 
+                    robot.stopIntake();
+
                     if(!dumpMoreGlyphs() || glyphStucked) {
                         driveBackwardInches(3.50, 0.25, 2.0);
-                        robot.stopIntake();
                         gotoState(READY_FOR_TELEOPS);
                         break;
                     }
 
-                    robot.stopIntake();
                     //robot.pushGlyph();
                     //sleepInAuto(200);
                     //robot.moveUpPusher();

@@ -157,9 +157,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
 
         while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout &&
-                (!useRangerSensor
-                        || (robot.columnDetected() != null && !robot.columnDetected()))
-                ) {
+                (!useRangerSensor || robot.columnDetected() == null || !robot.columnDetected()))
+        {
             double colDist = robot.getColDistance();
             if(colDist < 7.0) {
                 break;
@@ -178,7 +177,6 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.resetDriveMotorModes();
         robot.clearEncoderDrivePower();
     }
-
 
     protected void driveDirectionInchesUntilPlyphHit(double directionRadians, double inches, double power) throws InterruptedException {
         robot.setEncoderDrivePower(power);
@@ -484,6 +482,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             sleepInAuto(1000);
             robot.collectGlyph();
             driveForwardInches(3.0, 0.5, 2.0);
+            sleepInAuto(200);
             driveBackwardInches(3.0, 0.5, 2.0);
             glyphStucked = true;
         }
