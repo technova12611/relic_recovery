@@ -218,7 +218,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             isGlyphStucked();
                         }
 
-                        turn(-88.0);
+                        turn(-87.0);
                         robot.stopIntake();
                     }
 
@@ -232,7 +232,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if(do4Glyphs()) {
                         driveBackwardInchesToColumn(7.50, motorSpeed, 3.0);
                     } else {
-                        driveBackwardInches(6.25, motorSpeed, 3.0);
+                        driveBackwardInches(6.50, motorSpeed, 3.0);
                     }
 
                     gotoNextState();
@@ -267,7 +267,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                         }
 
-                        turn(-89.0);
+                        turn(-87.0);
                         gotoNextState();
                     }
                     break;
@@ -299,7 +299,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     //sleepInAuto(300);
 
                     driveBackwardInches(7.5, 0.5, 2.0);
-                    turnToAngle(-89.0, 0.15);
+                    turnToAngle(-86.0, 0.15);
                     //robot.pushGlyph();
 
                     gotoNextState();
@@ -313,7 +313,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     robot.pushGlyph();
                     sleepInAuto(300);
 
-                    turn(-89.0);
+                    turn(-87.0);
 
                     // push #1
                     robot.holdPusher();

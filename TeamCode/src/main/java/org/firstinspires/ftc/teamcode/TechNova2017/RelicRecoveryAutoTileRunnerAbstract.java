@@ -440,20 +440,29 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         if(distance > 200.0) {
             logInfo("Couldn't read range sensor data.");
+            return false;
         }
 
         ElapsedTime timer1 = new ElapsedTime();
         int count = 0;
         double runtime = 27.0;
         while(opModeIsActive() && timer1.seconds() < timeOutInSeconds && getRuntime() < runtime) {
-            distance = measureColDistance(150);
+            //distance = measureColDistance(150);
+            distance = robot.getColDistance();
             logInfo("    Initial Distance from the column (in): " + String.format("%.2f", distance));
+
+            // too far from cryptobox, move in by 2 inches
+            if(distance > 5.5 && distance < 15.0) {
+                driveBackwardInches(2.0, 0.35, 1.0);
+                distance = robot.getColDistance();
+                logInfo("     -- Adjusted distance from the column (in): " + String.format("%.2f", distance));
+            }
 
             // measurement as inches
             // need to test and tweak this to make it accurate
             //---------------------------------------------------
             //
-            if (distance > 0.0) {
+            if (distance > 0.0 && distance < 7.0) {
                 double desiredDistance = 3.15;
                 double delta = distance - desiredDistance;
                 logInfo("    Delta from the column (in): " + String.format("%.2f", delta));
@@ -468,7 +477,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                     break;
                 }
 
-                runtime = 28.0;
+                runtime = 28.5;
             } else {
                 logInfo("!!!! Range Sensor out of range.");
                 break;
