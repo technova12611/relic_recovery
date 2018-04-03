@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.TechNova2017;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.END;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.PUSH_JEWEL;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.READY_FOR_TELEOPS;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBase.State.START;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_UPRIGHT_POSITION;
@@ -17,8 +18,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
          START,
          PUSH_JEWEL,
          GET_OFF_STONE,
-         ALIGN_TO_COLUMN,
-         TURN_TO_90_DEGREE,
          PICKUP_ANOTHER_GLYPH,
          FORWARD_TO_CRYPTOBOX,
          PLACE_GLYPH_INTO_CRYPTO,
@@ -78,16 +77,18 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
         // starts the state machine
         //---------------------------------
-        v_state = START;
+        v_state = PUSH_JEWEL;
 
         // 2. Run the state machine
         //  test, and more test
         //-------------------------------------------------------------------
         while (opModeIsActive() && v_state != END) {
 
-            boolean detectVuMark = false;
-            double motorSpeed = 0.275;
-            double fasterMotorSpeed = 0.355;
+            boolean detectVuMark = true;
+            double motorSpeed = 0.28;
+            double fasterMotorSpeed = 0.36;
+
+            vuMark = vuMarkVision.detect(telemetry);
 
             logStateInfo(v_state, "Start");
 
@@ -125,10 +126,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         driveForwardInches(24.5, motorSpeed, 5.0);
                     }
 
-                    gotoNextState();
-                    break;
-
-                case ALIGN_TO_COLUMN:
                     switch (vuMark) {
 
                         // need to place glyph into RIGHT Crypto box
@@ -179,11 +176,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             break;
                     }
-
-                    gotoNextState();
-                    break;
-
-                case TURN_TO_90_DEGREE:
 
                     // turn right to 90 degree
                     // need to figure out the turn direction for

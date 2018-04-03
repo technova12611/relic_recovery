@@ -86,7 +86,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         v_prev_state = v_state;
         v_state = v_state.next();
         timer.reset();
-        robot.resetDriveMotors();
+        //robot.resetDriveMotors();
     }
 
     protected void gotoState(AutoState state) {
@@ -315,7 +315,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                             + " | " + String.format("%5d", timer.time(TimeUnit.MILLISECONDS))
                             + " | " + String.format("IMU: %.1f", robot.getHeadingAngle())
                             + " | " + String.format("(x1,x2): %3.1f, %3.1f", robot.getX1Distance(), robot.getColDistance()) + ", " + robot.columnDetected()
-                            + " | " + "Glyph count:" + String.format("%5d", robot.getGlyphLiftPosition())
+            //                + " | " + "Glyph count:" + String.format("%5d", robot.getGlyphLiftPosition())
                             + " | " + (vuMark != null ? vuMark : "")
                             + " | " + String.format("Battery: %3.2f", robot.getBatteryVoltage())
             );
