@@ -114,14 +114,14 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case FORWARD_3_FEET:
                     detectVuMark = true;
-                    driveForwardInches(28.25, motorSpeed, 5.0);
+                    driveForwardInches(29.0, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
                 case TURN_TO_180_DEGREE:
                     turn(178.0);
                     sleepInAuto(300);
-                    turnToAngle(-177.0, 0.10);
+                    turnToAngle(-175.0, 0.10);
 
                     gotoNextState();
                     break;
@@ -165,9 +165,9 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case BACKWARD_3_INCHES:
 
-                    turnToAngle(-178.0, 0.10);
+                    turnToAngle(-176.0, 0.10);
 
-                    driveBackwardInchesToColumn(5.0, motorSpeed, 2.0);
+                    driveBackwardInchesToColumn(3.0, motorSpeed, 2.0);
                     gotoNextState();
                     break;
 
@@ -214,7 +214,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                             break;
                     }
 
-                    turnToAngle(-160.0, 0.2);
+                    turnToAngle(-150.0, 0.2);
                     //turnToAngle(-135.0, 0.10);
 
                     robot.resetForTeleOps();

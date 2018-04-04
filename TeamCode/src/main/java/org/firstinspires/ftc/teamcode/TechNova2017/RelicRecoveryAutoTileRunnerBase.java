@@ -52,10 +52,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         // waiting for operator to press start button
         while(!isStarted()) {
             telemetry.addData("Distance (x1, x2): ",
-                    String.format("(%.1f, %.1f)", robot.getX1Distance(), robot.getColDistance()));
+                    String.format("(%.1f, %.1f)", robot.getX1Distance(), robot.getColDistance()) + " | " + robot.columnDetected());
             telemetry.addData("Glyph Color : ",robot.getGlyphColorRGB() +"");
-            telemetry.addData("IMU : ",
-                    String.format("(%.1f)", robot.getHeadingAngle()));
+            telemetry.addData("IMU : ", String.format("(%.1f)", robot.getHeadingAngle()));
             telemetry.update();
             sleep(100);
         }
@@ -79,16 +78,23 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
         //---------------------------------
         v_state = PUSH_JEWEL;
 
+        boolean detectVuMark = true;
         // 2. Run the state machine
         //  test, and more test
         //-------------------------------------------------------------------
         while (opModeIsActive() && v_state != END) {
 
-            boolean detectVuMark = true;
             double motorSpeed = 0.28;
             double fasterMotorSpeed = 0.36;
 
-            vuMark = vuMarkVision.detect(telemetry);
+            if(detectVuMark && vuMark == RelicRecoveryVuMark.UNKNOWN) {
+                vuMark = vuMarkVision.detect(telemetry);
+            }
+
+            if(vuMark != RelicRecoveryVuMark.UNKNOWN) {
+                robot.turnOnBlueLed();
+                vuMarkVision.setFlashTorchMode(false);
+            }
 
             logStateInfo(v_state, "Start");
 
@@ -96,13 +102,10 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
             switch (step) {
                 case START:
-                    detectVuMark = true;
                     gotoNextState();
                     break;
 
                 case PUSH_JEWEL:
-
-                    detectVuMark = true;
 
                     // even if the pusher fails to initialize
                     // we still want to perform the glyph
@@ -116,7 +119,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     break;
 
                 case GET_OFF_STONE:
-                    detectVuMark = true;
+                    detectVuMark = false;
 
                     if(getAllianceColor() ==  AllianceColor.RED) {
                         driveBackwardInches(24.5, motorSpeed, 5.0);
@@ -388,16 +391,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 Default:
                     break;
-            }
-
-            // if vuMark is not visible, keep trying
-            if(detectVuMark && vuMark == RelicRecoveryVuMark.UNKNOWN) {
-                vuMark = vuMarkVision.detect(telemetry);
-            }
-
-            if(vuMark != RelicRecoveryVuMark.UNKNOWN) {
-                robot.turnOnBlueLed();
-                vuMarkVision.setFlashTorchMode(false);
             }
         }
 

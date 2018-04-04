@@ -159,11 +159,6 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout &&
                 (!useRangerSensor || robot.columnDetected() == null || !robot.columnDetected()))
         {
-            double colDist = robot.getColDistance();
-            if(colDist < 7.0) {
-                break;
-            }
-
             //robot.updateSensorTelemetry();
             //telemetry.update();
             //robot.loop();
@@ -176,6 +171,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.stopDriveMotors();
         robot.resetDriveMotorModes();
         robot.clearEncoderDrivePower();
+
+        logInfo("Encoder drive", String.format("%.3f", timer.seconds()));
     }
 
     protected void driveDirectionInchesUntilPlyphHit(double directionRadians, double inches, double power) throws InterruptedException {
@@ -378,10 +375,10 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         logInfo(" --- More backward to let glyph fall on the floor --- ");
 
-        if(getRuntime() > 29.5) {
+        if(getRuntime() > 29.25) {
             driveForwardInches(4.0, motorSpeed, 1.0);
         } else if(getRuntime() > 28.75){
-            driveBackwardInches(3.0, motorSpeed, 1.0);
+            driveBackwardInches(2.0, motorSpeed, 1.0);
             driveForwardInches(5.0, motorSpeed, 1.0);
         } else {
             driveForwardInches(2.0, motorSpeed, 1.0);
