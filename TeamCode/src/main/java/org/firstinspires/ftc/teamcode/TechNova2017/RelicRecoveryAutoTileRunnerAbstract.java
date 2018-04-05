@@ -172,7 +172,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.resetDriveMotorModes();
         robot.clearEncoderDrivePower();
 
-        logInfo("Encoder drive", String.format("%.3f", timer.seconds()));
+        logInfo("Encoder drive", String.format("%.3f (s)", timer.seconds()));
     }
 
     protected void driveDirectionInchesUntilPlyphHit(double directionRadians, double inches, double power) throws InterruptedException {
@@ -260,7 +260,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         }
         robot.stopDriveMotors();
 
-        logInfo(" -- Angle Reached -- :", String.format("%.1f", headingAngle) + String.format(" Elapsed: %.2f", timer.seconds()));
+        logInfo(" -- Angle Reached -- :", String.format("%.1f", headingAngle) + " | " +  timer.time(TimeUnit.MILLISECONDS));
     }
 
     protected void turnToAngle(double target, double speed) throws InterruptedException {
@@ -278,11 +278,11 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         }
         robot.stopDriveMotors();
 
-        logInfo(" -- Angle Reached -- :", String.format("%.1f", headingAngle));
+        logInfo(" -- Angle Reached -- :", String.format("%.1f", headingAngle) + " | " + timer.time(TimeUnit.MILLISECONDS));
     }
 
     private String getRunTimeString() {
-        return String.format(" RT (s): %.2f ", getRuntime());
+        return String.format(" Runtime: %.2f ", getRuntime());
     }
 
 
@@ -322,11 +322,11 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     void logInfo(String tag, String message) {
-        Log.i("TechNova: " + this.getClass().getSimpleName(), tag + " | " + getRunTimeString() + message);
+        Log.i("TechNova: " + this.getClass().getSimpleName(), tag + " | " + message + " | " + getRunTimeString());
     }
 
     void logInfo(String message) {
-        Log.i("TechNova: " + this.getClass().getSimpleName(), getRunTimeString() + message);
+        Log.i("TechNova: " + this.getClass().getSimpleName(), message + " | " + getRunTimeString());
     }
 
     protected double getXDistance() {
@@ -491,15 +491,15 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected boolean isGlyphStucked() throws InterruptedException {
-        sleep(300);
+        sleep(200);
         int previousIntakeCount = robot.intakeRight.getCurrentPosition();
-        sleepInAuto(200);
+        sleepInAuto(150);
         robot.holdPusher();
 
         boolean glyphStucked = false;
         if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
             robot.reverseGlyph();
-            sleepInAuto(1000);
+            sleepInAuto(1200);
             robot.collectGlyph();
             driveForwardInches(3.0, 0.5, 2.0);
             sleepInAuto(200);

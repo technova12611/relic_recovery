@@ -12,7 +12,7 @@ public class RobotInfo {
     public static double JEWEL_PUSHER_LONG_ARM_TARGET_POSITION = 0.38;
 
     public static double JEWEL_PUSHER_SHORT_ARM_INITIAL_POSITION = 0.90;
-    public static double JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION = 0.51;
+    public static double JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION = 0.49;
 
     public static double JEWEL_PUSHER_SHORT_ARM_LEFT_PUSH_POSITION = 0.95;
     public static double JEWEL_PUSHER_SHORT_ARM_RIGHT_PUSH_POSITION = 0.05;

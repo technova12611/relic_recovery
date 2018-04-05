@@ -286,7 +286,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             intakeBackward = true;
             intakeForward = false;
 
-            if(intakeStuckTimer.time(TimeUnit.SECONDS) > 1.5) {
+            if(intakeStuckTimer.time(TimeUnit.SECONDS) > 1.25) {
                 robot.isIntakeStuck = false;
                 collectGlyph();
             }

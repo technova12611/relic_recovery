@@ -215,6 +215,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         robot.pushGlyph();
 
                         driveBackwardInches(18.0,0.5,3.0);
+                        robot.holdPusher();
 
                         if(isGlyphStucked()) {
                             robot.pushGlyph();
@@ -233,7 +234,10 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                 case FORWARD_TO_CRYPTOBOX:
 
                     if(do4Glyphs()) {
+                        robot.pushGlyph();
                         driveBackwardInchesToColumn(7.50, motorSpeed, 3.0);
+                        robot.holdPusher();
+                        robot.raiseGlyphTrayup2();
                     } else {
                         driveBackwardInches(6.50, motorSpeed, 3.0);
                     }
@@ -325,7 +329,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     // push #2
                     robot.pushGlyph();
 
-                    logInfo( getRuntime() + " Col Dist: " + String.format("%.2f", robot.getColDistance()) + ", " + robot.columnDetected());
+                    logInfo( " Col Dist: " + String.format("%.2f", robot.getColDistance()) + ", " + robot.columnDetected());
 
                     // detect if glyph is stuck
                     boolean glyphStucked = isGlyphStucked();
@@ -358,7 +362,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     double columnDist = robot.getColDistance();
 
                     if( (robot.columnDetected() != null && !robot.columnDetected()) || (columnDist > 7.0 && columnDist < 100)) {
-                        logInfo( getRuntime() + " Move to column: " + String.format("%.2f", columnDist));
+                        logInfo( " Move to column: " + String.format("%.2f", columnDist));
                         driveBackwardInchesToColumn(7.25, collectSpeed, 2.0);
                     }
 
