@@ -128,7 +128,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
     protected void driveBackwardInchesToColumn(double inches, double power, double timeout) throws InterruptedException {
         logInfo(" Drive backward to Column:",
-                String.format("%.2f, %.2f, %.2f, %.2f", inches, power, timeout, robot.getColDistance()));
+                String.format("%.2f, %.2f, %.2f, %.2f, ", inches, power, timeout, robot.getColDistance()) + robot.columnDetected());
         driveDirectionInches(0,inches, power, timeout, true);
     }
 
@@ -156,6 +156,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.encoderDriveInches(directionRadians, inches);
         ElapsedTime timer = new ElapsedTime();
 
+        if(useRangerSensor) {
+            logInfo("*** Sensor drive (pre) - Column detected", robot.columnDetected() + "");
+        }
         while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout &&
                 (!useRangerSensor || robot.columnDetected() == null || !robot.columnDetected()))
         {
@@ -172,7 +175,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.resetDriveMotorModes();
         robot.clearEncoderDrivePower();
 
-        logInfo("Encoder drive", String.format("%.3f (s)", timer.seconds()));
+        logInfo("Encoder drive", String.format("%.3f (s)", timer.seconds()) + " | " + robot.columnDetected());
     }
 
     protected void driveDirectionInchesUntilPlyphHit(double directionRadians, double inches, double power) throws InterruptedException {
@@ -361,15 +364,13 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
     protected void placeGlyphIntoColumn(double motorSpeed, boolean makeTurn) throws InterruptedException {
 
-        logInfo(" --- Align robot to the cryptobox --- ");
+        logInfo(" --- Align robot to the cryptobox ( " + robot.columnDetected() + ")--- ");
         boolean aligned = false;
         if(getRuntime() < 27.0) {
             aligned = alignCryptoBoxInAuto(5.0);
         }
 
-        robot.setServoPosition(robot.distSensorServo, DISTANCE_SENSOR_UPRIGHT_POSITION);
-
-        logInfo(" --- Flip Glyph Tray --- ");
+        logInfo(" --- Flip Glyph Tray (" + robot.columnDetected() + ") --- " );
         robot.dumpGlyphsFromTray();
         sleepInAuto(500);
 
@@ -377,7 +378,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         if(getRuntime() > 29.25) {
             driveForwardInches(4.0, motorSpeed, 1.0);
-        } else if(getRuntime() > 28.75){
+        } else if(getRuntime() > 28.50){
             driveBackwardInches(2.0, motorSpeed, 1.0);
             driveForwardInches(5.0, motorSpeed, 1.0);
         } else {
@@ -422,6 +423,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             }
         }
 
+        robot.setServoPosition(robot.distSensorServo, DISTANCE_SENSOR_UPRIGHT_POSITION);
+
         // close the glyphBlocker
         //----------------------------------------
         robot.closeGlyphBlocker();
@@ -446,13 +449,13 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         while(opModeIsActive() && timer1.seconds() < timeOutInSeconds && getRuntime() < runtime) {
             //distance = measureColDistance(150);
             distance = robot.getColDistance();
-            logInfo("    Initial Distance from the column (in): " + String.format("%.2f", distance));
+            logInfo("    Initial Distance from the column (in): " + String.format("%.2f", distance) + " | " + robot.columnDetected());
 
             // too far from cryptobox, move in by 2 inches
-            if(distance > 5.5 && distance < 15.0) {
-                driveBackwardInches(2.0, 0.35, 1.0);
+            if(distance > 6.5 && distance < 15.0) {
+                driveBackwardInchesToColumn(4.0, 0.35, 1.0);
                 distance = robot.getColDistance();
-                logInfo("     -- Adjusted distance from the column (in): " + String.format("%.2f", distance));
+                logInfo("     *** Adjusted distance from the column (in): " + String.format("%.2f", distance) + " | " + robot.columnDetected());
             }
 
             // measurement as inches

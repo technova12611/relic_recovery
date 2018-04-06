@@ -114,12 +114,12 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case FORWARD_3_FEET:
                     detectVuMark = true;
-                    driveForwardInches(29.0, motorSpeed, 5.0);
+                    driveForwardInches(31.0, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
                 case TURN_TO_180_DEGREE:
-                    turn(178.0);
+                    turn(179.0);
                     sleepInAuto(300);
                     turnToAngle(-175.0, 0.10);
 
@@ -214,7 +214,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                             break;
                     }
 
-                    turnToAngle(-150.0, 0.2);
+                    turnToAngle(-160.0, 0.2);
                     //turnToAngle(-135.0, 0.10);
 
                     robot.resetForTeleOps();
@@ -232,12 +232,12 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     sleepInAuto(500);
 
                     // push forward a bit to collect
-                    driveForwardInches(7.0, 0.25, 2.0);
+                    driveForwardInches(6.0, 0.25, 2.0);
                     sleepInAuto(300);
 
                     turn(-160.0);
 
-                    driveBackwardInches(37.5, 0.75, 5.0);
+                    driveBackwardInches(33.5, 0.75, 5.0);
 
                     robot.pushGlyph();
 
@@ -262,9 +262,9 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                 case PLACE_MORE_GLYPHS:
 
                     if(vuMark == RelicRecoveryVuMark.RIGHT) {
-                        driveLeftInches(12.0, motorSpeed, 3.0);
+                        driveLeftInches(15.0, motorSpeed, 3.0);
                     } else {
-                        driveLeftInches(5.0, motorSpeed, 3.0);
+                        driveLeftInches(8.0, motorSpeed, 3.0);
                     }
 
                     robot.extendDistanceSensorArmServo();
