@@ -114,7 +114,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                 case BACKWARD_3_FEET:
                     detectVuMark = true;
-                    driveBackwardInches(28.0, motorSpeed, 5.0);
+                    driveBackwardInches(30.0, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
@@ -212,18 +212,18 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     // drive to glyph pit
                     driveForwardInches(33.0, 0.75, 5.0);
-                    sleepInAuto(500);
+                    sleepInAuto(200);
 
-                    turn(0.0);
+                    //turn(0.0);
                     // push forward a bit to collect
                     driveForwardInches(7.0, 0.25, 2.0);
-                    sleepInAuto(500);
+                    sleepInAuto(200);
 
-                    driveBackwardInches(7.0, 0.5, 2.0);
+                    //driveBackwardInches(7.0, 0.5, 2.0);
 
                     turn(-20.0);
 
-                    driveBackwardInches(31.5, 0.75, 5.0);
+                    driveBackwardInches(32.5, 0.75, 5.0);
 
                     robot.pushGlyph();
 
@@ -251,7 +251,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                 case PLACE_MORE_GLYPHS:
 
                     if(vuMark == RelicRecoveryVuMark.LEFT) {
-                        driveRightInches(12.0, 0.35, 2.0);
+                        driveRightInches(15.0, 0.35, 2.0);
                     } else {
                         driveRightInches(7.0, 0.35, 2.0);
                     }
