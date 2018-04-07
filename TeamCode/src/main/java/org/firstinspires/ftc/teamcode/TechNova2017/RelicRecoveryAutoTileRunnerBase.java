@@ -123,11 +123,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     detectVuMark = false;
 
                     if(getAllianceColor() ==  AllianceColor.RED) {
-                        driveBackwardInches(24.5, motorSpeed, 5.0);
+                        driveBackwardInches(24.5, motorSpeed, 4.0);
                     }
                     // if this is BLUE Alliance
                     else {
-                        driveForwardInches(24.5, motorSpeed, 5.0);
+                        driveForwardInches(24.5, motorSpeed, 4.0);
                     }
 
                     switch (vuMark) {
@@ -136,23 +136,23 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         case RIGHT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
 
-                                driveBackwardInches(3.0, motorSpeed, 2.0);
+                                driveBackwardInches(3.0, motorSpeed, 1.5);
 
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(16.25, motorSpeed, 5.0);
+                                driveForwardInches(16.25, motorSpeed, 3.0);
                             }
                             break;
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(11.0, motorSpeed, 5.0);
+                                driveBackwardInches(11.0, motorSpeed, 3.0);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(8.0, motorSpeed, 5.0);
+                                driveForwardInches(8.0, motorSpeed, 2.0);
                             }
                             break;
 
@@ -160,7 +160,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         case LEFT:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(18.5, motorSpeed, 5.0);
+                                driveBackwardInches(18.5, motorSpeed, 3.0);
                             }
                             // if this is BLUE Alliance
                             else {
@@ -172,11 +172,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         // -------------------------------------------------
                         default:
                             if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(11.0, motorSpeed, 5.0);
+                                driveBackwardInches(11.0, motorSpeed, 2.0);
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(8.0, motorSpeed, 5.0);
+                                driveForwardInches(8.0, motorSpeed, 2.0);
                             }
                             break;
                     }
@@ -187,7 +187,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if(getAllianceColor() ==AllianceColor.RED) {
                         turn(-82.5);
                     } else {
-                        turn(-84.5);
+                        turn(-83.5);
                     }
 
                     //sleepInAuto(250);
@@ -200,26 +200,28 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     robot.resetForTeleOps();
 
-                    robot.setServoPosition(robot.distSensorServo, DISTANCE_SENSOR_UPRIGHT_POSITION);
+                    //robot.setServoPosition(robot.distSensorServo, DISTANCE_SENSOR_UPRIGHT_POSITION);
 
                     if(do4Glyphs()) {
 
                         robot.resetGlyphTray();
+
+                        driveForwardInches(15.0, 0.50, 3.0);
+                        turn(-86.5);
                         robot.collectGlyph();
 
-                        driveForwardInches(18.0, 0.75, 2.0);
-                        sleepInAuto(100);
+                        driveForwardInches(6.0, 0.35, 1.5);
+                        sleepInAuto(200);
 
-                        driveForwardInches(5.0, 0.35, 2.0);
-                        sleepInAuto(150);
+                        driveBackwardInches(6.0, 0.35, 1.5);
 
-                        turn(-87.0);
+                        //turn(-87.0);
 
                         robot.pushGlyph();
 
-                        driveBackwardInches(20.5,0.60,3.0);
+                        driveBackwardInches(15.5,0.50,3.0);
                         robot.holdPusher();
-                        robot.extendDistanceSensorArmServo();
+                        //robot.extendDistanceSensorArmServo();
 
                         if(isGlyphStucked()) {
                             robot.pushGlyph();
@@ -227,11 +229,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         }
 
                         turn(-87.0);
-                        if(getAllianceColor() == AllianceColor.RED) {
-                            driveRightInches(2.0, 0.5, 3.0);
-                        } else {
-                            driveRightInches(2.5, 0.5, 3.0);
-                        }
+//                        if(getAllianceColor() == AllianceColor.RED) {
+//                            driveRightInches(2.0, 0.5, 3.0);
+//                        } else {
+//                            driveRightInches(2.5, 0.5, 3.0);
+//                        }
+
                         robot.stopIntake();
                     }
 
@@ -244,11 +247,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     if(do4Glyphs()) {
                         robot.pushGlyph();
-                        driveBackwardInchesToColumn(7.50, motorSpeed, 3.0);
+                        driveBackwardInchesToColumn(8.50, motorSpeed, 3.0);
                         robot.holdPusher();
                         robot.raiseGlyphTrayup2();
                     } else {
-                        driveBackwardInches(6.05, motorSpeed, 3.0);
+                        driveBackwardInches(6.05, motorSpeed, 2.0);
                     }
 
                     gotoNextState();
@@ -329,7 +332,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case DRIVE_BACK_TO_CRYPTO:
 
-                    driveBackwardInches(17.5, 0.65, 5.0);
+                    driveBackwardInches(17.5, 0.60, 3.0);
 
                     robot.extendDistanceSensorArmServo();
                     robot.pushGlyph();

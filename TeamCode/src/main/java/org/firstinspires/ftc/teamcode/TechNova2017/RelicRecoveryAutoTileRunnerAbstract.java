@@ -251,8 +251,12 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
 
         double headingAngle = 0.0;
+        Double initHeadingAngle = null;
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 5000) {
             headingAngle = robot.getHeadingAngle();
+            if(initHeadingAngle == null) {
+                initHeadingAngle = headingAngle;
+            }
             double diff = angleDifference(headingAngle, degrees);
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 
@@ -263,15 +267,19 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         }
         robot.stopDriveMotors();
 
-        logInfo(" -- Angle Reached -- :", String.format("%.1f", headingAngle) + " | " +  timer.time(TimeUnit.MILLISECONDS));
+        logInfo(" -- Angle Reached -- :", String.format("(%.1f, %.1f)", initHeadingAngle, headingAngle) + " | " +  timer.time(TimeUnit.MILLISECONDS));
     }
 
     protected void turnToAngle(double target, double speed) throws InterruptedException {
         ElapsedTime timer = new ElapsedTime();
 
         double headingAngle = 0.0;
+        Double initHeadingAngle = null;
         while(opModeIsActive() && timer.time(TimeUnit.MILLISECONDS) < 5000) {
             headingAngle = robot.getHeadingAngle();
+            if(initHeadingAngle == null) {
+                initHeadingAngle = headingAngle;
+            }
             double diff = angleDifference(headingAngle, target);
             if (MAX_HEADING_SLOP >= Math.abs(diff)) break;
 
@@ -281,7 +289,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         }
         robot.stopDriveMotors();
 
-        logInfo(" -- Angle Reached -- :", String.format("%.1f", headingAngle) + " | " + timer.time(TimeUnit.MILLISECONDS));
+        logInfo(" -- Angle Reached -- :",
+                String.format("(%.1f, %.1f)", initHeadingAngle, headingAngle) + " | " + timer.time(TimeUnit.MILLISECONDS));
     }
 
     private String getRunTimeString() {
