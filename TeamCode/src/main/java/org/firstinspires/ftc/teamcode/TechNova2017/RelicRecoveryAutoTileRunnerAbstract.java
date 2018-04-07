@@ -391,7 +391,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             driveBackwardInches(2.0, motorSpeed, 1.0);
             driveForwardInches(5.0, motorSpeed, 1.0);
         } else {
-            driveForwardInches(2.0, motorSpeed, 1.0);
+            driveForwardInches(3.0, motorSpeed, 1.0);
             if (!aligned) {
                 sleepInAuto(200);
                 driveForwardInches(2.5, motorSpeed, 1.0);
@@ -462,7 +462,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
             // too far from cryptobox, move in by 2 inches
             if(distance > 6.5 && distance < 15.0) {
-                driveBackwardInchesToColumn(4.0, 0.35, 1.0);
+                driveBackwardInchesToColumn(3.0, 0.15, 1.0);
                 distance = robot.getColDistance();
                 logInfo("     *** Adjusted distance from the column (in): " + String.format("%.2f", distance) + " | " + robot.columnDetected());
             }
@@ -471,7 +471,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             // need to test and tweak this to make it accurate
             //---------------------------------------------------
             //
-            if (distance > 0.0 && distance < 7.0) {
+            if (distance > 0.0 && distance < 15.0) {
                 double desiredDistance = 3.15;
                 double delta = distance - desiredDistance;
                 logInfo("    Delta from the column (in): " + String.format("%.2f", delta));
@@ -511,11 +511,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         boolean glyphStucked = false;
         if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
             robot.reverseGlyph();
-            sleepInAuto(1200);
+            sleepInAuto(2000);
             robot.collectGlyph();
-            driveForwardInches(3.0, 0.5, 2.0);
-            sleepInAuto(200);
-            driveBackwardInches(3.0, 0.5, 2.0);
             glyphStucked = true;
         }
         return glyphStucked;
