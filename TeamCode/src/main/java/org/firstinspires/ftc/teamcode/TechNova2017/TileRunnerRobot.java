@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -918,7 +919,13 @@ public class TileRunnerRobot {
 
     public double getColDistance() {
         if(distRangeSensor != null) {
-            return Range.clip(distRangeSensor.getDistance(DistanceUnit.INCH), 0.0, 256.0);
+            int cmUltrasonicMax = 255;
+            double cm = distRangeSensor.rawUltrasonic();
+            if (cm == cmUltrasonicMax) {
+                cm = DistanceSensor.distanceOutOfRange;
+            }
+
+            return Range.clip(DistanceUnit.INCH.fromUnit(DistanceUnit.INCH, cm), 2.0, 256.0);
         }
 
         return 0.0;

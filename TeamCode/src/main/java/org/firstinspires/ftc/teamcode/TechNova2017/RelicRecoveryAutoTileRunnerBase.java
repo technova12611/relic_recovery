@@ -141,7 +141,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(16.25, motorSpeed, 3.0);
+                                driveForwardInches(17.5, motorSpeed, 3.0);
                             }
                             break;
                         // need to place glyph into CENTER Crypto box
@@ -152,7 +152,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(8.0, motorSpeed, 2.0);
+                                driveForwardInches(10.5, motorSpeed, 2.0);
                             }
                             break;
 
@@ -176,7 +176,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                             // if this is BLUE Alliance
                             else {
-                                driveForwardInches(8.0, motorSpeed, 2.0);
+                                driveForwardInches(10.5, motorSpeed, 2.0);
                             }
                             break;
                     }
@@ -210,10 +210,10 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         turn(-86.5);
                         robot.collectGlyph();
 
-                        driveForwardInches(6.0, 0.35, 1.5);
+                        driveForwardInches(9.0, 0.35, 1.5);
                         sleepInAuto(200);
 
-                        driveBackwardInches(6.0, 0.35, 1.5);
+                        driveBackwardInches(9.0, 0.35, 1.5);
 
                         //turn(-87.0);
 
@@ -276,13 +276,13 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         double oneColumnDistance = 9.50;
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                                driveLeftInches(oneColumnDistance+4.5, fasterMotorSpeed, 2.0);
+                                driveLeftInches(oneColumnDistance+ 6.5, fasterMotorSpeed, 2.0);
                             } else {
-                                driveRightInches(oneColumnDistance, fasterMotorSpeed, 2.0);
+                                driveRightInches(oneColumnDistance+ 2.5, fasterMotorSpeed, 2.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                driveRightInches(oneColumnDistance + 6.5, fasterMotorSpeed, 2.0);
+                                driveRightInches(oneColumnDistance+ 3.5, fasterMotorSpeed, 2.0);
                             } else {
                                 driveLeftInches(oneColumnDistance, fasterMotorSpeed, 2.0);
                             }
@@ -314,16 +314,16 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     }
 
                     driveForwardInches(5.0, collectSpeed, 1.25);
-                    sleepInAuto(150);
+                    sleepInAuto(100);
 
-                    driveForwardInches(6.0, collectSpeed, 1.25);
-                    sleepInAuto(200);
+                    driveForwardInches(7.0, collectSpeed, 1.25);
+                    sleepInAuto(100);
 
                     // push forward a bit to collect
                     //driveForwardInches(4.0, collectSpeed, 2.0);
                     //sleepInAuto(300);
 
-                    driveBackwardInches(11.5, 0.5, 2.0);
+                    driveBackwardInches(12.5, 0.5, 2.0);
                     turn(-87.5);
                     //robot.pushGlyph();
 

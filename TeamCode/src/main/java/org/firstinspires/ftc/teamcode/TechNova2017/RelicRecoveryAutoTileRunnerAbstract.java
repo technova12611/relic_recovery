@@ -375,23 +375,23 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         logInfo(" --- Align robot to the cryptobox ( " + robot.columnDetected() + ")--- ");
         boolean aligned = false;
-        if(getRuntime() < 27.0) {
+        if(getRuntime() < 27.5) {
             aligned = alignCryptoBoxInAuto(5.0);
         }
 
         logInfo(" --- Flip Glyph Tray (" + robot.columnDetected() + ") --- " );
         robot.dumpGlyphsFromTray();
-        sleepInAuto(500);
+        sleepInAuto(350);
 
         logInfo(" --- More backward to let glyph fall on the floor --- ");
 
         if(getRuntime() > 29.25) {
-            driveForwardInches(4.0, motorSpeed, 1.0);
+            driveForwardInches(4.5, motorSpeed, 1.0);
         } else if(getRuntime() > 28.50){
             driveBackwardInches(2.0, motorSpeed, 1.0);
-            driveForwardInches(5.0, motorSpeed, 1.0);
+            driveForwardInches(6.0, motorSpeed, 1.0);
         } else {
-            driveForwardInches(3.0, motorSpeed, 1.0);
+            driveForwardInches(3.5, motorSpeed, 1.0);
             if (!aligned) {
                 sleepInAuto(200);
                 driveForwardInches(2.5, motorSpeed, 1.0);
@@ -449,12 +449,19 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         if(distance > 200.0) {
             logInfo("Couldn't read range sensor data.");
-            return false;
+            ElapsedTime timer = new ElapsedTime();
+            while (opModeIsActive() && timer.milliseconds() < 250.0) {
+                distance = robot.getColDistance();
+            }
+
+            if(distance > 200.0) {
+                return false;
+            }
         }
 
         ElapsedTime timer1 = new ElapsedTime();
         int count = 0;
-        double runtime = 27.0;
+        double runtime = 27.5;
         while(opModeIsActive() && timer1.seconds() < timeOutInSeconds && getRuntime() < runtime) {
             //distance = measureColDistance(150);
             distance = robot.getColDistance();
@@ -511,7 +518,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         boolean glyphStucked = false;
         if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
             robot.reverseGlyph();
-            sleepInAuto(2000);
+            sleepInAuto(2250);
             robot.collectGlyph();
             glyphStucked = true;
         }

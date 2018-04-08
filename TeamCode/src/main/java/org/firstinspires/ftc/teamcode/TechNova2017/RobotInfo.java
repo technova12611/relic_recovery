@@ -171,8 +171,8 @@ public class RobotInfo {
     public static double INTAKE_COLLECT_POWER = 0.90;
 
     public static double DISTANCE_SENSOR_INITIAL_POSITION = 0.82;
-    public static double DISTANCE_SENSOR_EXTEND_POSITION = 0.17;
-    public static double DISTANCE_SENSOR_TELEOPS_POSITION = 0.75;
+    public static double DISTANCE_SENSOR_EXTEND_POSITION = 0.16;
+    public static double DISTANCE_SENSOR_TELEOPS_POSITION = 0.72;
     public static double DISTANCE_SENSOR_UPRIGHT_POSITION = 0.50;
     public static double DISTANCE_SENSOR_UPRIGHT_POSITION_2 = 0.35;
 
