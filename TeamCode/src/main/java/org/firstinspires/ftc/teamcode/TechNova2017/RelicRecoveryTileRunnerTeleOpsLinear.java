@@ -228,7 +228,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.holdPusher();
             stopIntake();
 
-            if(tripTimer.milliseconds() < 100) {
+            if(tripTimer.milliseconds() > 100) {
                 Log.i("Place Glyph", "Trip #" + (++numOfTrips) + " | " + String.format("%.1f", tripTimer.seconds()));
                 tripTimer.reset();
             }
