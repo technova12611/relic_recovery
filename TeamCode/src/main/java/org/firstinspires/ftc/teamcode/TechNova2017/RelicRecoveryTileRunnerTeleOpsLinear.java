@@ -115,13 +115,13 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             robot.releaseRelic();
             clawClosed = false;
 
-            Log.i("Release Relic", "@ " + String.format("%.2f", getRuntime()));
+            Log.i("TechNova: Release Relic", "@ " + String.format("%.2f", getRuntime()));
 
         } else if(g2.dpadRight()) {
             robot.grabRelic();
             clawClosed = true;
 
-            Log.i("Grab Relic", "@ " + String.format("%.2f", getRuntime()));
+            Log.i("TechNova: Grab Relic", "@ " + String.format("%.2f", getRuntime()));
         }
 
         // operator controller right joystick Y to move Relic Elbow up and down
@@ -166,7 +166,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
                 robot.pushGlyph();
                 relicClawLocked = false;
 
-                Log.i("Release Relic Claw", "Relic starts @ " + String.format("%.2f", getRuntime()));
+                Log.i("TechNova: Rel RelicClaw", "Relic starts @ " + String.format("%.2f", getRuntime()));
             }
         } else if((g2.leftBumper() || g2.rightBumper()) && g2.right_trigger > 0.2) {
             robot.moveGlyphLift(0);
@@ -229,7 +229,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             stopIntake();
 
             if(tripTimer.milliseconds() > 100) {
-                Log.i("Place Glyph", "Trip #" + (++numOfTrips) + " | " + String.format("%.1f", tripTimer.seconds()));
+                Log.i("TechNova: Place Glyph", "Trip #" + (++numOfTrips) + " | " + String.format("%.1f", tripTimer.seconds()));
                 tripTimer.reset();
             }
         }
@@ -269,7 +269,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
             //---------------------------------------------------------------
             if (Math.abs(rightPosition - previousRightIntakePosition) < 150)
             {
-                Log.i("Intake Detection:" , "Current: " + rightPosition
+                Log.i("TechNova: Intake Detec" , "Current: " + rightPosition
                                   + " | Previous: " + previousRightIntakePosition);
                 stuckDetected = true;
                 robot.isIntakeStuck = true;

@@ -316,7 +316,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
      */
     void logStateInfo(AutoState state, String stage) {
         try {
-            Log.i(this.getClass().getSimpleName(),
+            Log.i(this.getClass().getSimpleName(), "TechNova: " +
                     getAllianceColor()
                             + " | State: " + String.format("%28s", state.toString())
                             + " | " + String.format("%6s", stage)
