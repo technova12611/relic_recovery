@@ -26,6 +26,7 @@
             <Servo name="intakeRightHolder" port="4" />
             <Servo name="relicClawholder" port="5" />
             <DigitalDevice name="proximity" port="1" />
+            <DigitalDevice name="touch_sensor" port="3" />
             <ModernRoboticsI2cRangeSensor name="x2Range" port="0" bus="1" />
         </LynxModule>
     </LynxUsbDevice>

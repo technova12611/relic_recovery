@@ -33,6 +33,7 @@ import static java.lang.Boolean.TRUE;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_EXTEND_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_TELEOPS_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_UPRIGHT_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIVE_POWER;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_BLOCKER_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_BLOCKER_INIT_POSITION;
@@ -93,6 +94,8 @@ public class TileRunnerRobot {
     ColorSensor glyphColor;
 
     DigitalChannel proximitySensor = null;
+
+    DigitalChannel columnTouch = null;
 
     private boolean isBlueLedOn = false;
     private boolean isGreenLedOn = false;
@@ -287,6 +290,16 @@ public class TileRunnerRobot {
 
             // set the digital channel to input.
             proximitySensor.setMode(DigitalChannel.Mode.INPUT);
+        } catch(Exception e) {
+            // ignore
+        }
+
+        try{
+            // get a reference to our tocuh sensor object.
+            columnTouch = hardwareMap.get(DigitalChannel.class, "touch_sensor");
+
+            // set the digital channel to input.
+            columnTouch.setMode(DigitalChannel.Mode.INPUT);
         } catch(Exception e) {
             // ignore
         }
@@ -919,13 +932,13 @@ public class TileRunnerRobot {
 
     public double getColDistance() {
         if(distRangeSensor != null) {
-            int cmUltrasonicMax = 255;
-            double cm = distRangeSensor.rawUltrasonic();
-            if (cm == cmUltrasonicMax) {
-                cm = DistanceSensor.distanceOutOfRange;
-            }
+//            int cmUltrasonicMax = 255;
+//            double cm = distRangeSensor.rawUltrasonic();
+//            if (cm == cmUltrasonicMax) {
+//                cm = DistanceSensor.distanceOutOfRange;
+//            }
 
-            return Range.clip(DistanceUnit.INCH.fromUnit(DistanceUnit.INCH, cm), 2.0, 256.0);
+            return Range.clip(distRangeSensor.getDistance(DistanceUnit.INCH), 2.0, 256.0);
         }
 
         return 0.0;
@@ -1241,6 +1254,12 @@ public class TileRunnerRobot {
         return false;
     }
 
+    public void uprightDistanceSensorArmServo() {
+        if(this.distSensorServo != null) {
+            this.distSensorServo.setPosition(DISTANCE_SENSOR_UPRIGHT_POSITION);
+        }
+    }
+
     public void extendDistanceSensorArmServo() {
         if(this.distSensorServo != null) {
             this.distSensorServo.setPosition(DISTANCE_SENSOR_EXTEND_POSITION);
@@ -1300,6 +1319,14 @@ public class TileRunnerRobot {
     public Boolean columnDetected() {
         if(proximitySensor != null) {
             return !proximitySensor.getState();
+        } else {
+            return null;
+        }
+    }
+
+    public Boolean isColumnTouched() {
+        if(columnTouch != null) {
+            return !columnTouch.getState();
         } else {
             return null;
         }
