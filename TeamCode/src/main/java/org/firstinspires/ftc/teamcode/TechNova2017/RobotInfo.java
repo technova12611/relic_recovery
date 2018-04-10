@@ -121,16 +121,15 @@ public class RobotInfo {
     public static double RELIC_CLAW_CLOSE_POSITION = 0.53;
     public static double RELIC_CLAW_OPEN_POSITION = 0.70;
 
-    public static double RELIC_ELBOW_INITIAL_POSITION = 0.18;
+    public static double RELIC_ELBOW_INITIAL_POSITION = 0.21;
     public static double RELIC_ELBOW_RELEASE_POSITION = 0.21;
-    public static double RELIC_ELBOW_UP_POSITION = 0.65;
+    public static double RELIC_ELBOW_UP_POSITION = 0.68;
 
     public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.73;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.02;
 
-    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.18;
+    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.22;
     public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.75;
-
 
 //    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.19;
 //    //public static double GLYPH_PUSHER_PUSH_POSITION = 0.24;
@@ -154,7 +153,7 @@ public class RobotInfo {
 //    public static double GLYPH_PUSHER_UP_POSITION = 0.01;
 
     //DS 3218 270 degree Servo positions
-    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.89;
+    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.93;
     public static double GLYPH_PUSHER_PUSH_POSITION = 0.91;
     public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.93;
     public static double GLYPH_PUSHER_HOLD_POSITION = 0.40;

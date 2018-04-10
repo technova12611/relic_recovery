@@ -1326,7 +1326,7 @@ public class TileRunnerRobot {
 
     public Boolean isColumnTouched() {
         if(columnTouch != null) {
-            return !columnTouch.getState();
+            return columnTouch.getState();
         } else {
             return null;
         }

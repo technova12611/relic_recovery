@@ -158,16 +158,19 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         }
 
         while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout &&
-                (!useRangerSensor || robot.columnDetected() == null || !robot.columnDetected()))
+                (!useRangerSensor || robot.columnDetected() == null || robot.columnDetected()))
         {
             if(useRangerSensor && robot.isColumnTouched() != null) {
                 if(robot.isColumnTouched()) {
-                    logInfo("*** Column tocuhed", robot.columnDetected() + "");
+                    logInfo("*** Column tocuhed", robot.isColumnTouched() + "");
                     columnTouched = true;
                     //break;
                 }
             }
 
+            if(robot.getColDistance() < 5.5) {
+                // break;
+            }
             //robot.updateSensorTelemetry();
             //telemetry.update();
             //robot.loop();

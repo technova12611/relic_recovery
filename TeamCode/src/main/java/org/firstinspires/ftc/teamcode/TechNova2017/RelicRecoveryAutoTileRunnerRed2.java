@@ -176,25 +176,25 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveLeftInches(21.0, motorSpeed,5.0);
+                            driveLeftInches(25.0, motorSpeed,5.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveLeftInches(13.0, motorSpeed, 4.0);
+                            driveLeftInches(18.0, motorSpeed, 4.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(6.0, motorSpeed, 3.0);
+                            driveLeftInches(8.0, motorSpeed, 3.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveLeftInches(13.0, motorSpeed, 4.0);
+                            driveLeftInches(18.0, motorSpeed, 4.0);
                             break;
                     }
 
@@ -216,14 +216,14 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     //turn(0.0);
                     // push forward a bit to collect
-                    driveForwardInches(7.0, 0.25, 2.0);
+                    driveForwardInches(9.0, 0.25, 2.0);
                     sleepInAuto(200);
 
                     //driveBackwardInches(7.0, 0.5, 2.0);
 
                     turn(-15.0);
 
-                    driveBackwardInches(31.5, 0.75, 5.0);
+                    driveBackwardInches(37.5, 0.75, 5.0);
 
                     robot.pushGlyph();
 

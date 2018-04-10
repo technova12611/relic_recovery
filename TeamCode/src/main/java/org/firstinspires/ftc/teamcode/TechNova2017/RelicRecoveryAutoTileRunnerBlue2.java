@@ -114,13 +114,13 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case FORWARD_3_FEET:
                     detectVuMark = true;
-                    driveForwardInches(30.0, motorSpeed, 5.0);
+                    driveForwardInches(29.0, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
                 case TURN_TO_180_DEGREE:
                     turn(175.0);
-                    sleepInAuto(300);
+                    sleepInAuto(200);
                     turnToAngle(-173.0, 0.10);
 
                     gotoNextState();
@@ -135,25 +135,25 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(23.0, motorSpeed,5.0);
+                            driveRightInches(21.0, motorSpeed,5.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(13.0, motorSpeed, 4.0);
+                            driveRightInches(9.0, motorSpeed, 4.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveRightInches(4.5, motorSpeed, 3.0);
+                            driveRightInches(3.5, motorSpeed, 3.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveRightInches(15.0, motorSpeed, 5.0);
+                            driveRightInches(9.0, motorSpeed, 5.0);
                             break;
                     }
 
@@ -198,7 +198,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(15.0, fasterMotorSpeed, 4.0);
+                            driveRightInches(12.5, fasterMotorSpeed, 4.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
@@ -214,7 +214,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                             break;
                     }
 
-                    turnToAngle(-160.0, 0.2);
+                    turnToAngle(-165.0, 0.2);
                     //turnToAngle(-135.0, 0.10);
 
                     robot.resetForTeleOps();
@@ -228,16 +228,16 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                 case PICKUP_MORE_GLYPHS:
 
                     // drive to glyph pit
-                    driveForwardInches(34.0, 0.60, 5.0);
-                    sleepInAuto(200);
+                    driveForwardInches(35.0, 0.60, 5.0);
+                    sleepInAuto(100);
 
                     // push forward a bit to collect
-                    driveForwardInches(7.0, 0.25, 2.0);
-                    sleepInAuto(300);
+                    driveForwardInches(9.5, 0.25, 2.0);
+                    sleepInAuto(150);
 
-                    turn(-160.0);
+                    turn(-165.0);
 
-                    driveBackwardInches(33.5, 0.75, 5.0);
+                    driveBackwardInches(36.5, 0.60, 5.0);
 
                     robot.pushGlyph();
 
@@ -254,7 +254,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                         break;
                     }
 
-                    turn(-179.0);
+                    turn(-175.0);
 
                     gotoNextState();
                     break;
@@ -264,9 +264,9 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     turn(175.0);
 
                     if(vuMark == RelicRecoveryVuMark.RIGHT) {
-                        driveLeftInches(18.0, motorSpeed, 3.0);
+                        driveLeftInches(23.0, motorSpeed, 3.0);
                     } else {
-                        driveLeftInches(10.0, motorSpeed, 3.0);
+                        driveLeftInches(15.0, motorSpeed, 3.0);
                     }
 
                     robot.extendDistanceSensorArmServo();
@@ -287,7 +287,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     robot.holdPusher();
                     driveForwardInches(4.0, 0.5, 2.0);
 
-                    turnToAngle(-125.0,0.25);
+                    turnToAngle(-165.0,0.25);
 
                     gotoNextState();
                     break;
