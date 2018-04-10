@@ -56,6 +56,8 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
             telemetry.addData("Distance (x1, x2): ", "(%.1f, %.1f)", robot.getX1Distance(), robot.getColDistance());
             telemetry.addData("IMU : ",
                     String.format("(%.1f)", robot.getHeadingAngle()));
+            telemetry.addData("Touch", robot.isColumnTouched());
+            telemetry.addData("Column", robot.columnDetected());
             telemetry.update();
 
             sleep(100);
