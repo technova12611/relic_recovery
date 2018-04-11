@@ -89,6 +89,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
             double motorSpeed = 0.28;
             double fasterMotorSpeed = 0.35;
+            double straightAngle = -85.0;
 
             if(detectVuMark && vuMark == RelicRecoveryVuMark.UNKNOWN) {
                 vuMark = vuMarkVision.detect(telemetry);
@@ -136,56 +137,90 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(2.5, motorSpeed, 1.5);
-                            }
-                            // if this is BLUE Alliance
-                            else {
-                                driveForwardInches(17.5, motorSpeed, 3.0);
+                            if(do4Glyphs()) {
+                                if(getAllianceColor() ==  AllianceColor.RED) {
+                                    driveBackwardInches(2.5, motorSpeed, 1.5);
+                                }
+                                // if this is BLUE Alliance
+                                else {
+                                    driveForwardInches(17.5, motorSpeed, 3.0);
+                                }
+                            } else {
+                                if(getAllianceColor() ==  AllianceColor.RED) {
+                                    driveBackwardInches(2.5, motorSpeed, 1.5);
+                                }
+                                // if this is BLUE Alliance
+                                else {
+                                    driveForwardInches(17.5, motorSpeed, 3.0);
+                                }
                             }
                             break;
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-                                if(do4Glyphs()) {
-                                    driveBackwardInches(9.5, motorSpeed, 3.0);
-                                } else {
+                            if(do4Glyphs()) {
+                                if(getAllianceColor() ==  AllianceColor.RED) {
                                     driveBackwardInches(9.5, motorSpeed, 3.0);
                                 }
+                                // if this is BLUE Alliance
+                                else {
+                                    driveForwardInches(10.5, motorSpeed, 2.0);
+                                }
+                            } else {
+                                if(getAllianceColor() ==  AllianceColor.RED) {
+                                    driveBackwardInches(11.0, motorSpeed, 3.0);
+                                }
+                                // if this is BLUE Alliance
+                                else {
+                                    driveForwardInches(10.5, motorSpeed, 2.0);
+                                }
                             }
-                            // if this is BLUE Alliance
-                            else {
-                                driveForwardInches(10.5, motorSpeed, 2.0);
-                            }
+
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-                                //driveBackwardInches(18.5, motorSpeed, 3.0);
-                                if(do4Glyphs()) {
-                                    driveBackwardInches(15.0, motorSpeed, 3.0);}
+                            if(do4Glyphs()) {
+                                if (getAllianceColor() == AllianceColor.RED) {
+                                    //driveBackwardInches(18.5, motorSpeed, 3.0);
+                                    driveBackwardInches(15.0, motorSpeed, 3.0);
+                                }
+                                // if this is BLUE Alliance
                                 else {
-                                    driveBackwardInches(18.5, motorSpeed, 3.0);
+                                    driveForwardInches(2.0, motorSpeed, 2.0);
                                 }
                             }
-                            // if this is BLUE Alliance
                             else {
-                                driveForwardInches(2.0, motorSpeed, 2.0);
+                                if (getAllianceColor() == AllianceColor.RED) {
+                                    driveBackwardInches(18.5, motorSpeed, 3.0);
+                                }
+                                // if this is BLUE Alliance
+                                else {
+                                    driveForwardInches(2.0, motorSpeed, 2.0);
+                                }
                             }
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            if(getAllianceColor() ==  AllianceColor.RED) {
-                                driveBackwardInches(11.0, motorSpeed, 2.0);
-                            }
-                            // if this is BLUE Alliance
-                            else {
-                                driveForwardInches(10.5, motorSpeed, 2.0);
+                            if(do4Glyphs()) {
+                                if(getAllianceColor() ==  AllianceColor.RED) {
+                                    driveBackwardInches(9.5, motorSpeed, 3.0);
+                                }
+                                // if this is BLUE Alliance
+                                else {
+                                    driveForwardInches(10.5, motorSpeed, 2.0);
+                                }
+                            } else {
+                                if(getAllianceColor() ==  AllianceColor.RED) {
+                                    driveBackwardInches(11.0, motorSpeed, 3.0);
+                                }
+                                // if this is BLUE Alliance
+                                else {
+                                    driveForwardInches(10.5, motorSpeed, 2.0);
+                                }
                             }
                             break;
                     }
@@ -199,9 +234,6 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         turn(-83.5);
                     }
 
-                    //sleepInAuto(250);
-                    //turn(-88.5);
-
                     gotoNextState();
                     break;
 
@@ -214,16 +246,16 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         robot.resetGlyphTray();
 
                         driveForwardInches(16.0, 0.50, 3.0);
+                        turn(straightAngle);
                         robot.collectGlyph();
                         sleepInAuto(100);
-                        turn(-86.5);
 
                         driveForwardInches(9.0, 0.35, 1.5);
                         sleepInAuto(100);
 
                         driveBackwardInches(8.5, 0.35, 1.5);
 
-                        //turn(-87.0);
+                        turn(straightAngle);
 
                         robot.pushGlyph();
                         robot.extendDistanceSensorArmServo();
@@ -236,7 +268,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             isGlyphStucked();
                         }
 
-                        turn(-86.5);
+                        turn(straightAngle);
                         robot.stopIntake();
                     }
 
@@ -248,18 +280,19 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     robot.extendDistanceSensorArmServo();
 
                     if(do4Glyphs()) {
+                        // push #2
                         robot.pushGlyph();
                         boolean columnTouched = driveBackwardInchesToColumn(8.50, 0.15, 3.0);
                         robot.holdPusher();
 
                         if(columnTouched) {
-//                             if(!robot.columnDetected()) {
-//                                 driveRightInches(4.0, 0.5, 1.0);
-//                                 driveBackwardInchesToColumn(3.0, 0.15, 1.0);
-//                             }
-//                             else {
-//                                 driveForwardInches(2.0, 0.25, 1.0);
-//                             }
+                             if(!robot.columnDetected()) {
+                                 driveRightInches(3.0, 0.5, 1.0);
+                                 driveBackwardInchesToColumn(3.0, 0.15, 1.0);
+                             }
+                             else {
+                                 driveForwardInches(2.0, 0.25, 1.0);
+                             }
                         }
 
                         robot.raiseGlyphTrayup2();
@@ -291,18 +324,26 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         if(getAllianceColor() == AllianceColor.RED) {
                             if (vuMark == RelicRecoveryVuMark.RIGHT) {
                                 driveLeftInches(oneColumnDistance+ 5.5, fasterMotorSpeed, 3.0);
-                            } else {
+                            }
+                            else if (vuMark == RelicRecoveryVuMark.LEFT) {
+                                driveLeftInches(oneColumnDistance+ 1.5, fasterMotorSpeed, 3.0);
+                            }
+                            else {
                                 driveRightInches(oneColumnDistance+ 1.5, fasterMotorSpeed, 3.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
                                 driveRightInches(oneColumnDistance+ 3.5, fasterMotorSpeed, 3.0);
-                            } else {
-                                driveLeftInches(oneColumnDistance, fasterMotorSpeed, 3.0);
+                            }
+                            else if (vuMark == RelicRecoveryVuMark.RIGHT) {
+                                driveLeftInches(oneColumnDistance + 0.5, fasterMotorSpeed, 3.0);
+                            }
+                            else {
+                                driveLeftInches(oneColumnDistance + 0.5, fasterMotorSpeed, 3.0);
                             }
                         }
 
-                        turn(-87.0);
+                        turn(-84.5);
                         gotoNextState();
                     }
                     break;
@@ -315,7 +356,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     double collectSpeed = 0.35;
                     // drive to glyph pit
                     driveForwardInches(22.0, 0.70, 5.0);
-                    sleepInAuto(100);
+                    sleepInAuto(50);
                     //driveBackwardInches(2.0, collectSpeed, 2.0);
 
                     if(getAllianceColor() == AllianceColor.RED) {
@@ -325,36 +366,29 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     }
 
                     driveForwardInches(5.0, collectSpeed, 1.25);
-                    sleepInAuto(100);
+                    sleepInAuto(50);
 
                     driveForwardInches(7.0, collectSpeed, 1.25);
-                    sleepInAuto(100);
+                    sleepInAuto(50);
 
                     // push forward a bit to collect
                     //driveForwardInches(4.0, collectSpeed, 2.0);
                     //sleepInAuto(300);
 
                     driveBackwardInches(12.5, 0.5, 2.0);
-                    turn(-87.5);
-                    //robot.pushGlyph();
+                    turn(-84.5);
+                    robot.pushGlyph();
 
                     gotoNextState();
                     break;
 
                 case DRIVE_BACK_TO_CRYPTO:
 
-                    robot.pushGlyph();
-                    driveBackwardInches(15.5, 0.60, 3.0);
+                    driveBackwardInches(15.5, 0.45, 3.0);
                     robot.extendDistanceSensorArmServo();
 
-                    turn(-86.5);
-
-                    // push #1
-                    robot.holdPusher();
-                    sleepInAuto(250);
-
-                    // push #2
                     robot.pushGlyph();
+                    turn(-84.5);
 
                     logInfo( " Col Dist: " + String.format("%.2f", robot.getColDistance()) + ", " + robot.columnDetected());
 
@@ -387,24 +421,22 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case PLACE_MORE_GLYPHS_INTO_CRYPTO:
 
-                    collectSpeed = 0.35;
-
-                    turn(-87.5);
+                    turn(-84.5);
 
                     double columnDist = robot.getColDistance();
 
-                    if( (robot.columnDetected() != null && !robot.columnDetected()) || (columnDist > 7.0 && columnDist < 100)) {
+                    if( (robot.columnDetected() != null && !robot.columnDetected()) || (columnDist > 5.0 && columnDist < 100)) {
                         logInfo( " Move to column: " + String.format("%.2f", columnDist) + " | " + robot.columnDetected());
                         boolean columnTouched = driveBackwardInchesToColumn(7.25, 0.18, 2.0);
 
                         if(columnTouched) {
                             if (!robot.columnDetected()) {
-                                driveRightInches(4.0, 0.5, 3.0);
+                                driveRightInches(4.0, 0.35, 3.0);
                                 if(!robot.columnDetected()) {
-                                    driveBackwardInchesToColumn(2.5, 0.15, 1.0);
+                                    driveBackwardInchesToColumn(2.5, 0.18, 1.0);
                                 }
                             } else {
-                                driveForwardInches(1.5, 0.25, 1.0);
+                                driveForwardInches(1.5, 0.35, 1.0);
                             }
                         }
                     } else {

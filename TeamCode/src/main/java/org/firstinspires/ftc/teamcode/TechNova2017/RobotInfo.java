@@ -153,7 +153,7 @@ public class RobotInfo {
 //    public static double GLYPH_PUSHER_UP_POSITION = 0.01;
 
     //DS 3218 270 degree Servo positions
-    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.93;
+    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.90;
     public static double GLYPH_PUSHER_PUSH_POSITION = 0.91;
     public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.93;
     public static double GLYPH_PUSHER_HOLD_POSITION = 0.40;
@@ -166,8 +166,8 @@ public class RobotInfo {
 //    public static double GLYPH_PUSHER_HOLD_POSITION = 0.28;
 //    public static double GLYPH_PUSHER_UP_POSITION = 0.01;
 
-    public static double INTAKE_REVERSE_POWER = -0.90;
-    public static double INTAKE_COLLECT_POWER = 0.90;
+    public static double INTAKE_REVERSE_POWER = -0.95;
+    public static double INTAKE_COLLECT_POWER = 0.95;
 
     public static double DISTANCE_SENSOR_INITIAL_POSITION = 0.82;
     public static double DISTANCE_SENSOR_EXTEND_POSITION = 0.16;

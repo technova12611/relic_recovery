@@ -235,11 +235,11 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                     // push forward a bit to collect
                     driveForwardInches(9.5, 0.25, 2.0);
-                    sleepInAuto(150);
+                    sleepInAuto(100);
 
-                    turn(-165.0);
+                    //turn(-165.0);
 
-                    driveBackwardInches(36.5, 0.60, 5.0);
+                    driveBackwardInches(38.5, 0.60, 5.0);
 
                     robot.pushGlyph();
 
@@ -256,14 +256,14 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                         break;
                     }
 
-                    turn(-175.0);
+                    turn(-178.0);
 
                     gotoNextState();
                     break;
 
                 case PLACE_MORE_GLYPHS:
 
-                    turn(175.0);
+                    //turn(175.0);
 
                     if(vuMark == RelicRecoveryVuMark.RIGHT) {
                         driveLeftInches(23.0, motorSpeed, 3.0);
@@ -274,7 +274,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     robot.extendDistanceSensorArmServo();
                     sleepInAuto(300);
 
-                    driveBackwardInchesToColumn(8.0, 0.15, 3.0);
+                    driveBackwardInchesToColumn(10.0, 0.15, 3.0);
 
                     turn(-178.0);
 

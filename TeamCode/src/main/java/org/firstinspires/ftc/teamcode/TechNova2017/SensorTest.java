@@ -55,10 +55,8 @@ public class SensorTest extends LinearOpMode {
             // send the info back to driver station using telemetry function.
             telemetry.addData("(x1,x2): ", "(%.2f, %.2f)", robot.getX1Distance(), robot.getColDistance());
             telemetry.addData("IMU: ", "%.2f", robot.getHeadingAngle());
-
-            if(robot.proximitySensor != null){
-                telemetry.addData("Proximity: ", robot.columnDetected());
-            }
+            telemetry.addData("Proximity: ", robot.columnDetected());
+            telemetry.addData("Touch: ", robot.isColumnTouched());
 
             vuMark = vuMarkVision.detect(null, true);
 

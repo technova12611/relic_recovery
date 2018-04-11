@@ -162,14 +162,18 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         {
             if(useRangerSensor && robot.isColumnTouched() != null) {
                 if(robot.isColumnTouched()) {
-                    logInfo("*** Column tocuhed", robot.isColumnTouched() + "");
+                    logInfo("*** Column touched", robot.isColumnTouched() + "");
                     columnTouched = true;
                     //break;
                 }
             }
 
-            if(robot.getColDistance() < 5.5) {
-                // break;
+            if(useRangerSensor) {
+                double colDistance = robot.getColDistance();
+                if (colDistance < 5.5) {
+                    // break;
+                    logInfo("*** Column touched", String.format("%.2f", colDistance));
+                }
             }
             //robot.updateSensorTelemetry();
             //telemetry.update();
@@ -386,39 +390,39 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         logInfo(" --- Align robot to the cryptobox ( Col: " + robot.columnDetected() + ")--- ");
         boolean aligned = false;
+        double startTime = getRuntime();
+
         if(getRuntime() < 27.5) {
             aligned = alignCryptoBoxInAuto(5.0);
         }
 
         logInfo(" --- Flip Glyph Tray (" + robot.columnDetected() + ") --- " );
         robot.dumpGlyphsFromTray();
-        sleepInAuto(350);
+        sleepInAuto(300);
 
         logInfo(" --- More backward to let glyph fall on the floor --- ");
 
         if(getRuntime() > 29.25) {
-            driveForwardInches(4.5, motorSpeed, 1.0);
+            driveForwardInches(4.5, 0.60, 1.0);
         } else if(getRuntime() > 28.50){
             driveBackwardInches(2.0, motorSpeed, 1.0);
-            driveForwardInches(6.0, motorSpeed, 1.0);
+            driveForwardInches(6.0, 0.6, 1.0);
         } else {
             driveForwardInches(3.5, motorSpeed, 1.0);
             if (!aligned) {
                 sleepInAuto(200);
-                driveForwardInches(2.5, motorSpeed, 1.0);
+                driveForwardInches(3.5, motorSpeed, 1.0);
             }
         }
-
-
 
         if(getRuntime() < 28.0) {
 
             // move forward to push the glyph into the box
             //-------------------------------------------------
-            logInfo(" --- Drive forward to push --- ");
             ElapsedTime watcher = new ElapsedTime();
             if(!aligned) {
-                driveBackwardInches(6.5, motorSpeed, 1.25);
+                logInfo(" --- Drive forward to push --- ");
+                driveBackwardInches(7.5, motorSpeed, 1.25);
             }
 
             logInfo(" --- Place Glyph into column (ms): " +
@@ -432,8 +436,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             }
             // move backward to separate robot from glyph
             //----------------------------------------------
-            logInfo(" --- Drive backward to finish --- ");
             if(!aligned) {
+                logInfo(" --- Drive backward to finish --- ");
                 driveForwardInches(8.5, 0.5, 2.0);
             }
 
@@ -449,6 +453,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         // close the glyphBlocker
         //----------------------------------------
         robot.closeGlyphBlocker();
+        logInfo(" --- Finished glyphs --- " + String.format("%.2f", (getRuntime()-startTime)));
     }
 
     public boolean alignCryptoBoxInAuto(double timeOutInSeconds) throws InterruptedException {
@@ -491,14 +496,14 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             //---------------------------------------------------
             //
             if (distance > 0.0 && distance < 15.0) {
-                double desiredDistance = 3.15;
+                double desiredDistance = 3.50;
                 double delta = distance - desiredDistance;
                 logInfo("    Delta from the column (in): " + String.format("%.2f", delta));
 
                 if (delta > 0.4) {
-                    driveRightInches(delta*1.5, 0.35, 3.0);
+                    driveRightInches(delta*1.5, 0.35, 1.5);
                 } else if (delta < -0.4) {
-                    driveLeftInches(-delta*1.5, 0.35, 3.0);
+                    driveLeftInches(-delta*1.5, 0.35, 1.5);
                 } else {
                     aligned = true;
                     logInfo("**** Aligned correctly.");
@@ -537,6 +542,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             driveForwardInches(4.0, 0.35, 1.0);
             sleep(100);
             driveBackwardInches(4.0, 0.35, 1.0);
+
+            robot.pushGlyph();
         }
         return glyphStucked;
     }

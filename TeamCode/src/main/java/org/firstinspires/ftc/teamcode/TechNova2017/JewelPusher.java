@@ -72,7 +72,7 @@ public class JewelPusher {
             waitForMS(200);
 
             telemetry.addData("Color: ", jewelColor.argb());
-            Log.i(this.getClass().getSimpleName(), "Color in Init (R,G, B):"
+            Log.i("TechNova: " + this.getClass().getSimpleName(), "Color in Init (R,G, B):"
                     + jewelColor.red() + ", " + jewelColor.green() + ", " + jewelColor.blue());
         }
     }
@@ -83,7 +83,7 @@ public class JewelPusher {
      */
     public void extend() throws InterruptedException {
 
-        Log.i(this.getClass().getSimpleName(), "Deploying jewel pusher arms ...");
+        Log.i(this.getClass().getSimpleName(), "TechNova: Deploying jewel pusher arms ...");
 
         // long arm down
         //--------------------------------------
@@ -96,7 +96,7 @@ public class JewelPusher {
         shortArm.setPosition(JEWEL_PUSHER_SHORT_ARM_STRAIGHT_POSITION);
 
         // wait for ~ 1.0 seconds
-        waitForMS(300);
+        waitForMS(200);
 
         // long arm down
         //--------------------------------------
@@ -112,7 +112,7 @@ public class JewelPusher {
      */
     public void retract() throws InterruptedException {
 
-        Log.i(this.getClass().getSimpleName(), "Retracting jewel pusher arms ...");
+        Log.i("TechNova: " + this.getClass().getSimpleName(), "Retracting jewel pusher arms ...");
 
         longArm.setPosition(JEWEL_PUSHER_LONG_ARM_HALF_TARGET_POSITION);
         waitForMS(200);
@@ -164,7 +164,7 @@ public class JewelPusher {
         ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
 
         Color jewelColor = getJewelColor();
-        while(_autoOpMode.opModeIsActive() && timer.time() < 1500 && jewelColor == UNKNOWN) {
+        while(_autoOpMode.opModeIsActive() && timer.time() < 1000 && jewelColor == UNKNOWN) {
             jewelColor = getJewelColor();
             waitForMS(100);
         }
@@ -194,7 +194,7 @@ public class JewelPusher {
             }
         }
 
-        waitForMS(500);
+        waitForMS(300);
     }
 
     /**
