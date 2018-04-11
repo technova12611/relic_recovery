@@ -388,7 +388,10 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
     protected void placeGlyphIntoColumn(double motorSpeed, boolean makeTurn) throws InterruptedException {
 
-        logInfo(" --- Align robot to the cryptobox ( Col: " + robot.columnDetected() + ")--- ");
+        boolean columnDetected = robot.columnDetected();
+        logInfo("** Place glyph into column ** ");
+
+        logInfo(" --- Align robot to the cryptobox ( Col: " + columnDetected + ", touched: " + robot.isColumnTouched() + ") --- ");
         boolean aligned = false;
         double startTime = getRuntime();
 
@@ -459,10 +462,11 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     public boolean alignCryptoBoxInAuto(double timeOutInSeconds) throws InterruptedException {
 
         boolean aligned = false;
-        logInfo(" --- Get the distance sensor in place --- ");
-        //robot.extendDistanceSensorArmServo();
 
         double distance = robot.getColDistance();
+
+        logInfo(" --- Alignment: Init col distance: " + String.format("%.2f", distance));
+        //robot.extendDistanceSensorArmServo();
 
         if(distance > 200.0) {
             logInfo("Couldn't read range sensor data.");
@@ -482,10 +486,10 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         while(opModeIsActive() && timer1.seconds() < timeOutInSeconds && getRuntime() < runtime) {
             //distance = measureColDistance(150);
             distance = robot.getColDistance();
-            logInfo("    Initial Distance from the column (in): " + String.format("%.2f", distance) + " | " + robot.columnDetected());
+            logInfo("    Col distance (in): " + String.format("%.2f", distance) + " | " + robot.columnDetected());
 
             // too far from cryptobox, move in by 2 inches
-            if(distance > 6.5 && distance < 15.0) {
+            if(distance > 6.5 && distance < 15.0 && !robot.columnDetected()) {
                 //driveBackwardInchesToColumn(3.0, 0.15, 1.0);
                 distance = robot.getColDistance();
                 logInfo("     *** Adjusted distance from the column (in): " + String.format("%.2f", distance) + " | " + robot.columnDetected());

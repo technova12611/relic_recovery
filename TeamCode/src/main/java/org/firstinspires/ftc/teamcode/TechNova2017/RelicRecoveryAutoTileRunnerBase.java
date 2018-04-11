@@ -343,7 +343,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                         }
 
-                        turn(-84.5);
+                        turn(straightAngle);
                         gotoNextState();
                     }
                     break;
@@ -376,7 +376,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     //sleepInAuto(300);
 
                     driveBackwardInches(12.5, 0.5, 2.0);
-                    turn(-84.5);
+                    turn(straightAngle);
                     robot.pushGlyph();
 
                     gotoNextState();
@@ -388,7 +388,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     robot.extendDistanceSensorArmServo();
 
                     robot.pushGlyph();
-                    turn(-84.5);
+                    turn(straightAngle);
 
                     logInfo( " Col Dist: " + String.format("%.2f", robot.getColDistance()) + ", " + robot.columnDetected());
 
@@ -421,11 +421,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case PLACE_MORE_GLYPHS_INTO_CRYPTO:
 
-                    turn(-84.5);
+                    turn(straightAngle);
 
                     double columnDist = robot.getColDistance();
 
-                    if( (robot.columnDetected() != null && !robot.columnDetected()) || (columnDist > 5.0 && columnDist < 100)) {
+                    if( (robot.columnDetected() != null && !robot.columnDetected())
+                            || (columnDist > 2.5 && columnDist < 100)) {
                         logInfo( " Move to column: " + String.format("%.2f", columnDist) + " | " + robot.columnDetected());
                         boolean columnTouched = driveBackwardInchesToColumn(7.25, 0.18, 2.0);
 
@@ -440,7 +441,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                         }
                     } else {
-                        sleepInAuto(200);
+                        logInfo( " Col Detected: " + String.format("%.2f", columnDist) + " | " + robot.columnDetected());
+                        sleepInAuto(100);
                     }
 
                     robot.pushGlyph();

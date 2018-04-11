@@ -13,8 +13,8 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_RELEASE_POSITION;
 
 @TeleOp(name = "Tile Runner (New) TeleOps", group = "Competition")
-public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
-    private TileRunnerRobot robot = null;
+public class RelicRecoveryTileRunnerTeleOpsLinear extends TileRunnerAbstract {
+
     private Controller g1, g2;
     private boolean debug_mode = false;
 
@@ -309,7 +309,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends LinearOpMode {
 
         // driving the robot
         //------------------------------------------------------
-        TileRunnerDriveHelper.drive(g1, robot, telemetry);
+        TileRunnerDriveHelper.drive(this, g1, robot, telemetry);
 
         telemetry.addData("Intake Counts:", + robot.intakeRight.getCurrentPosition() + " | "
                         + String.format("%.1f", intakeStuckTimer.seconds()));

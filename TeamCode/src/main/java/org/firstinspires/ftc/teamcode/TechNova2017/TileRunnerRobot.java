@@ -632,6 +632,9 @@ public class TileRunnerRobot {
      */
     public void drive(double direction, double velocity, double rotationVelocity) {
         WheelsSpeed w = getWheelsSpeed(direction, velocity, rotationVelocity);
+
+        setMode(DcMotor.RunMode.RUN_USING_ENCODER, lf, lr, rf, rr);
+
         lf.setPower(w.lf);
         rf.setPower(w.rf);
         lr.setPower(w.lr);

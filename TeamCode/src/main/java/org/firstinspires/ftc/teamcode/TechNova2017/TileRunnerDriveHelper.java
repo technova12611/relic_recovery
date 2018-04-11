@@ -29,7 +29,8 @@ public class TileRunnerDriveHelper {
     static double scaleToDrive = 1.0;
 
     // assumes that the controller is updated
-    static void drive(Controller g, TileRunnerRobot robot, Telemetry telemetry) {
+    static void drive(TileRunnerAbstract opMode, Controller g, TileRunnerRobot robot, Telemetry telemetry)
+    {
         double theta = 0.0, v_theta = 0.0, v_rotation = 0.0;
 
         final double dpad_speed = DPAD_SCALE_TO_DRIVE;
@@ -37,7 +38,10 @@ public class TileRunnerDriveHelper {
         double lx = 0.0;
         double ly = 0.0;
 
-        if((g.leftBumper() || g.rightBumper()) && g.B()) {
+        if(g.leftBumper_long() && g.rightBumper_long()) {
+            opMode.driveBackwardInches(20.0, 0.35);
+        }
+        else if((g.leftBumper() || g.rightBumper()) && g.B()) {
             robot.closeIntakeWheels();
             robot.pushGlyph();
         }
