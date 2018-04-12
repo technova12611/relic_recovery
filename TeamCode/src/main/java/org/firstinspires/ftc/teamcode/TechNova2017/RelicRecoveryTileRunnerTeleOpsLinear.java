@@ -65,7 +65,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends TileRunnerAbstract {
 
         robot.onStart();
 
-        tripTimer = new ElapsedTime();
+        tripTimer.reset();
 
         robot.holdPusher();
 
@@ -228,8 +228,8 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends TileRunnerAbstract {
             robot.holdPusher();
             stopIntake();
 
-            if(tripTimer.milliseconds() > 100) {
-                Log.i("TechNova: Place Glyph", "Trip #" + (++numOfTrips) + " | " + String.format("%.1f", tripTimer.seconds()));
+            if(tripTimer.milliseconds() > 3000) {
+                Log.i("TechNova: Place Glyph", "Trip #" + (++numOfTrips) + ": " + String.format("%.1f", tripTimer.seconds()));
                 tripTimer.reset();
             }
         }
@@ -269,7 +269,7 @@ public class RelicRecoveryTileRunnerTeleOpsLinear extends TileRunnerAbstract {
             //---------------------------------------------------------------
             if (Math.abs(rightPosition - previousRightIntakePosition) < 150)
             {
-                Log.i("TechNova: Intake Detec" , "Current: " + rightPosition
+                Log.i("TechNova: Intake Stuck" , "Current: " + rightPosition
                                   + " | Previous: " + previousRightIntakePosition);
                 stuckDetected = true;
                 robot.isIntakeStuck = true;
