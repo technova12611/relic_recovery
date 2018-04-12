@@ -16,12 +16,6 @@ public class SensorTest extends LinearOpMode {
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
 
-    ModernRoboticsI2cRangeSensor xRangeSensor;
-    ModernRoboticsI2cRangeSensor yRangeSensor;
-
-    AnalogInput rangeSensor;
-    DistanceSensor glyphDistance;
-
     double servoPosition = 0.0;
     ElapsedTime servoTimer = new ElapsedTime();
 
@@ -116,7 +110,7 @@ public class SensorTest extends LinearOpMode {
             }
             else if(gamepad2.b && !gamepad2.start) {
                 robot.openGlyphBlocker();
-                robot.raiseGlyphTrayup1();
+                robot.raiseGlyphTrayup2();
             }
             else if(gamepad2.x) {
                 robot.openGlyphBlocker();
@@ -131,18 +125,18 @@ public class SensorTest extends LinearOpMode {
                 robot.openGlyphBlocker();
             }
 
-            servoPosition = robot.distSensorServo.getPosition();
+            servoPosition = robot.glyphFlipper.getPosition();
             if (gamepad1.right_stick_y < 0) {
-                servoPosition = Range.clip(servoPosition + 0.05, 0.01, 1.0);
-                robot.setServoPosition(robot.distSensorServo, servoPosition);
+                servoPosition = Range.clip(servoPosition + 0.01, 0.01, 1.0);
+                robot.setServoPosition(robot.glyphFlipper, servoPosition);
                 servoTimer.reset();
             } else if (gamepad1.right_stick_y > 0) {
-                servoPosition = Range.clip(servoPosition - 0.05, 0.01, 1.0);
-                robot.setServoPosition(robot.distSensorServo, servoPosition);
+                servoPosition = Range.clip(servoPosition - 0.01, 0.01, 1.0);
+                robot.setServoPosition(robot.glyphFlipper, servoPosition);
                 servoTimer.reset();
             }
 
-            telemetry.addData("Servo Position: ", "%.1f", servoPosition);
+            telemetry.addData("Servo Position: ", "%.2f", servoPosition);
             telemetry.update();
         }
     }

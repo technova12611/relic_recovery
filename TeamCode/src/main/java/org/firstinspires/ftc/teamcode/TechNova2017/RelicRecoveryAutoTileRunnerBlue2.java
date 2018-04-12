@@ -296,7 +296,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case RESET_GLYPH_TRAY:
                     // move the glyph lift back to zero position
-                    robot.initServosForTeleOps();
+                    robot.resetForTeleOps();
                     gotoNextState();
                     break;
 

@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -36,13 +35,17 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SEN
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SENSOR_UPRIGHT_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.ENCODER_DRIVE_POWER;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_BLOCKER_CLOSE_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_BLOCKER_INIT_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_BLOCKER_OPEN_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_2_AUTO_BLUE_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_2_AUTO_RED_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_2_CLOSE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_2_FLAT_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_2_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_2_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_AUTO_BLUE_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_AUTO_RED_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_CLOSE_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_1;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION_2;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_FLAT_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_FLIPPER_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.GLYPH_PUSHER_HOLD_POSITION;
@@ -86,7 +89,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_
 public class TileRunnerRobot {
     DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider, intakeLeft, intakeRight;
     Servo relicClaw, relicElbow, relicClawholder, longArm, intakeLeftHolder, intakeRightHolder,
-                  glyphFlipper, glyphPusher, distSensorServo, glyphBlocker;
+                  glyphFlipper, glyphFlipper2, glyphPusher, distSensorServo, glyphBlocker;
 
     private Telemetry telemetry;
     private VoltageSensor voltageSensor;
@@ -197,7 +200,23 @@ public class TileRunnerRobot {
             }
 
         } catch(Exception e) {
-            logInfo(this.telemetry, "Glyph Flipper: ", e.getMessage());
+            logInfo(this.telemetry, "Glyph Flipper 1: ", e.getMessage());
+        }
+
+        try {
+            glyphFlipper2 = hardwareMap.servo.get("glyphFlipper2");
+            if(allianceColor != null) {
+                if(allianceColor == AllianceColor.RED) {
+                    glyphFlipper2.setPosition(GLYPH_FLIPPER_2_AUTO_RED_INITIAL_POSITION);
+                } else {
+                    glyphFlipper2.setPosition(GLYPH_FLIPPER_2_AUTO_BLUE_INITIAL_POSITION);
+                }
+            } else {
+                glyphFlipper2.setPosition(GLYPH_FLIPPER_2_INITIAL_POSITION);
+            }
+
+        } catch(Exception e) {
+            logInfo(this.telemetry, "Glyph Flipper 2: ", e.getMessage());
         }
 
         try {
@@ -318,6 +337,7 @@ public class TileRunnerRobot {
             if(longArm != null) longArm.setPosition(JEWEL_PUSHER_LONG_ARM_TELEOPS_POSITION);
             if(glyphPusher != null) glyphPusher.setPosition(GLYPH_PUSHER_UP_POSITION);
             if(glyphFlipper != null) glyphFlipper.setPosition(GLYPH_FLIPPER_INITIAL_POSITION);
+            if(glyphFlipper2 != null) glyphFlipper2.setPosition(GLYPH_FLIPPER_2_INITIAL_POSITION);
             if(distSensorServo != null) distSensorServo.setPosition(DISTANCE_SENSOR_TELEOPS_POSITION);
         }
         catch(Exception e) {
@@ -1084,29 +1104,29 @@ public class TileRunnerRobot {
         if(this.glyphFlipper !=  null) {
             this.glyphFlipper.setPosition(GLYPH_FLIPPER_CLOSE_POSITION);
         }
+
+        if(this.glyphFlipper2 !=  null) {
+            this.glyphFlipper2.setPosition(GLYPH_FLIPPER_2_CLOSE_POSITION);
+        }
     }
 
     public void dumpGlyphsFromTray() {
         if(this.glyphFlipper !=  null) {
             this.glyphFlipper.setPosition(GLYPH_FLIPPER_OPEN_POSITION);
         }
-    }
 
-    public void raiseGlyphTrayup1() {
-        if(this.glyphFlipper !=  null) {
-            this.glyphFlipper.setPosition(GLYPH_FLIPPER_FLAT_POSITION_1);
+        if(this.glyphFlipper2 !=  null) {
+            this.glyphFlipper2.setPosition(GLYPH_FLIPPER_2_OPEN_POSITION);
         }
     }
 
     public void raiseGlyphTrayup2() {
         if(this.glyphFlipper !=  null) {
-            this.glyphFlipper.setPosition(GLYPH_FLIPPER_FLAT_POSITION_2);
+            this.glyphFlipper.setPosition(GLYPH_FLIPPER_FLAT_POSITION);
         }
-    }
 
-    public void setGlyphFlipperPosition(double position) {
-        if(this.glyphFlipper !=  null) {
-            this.glyphFlipper.setPosition(position);
+        if(this.glyphFlipper2 !=  null) {
+            this.glyphFlipper2.setPosition(GLYPH_FLIPPER_2_FLAT_POSITION);
         }
     }
 
