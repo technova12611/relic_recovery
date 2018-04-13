@@ -251,7 +251,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         sleepInAuto(100);
 
                         driveForwardInches(9.0, 0.35, 1.5);
-                        sleepInAuto(100);
+                        sleepInAuto(250);
 
                         driveBackwardInches(8.5, 0.35, 1.5);
 
@@ -260,7 +260,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         robot.pushGlyph();
                         robot.extendDistanceSensorArmServo();
 
-                        driveBackwardInches(12.5,0.50,3.0);
+                        driveBackwardInches(15.5,0.50,3.0);
                         robot.holdPusher();
 
                         if(isGlyphStucked()) {
@@ -282,7 +282,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if(do4Glyphs()) {
                         // push #2
                         robot.pushGlyph();
-                        boolean columnTouched = driveBackwardInchesToColumn(8.50, 0.15, 3.0);
+                        boolean columnTouched = driveBackwardInchesToColumn(7.50, 0.10, 3.0);
                         robot.holdPusher();
 
                         if(columnTouched) {
@@ -326,20 +326,20 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                                 driveLeftInches(oneColumnDistance+ 5.5, fasterMotorSpeed, 3.0);
                             }
                             else if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                driveLeftInches(oneColumnDistance+ 1.5, fasterMotorSpeed, 3.0);
+                                driveRightInches(oneColumnDistance+ 6.0, fasterMotorSpeed, 3.0);
                             }
                             else {
-                                driveRightInches(oneColumnDistance+ 1.5, fasterMotorSpeed, 3.0);
+                                driveRightInches(oneColumnDistance+ 2.5, fasterMotorSpeed, 3.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
                                 driveRightInches(oneColumnDistance+ 3.5, fasterMotorSpeed, 3.0);
                             }
                             else if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                                driveLeftInches(oneColumnDistance + 0.5, fasterMotorSpeed, 3.0);
+                                driveLeftInches(oneColumnDistance + 3.5, fasterMotorSpeed, 3.0);
                             }
                             else {
-                                driveLeftInches(oneColumnDistance + 0.5, fasterMotorSpeed, 3.0);
+                                driveLeftInches(oneColumnDistance + 1.5, fasterMotorSpeed, 3.0);
                             }
                         }
 
@@ -366,16 +366,16 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     }
 
                     driveForwardInches(5.0, collectSpeed, 1.25);
-                    sleepInAuto(50);
+                    sleepInAuto(150);
 
-                    driveForwardInches(7.0, collectSpeed, 1.25);
-                    sleepInAuto(50);
+                    driveForwardInches(6.0, collectSpeed, 1.25);
+                    sleepInAuto(100);
 
                     // push forward a bit to collect
                     //driveForwardInches(4.0, collectSpeed, 2.0);
                     //sleepInAuto(300);
 
-                    driveBackwardInches(12.5, 0.5, 2.0);
+                    driveBackwardInches(11.5, 0.5, 2.0);
                     turn(straightAngle);
                     robot.pushGlyph();
 
@@ -384,7 +384,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case DRIVE_BACK_TO_CRYPTO:
 
-                    driveBackwardInches(15.5, 0.45, 3.0);
+                    driveBackwardInches(16.5, 0.50, 3.0);
                     robot.extendDistanceSensorArmServo();
 
                     robot.pushGlyph();
@@ -428,7 +428,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if( (robot.columnDetected() != null && !robot.columnDetected())
                             || (columnDist > 2.5 && columnDist < 100)) {
                         logInfo( " Move to column: " + String.format("%.2f", columnDist) + " | " + robot.columnDetected());
-                        boolean columnTouched = driveBackwardInchesToColumn(7.25, 0.18, 2.0);
+                        boolean columnTouched = driveBackwardInchesToColumn(7.25, 0.12, 2.0);
 
                         if(columnTouched) {
                             if (!robot.columnDetected()) {

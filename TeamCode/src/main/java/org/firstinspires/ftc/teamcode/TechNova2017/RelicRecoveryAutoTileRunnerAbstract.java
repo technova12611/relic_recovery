@@ -158,7 +158,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         }
 
         while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout &&
-                (!useRangerSensor || robot.columnDetected() == null || robot.columnDetected()))
+                (!useRangerSensor || robot.columnDetected() == null || !robot.columnDetected()))
         {
             if(useRangerSensor && robot.isColumnTouched() != null) {
                 if(robot.isColumnTouched()) {
@@ -500,7 +500,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             //---------------------------------------------------
             //
             if (distance > 0.0 && distance < 15.0) {
-                double desiredDistance = 3.50;
+                double desiredDistance = 3.18;
                 double delta = distance - desiredDistance;
                 logInfo("    Delta from the column (in): " + String.format("%.2f", delta));
 

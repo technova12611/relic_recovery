@@ -39,7 +39,7 @@ public class TileRunnerDriveHelper {
         double ly = 0.0;
 
         if(g.leftBumper_long() && g.rightBumper_long()) {
-            opMode.driveBackwardInches(20.0, 0.35);
+            opMode.driveBackwardInches(25.0, 0.35);
         }
         else if((g.leftBumper() || g.rightBumper()) && g.B()) {
             robot.closeIntakeWheels();
