@@ -47,7 +47,8 @@ public class SensorTest extends LinearOpMode {
         // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
         while (opModeIsActive()) {
             // send the info back to driver station using telemetry function.
-            telemetry.addData("(x1,x2): ", "(%.2f, %.2f)", robot.getX1Distance(), robot.getColDistance());
+            double colDist = robot.getColDistance();
+            telemetry.addData("(x1,x2): ", "(%.2f, %.2f)", robot.getX1Distance(), colDist);
             telemetry.addData("IMU: ", "%.2f", robot.getHeadingAngle());
             telemetry.addData("Proximity: ", robot.columnDetected());
             telemetry.addData("Touch: ", robot.isColumnTouched());
@@ -58,6 +59,10 @@ public class SensorTest extends LinearOpMode {
                 robot.turnOffBlueLed();
             } else {
                 robot.turnOnBlueLed();
+            }
+
+            if(colDist >=35.5 && colDist < 37.5) {
+                robot.turnOnGreenLed();
             }
 
             String message = String.format("%s visible", vuMark);

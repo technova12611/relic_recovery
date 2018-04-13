@@ -282,13 +282,14 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if(do4Glyphs()) {
                         // push #2
                         robot.pushGlyph();
-                        boolean columnTouched = driveBackwardInchesToColumn(7.50, 0.10, 3.0);
+                        boolean columnTouched = driveBackwardInchesToColumn(7.50, 0.12, 3.0);
                         robot.holdPusher();
 
                         if(columnTouched) {
                              if(!robot.columnDetected()) {
+                                 driveForwardInches(3.0, 0.5,1.0);
                                  driveRightInches(3.0, 0.5, 1.0);
-                                 driveBackwardInchesToColumn(3.0, 0.15, 1.0);
+                                 driveBackwardInchesToColumn(5.0, 0.15, 1.0);
                              }
                              else {
                                  driveForwardInches(2.0, 0.25, 1.0);
@@ -432,10 +433,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                         if(columnTouched) {
                             if (!robot.columnDetected()) {
-                                driveRightInches(4.0, 0.35, 3.0);
-                                if(!robot.columnDetected()) {
-                                    driveBackwardInchesToColumn(2.5, 0.18, 1.0);
-                                }
+                                 driveForwardInches(3.0,0.5,1.0);
+                                 driveRightInches(4.0, 0.35, 3.0);
+                                 driveBackwardInchesToColumn(5.0, 0.12, 1.0);
                             } else {
                                 driveForwardInches(1.5, 0.35, 1.0);
                             }

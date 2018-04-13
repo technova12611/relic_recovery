@@ -153,8 +153,11 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.encoderDriveInches(directionRadians, inches);
         ElapsedTime timer = new ElapsedTime();
 
+        double colDistance = 0.0;
         if(useRangerSensor) {
-            logInfo("*** Sensor drive (pre) - Column detected", robot.columnDetected() + "");
+            colDistance = robot.getColDistance();
+            logInfo("*** Sensor drive (pre) - Column detected", robot.columnDetected() + " | "
+                         + String.format("%.2f", colDistance));
         }
 
         while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout &&
@@ -164,12 +167,12 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 if(robot.isColumnTouched()) {
                     logInfo("*** Column touched", robot.isColumnTouched() + "");
                     columnTouched = true;
-                    //break;
+                    break;
                 }
             }
 
             if(useRangerSensor) {
-                double colDistance = robot.getColDistance();
+                colDistance = robot.getColDistance();
                 if (colDistance < 5.5) {
                     // break;
                     logInfo("*** Column distance", String.format("%.2f", colDistance));

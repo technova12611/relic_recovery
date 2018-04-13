@@ -77,14 +77,14 @@ public class RobotInfo {
     public static double GLYPH_FLIPPER_AUTO_BLUE_INITIAL_POSITION = 0.40;
     public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.78;
     public static double GLYPH_FLIPPER_FLAT_POSITION    = 0.39;
-    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.29;
+    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.28;
 
     public static double GLYPH_FLIPPER_2_INITIAL_POSITION = 0.87;
     public static double GLYPH_FLIPPER_2_AUTO_RED_INITIAL_POSITION = 0.80;
     public static double GLYPH_FLIPPER_2_AUTO_BLUE_INITIAL_POSITION = 0.76;
     public static double GLYPH_FLIPPER_2_OPEN_POSITION    = 0.36;
     public static double GLYPH_FLIPPER_2_FLAT_POSITION    = 0.78;
-    public static double GLYPH_FLIPPER_2_CLOSE_POSITION   = 0.87;
+    public static double GLYPH_FLIPPER_2_CLOSE_POSITION   = 0.88;
 
     // DS 180 Servo positions
     //---------------------------------------------
@@ -177,7 +177,7 @@ public class RobotInfo {
 
     public static double DISTANCE_SENSOR_INITIAL_POSITION = 0.80;
     public static double DISTANCE_SENSOR_EXTEND_POSITION = 0.14;
-    public static double DISTANCE_SENSOR_TELEOPS_POSITION = 0.72;
+    public static double DISTANCE_SENSOR_TELEOPS_POSITION = 0.68;
     public static double DISTANCE_SENSOR_UPRIGHT_POSITION = 0.50;
     public static double DISTANCE_SENSOR_UPRIGHT_POSITION_2 = 0.35;
 
