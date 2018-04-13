@@ -230,16 +230,16 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                 case PICKUP_MORE_GLYPHS:
 
                     // drive to glyph pit
-                    driveForwardInches(35.0, 0.60, 5.0);
+                    driveForwardInches(35.5, 0.50, 5.0);
                     sleepInAuto(100);
 
                     // push forward a bit to collect
-                    driveForwardInches(7.5, 0.25, 2.0);
+                    driveForwardInches(6.5, 0.25, 2.0);
                     sleepInAuto(100);
 
                     //turn(-165.0);
 
-                    driveBackwardInches(38.5, 0.60, 5.0);
+                    driveBackwardInches(38.5, 0.50, 5.0);
 
                     robot.pushGlyph();
 

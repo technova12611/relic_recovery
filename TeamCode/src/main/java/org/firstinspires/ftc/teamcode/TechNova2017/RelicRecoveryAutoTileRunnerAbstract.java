@@ -540,7 +540,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         robot.holdPusher();
 
         boolean glyphStucked = false;
-        if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 20) {
+        if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 35) {
             robot.reverseGlyph();
             sleepInAuto(2050);
             robot.collectGlyph();
