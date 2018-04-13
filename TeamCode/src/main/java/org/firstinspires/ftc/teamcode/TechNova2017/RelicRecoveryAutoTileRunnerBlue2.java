@@ -167,7 +167,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case BACKWARD_3_INCHES:
 
-                    turnToAngle(-176.0, 0.10);
+                    turnToAngle(-173.0, 0.10);
 
                     driveBackwardInchesToColumn(3.0, motorSpeed, 2.0);
                     gotoNextState();

@@ -172,7 +172,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 double colDistance = robot.getColDistance();
                 if (colDistance < 5.5) {
                     // break;
-                    logInfo("*** Column touched", String.format("%.2f", colDistance));
+                    logInfo("*** Column distance", String.format("%.2f", colDistance));
                 }
             }
             //robot.updateSensorTelemetry();
