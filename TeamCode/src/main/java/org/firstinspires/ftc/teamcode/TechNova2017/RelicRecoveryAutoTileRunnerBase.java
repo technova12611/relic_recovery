@@ -282,13 +282,17 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     if(do4Glyphs()) {
                         // push #2
                         robot.pushGlyph();
+
+                        double colDist = robot.getColDistance();
+                        logInfo( " Col Dist: " + String.format("%.2f", colDist) + ", " + robot.columnDetected());
+
                         boolean columnTouched = driveBackwardInchesToColumn(7.50, 0.12, 3.0);
                         robot.holdPusher();
 
                         if(columnTouched) {
                              if(!robot.columnDetected()) {
-                                 driveForwardInches(3.0, 0.5,1.0);
-                                 driveRightInches(3.0, 0.5, 1.0);
+                                 driveForwardInches(3.0, 0.35,1.0);
+                                 driveRightInches(3.0, 0.35, 1.0);
                                  driveBackwardInchesToColumn(5.0, 0.15, 1.0);
                              }
                              else {
@@ -407,7 +411,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     robot.stopIntake();
 
-                    if(!dumpMoreGlyphs() || glyphStucked || getRuntime() > 27.0) {
+                    if(!dumpMoreGlyphs() || glyphStucked || getRuntime() > 27.25) {
                         driveBackwardInches(2.50, 0.25, 2.0);
                         gotoState(READY_FOR_TELEOPS);
                         break;
@@ -428,7 +432,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     if( (robot.columnDetected() != null && !robot.columnDetected())
                             || (columnDist > 2.5 && columnDist < 100)) {
-                        logInfo( " Move to column: " + String.format("%.2f", columnDist) + " | " + robot.columnDetected());
+                        logInfo( " Move to column: " +
+                                String.format("%.2f", columnDist) + " | " + robot.columnDetected());
                         boolean columnTouched = driveBackwardInchesToColumn(7.25, 0.12, 2.0);
 
                         if(columnTouched) {

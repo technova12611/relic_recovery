@@ -394,11 +394,12 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         boolean columnDetected = robot.columnDetected();
         logInfo("** Place glyph into column ** ");
 
-        logInfo(" --- Align robot to the cryptobox ( Col: " + columnDetected + ", touched: " + robot.isColumnTouched() + ") --- ");
+        logInfo(" --- Align robot to the cryptobox ( Col: " +
+                columnDetected + ", touched: " + robot.isColumnTouched() + ") --- ");
         boolean aligned = false;
         double startTime = getRuntime();
 
-        if(getRuntime() < 27.5) {
+        if(getRuntime() < 28.0) {
             aligned = alignCryptoBoxInAuto(5.0);
         }
 
