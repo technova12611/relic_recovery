@@ -234,7 +234,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     sleepInAuto(100);
 
                     // push forward a bit to collect
-                    driveForwardInches(9.5, 0.25, 2.0);
+                    driveForwardInches(7.5, 0.25, 2.0);
                     sleepInAuto(100);
 
                     //turn(-165.0);
@@ -265,10 +265,12 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                     //turn(175.0);
 
+                    robot.closeIntakeWheels();
+
                     if(vuMark == RelicRecoveryVuMark.RIGHT) {
-                        driveLeftInches(23.0, motorSpeed, 3.0);
+                        driveLeftInches(21.0, motorSpeed, 3.0);
                     } else {
-                        driveLeftInches(15.0, motorSpeed, 3.0);
+                        driveLeftInches(14.0, motorSpeed, 3.0);
                     }
 
                     robot.extendDistanceSensorArmServo();
