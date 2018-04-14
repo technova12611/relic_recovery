@@ -265,6 +265,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                     turn(179.0);
 
+                    robot.pushGlyph();
                     robot.closeIntakeWheels();
 
                     sleepInAuto(200);

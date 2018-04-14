@@ -391,6 +391,8 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
     protected void placeGlyphIntoColumn(double motorSpeed, boolean makeTurn) throws InterruptedException {
 
+        robot.pushGlyph();
+
         boolean columnDetected = robot.columnDetected();
         logInfo("** Place glyph into column ** ");
 
@@ -454,6 +456,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             }
         }
 
+        robot.holdPusher();
         robot.resetGlyphTray();
         robot.uprightDistanceSensorArmServo();
 
@@ -540,8 +543,10 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         sleepInAuto(150);
         robot.holdPusher();
 
+        logInfo("    Intake encoder: ( " + previousIntakeCount + "," + robot.intakeRight.getCurrentPosition() + ")");
+
         boolean glyphStucked = false;
-        if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 35) {
+        if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 40) {
             robot.reverseGlyph();
             sleepInAuto(2050);
             robot.collectGlyph();

@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -32,7 +33,7 @@ public class SensorTest extends LinearOpMode {
 
         //glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
 
-        VuMarkVision vuMarkVision = new VuMarkVision(hardwareMap, telemetry, true);
+        VuMarkVision vuMarkVision = new VuMarkVision(hardwareMap, telemetry, false);
 
         // wait for the start button to be pressed.
         waitForStart();
@@ -130,14 +131,16 @@ public class SensorTest extends LinearOpMode {
                 robot.openGlyphBlocker();
             }
 
-            servoPosition = robot.glyphFlipper.getPosition();
+            Servo servoTester = robot.servoTester;
+
+            servoPosition = servoTester.getPosition();
             if (gamepad1.right_stick_y < 0) {
                 servoPosition = Range.clip(servoPosition + 0.01, 0.01, 1.0);
-                robot.setServoPosition(robot.glyphFlipper, servoPosition);
+                robot.setServoPosition(servoTester, servoPosition);
                 servoTimer.reset();
             } else if (gamepad1.right_stick_y > 0) {
                 servoPosition = Range.clip(servoPosition - 0.01, 0.01, 1.0);
-                robot.setServoPosition(robot.glyphFlipper, servoPosition);
+                robot.setServoPosition(servoTester, servoPosition);
                 servoTimer.reset();
             }
 

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION_2;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_INITIAL_POSITION;
 
@@ -38,7 +38,7 @@ public class RelicSlider {
             relicElbow = hardwareMap.servo.get("relicElbow");
             relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
             relicClawholder = hardwareMap.servo.get("relicClawholder");
-            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION_2);
         } catch(Exception e) {
             Log.e(this.getClass().getSimpleName(), "Init relic failed: " + e.getMessage());
         }

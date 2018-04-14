@@ -62,7 +62,7 @@ public class RobotInfo {
 
     public static int GLYPH_LIFT_PICKUP_GLYPH_IN_AUTO_POSITION = 700;
 
-    public static double INTAKE_LEFT_HOLDER_INITIAL_POSITION = 0.02;
+    public static double INTAKE_LEFT_HOLDER_INITIAL_POSITION = 0.01;
     public static double INTAKE_LEFT_HOLDER_OPEN_POSITION = 0.70;
     public static double INTAKE_LEFT_HOLDER_CLOSE_POSITION = 0.05;
 
@@ -82,7 +82,7 @@ public class RobotInfo {
     public static double GLYPH_FLIPPER_2_INITIAL_POSITION = 0.87;
     public static double GLYPH_FLIPPER_2_AUTO_RED_INITIAL_POSITION = 0.80;
     public static double GLYPH_FLIPPER_2_AUTO_BLUE_INITIAL_POSITION = 0.76;
-    public static double GLYPH_FLIPPER_2_OPEN_POSITION    = 0.36;
+    public static double GLYPH_FLIPPER_2_OPEN_POSITION    = 0.32;
     public static double GLYPH_FLIPPER_2_FLAT_POSITION    = 0.78;
     public static double GLYPH_FLIPPER_2_CLOSE_POSITION   = 0.89;
 
@@ -131,11 +131,11 @@ public class RobotInfo {
     public static double RELIC_ELBOW_RELEASE_POSITION = 0.21;
     public static double RELIC_ELBOW_UP_POSITION = 0.68;
 
-    public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.73;
-    public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.02;
+    //public static double RELIC_CLAWHOLDER_INITIAL_POSITION = 0.73;
+    //public static double RELIC_CLAWHOLDER_RELEASE_POSITION = 0.02;
 
-    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.22;
-    public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.75;
+    public static double RELIC_CLAWHOLDER_INITIAL_POSITION_2 = 0.17;
+    public static double RELIC_CLAWHOLDER_RELEASE_POSITION_2 = 0.65;
 
 //    public static double GLYPH_PUSHER_INITIAL_POSITION = 0.19;
 //    //public static double GLYPH_PUSHER_PUSH_POSITION = 0.24;

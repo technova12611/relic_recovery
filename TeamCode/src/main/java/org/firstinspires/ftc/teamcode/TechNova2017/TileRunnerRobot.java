@@ -89,7 +89,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_
 public class TileRunnerRobot {
     DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider, intakeLeft, intakeRight;
     Servo relicClaw, relicElbow, relicClawholder, longArm, intakeLeftHolder, intakeRightHolder,
-                  glyphFlipper, glyphFlipper2, glyphPusher, distSensorServo, glyphBlocker;
+                  glyphFlipper, glyphFlipper2, glyphPusher, distSensorServo, glyphBlocker, servoTester;
 
     private Telemetry telemetry;
     private VoltageSensor voltageSensor;
@@ -256,6 +256,12 @@ public class TileRunnerRobot {
             relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
         } catch(Exception e) {
             logInfo(this.telemetry, "Relic claw init failed", e.getMessage());
+        }
+
+        try {
+            servoTester = hardwareMap.servo.get("servoTester");
+            servoTester.setPosition(0.5);
+        } catch(Exception e) {
         }
 
         try {

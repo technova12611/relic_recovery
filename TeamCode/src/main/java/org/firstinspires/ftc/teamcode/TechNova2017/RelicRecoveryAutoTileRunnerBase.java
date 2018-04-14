@@ -289,6 +289,12 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         boolean columnTouched = driveBackwardInchesToColumn(8.50, 0.12, 3.0);
                         robot.holdPusher();
 
+                        if(!robot.columnDetected()) {
+                            columnTouched = driveBackwardInchesToColumn(2.50, 0.12, 3.0);
+                        } else {
+                            sleepInAuto(150);
+                        }
+
                         if(columnTouched) {
                              if(!robot.columnDetected()) {
                                  driveForwardInches(3.0, 0.35,1.0);
@@ -356,7 +362,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                 case PICKUP_MORE_GLYPH:
 
                     // turn on the intake wheels
-                    robot.collectGlyph();
+                    //robot.collectGlyph();
 
                     double collectSpeed = 0.35;
                     // drive to glyph pit
@@ -369,6 +375,8 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     } else {
                         turnToAngle(-103.5, 0.25);
                     }
+                    robot.collectGlyph();
+                    sleepInAuto(100);
 
                     driveForwardInches(5.0, collectSpeed, 1.25);
                     sleepInAuto(150);

@@ -47,8 +47,8 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_MEDIUM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_OPEN_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.LOWER_RIGHT_GLYPH_ARM_WIDE_OPEN_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION;
-import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_RELEASE_POSITION;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_INITIAL_POSITION_2;
+import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAWHOLDER_RELEASE_POSITION_2;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_CLOSE_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_INITIAL_POSITION;
 import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_CLAW_OPEN_POSITION;
@@ -145,7 +145,7 @@ public class MecanumRobot {
 
         try {
             relicClawholder = hardwareMap.servo.get("relicClawholder");
-            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION_2);
         } catch (Exception e) {
             logInfo(this.telemetry, "Init relic claw holder failed", e.getMessage());
         }
@@ -230,7 +230,7 @@ public class MecanumRobot {
     public void initServosForTeleOps() {
         try {
             if (relicClawholder != null)
-                relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+                relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION_2);
             if (glyphHolder != null) glyphHolder.setPosition(GLYPH_TOP_HOLDER_INITIAL_POSITION);
             if (relicClaw != null) relicClaw.setPosition(RELIC_CLAW_INITIAL_POSITION);
             if (relicElbow != null) relicElbow.setPosition(RELIC_ELBOW_INITIAL_POSITION);
@@ -1123,7 +1123,7 @@ public class MecanumRobot {
 
     public void releaseClaw() {
         if (relicClawholder != null) {
-            relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION);
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_RELEASE_POSITION_2);
             isRelicClawReleased = true;
         }
 
@@ -1138,7 +1138,7 @@ public class MecanumRobot {
 
     public void closeRelicClawHolder() {
         if (relicClawholder != null) {
-            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION);
+            relicClawholder.setPosition(RELIC_CLAWHOLDER_INITIAL_POSITION_2);
             isRelicClawReleased = false;
         }
     }

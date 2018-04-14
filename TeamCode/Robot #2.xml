@@ -6,10 +6,12 @@
             <RevRoboticsHDHexMotor name="lr" port="1" />
             <RevRoboticsCoreHexMotor name="led" port="2" />
             <NeveRest20Gearmotor name="relicSlider" port="3" />
+            <Servo name="servoTester" port="0" />
             <Servo name="longArm" port="1" />
             <Servo name="shortArm" port="2" />
             <Servo name="intakeLeftHolder" port="3" />
             <Servo name="distSensor" port="4" />
+            <Servo name="glyphFlipper2" port="5" />
             <LynxColorSensor name="jewelColor" port="0" bus="1" />
             <ModernRoboticsI2cRangeSensor name="x1Range" port="0" bus="3" />
             <AdafruitBNO055IMU name="imu" port="0" bus="0" />
