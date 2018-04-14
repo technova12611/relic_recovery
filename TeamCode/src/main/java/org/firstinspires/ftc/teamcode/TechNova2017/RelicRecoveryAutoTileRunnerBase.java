@@ -286,7 +286,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         double colDist = robot.getColDistance();
                         logInfo( " Col Dist: " + String.format("%.2f", colDist) + ", " + robot.columnDetected());
 
-                        boolean columnTouched = driveBackwardInchesToColumn(7.50, 0.12, 3.0);
+                        boolean columnTouched = driveBackwardInchesToColumn(8.50, 0.12, 3.0);
                         robot.holdPusher();
 
                         if(columnTouched) {
@@ -341,7 +341,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                                 driveRightInches(oneColumnDistance+ 3.5, fasterMotorSpeed, 3.0);
                             }
                             else if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                                driveLeftInches(oneColumnDistance + 3.5, fasterMotorSpeed, 3.0);
+                                driveLeftInches(oneColumnDistance + 4.5, fasterMotorSpeed, 3.0);
                             }
                             else {
                                 driveLeftInches(oneColumnDistance + 1.5, fasterMotorSpeed, 3.0);

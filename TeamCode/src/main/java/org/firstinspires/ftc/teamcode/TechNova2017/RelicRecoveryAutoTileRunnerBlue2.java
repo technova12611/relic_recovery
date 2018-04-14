@@ -143,19 +143,19 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(9.0, motorSpeed, 4.0);
+                            driveRightInches(13.0, motorSpeed, 4.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveRightInches(3.5, motorSpeed, 3.0);
+                            driveRightInches(4.0, motorSpeed, 3.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveRightInches(9.0, motorSpeed, 5.0);
+                            driveRightInches(13.0, motorSpeed, 5.0);
                             break;
                     }
 
@@ -200,23 +200,23 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(12.5, fasterMotorSpeed, 4.0);
+                            driveRightInches(16.5, fasterMotorSpeed, 4.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveRightInches(22.0, fasterMotorSpeed, 5.0);
+                            driveRightInches(25.0, fasterMotorSpeed, 5.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveRightInches(15.0, fasterMotorSpeed, 4.0);
+                            driveRightInches(16.0, fasterMotorSpeed, 4.0);
                             break;
                     }
 
-                    turnToAngle(-165.0, 0.2);
+                    turn(-158.0);
                     //turnToAngle(-135.0, 0.10);
 
                     robot.resetForTeleOps();
@@ -239,7 +239,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                     //turn(-165.0);
 
-                    driveBackwardInches(38.5, 0.50, 5.0);
+                    driveBackwardInches(35.5, 0.50, 5.0);
 
                     robot.pushGlyph();
 
@@ -256,27 +256,29 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                         break;
                     }
 
-                    turn(-178.0);
+                    turn(-173.0);
 
                     gotoNextState();
                     break;
 
                 case PLACE_MORE_GLYPHS:
 
-                    //turn(175.0);
+                    turn(179.0);
 
                     robot.closeIntakeWheels();
 
+                    sleepInAuto(200);
+
                     if(vuMark == RelicRecoveryVuMark.RIGHT) {
-                        driveLeftInches(21.0, motorSpeed, 3.0);
+                        driveLeftInches(13.5, motorSpeed, 3.0);
                     } else {
-                        driveLeftInches(14.0, motorSpeed, 3.0);
+                        driveLeftInches(8.5, motorSpeed, 3.0);
                     }
 
                     robot.extendDistanceSensorArmServo();
                     sleepInAuto(300);
 
-                    driveBackwardInchesToColumn(10.0, 0.15, 3.0);
+                    driveBackwardInchesToColumn(11.0, 0.12, 3.0);
 
                     turn(-178.0);
 
