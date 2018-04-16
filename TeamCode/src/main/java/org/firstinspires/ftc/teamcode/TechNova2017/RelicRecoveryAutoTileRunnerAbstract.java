@@ -161,7 +161,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         }
 
         while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout &&
-                (!useRangerSensor || robot.columnDetected() == null || !robot.columnDetected()))
+                (!useRangerSensor || (robot.columnDetected() == null && !robot.columnDetected())))
         {
             if(useRangerSensor && robot.isColumnTouched() != null) {
                 if(robot.isColumnTouched()) {
@@ -401,7 +401,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         boolean aligned = false;
         double startTime = getRuntime();
 
-        if(getRuntime() < 28.0) {
+        if(getRuntime() < 28.55) {
             aligned = alignCryptoBoxInAuto(5.0);
         }
 
@@ -411,11 +411,13 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
         logInfo(" --- More backward to let glyph fall on the floor --- ");
 
-        if(getRuntime() > 29.25) {
+        if(getRuntime() > 28.75) {
             driveForwardInches(4.5, 0.60, 1.0);
-        } else if(getRuntime() > 28.50){
-            driveBackwardInches(2.0, motorSpeed, 1.0);
-            driveForwardInches(6.0, 0.6, 1.0);
+        } else if(getRuntime() > 28.00){
+            if(!aligned) {
+                driveBackwardInches(2.0, 0.5, 1.0);
+            }
+            driveForwardInches(5.0, 0.6, 1.0);
         } else {
             driveForwardInches(3.5, motorSpeed, 1.0);
             if (!aligned) {
@@ -507,7 +509,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             //---------------------------------------------------
             //
             if (distance > 0.0 && distance < 15.0) {
-                double desiredDistance = 3.18;
+                double desiredDistance = 3.00;
                 double delta = distance - desiredDistance;
                 logInfo("    Delta from the column (in): " + String.format("%.2f", delta));
 

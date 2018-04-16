@@ -200,7 +200,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                             break;
                     }
 
-                    turn(-15.0);
+                    turn(-10.0);
 
                     robot.resetForTeleOps();
 
@@ -218,14 +218,14 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     //turn(0.0);
                     // push forward a bit to collect
-                    driveForwardInches(6.5, 0.35, 2.0);
+                    driveForwardInches(7.5, 0.35, 2.0);
                     sleepInAuto(100);
 
                     //driveBackwardInches(7.0, 0.5, 2.0);
 
                     //turn(-15.0);
 
-                    driveBackwardInches(35.5, 0.50, 5.0);
+                    driveBackwardInches(37.5, 0.50, 5.0);
 
                     robot.pushGlyph();
 
@@ -254,9 +254,9 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     robot.closeIntakeWheels();
 
                     if(vuMark == RelicRecoveryVuMark.LEFT) {
-                        driveRightInches(22.0, 0.35, 2.0);
+                        driveRightInches(17.0, 0.35, 2.0);
                     } else {
-                        driveRightInches(11.0, 0.35, 2.0);
+                        driveRightInches(9.0, 0.35, 2.0);
                     }
 
                     robot.extendDistanceSensorArmServo();

@@ -139,7 +139,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         case RIGHT:
                             if(do4Glyphs()) {
                                 if(getAllianceColor() ==  AllianceColor.RED) {
-                                    driveBackwardInches(2.5, motorSpeed, 1.5);
+                                    driveBackwardInches(2.00, motorSpeed, 1.5);
                                 }
                                 // if this is BLUE Alliance
                                 else {
@@ -151,7 +151,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                                 }
                                 // if this is BLUE Alliance
                                 else {
-                                    driveForwardInches(17.5, motorSpeed, 3.0);
+                                    driveForwardInches(18.75, motorSpeed, 3.0);
                                 }
                             }
                             break;
@@ -160,7 +160,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         case CENTER:
                             if(do4Glyphs()) {
                                 if(getAllianceColor() ==  AllianceColor.RED) {
-                                    driveBackwardInches(9.5, motorSpeed, 3.0);
+                                    driveBackwardInches(8.25, motorSpeed, 3.0);
                                 }
                                 // if this is BLUE Alliance
                                 else {
@@ -197,7 +197,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                                 }
                                 // if this is BLUE Alliance
                                 else {
-                                    driveForwardInches(2.0, motorSpeed, 2.0);
+                                    driveForwardInches(1.0, motorSpeed, 2.0);
                                 }
                             }
                             break;
@@ -289,11 +289,11 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         boolean columnTouched = driveBackwardInchesToColumn(8.50, 0.12, 3.0);
                         robot.holdPusher();
 
-                        if(!robot.columnDetected()) {
-                            columnTouched = driveBackwardInchesToColumn(2.50, 0.12, 3.0);
-                        } else {
-                            sleepInAuto(150);
-                        }
+//                        if(!robot.columnDetected()) {
+//                            columnTouched = driveBackwardInchesToColumn(2.50, 0.12, 3.0);
+//                        } else {
+//                            sleepInAuto(150);
+//                        }
 
                         if(columnTouched) {
                              if(!robot.columnDetected()) {
@@ -340,14 +340,14 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                                 driveRightInches(oneColumnDistance+ 6.0, fasterMotorSpeed, 3.0);
                             }
                             else {
-                                driveRightInches(oneColumnDistance+ 2.5, fasterMotorSpeed, 3.0);
+                                driveRightInches(oneColumnDistance+ 3.5, fasterMotorSpeed, 3.0);
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
                                 driveRightInches(oneColumnDistance+ 3.5, fasterMotorSpeed, 3.0);
                             }
                             else if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                                driveLeftInches(oneColumnDistance + 4.5, fasterMotorSpeed, 3.0);
+                                driveLeftInches(oneColumnDistance + 7.5, fasterMotorSpeed, 3.0);
                             }
                             else {
                                 driveLeftInches(oneColumnDistance + 1.5, fasterMotorSpeed, 3.0);
@@ -371,9 +371,9 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     //driveBackwardInches(2.0, collectSpeed, 2.0);
 
                     if(getAllianceColor() == AllianceColor.RED) {
-                        turnToAngle(-74.5, 0.25);
+                        turn(-74.5);
                     } else {
-                        turnToAngle(-103.5, 0.25);
+                        turn(-103.5);
                     }
                     robot.collectGlyph();
                     sleepInAuto(100);
@@ -442,7 +442,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             || (columnDist > 2.5 && columnDist < 100)) {
                         logInfo( " Move to column: " +
                                 String.format("%.2f", columnDist) + " | " + robot.columnDetected());
-                        boolean columnTouched = driveBackwardInchesToColumn(7.25, 0.12, 2.0);
+                        boolean columnTouched = driveBackwardInchesToColumn(7.25, 0.10, 2.0);
 
                         if(columnTouched) {
                             if (!robot.columnDetected()) {
