@@ -278,6 +278,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     robot.extendDistanceSensorArmServo();
                     sleepInAuto(300);
 
+                    robot.holdPusher();
                     driveBackwardInchesToColumn(11.0, 0.12, 3.0);
 
                     turn(-178.0);

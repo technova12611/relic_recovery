@@ -560,9 +560,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             robot.collectGlyph();
             glyphStucked = true;
 
-            driveForwardInches(4.0, 0.35, 1.0);
+            driveForwardInches(5.0, 0.35, 1.0);
             sleep(100);
-            driveBackwardInches(4.0, 0.35, 1.0);
+            driveBackwardInches(5.0, 0.35, 1.0);
 
             robot.pushGlyph();
         }

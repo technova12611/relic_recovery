@@ -252,6 +252,8 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                 case PLACE_MORE_GLYPHS:
 
                     robot.closeIntakeWheels();
+                    sleepInAuto(300);
+                    robot.pushGlyph();
 
                     if(vuMark == RelicRecoveryVuMark.LEFT) {
                         driveRightInches(17.0, 0.35, 2.0);
@@ -262,6 +264,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     robot.extendDistanceSensorArmServo();
 
                     turn(1.0);
+                    robot.holdPusher();
 
                     driveBackwardInchesToColumn(10.0, 0.10, 2.0);
 
