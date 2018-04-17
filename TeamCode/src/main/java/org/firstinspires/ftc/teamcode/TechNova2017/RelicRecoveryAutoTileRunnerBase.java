@@ -344,7 +344,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                driveRightInches(oneColumnDistance+ 5.75, fasterMotorSpeed, 3.0);
+                                driveRightInches(oneColumnDistance+ 6.75, fasterMotorSpeed, 3.0);
                             }
                             else if (vuMark == RelicRecoveryVuMark.RIGHT) {
                                 driveLeftInches(oneColumnDistance + 7.5, fasterMotorSpeed, 3.0);
