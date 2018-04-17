@@ -161,7 +161,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         }
 
         while (opModeIsActive() && robot.driveMotorsBusy() && timer.seconds() < timeout &&
-                (!useRangerSensor || (robot.columnDetected() == null && !robot.columnDetected())))
+                (!useRangerSensor || robot.columnDetected() == null || !robot.columnDetected()))
         {
             if(useRangerSensor && robot.isColumnTouched() != null) {
                 if(robot.isColumnTouched()) {
@@ -392,7 +392,6 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     protected void placeGlyphIntoColumn(double motorSpeed, boolean makeTurn) throws InterruptedException {
 
         robot.pushGlyph();
-
         boolean columnDetected = robot.columnDetected();
         logInfo("** Place glyph into column ** ");
 
@@ -521,6 +520,13 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                     aligned = true;
                     logInfo("**** Aligned correctly.");
                     break;
+                }
+
+                if(timer1.milliseconds() > 350) {
+                    robot.pushGlyph();
+                }
+                else if(timer1.milliseconds() > 200) {
+                    robot.holdPusher();
                 }
 
                 runtime = 28.5;

@@ -286,7 +286,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                         double colDist = robot.getColDistance();
                         logInfo( " Col Dist: " + String.format("%.2f", colDist) + ", " + robot.columnDetected());
 
-                        boolean columnTouched = driveBackwardInchesToColumn(8.50, 0.12, 3.0);
+                        boolean columnTouched = driveBackwardInchesToColumn(8.50, 0.10, 3.0);
                         robot.holdPusher();
 
 //                        if(!robot.columnDetected()) {
@@ -344,7 +344,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                             }
                         } else {
                             if (vuMark == RelicRecoveryVuMark.LEFT) {
-                                driveRightInches(oneColumnDistance+ 3.5, fasterMotorSpeed, 3.0);
+                                driveRightInches(oneColumnDistance+ 5.75, fasterMotorSpeed, 3.0);
                             }
                             else if (vuMark == RelicRecoveryVuMark.RIGHT) {
                                 driveLeftInches(oneColumnDistance + 7.5, fasterMotorSpeed, 3.0);
@@ -371,9 +371,17 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     //driveBackwardInches(2.0, collectSpeed, 2.0);
 
                     if(getAllianceColor() == AllianceColor.RED) {
-                        turn(-74.5);
+                        if (vuMark == RelicRecoveryVuMark.RIGHT) {
+                            turn(-103.5);
+                        } else {
+                            turn(-74.5);
+                        }
                     } else {
-                        turn(-103.5);
+                        if (vuMark == RelicRecoveryVuMark.LEFT) {
+                            turn(-74.5);
+                        } else {
+                            turn(-103.5);
+                        }
                     }
                     robot.collectGlyph();
                     sleepInAuto(100);

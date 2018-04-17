@@ -178,29 +178,29 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveLeftInches(25.0, motorSpeed,5.0);
+                            driveLeftInches(27.5, motorSpeed,5.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveLeftInches(18.0, motorSpeed, 4.0);
+                            driveLeftInches(19.0, motorSpeed, 4.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(6.0, motorSpeed, 3.0);
+                            driveLeftInches(9.0, motorSpeed, 3.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
                         // -------------------------------------------------
                         default:
-                            driveLeftInches(18.0, motorSpeed, 4.0);
+                            driveLeftInches(19.0, motorSpeed, 3.0);
                             break;
                     }
 
-                    turn(-10.0);
+                    turn(-13.5);
 
                     robot.resetForTeleOps();
 
@@ -213,7 +213,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                 case PICKUP_MORE_GLYPHS:
 
                     // drive to glyph pit
-                    driveForwardInches(34.5, 0.50, 5.0);
+                    driveForwardInches(33.5, 0.50, 5.0);
                     sleepInAuto(100);
 
                     //turn(0.0);
@@ -225,7 +225,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     //turn(-15.0);
 
-                    driveBackwardInches(37.5, 0.50, 5.0);
+                    driveBackwardInches(34.5, 0.50, 5.0);
 
                     robot.pushGlyph();
 
@@ -256,14 +256,14 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                     if(vuMark == RelicRecoveryVuMark.LEFT) {
                         driveRightInches(17.0, 0.35, 2.0);
                     } else {
-                        driveRightInches(9.0, 0.35, 2.0);
+                        driveRightInches(7.5, 0.35, 2.0);
                     }
 
                     robot.extendDistanceSensorArmServo();
 
-                    turn(0.0);
+                    turn(1.0);
 
-                    driveBackwardInchesToColumn(8.0, 0.12, 2.0);
+                    driveBackwardInchesToColumn(10.0, 0.25, 2.0);
 
                     if(getRuntime() < 27.0) {
                         // push glyph again
