@@ -510,6 +510,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             if (distance > 0.0 && distance < 15.0) {
                 double desiredDistance = 3.00;
                 double delta = distance - desiredDistance;
+                if(distance == 2.0) {
+                    delta = 2.0;
+                }
                 logInfo("    Delta from the column (in): " + String.format("%.2f", delta));
 
                 if (delta > 0.4) {
@@ -532,7 +535,18 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
                 runtime = 28.5;
             } else {
                 logInfo("!!!! Range Sensor out of range.");
-                break;
+
+                ElapsedTime timerS = new ElapsedTime();
+                while(opModeIsActive() && timerS.milliseconds() < 500) {
+                    distance = robot.getColDistance();
+                    if(distance < 200.0) {
+                        break;
+                    }
+                }
+
+                if(distance > 20.0) {
+                    break;
+                }
             }
 
             logInfo("    " + (++count) + " Distance from the column (in): " + String.format("%.2f", robot.getColDistance()));
