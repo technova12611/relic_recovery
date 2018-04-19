@@ -116,7 +116,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                 case FORWARD_3_FEET:
                     detectVuMark = true;
-                    driveForwardInches(29.5, motorSpeed, 5.0);
+                    driveForwardInches(28.5, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
@@ -137,7 +137,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(21.0, motorSpeed,5.0);
+                            driveRightInches(21.5, motorSpeed,5.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
@@ -270,7 +270,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     sleepInAuto(200);
 
                     if(vuMark == RelicRecoveryVuMark.RIGHT) {
-                        driveLeftInches(15.5, motorSpeed, 3.0);
+                        driveLeftInches(14.0, motorSpeed, 3.0);
                     } else {
                         driveLeftInches(8.25, motorSpeed, 3.0);
                     }

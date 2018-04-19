@@ -106,12 +106,12 @@ public class RobotInfo {
 
     // HiTec Servo #2 positions
     //----------------------------------------------
-    public static double GLYPH_FLIPPER_2_INITIAL_POSITION = 0.77;
+    public static double GLYPH_FLIPPER_2_INITIAL_POSITION = 0.78;
     public static double GLYPH_FLIPPER_2_AUTO_RED_INITIAL_POSITION = 0.72;
     public static double GLYPH_FLIPPER_2_AUTO_BLUE_INITIAL_POSITION = 0.72;
     public static double GLYPH_FLIPPER_2_OPEN_POSITION    = 0.35;
-    public static double GLYPH_FLIPPER_2_FLAT_POSITION    = 0.70;
-    public static double GLYPH_FLIPPER_2_CLOSE_POSITION   = 0.77;
+    public static double GLYPH_FLIPPER_2_FLAT_POSITION    = 0.72;
+    public static double GLYPH_FLIPPER_2_CLOSE_POSITION   = 0.78;
 
     // Driver control motor speed
     //-----------------------------------------------------------------------
@@ -159,8 +159,8 @@ public class RobotInfo {
 
     //DS 3218 270 degree Servo positions
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.90;
-    public static double GLYPH_PUSHER_PUSH_POSITION = 0.91;
-    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.93;
+    public static double GLYPH_PUSHER_PUSH_POSITION = 0.92;
+    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.88;
     public static double GLYPH_PUSHER_HOLD_POSITION = 0.40;
     public static double GLYPH_PUSHER_UP_POSITION = 0.15;
 

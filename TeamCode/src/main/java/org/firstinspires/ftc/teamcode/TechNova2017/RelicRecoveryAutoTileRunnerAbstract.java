@@ -510,15 +510,20 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             if (distance > 0.0 && distance < 15.0) {
                 double desiredDistance = 3.00;
                 double delta = distance - desiredDistance;
-                if(distance == 2.0) {
-                    delta = 2.0;
-                }
+
                 logInfo("    Delta from the column (in): " + String.format("%.2f", delta));
 
                 if (delta > 0.4) {
                     driveRightInches(delta*1.5, 0.35, 1.5);
+                    if(robot.getColDistance() == 2.0) {
+                        break;
+                    }
                 } else if (delta < -0.4) {
                     driveLeftInches(-delta*1.5, 0.35, 1.5);
+
+                    if(robot.getColDistance() == 2.0) {
+                        break;
+                    }
                 } else {
                     aligned = true;
                     logInfo("**** Aligned correctly.");
@@ -534,13 +539,17 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
                 runtime = 28.5;
             } else {
-                logInfo("!!!! Range Sensor out of range.");
+                logInfo("!!!! Range Sensor out of range. | " + String.format("%.2f", distance));
 
-                ElapsedTime timerS = new ElapsedTime();
-                while(opModeIsActive() && timerS.milliseconds() < 500) {
-                    distance = robot.getColDistance();
-                    if(distance < 200.0) {
-                        break;
+                if(distance > 200) {
+                    ElapsedTime timerS = new ElapsedTime();
+                    int retries = 0;
+                    while (opModeIsActive() && timerS.milliseconds() < 500) {
+                        distance = robot.getColDistance();
+                        logInfo("!!!! Out of range, retry #" + ++retries + " | " + String.format("%.2f", distance));
+                        if (distance < 200.0) {
+                            break;
+                        }
                     }
                 }
 
@@ -574,9 +583,9 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
             robot.collectGlyph();
             glyphStucked = true;
 
-            driveForwardInches(5.0, 0.35, 1.0);
+            driveForwardInches(7.0, 0.35, 1.0);
             sleep(100);
-            driveBackwardInches(5.0, 0.35, 1.0);
+            driveBackwardInches(7.0, 0.35, 1.0);
 
             robot.pushGlyph();
         }
