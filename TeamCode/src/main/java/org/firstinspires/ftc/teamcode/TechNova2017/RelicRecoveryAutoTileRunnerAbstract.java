@@ -513,7 +513,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
 
                 logInfo("    Delta from the column (in): " + String.format("%.2f", delta));
 
-                if (delta > 0.4) {
+                if (delta > 0.4 ) {
                     driveRightInches(delta*1.5, 0.35, 1.5);
                     if(robot.getColDistance() == 2.0) {
                         break;
@@ -569,7 +569,7 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     }
 
     protected boolean isGlyphStucked() throws InterruptedException {
-        sleep(100);
+        sleepInAuto(100);
         int previousIntakeCount = robot.intakeRight.getCurrentPosition();
         sleepInAuto(150);
         robot.holdPusher();
@@ -577,14 +577,14 @@ public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
         logInfo("    Intake encoder: ( " + previousIntakeCount + "," + robot.intakeRight.getCurrentPosition() + ")");
 
         boolean glyphStucked = false;
-        if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 40) {
+        if(Math.abs(previousIntakeCount - robot.intakeRight.getCurrentPosition()) < 50) {
             robot.reverseGlyph();
-            sleepInAuto(2050);
+            sleepInAuto(2000);
             robot.collectGlyph();
             glyphStucked = true;
 
             driveForwardInches(7.0, 0.35, 1.0);
-            sleep(100);
+            sleepInAuto(100);
             driveBackwardInches(7.0, 0.35, 1.0);
 
             robot.pushGlyph();

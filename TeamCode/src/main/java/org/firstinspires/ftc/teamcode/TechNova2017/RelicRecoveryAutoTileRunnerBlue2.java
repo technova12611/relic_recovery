@@ -137,7 +137,7 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(21.5, motorSpeed,5.0);
+                            driveRightInches(23.5, motorSpeed,5.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
@@ -194,13 +194,13 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveRightInches(8.0,fasterMotorSpeed ,3.0);
+                            driveRightInches(6.0,fasterMotorSpeed ,3.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
                         // -------------------------------------------------
                         case CENTER:
-                            driveRightInches(16.5, fasterMotorSpeed, 4.0);
+                            driveRightInches(18.0, fasterMotorSpeed, 4.0);
                             break;
 
                         // need to place glyph into LEFT Crypto box
@@ -228,17 +228,17 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                 case PICKUP_MORE_GLYPHS:
 
                     // drive to glyph pit
-                    driveForwardInches(35.5, 0.50, 5.0);
+                    driveForwardInches(34.5, 0.50, 5.0);
                     robot.collectGlyph();
-                    sleepInAuto(300);
+                    sleepInAuto(500);
 
                     // push forward a bit to collect
-                    driveForwardInches(7.5, 0.25, 2.0);
-                    sleepInAuto(100);
+                    driveForwardInches(10.5, 0.25, 2.0);
+                    sleepInAuto(250);
 
                     //turn(-165.0);
 
-                    driveBackwardInches(39.5, 0.45, 5.0);
+                    driveBackwardInches(42.0, 0.40, 5.0);
 
                     robot.pushGlyph();
 
@@ -270,16 +270,16 @@ public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunne
                     sleepInAuto(200);
 
                     if(vuMark == RelicRecoveryVuMark.RIGHT) {
-                        driveLeftInches(14.0, motorSpeed, 3.0);
+                        driveLeftInches(13.0, motorSpeed, 3.0);
                     } else {
-                        driveLeftInches(8.25, motorSpeed, 3.0);
+                        driveLeftInches(7.5, motorSpeed, 3.0);
                     }
 
                     robot.extendDistanceSensorArmServo();
                     sleepInAuto(300);
 
                     robot.holdPusher();
-                    driveBackwardInchesToColumn(11.0, 0.12, 3.0);
+                    driveBackwardInchesToColumn(11.0, 0.10, 3.0);
 
                     turn(-178.0);
 

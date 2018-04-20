@@ -76,8 +76,8 @@ public class RobotInfo {
     public static double GLYPH_FLIPPER_AUTO_RED_INITIAL_POSITION = 0.38;
     public static double GLYPH_FLIPPER_AUTO_BLUE_INITIAL_POSITION = 0.42;
     public static double GLYPH_FLIPPER_OPEN_POSITION    = 0.79;
-    public static double GLYPH_FLIPPER_FLAT_POSITION    = 0.41;
-    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.31;
+    public static double GLYPH_FLIPPER_FLAT_POSITION    = 0.45;
+    public static double GLYPH_FLIPPER_CLOSE_POSITION   = 0.33;
 
 //    public static double GLYPH_FLIPPER_2_INITIAL_POSITION = 0.87;
 //    public static double GLYPH_FLIPPER_2_AUTO_RED_INITIAL_POSITION = 0.80;
@@ -159,8 +159,8 @@ public class RobotInfo {
 
     //DS 3218 270 degree Servo positions
     public static double GLYPH_PUSHER_INITIAL_POSITION = 0.90;
-    public static double GLYPH_PUSHER_PUSH_POSITION = 0.92;
-    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.88;
+    public static double GLYPH_PUSHER_PUSH_POSITION = 0.90;
+    public static double GLYPH_PUSHER_PUSH_HARDER_POSITION = 0.87;
     public static double GLYPH_PUSHER_HOLD_POSITION = 0.40;
     public static double GLYPH_PUSHER_UP_POSITION = 0.15;
 
