@@ -19,7 +19,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.DISTANCE_SEN
 public abstract class RelicRecoveryAutoTileRunnerAbstract extends LinearOpMode {
     TileRunnerRobot robot = null;
 
-    JewelPusher pusher = null;
+    public JewelPusher pusher = null;
     VuMarkVision vuMarkVision;
     RelicRecoveryVuMark vuMark;
 

@@ -116,7 +116,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                 case BACKWARD_3_FEET:
                     detectVuMark = true;
-                    driveBackwardInches(27.5, motorSpeed, 5.0);
+                    driveBackwardInches(28.0, motorSpeed, 5.0);
                     gotoNextState();
                     break;
 
@@ -138,7 +138,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                         // need to place glyph into LEFT Crypto box
                         // -------------------------------------------------
                         case LEFT:
-                            driveLeftInches(23.0, motorSpeed,5.0);
+                            driveLeftInches(25.0, motorSpeed,5.0);
                             break;
 
                         // Default is CENTER position, in case Vumark is not visible
@@ -178,7 +178,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                         // need to place glyph into RIGHT Crypto box
                         case RIGHT:
-                            driveLeftInches(27.5, motorSpeed,5.0);
+                            driveLeftInches(27.0, motorSpeed,5.0);
                             break;
 
                         // need to place glyph into CENTER Crypto box
@@ -213,7 +213,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
                 case PICKUP_MORE_GLYPHS:
 
                     // drive to glyph pit
-                    driveForwardInches(34.5, 0.50, 5.0);
+                    driveForwardInches(32.5, 0.50, 5.0);
                     sleepInAuto(100);
 
                     //turn(0.0);
@@ -225,7 +225,7 @@ public class RelicRecoveryAutoTileRunnerRed2 extends RelicRecoveryAutoTileRunner
 
                     //turn(-15.0);
 
-                    driveBackwardInches(37.0, 0.45, 5.0);
+                    driveBackwardInches(38.0, 0.45, 5.0);
 
                     robot.pushGlyph();
 

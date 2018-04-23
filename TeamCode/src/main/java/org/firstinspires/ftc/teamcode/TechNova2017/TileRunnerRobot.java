@@ -88,7 +88,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RobotInfo.RELIC_ELBOW_
  */
 public class TileRunnerRobot {
     DcMotor lf, lr, rf, rr, led, glyphLift, relicSlider, intakeLeft, intakeRight;
-    Servo relicClaw, relicElbow, relicClawholder, longArm, intakeLeftHolder, intakeRightHolder,
+    public Servo relicClaw, relicElbow, relicClawholder, longArm, intakeLeftHolder, intakeRightHolder,
                   glyphFlipper, glyphFlipper2, glyphPusher, distSensorServo, glyphBlocker, servoTester;
 
     private Telemetry telemetry;

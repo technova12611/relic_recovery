@@ -164,7 +164,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                                 }
                                 // if this is BLUE Alliance
                                 else {
-                                    driveForwardInches(12.5, motorSpeed, 2.0);
+                                    driveForwardInches(11.0, motorSpeed, 2.0);
                                 }
                             } else {
                                 if(getAllianceColor() ==  AllianceColor.RED) {
@@ -188,7 +188,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                                 }
                                 // if this is BLUE Alliance
                                 else {
-                                    driveForwardInches(2.0, motorSpeed, 2.0);
+                                    driveForwardInches(3.5, motorSpeed, 2.0);
                                 }
                             }
                             else {
@@ -350,7 +350,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                                 driveRightInches(oneColumnDistance+ 9.5, fasterMotorSpeed, 3.0);
                             }
                             else if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                                driveLeftInches(oneColumnDistance + 7.5, fasterMotorSpeed, 3.0);
+                                driveLeftInches(oneColumnDistance + 10.5, fasterMotorSpeed, 3.0);
                             }
                             else {
                                 driveLeftInches(oneColumnDistance + 1.0, fasterMotorSpeed, 3.0);
@@ -375,21 +375,21 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                     if(getAllianceColor() == AllianceColor.RED) {
                         if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                            turn(-103.5);
+                            turn(-100.5);
                         } else {
-                            turn(-74.5);
+                            turn(-78.5);
                         }
                     } else {
                         if (vuMark == RelicRecoveryVuMark.LEFT) {
-                            turn(-74.5);
+                            turn(-78.5);
                         } else {
-                            turn(-103.5);
+                            turn(-100.5);
                         }
                     }
                     robot.collectGlyph();
                     sleepInAuto(100);
 
-                    driveForwardInches(4.0, collectSpeed, 1.25);
+                    driveForwardInches(5.0, collectSpeed, 1.25);
                     sleepInAuto(100);
 
                     driveForwardInches(8.5, collectSpeed, 1.25);
@@ -399,7 +399,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
                     //driveForwardInches(4.0, collectSpeed, 2.0);
                     //sleepInAuto(300);
 
-                    driveBackwardInches(13.5, 0.5, 2.0);
+                    driveBackwardInches(14.5, 0.5, 2.0);
                     turn(straightAngle);
                     robot.pushGlyph();
 
@@ -408,7 +408,7 @@ public class RelicRecoveryAutoTileRunnerBase extends RelicRecoveryAutoTileRunner
 
                 case DRIVE_BACK_TO_CRYPTO:
 
-                    driveBackwardInches(16.5, 0.50, 3.0);
+                    driveBackwardInches(17.5, 0.50, 3.0);
                     robot.extendDistanceSensorArmServo();
 
                     robot.pushGlyph();

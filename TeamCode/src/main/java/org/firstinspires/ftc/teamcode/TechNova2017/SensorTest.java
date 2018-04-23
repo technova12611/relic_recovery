@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
+import android.util.Log;
+
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -19,6 +21,7 @@ public class SensorTest extends LinearOpMode {
 
     double servoPosition = 0.0;
     ElapsedTime servoTimer = new ElapsedTime();
+    JewelPusher pusher = null;
 
     @Override
     public void runOpMode() {
@@ -33,14 +36,27 @@ public class SensorTest extends LinearOpMode {
 
         //glyphDistance = hardwareMap.get(DistanceSensor.class, "glyphColorDistance");
 
-        VuMarkVision vuMarkVision = new VuMarkVision(hardwareMap, telemetry, false);
+        VuMarkVision vuMarkVision = new VuMarkVision(hardwareMap, telemetry, true);
 
         // wait for the start button to be pressed.
         waitForStart();
 
+        try {
+            pusher = new JewelPusher(this, hardwareMap, telemetry, AllianceColor.BLUE, true);
+        }
+        catch(InterruptedException ie) {
+        }
+        catch(Exception e) {
+            telemetry.addData("Jewel Pusher failed", e.getMessage());
+            Log.e(this.getClass().getSimpleName(), "JewelPusher failed.", e);
+        }
+
         vuMarkVision.activate();
 
         RelicRecoveryVuMark vuMark = vuMarkVision.detect(telemetry);
+        try {pusher.performTasks(); }
+        catch(InterruptedException e)
+        {}
 
         ElapsedTime timer2 = new ElapsedTime();
 
