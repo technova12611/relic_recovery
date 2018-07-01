@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 
 @Autonomous(name = "Auto RED #2 (Turn)", group = "Competition")
+@Disabled
 public class RelicRecoveryAutoTileRunnerRed5 extends RelicRecoveryAutoTileRunnerAbstract {
     public AllianceColor getAllianceColor() {
         return AllianceColor.RED;
