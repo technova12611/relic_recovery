@@ -1,1 +1,0 @@
-git filter-branch --commit-filter 'if [ "$GIT_AUTHOR_NAME" = "Terry Wang" ]; then export GIT_AUTHOR_NAME="techNova07"; export GIT_AUTHOR_EMAIL=ftcteam12611@gmail.com;fi; git commit-tree "$@"'
