@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.TechNova2017;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
@@ -11,6 +12,7 @@ import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileR
 import static org.firstinspires.ftc.teamcode.TechNova2017.RelicRecoveryAutoTileRunnerBlue2.State.RESET_GLYPH_TRAY;
 
 @Autonomous(name = "Auto BLUE #2 (Strafe)", group = "Competition")
+@Disabled
 public class RelicRecoveryAutoTileRunnerBlue2 extends RelicRecoveryAutoTileRunnerAbstract {
     public AllianceColor getAllianceColor() {
         return AllianceColor.BLUE;
